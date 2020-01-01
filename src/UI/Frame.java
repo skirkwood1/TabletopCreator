@@ -6,12 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class Frame extends JFrame {
 
+    private ComponentTree componentTree;
     private Toolbar toolbar;
     private TextPanel textPanel;
     private JButton btn;
+    private JSplitPane pane;
 
     Dice die = new Dice(6);
 
@@ -22,11 +26,31 @@ public class Frame extends JFrame {
 
         toolbar = new Toolbar();
         textPanel = new TextPanel();
+        componentTree = new ComponentTree();
         btn = new JButton("Roll die");
 
+        pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,componentTree,textPanel);
+        pane.addPropertyChangeListener("dividerLocation", new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(PropertyChangeEvent e)
+            {
+                int location = ((Integer)e.getNewValue()).intValue();
+                System.out.println(location);
+
+                if (location > 150)
+                {
+                    JSplitPane splitPane = (JSplitPane)e.getSource();
+                    splitPane.setDividerLocation( 150 );
+                }
+            }
+        });
+
         add(toolbar, BorderLayout.NORTH);
-        add(textPanel, BorderLayout.CENTER);
+        add(pane, BorderLayout.CENTER);
         add(btn, BorderLayout.SOUTH);
+
+        toolbar.setTextPanel(textPanel);
 
         btn.addActionListener(new ActionListener() {
             @Override
