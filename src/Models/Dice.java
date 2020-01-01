@@ -1,5 +1,6 @@
 package Models;
 
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,8 +8,11 @@ public class Dice {
 
     private int sides;
 
+    public static ArrayList<Dice> dieList = new ArrayList<>();
+
     public Dice(int sides){
         this.sides = sides;
+        dieList.add(this);
     }
 
     public int roll(){
