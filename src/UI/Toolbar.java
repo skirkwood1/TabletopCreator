@@ -1,11 +1,10 @@
 package UI;
 
-import Models.Game;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Toolbar extends JPanel implements ActionListener {
     private JButton save;
@@ -14,12 +13,12 @@ public class Toolbar extends JPanel implements ActionListener {
     private StringListener stringListener;
 
     public Toolbar(){
-        ImageIcon saveIcon = new ImageIcon("src/Images/icons8-save-100.png");
+        ImageIcon saveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons8-save-100.png"));
         Image image = saveIcon.getImage();
         Image newImg = image.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
         saveIcon = new ImageIcon(newImg);
 
-        ImageIcon openIcon = new ImageIcon("src/Images/folder-open-outline-filled.png");
+        ImageIcon openIcon = new ImageIcon(getClass().getClassLoader().getResource("folder-open-outline-filled.png"));
         image = openIcon.getImage();
         newImg = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
         openIcon = new ImageIcon(newImg);
