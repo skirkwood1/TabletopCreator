@@ -185,6 +185,21 @@ public class CenterPane extends JPanel {
     void refreshComponentTree(Game game){
         this.game = game;
         componentTree.refreshTree(game);
+        componentTree.getTree().addTreeSelectionListener(e -> {
+
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
+            if(selectedNode != null){
+                String cardName = selectedNode.toString();
+                Card card = null;
+                if(selectedNode.isLeaf()){
+                    card = game.getCard(cardName);
+                }
+                if(card != null){
+                    displayImage(card.getImage());
+                    setCardText(card.getText());
+                }
+            }
+        });
     }
 
 }

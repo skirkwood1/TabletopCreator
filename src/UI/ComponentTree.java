@@ -71,6 +71,8 @@ public class ComponentTree extends JPanel {
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(card.getName());
             model.insertNodeInto(node,deck,deck.getChildCount());
         }
+
+
     }
 
 //    public void valueChanged(TreeSelectionEvent e) {
