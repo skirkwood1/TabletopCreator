@@ -82,14 +82,16 @@ public class CenterPane extends JPanel {
         componentTree.getTree().addTreeSelectionListener(e -> {
 
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
-            String cardName = selectedNode.toString();
-            Card card = null;
-            if(selectedNode.isLeaf()){
-                card = game.getCard(cardName);
-            }
-            if(card != null){
-                displayImage(card.getImage());
-                setCardText(card.getText());
+            if(selectedNode != null){
+                String cardName = selectedNode.toString();
+                Card card = null;
+                if(selectedNode.isLeaf()){
+                    card = game.getCard(cardName);
+                }
+                if(card != null){
+                    displayImage(card.getImage());
+                    setCardText(card.getText());
+                }
             }
         });
 
@@ -138,15 +140,15 @@ public class CenterPane extends JPanel {
     }
 
 
-    public void appendText(String text){
+    void appendText(String text){
         textPanel.appendText(text);
     }
 
-    public void setCardText(String text){
+    void setCardText(String text){
         cardText.setText(text);
     }
 
-    public void displayImage(File imageFile){
+    void displayImage(File imageFile){
         try {
             Image image = ImageIO.read(imageFile);
 
@@ -174,8 +176,15 @@ public class CenterPane extends JPanel {
         }
     }
 
-    public void updateComponentTree(Card card){
+    void updateComponentTree(Card card){
         componentTree.updateTree(card);
+    }
+
+    public void collapseComponentTree(){componentTree.collapseTree();}
+
+    void refreshComponentTree(Game game){
+        this.game = game;
+        componentTree.refreshTree(game);
     }
 
 }

@@ -11,10 +11,10 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 public class ComponentTree extends JPanel {
     private JTree tree;
-    private Card selectedCard = null;
 
     private Game game;
 
@@ -45,6 +45,32 @@ public class ComponentTree extends JPanel {
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(card.getName());
         tree.scrollPathToVisible(new TreePath(node.getPath()));
         model.insertNodeInto(node,deck,deck.getChildCount());
+    }
+
+    public void collapseTree(){
+        if(tree == null){
+            throw new NullPointerException("tree == null");
+        }
+        TreeSelectionModel m = tree.getSelectionModel();
+        if (m != null) {
+            m.clearSelection();
+        }
+
+        for(int i = tree.getRowCount() -1; i > 0; i--){
+            tree.collapseRow(i);
+        }
+    }
+
+    public void refreshTree(Game game){
+        this.game = game;
+        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        deck.removeAllChildren();
+        //model.reload();
+
+        for(Card card: this.game.getDeck()){
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(card.getName());
+            model.insertNodeInto(node,deck,deck.getChildCount());
+        }
     }
 
 //    public void valueChanged(TreeSelectionEvent e) {

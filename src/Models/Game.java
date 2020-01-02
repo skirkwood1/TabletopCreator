@@ -30,4 +30,21 @@ public class Game implements Serializable {
         }
         return null;
     }
+
+    public String toString(){
+        String finalString = "";
+        int numDice = 0;
+        for(Card card: deck){
+            finalString += card.getName() + "   ";
+            finalString += card.getText() + "   ";
+            finalString += card.getImage().getAbsolutePath();
+            finalString += "\r\n";
+        }
+        for(Dice die: diceCollection){
+            numDice += 1;
+        }
+        finalString = finalString + numDice;
+
+        return finalString;
+    }
 }
