@@ -1,6 +1,7 @@
 package UI;
 
 import Models.Card;
+import Models.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,11 +25,15 @@ public class CenterPane extends JPanel {
     private JLabel componentImage;
     private JScrollPane imagePane;
 
-    public CenterPane() {
+    Game game;
+
+    public CenterPane(Game game) {
+        this.game = game;
+
         cardText = new TextPanel();
         componentImage = new JLabel();
         textPanel = new TextPanel();
-        componentTree = new ComponentTree();
+        componentTree = new ComponentTree(game);
         imagePane = new JScrollPane(componentImage);
 
         textPanel.setPreferredSize(new Dimension(800, 600));
@@ -70,6 +75,8 @@ public class CenterPane extends JPanel {
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
+        overallPane.setContinuousLayout(true);
+
         add(overallPane);
 
         componentTree.getTree().addTreeSelectionListener(e -> {
@@ -78,7 +85,7 @@ public class CenterPane extends JPanel {
             String cardName = selectedNode.toString();
             Card card = null;
             if(selectedNode.isLeaf()){
-                card = Card.getCard(cardName);
+                card = game.getCard(cardName);
             }
             if(card != null){
                 displayImage(card.getImage());
@@ -126,6 +133,8 @@ public class CenterPane extends JPanel {
         imagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         imagePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
+
+
     }
 
 
@@ -163,6 +172,10 @@ public class CenterPane extends JPanel {
         }catch (IOException ex){
             ex.printStackTrace();
         }
+    }
+
+    public void updateComponentTree(Card card){
+        componentTree.updateTree(card);
     }
 
 }

@@ -1,6 +1,6 @@
 package UI;
 
-import Models.Card;
+import Models.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,22 +9,26 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 public class ComponentTree extends JPanel {
     private JTree tree;
     private Card selectedCard = null;
 
-    public ComponentTree(){
+    private Game game;
+
+    DefaultMutableTreeNode top = new DefaultMutableTreeNode("Game");
+    DefaultMutableTreeNode deck = new DefaultMutableTreeNode("Deck");
+
+    public ComponentTree(Game game){
         super();
-        DefaultMutableTreeNode top = new DefaultMutableTreeNode("Game");
-        DefaultMutableTreeNode deck = new DefaultMutableTreeNode("Deck");
+
+        this.game = game;
+
         top.add(deck);
         top.add(new DefaultMutableTreeNode("Pieces"));
         top.add(new DefaultMutableTreeNode("Dice"));
-
-        for(Card card: Card.deck) {
-            deck.add(new DefaultMutableTreeNode(card.getName()));
-        }
 
         tree = new JTree(top);
         tree.setPreferredSize(new Dimension(1280,0));
@@ -34,6 +38,13 @@ public class ComponentTree extends JPanel {
 
         setLayout(new BorderLayout());
         add(view, BorderLayout.WEST);
+    }
+
+    public void updateTree(Card card){
+        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(card.getName());
+        tree.scrollPathToVisible(new TreePath(node.getPath()));
+        model.insertNodeInto(node,deck,deck.getChildCount());
     }
 
 //    public void valueChanged(TreeSelectionEvent e) {

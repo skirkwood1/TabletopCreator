@@ -1,10 +1,11 @@
 package Models;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Dice {
+public class Dice implements Serializable {
 
     private int sides;
 
@@ -27,4 +28,6 @@ public class Dice {
         }
         return total;
     }
+
+
 }

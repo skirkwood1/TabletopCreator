@@ -1,5 +1,7 @@
 package UI;
 
+import Models.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -49,6 +51,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
         if (clicked == save){
             stringListener.textEmitted("Save\n\r");
+
         }
         else if (clicked == open){
             stringListener.textEmitted("Open\n\r");

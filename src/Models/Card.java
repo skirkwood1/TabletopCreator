@@ -1,20 +1,17 @@
 package Models;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Card {
+public class Card implements Serializable {
     private String name;
     private String text;
     private File image;
-
-    public static ArrayList<Card> deck = new ArrayList<>();
 
     public Card(String name, String text, String filename){
         this.name = name;
         this.image = new File(filename);
         this.text = text;
-        deck.add(this);
     }
 
     public String getName(){
@@ -29,12 +26,5 @@ public class Card {
         return image;
     }
 
-    public static Card getCard(String name){
-        for(Card card: deck){
-            if(card.getName().equals(name)){
-                return card;
-            }
-        }
-        return null;
-    }
+
 }
