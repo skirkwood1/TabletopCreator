@@ -1,9 +1,15 @@
 package UI;
 
+import Models.Card;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 
 public class CenterPane extends JPanel {
     private ComponentTree componentTree;
@@ -55,14 +61,40 @@ public class CenterPane extends JPanel {
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         add(overallPane);
+
+        componentTree.getTree().addTreeSelectionListener(e -> {
+
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
+            String cardName = selectedNode.toString();
+            Card card = null;
+            if(selectedNode.isLeaf()){
+                card = Card.getCard(cardName);
+            }
+            if(card != null){
+                displayImage(card.getImage());
+                setCardText(card.getText());
+            }
+        });
+
     }
+
 
     public void appendText(String text){
         textPanel.appendText(text);
     }
 
-    public void appendCardText(String text){
-        cardText.appendText(text);
+    public void setCardText(String text){
+        cardText.setText(text);
+    }
+
+    public void displayImage(File imageFile){
+        try {
+            Image image = ImageIO.read(imageFile);
+            ImageIcon icon = new ImageIcon(image);
+            componentImage.setIcon(icon);
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
 }
