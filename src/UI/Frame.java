@@ -15,7 +15,7 @@ public class Frame extends JFrame {
     private Toolbar toolbar;
     private TextPanel textPanel;
     private JButton btn;
-    private JSplitPane pane;
+    private CenterPane centerPane;
 
     Dice die = new Dice(6);
 
@@ -25,39 +25,18 @@ public class Frame extends JFrame {
         setLayout(new BorderLayout());
 
         toolbar = new Toolbar();
-        textPanel = new TextPanel();
-        componentTree = new ComponentTree();
+        centerPane = new CenterPane();
         btn = new JButton("Roll die");
 
-        pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,componentTree,textPanel);
-        pane.addPropertyChangeListener("dividerLocation", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent e)
-            {
-                int location = ((Integer)e.getNewValue()).intValue();
-                System.out.println(location);
-
-                if (location > 150)
-                {
-                    JSplitPane splitPane = (JSplitPane)e.getSource();
-                    splitPane.setDividerLocation( 150 );
-                }
-            }
-        });
 
         add(toolbar, BorderLayout.NORTH);
-        add(pane, BorderLayout.CENTER);
+        add(centerPane, BorderLayout.CENTER);
         add(btn, BorderLayout.SOUTH);
+        pack();
 
-        toolbar.setTextPanel(textPanel);
+        toolbar.setStringListener(text -> centerPane.appendText(text));
 
-        btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                textPanel.appendText(Dice.dieList.get(0).roll() + "");
-            }
-        });
+        btn.addActionListener(e -> centerPane.appendText(Dice.dieList.get(0).roll() + ""));
 
         setSize(1280,720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

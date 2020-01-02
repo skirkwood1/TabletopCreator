@@ -9,7 +9,7 @@ public class Toolbar extends JPanel implements ActionListener {
     private JButton save;
     private JButton open;
 
-    private TextPanel textPanel;
+    private StringListener stringListener;
 
     public Toolbar(){
         ImageIcon saveIcon = new ImageIcon("src/Images/icons8-save-100.png");
@@ -40,18 +40,18 @@ public class Toolbar extends JPanel implements ActionListener {
 
     }
 
-    public void setTextPanel(TextPanel textPanel){
-        this.textPanel = textPanel;
+    public void setStringListener(StringListener listener){
+        this.stringListener = listener;
     }
 
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton)e.getSource();
 
         if (clicked == save){
-            textPanel.appendText("Save\n\r");
+            stringListener.textEmitted("Save\n\r");
         }
         else if (clicked == open){
-            textPanel.appendText("Open\n\r");
+            stringListener.textEmitted("Open\n\r");
         }
 
     }

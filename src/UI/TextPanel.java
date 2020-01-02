@@ -8,6 +8,9 @@ public class TextPanel extends JPanel {
 
     public TextPanel() {
         textArea = new JTextArea();
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
 
         setLayout(new BorderLayout());
 
