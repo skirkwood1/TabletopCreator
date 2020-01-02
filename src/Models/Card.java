@@ -10,7 +10,7 @@ public class Card {
 
     public static ArrayList<Card> deck = new ArrayList<>();
 
-    public Card(String name, String filename, String text){
+    public Card(String name, String text, String filename){
         this.name = name;
         this.image = new File(filename);
         this.text = text;

@@ -7,11 +7,9 @@ import Models.*;
 public class Program {
 
     public static void main(String[] args){
-        new Card("poopy","src/Images/icons8-save-100.png","stinky");
-        new Card("stinky","src/Images/folder-open-outline-filled.png","poopy");
+        new Card("Pizza","It's-a very good-a","src/Images/icons8-save-100.png");
+        new Card("Burger","An American classic","src/Images/folder-open-outline-filled.png");
 
-        Card card = Card.getCard("stinky");
-        System.out.println(card.getName());
         SwingUtilities.invokeLater(new Runnable(){
             public void run(){
                 new Frame();

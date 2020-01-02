@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -19,19 +20,26 @@ public class CenterPane extends JPanel {
     private JSplitPane cardPane;
     private TextPanel cardText;
     private JLabel componentImage;
+    private JScrollPane imagePane;
 
     public CenterPane() {
         cardText = new TextPanel();
         componentImage = new JLabel();
         textPanel = new TextPanel();
         componentTree = new ComponentTree();
+        imagePane = new JScrollPane(componentImage);
 
         textPanel.setPreferredSize(new Dimension(800, 600));
 
         cardText.setPreferredSize(new Dimension(200,300));
         cardText.setMinimumSize(new Dimension(200,50));
-        componentImage.setPreferredSize(new Dimension(200, 100));
-        cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, componentImage);
+
+        imagePane.setPreferredSize(new Dimension(200, 100));
+        imagePane.setMinimumSize(new Dimension(200,100));
+        componentImage.setHorizontalAlignment(SwingConstants.CENTER);
+        componentImage.setVerticalAlignment(SwingConstants.CENTER);
+
+        cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, imagePane);
 
         textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, textPanel, cardPane);
         textAndCardPane.setResizeWeight(1);
@@ -90,6 +98,24 @@ public class CenterPane extends JPanel {
     public void displayImage(File imageFile){
         try {
             Image image = ImageIO.read(imageFile);
+
+            int baseHeight = ((BufferedImage) image).getHeight();
+            int baseWidth = ((BufferedImage) image).getWidth();
+
+            int imageSize;
+            float imageScale;
+            if(imagePane.getHeight()>imagePane.getWidth()){
+                imageSize = imagePane.getWidth();
+                imageScale = (float)imageSize/baseWidth;
+            }
+            else{
+                imageSize = imagePane.getHeight();
+                imageScale = (float)imageSize/baseHeight;
+            }
+
+            image = image.getScaledInstance((int)(baseHeight*imageScale),
+                    (int)(((BufferedImage) image).getHeight()*imageScale),
+                    Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon(image);
             componentImage.setIcon(icon);
         }catch (IOException ex){
