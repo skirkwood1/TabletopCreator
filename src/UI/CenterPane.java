@@ -21,6 +21,7 @@ public class CenterPane extends JPanel {
     private JSplitPane overallPane;
     private JSplitPane textAndCardPane;
     private JSplitPane cardPane;
+    BoardPane boardPane;
     private TextPanel cardText;
     private JLabel componentImage;
     private JScrollPane imagePane;
@@ -32,11 +33,12 @@ public class CenterPane extends JPanel {
 
         cardText = new TextPanel();
         componentImage = new JLabel();
-        textPanel = new TextPanel();
+        //textPanel = new TextPanel();
+        boardPane = new BoardPane(game.getBoard());
         componentTree = new ComponentTree(game);
         imagePane = new JScrollPane(componentImage);
 
-        textPanel.setPreferredSize(new Dimension(800, 600));
+        boardPane.setPreferredSize(new Dimension(800, 600));
 
         cardText.setPreferredSize(new Dimension(200,300));
         cardText.setMinimumSize(new Dimension(200,50));
@@ -48,7 +50,7 @@ public class CenterPane extends JPanel {
 
         cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, imagePane);
 
-        textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, textPanel, cardPane);
+        textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardPane, cardPane);
         textAndCardPane.setResizeWeight(1);
 
         componentTree.setMinimumSize(new Dimension(50,0));
@@ -200,6 +202,16 @@ public class CenterPane extends JPanel {
                 }
             }
         });
+    }
+
+    void refreshBoard(){
+        textAndCardPane.remove(boardPane);
+        this.boardPane = new BoardPane(game.getBoard());
+        textAndCardPane.add(boardPane);
+
+        boardPane.removeAll();
+        boardPane.revalidate();
+        boardPane.repaint();
     }
 
 }

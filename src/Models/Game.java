@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Game implements Serializable {
+
     private ArrayList<Card> deck;
     private ArrayList<Dice> diceCollection;
+    private Board board;
 
     public Game(){
         this.deck = new ArrayList<>();
         this.diceCollection = new ArrayList<>();
+        this.board = new Board(10,10);
     }
 
     public Card addCard(String name, String text, String filename){
@@ -31,6 +34,10 @@ public class Game implements Serializable {
         return null;
     }
 
+    public Board getBoard(){
+        return this.board;
+    }
+
     public String toString(){
         String finalString = "";
         int numDice = 0;
@@ -43,7 +50,9 @@ public class Game implements Serializable {
         for(Dice die: diceCollection){
             numDice += 1;
         }
-        finalString = finalString + numDice;
+        finalString = finalString + numDice + "\n\r";
+
+        finalString += board.toString();
 
         return finalString;
     }

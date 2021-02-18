@@ -36,7 +36,7 @@ public class Frame extends JFrame {
         pack();
 
         toolbar.setStringListener(text -> {
-            centerPane.appendText(text);
+            //centerPane.appendText(text);
             if(text.equals("Save\n\r")){
                 fileChooser.setDialogTitle("Save file");
                 int userSelection = fileChooser.showSaveDialog(this);
@@ -54,6 +54,7 @@ public class Frame extends JFrame {
                     System.out.println("Open file:" + fileToOpen.getAbsolutePath());
                     game = openGame(fileToOpen);
                     centerPane.refreshComponentTree(game);
+                    centerPane.refreshBoard();
                 }
             }
         });
