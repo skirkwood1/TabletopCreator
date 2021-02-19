@@ -11,9 +11,12 @@ public class Frame extends JFrame {
     private ComponentTree componentTree;
     private Toolbar toolbar;
     private TextPanel textPanel;
-    private JButton btn;
+    private JButton cardBtn;
+    private JButton pieceBtn;
     private CenterPane centerPane;
-    private CardCreationDialog cardCreationDialog;
+    private ComponentCreationDialog cardCreationDialog;
+    private ComponentCreationDialog pieceCreationDialog;
+    private JSplitPane buttonPane;
 
     private JFileChooser fileChooser = new JFileChooser();
 
@@ -26,13 +29,24 @@ public class Frame extends JFrame {
 
         toolbar = new Toolbar();
         centerPane = new CenterPane(game);
-        btn = new JButton("Add card");
-        cardCreationDialog = new CardCreationDialog();
+        cardBtn = new JButton("Add card");
+        pieceBtn = new JButton("Add piece");
 
+        buttonPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        buttonPane.setDividerSize(0);
+
+        cardCreationDialog = new ComponentCreationDialog();
+        pieceCreationDialog = new ComponentCreationDialog();
+
+        buttonPane.add(cardBtn);
+        buttonPane.add(pieceBtn);
+        buttonPane.setResizeWeight(0.5);
 
         add(toolbar, BorderLayout.NORTH);
         add(centerPane, BorderLayout.CENTER);
-        add(btn, BorderLayout.SOUTH);
+        add(buttonPane, BorderLayout.SOUTH);
+
+
         pack();
 
         toolbar.setStringListener(text -> {
@@ -59,11 +73,11 @@ public class Frame extends JFrame {
             }
         });
 
-        btn.addActionListener(e -> {
+        cardBtn.addActionListener(e -> {
             int n = cardCreationDialog.display();
             if(n == JOptionPane.YES_OPTION){
-                String cardName = cardCreationDialog.getCardName();
-                String cardText = cardCreationDialog.getCardText();
+                String cardName = cardCreationDialog.getComponentName();
+                String cardText = cardCreationDialog.getComponentText();
                 String fileSelected = cardCreationDialog.getFileSelect();
 
                 Card card = game.addCard(
@@ -71,6 +85,21 @@ public class Frame extends JFrame {
                 centerPane.updateComponentTree(card);
 
                 cardCreationDialog.clear();
+            }
+        });
+
+        pieceBtn.addActionListener(e -> {
+            int n = pieceCreationDialog.display();
+            if(n == JOptionPane.YES_OPTION){
+                String pieceName = pieceCreationDialog.getComponentName();
+                String pieceText = pieceCreationDialog.getComponentText();
+                String fileSelected = pieceCreationDialog.getFileSelect();
+
+                Piece piece = game.addPiece(
+                        pieceName,pieceText,fileSelected);
+                centerPane.updateComponentTree(piece);
+
+                pieceCreationDialog.clear();
             }
         });
 

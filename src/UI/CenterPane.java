@@ -2,6 +2,8 @@ package UI;
 
 import Models.Card;
 import Models.Game;
+import Models.Piece;
+import Models.Component;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -85,14 +87,24 @@ public class CenterPane extends JPanel {
 
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
             if(selectedNode != null){
-                String cardName = selectedNode.toString();
-                Card card = null;
+                String name = selectedNode.toString();
+                Component component = null;
+//                if(selectedNode.isLeaf()){
+//                    card = game.getCard(cardName);
+//                }
+
                 if(selectedNode.isLeaf()){
-                    card = game.getCard(cardName);
+                    if(selectedNode.getParent().equals(componentTree.pieces)){
+                        component = game.getPiece(name);
+                    }
+                    else{
+                        component = game.getCard(name);
+                    }
                 }
-                if(card != null){
-                    displayImage(card.getImage());
-                    setCardText(card.getText());
+
+                if(component != null){
+                    displayImage(component.getImage());
+                    setCardText(component.getText());
                 }
             }
         });
@@ -182,6 +194,10 @@ public class CenterPane extends JPanel {
         componentTree.updateTree(card);
     }
 
+    void updateComponentTree(Piece piece){
+        componentTree.updateTree(piece);
+    }
+
     public void collapseComponentTree(){componentTree.collapseTree();}
 
     void refreshComponentTree(Game game){
@@ -191,14 +207,19 @@ public class CenterPane extends JPanel {
 
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
             if(selectedNode != null){
-                String cardName = selectedNode.toString();
-                Card card = null;
+                String name = selectedNode.toString();
+                Component component = null;
                 if(selectedNode.isLeaf()){
-                    card = game.getCard(cardName);
+                    if(selectedNode.getParent().equals(componentTree.pieces)){
+                        component = game.getPiece(name);
+                    }
+                    else{
+                        component = game.getCard(name);
+                    }
                 }
-                if(card != null){
-                    displayImage(card.getImage());
-                    setCardText(card.getText());
+                if(component != null){
+                    displayImage(component.getImage());
+                    setCardText(component.getText());
                 }
             }
         });

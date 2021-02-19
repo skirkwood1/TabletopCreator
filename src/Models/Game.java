@@ -7,11 +7,14 @@ public class Game implements Serializable {
 
     private ArrayList<Card> deck;
     private ArrayList<Dice> diceCollection;
+    private ArrayList<Piece> pieces;
+
     private Board board;
 
     public Game(){
         this.deck = new ArrayList<>();
         this.diceCollection = new ArrayList<>();
+        this.pieces = new ArrayList<>();
         this.board = new Board(10,10);
     }
 
@@ -21,14 +24,33 @@ public class Game implements Serializable {
         return card;
     }
 
+    public Piece addPiece(String name, String text, String filename){
+        Piece piece = new Piece(name,text,filename);
+        pieces.add(piece);
+        return piece;
+    }
+
     public ArrayList<Card> getDeck(){
         return deck;
+    }
+
+    public ArrayList<Piece> getPieces(){
+        return pieces;
     }
 
     public Card getCard(String name){
         for(Card card: deck){
             if(card.getName().equals(name)){
                 return card;
+            }
+        }
+        return null;
+    }
+
+    public Piece getPiece(String name){
+        for(Piece piece: pieces){
+            if(piece.getName().equals(name)){
+                return piece;
             }
         }
         return null;

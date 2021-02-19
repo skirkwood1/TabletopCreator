@@ -3,24 +3,24 @@ package UI;
 import javax.swing.*;
 import java.awt.*;
 
-public class CardCreationDialog extends JOptionPane {
-    private JTextField cardName;
-    private JTextArea cardText;
-//    private JButton confirmButton;
+public class ComponentCreationDialog extends JOptionPane {
+    private JTextField name;
+    private JTextArea text;
+    //    private JButton confirmButton;
     private JPanel layout;
     private JFileChooser imageChooser;
 
-    public CardCreationDialog(){
-        this.cardName = new JTextField();
-        this.cardText = new JTextArea();
+    public ComponentCreationDialog(){
+        this.name = new JTextField();
+        this.text = new JTextArea();
         //this.confirmButton = new JButton();
         this.layout = new JPanel(new BorderLayout());
         this.imageChooser = new JFileChooser();
 
-        cardText.setPreferredSize(new Dimension(300,300));
+        text.setPreferredSize(new Dimension(300,300));
 
-        layout.add(cardName,BorderLayout.NORTH);
-        layout.add(cardText,BorderLayout.CENTER);
+        layout.add(name,BorderLayout.NORTH);
+        layout.add(text,BorderLayout.CENTER);
         layout.add(imageChooser,BorderLayout.SOUTH);
         //layout.add(confirmButton,BorderLayout.SOUTH);
     }
@@ -32,12 +32,12 @@ public class CardCreationDialog extends JOptionPane {
         return n;
     }
 
-    String getCardText(){
-        return cardText.getText();
+    String getComponentText(){
+        return text.getText();
     }
 
-    String getCardName(){
-        return cardName.getText();
+    String getComponentName(){
+        return name.getText();
     }
 
     String getFileSelect(){
@@ -50,8 +50,8 @@ public class CardCreationDialog extends JOptionPane {
     }
 
     void clear(){
-        cardName.setText(null);
-        cardText.setText(null);
+        name.setText(null);
+        text.setText(null);
         imageChooser.setSelectedFile(null);
     }
 }
