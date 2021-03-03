@@ -7,12 +7,20 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 public class Toolbar extends JPanel implements ActionListener {
+    private JPanel buttons;
     private JButton save;
     private JButton open;
 
+    private JMenuBar menuBar;
+    private JMenu file,edit;
+    private JMenuItem copy,cut,paste;
+
     private StringListener stringListener;
 
+
     public Toolbar(){
+        setLayout(new BorderLayout());
+
         ImageIcon saveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons8-save-100.png"));
         Image image = saveIcon.getImage();
         Image newImg = image.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
@@ -34,10 +42,31 @@ public class Toolbar extends JPanel implements ActionListener {
         save.addActionListener(this);
         open.addActionListener(this);
 
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        buttons = new JPanel();
 
-        add(save);
-        add(open);
+        buttons.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        buttons.add(save);
+        buttons.add(open);
+
+        menuBar = new JMenuBar();
+        file = new JMenu("File");
+        edit = new JMenu("Edit");
+        cut = new JMenuItem("Cut");
+        copy = new JMenuItem("Copy");
+        paste = new JMenuItem("Paste");
+
+        file.add(cut);
+        file.add(copy);
+        edit.add(paste);
+
+        menuBar.add(file);
+        menuBar.add(edit);
+
+        add(menuBar,BorderLayout.NORTH);
+        add(buttons,BorderLayout.SOUTH);
+
+
 
     }
 

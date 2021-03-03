@@ -25,6 +25,9 @@ public class Frame extends JFrame {
     public Frame() {
         super("Tabletop Creator v0.01");
 
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        //setLayout(new GridBagLayout());
         setLayout(new BorderLayout());
 
         toolbar = new Toolbar();
@@ -42,10 +45,12 @@ public class Frame extends JFrame {
         buttonPane.add(pieceBtn);
         buttonPane.setResizeWeight(0.5);
 
-        add(toolbar, BorderLayout.NORTH);
-        add(centerPane, BorderLayout.CENTER);
-        add(buttonPane, BorderLayout.SOUTH);
 
+        add(toolbar, BorderLayout.NORTH);
+
+        add(centerPane, BorderLayout.CENTER);
+
+        add(buttonPane, BorderLayout.SOUTH);
 
         pack();
 

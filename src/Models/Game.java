@@ -66,7 +66,7 @@ public class Game implements Serializable {
         for(Card card: deck){
             finalString += card.getName() + "   ";
             finalString += card.getText() + "   ";
-            finalString += card.getImage().getAbsolutePath();
+            //finalString += card.getImage().getAbsolutePath();
             finalString += "\r\n";
         }
         for(Dice die: diceCollection){

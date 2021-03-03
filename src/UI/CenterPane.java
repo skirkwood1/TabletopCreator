@@ -11,11 +11,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+
+
 
 public class CenterPane extends JPanel {
     private ComponentTree componentTree;
@@ -27,6 +31,8 @@ public class CenterPane extends JPanel {
     private TextPanel cardText;
     private JLabel componentImage;
     private JScrollPane imagePane;
+
+    private double zoom = 1.0;
 
     Game game;
 
@@ -77,7 +83,8 @@ public class CenterPane extends JPanel {
             }
         });
 
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        //setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new BorderLayout());
 
         overallPane.setContinuousLayout(true);
 
@@ -103,13 +110,15 @@ public class CenterPane extends JPanel {
                 }
 
                 if(component != null){
-                    displayImage(component.getImage());
+                    displayImage(component.getPicture());
                     setCardText(component.getText());
                 }
             }
         });
 
         componentImage.setAutoscrolls(true);
+
+
 
         MouseAdapter ma = new MouseAdapter() {
 
@@ -145,6 +154,18 @@ public class CenterPane extends JPanel {
 
         componentImage.addMouseListener(ma);
         componentImage.addMouseMotionListener(ma);
+        componentImage.addMouseWheelListener(new MouseWheelListener() {
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                int notches = e.getWheelRotation();
+                double temp = zoom - (notches * 0.2);
+                // minimum zoom factor is 1.0
+                temp = Math.max(temp, 1.0);
+                if (temp != zoom) {
+                    zoom = temp;
+                    //resizeImage();
+                }
+            }
+        });
 
         imagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         imagePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -165,29 +186,33 @@ public class CenterPane extends JPanel {
     void displayImage(File imageFile){
         try {
             Image image = ImageIO.read(imageFile);
+            displayImage(image);
 
-            int baseHeight = ((BufferedImage) image).getHeight();
-            int baseWidth = ((BufferedImage) image).getWidth();
-
-            int imageSize;
-            float imageScale;
-            if(imagePane.getHeight()>imagePane.getWidth()){
-                imageSize = imagePane.getWidth();
-                imageScale = (float)imageSize/baseWidth;
-            }
-            else{
-                imageSize = imagePane.getHeight();
-                imageScale = (float)imageSize/baseHeight;
-            }
-
-            image = image.getScaledInstance((int)(baseHeight*imageScale),
-                    (int)(((BufferedImage) image).getHeight()*imageScale),
-                    Image.SCALE_SMOOTH);
-            ImageIcon icon = new ImageIcon(image);
-            componentImage.setIcon(icon);
         }catch (IOException ex){
             ex.printStackTrace();
         }
+    }
+
+    void displayImage(Image image){
+//        int baseHeight = ((BufferedImage)image).getHeight();
+//        int baseWidth = ((BufferedImage)image).getWidth();
+
+//        int imageSize;
+//        float imageScale;
+//        if(imagePane.getHeight()>imagePane.getWidth()){
+//            imageSize = imagePane.getWidth();
+//            imageScale = (float)imageSize/baseWidth;
+//        }
+//        else{
+//            imageSize = imagePane.getHeight();
+//            imageScale = (float)imageSize/baseHeight;
+//        }
+//
+//        image = image.getScaledInstance((int)(baseHeight*imageScale),
+//                (int)(((BufferedImage)image).getHeight()*imageScale),
+//                Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(image);
+        componentImage.setIcon(icon);
     }
 
     void updateComponentTree(Card card){
@@ -218,7 +243,7 @@ public class CenterPane extends JPanel {
                     }
                 }
                 if(component != null){
-                    displayImage(component.getImage());
+                    displayImage(component.getPicture());
                     setCardText(component.getText());
                 }
             }
