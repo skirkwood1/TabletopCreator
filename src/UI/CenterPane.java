@@ -9,10 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -28,6 +25,7 @@ public class CenterPane extends JPanel {
     private JSplitPane textAndCardPane;
     private JSplitPane cardPane;
     BoardPane boardPane;
+    JScrollPane boardScreen;
     private TextPanel cardText;
     private JLabel componentImage;
     private JScrollPane imagePane;
@@ -43,23 +41,34 @@ public class CenterPane extends JPanel {
         componentImage = new JLabel();
         //textPanel = new TextPanel();
         boardPane = new BoardPane(game.getBoard());
+        boardScreen = new JScrollPane();
         componentTree = new ComponentTree(game);
         imagePane = new JScrollPane(componentImage);
 
-        boardPane.setPreferredSize(new Dimension(800, 600));
+        cardText.setPreferredSize(new Dimension(200,100));
+        cardText.setMinimumSize(new Dimension(200,100));
+        cardText.setMaximumSize(new Dimension(300,500));
 
-        cardText.setPreferredSize(new Dimension(200,300));
-        cardText.setMinimumSize(new Dimension(200,50));
-
-        imagePane.setPreferredSize(new Dimension(200, 100));
+        imagePane.setPreferredSize(new Dimension(200, 300));
         imagePane.setMinimumSize(new Dimension(200,100));
+        imagePane.setMaximumSize(new Dimension(300,500));
         componentImage.setHorizontalAlignment(SwingConstants.CENTER);
         componentImage.setVerticalAlignment(SwingConstants.CENTER);
 
         cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, imagePane);
+        cardPane.setMaximumSize(new Dimension (300,600));
 
-        textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardPane, cardPane);
-        textAndCardPane.setResizeWeight(1);
+        Dimension boardDimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
+        boardPane.setPreferredSize(boardDimension);
+        boardPane.setMinimumSize(new Dimension(400,300));
+
+        //boardScreen.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        //boardScreen.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        boardScreen.setViewportView(boardPane);
+
+        textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardScreen, cardPane);
+        textAndCardPane.setResizeWeight(0.8);
+
 
         componentTree.setMinimumSize(new Dimension(50,0));
         componentTree.setMaximumSize(new Dimension(250,0));
@@ -122,11 +131,11 @@ public class CenterPane extends JPanel {
 
         MouseAdapter ma = new MouseAdapter() {
 
-            private Point origin;
+            private Point holdPoint;
 
             @Override
             public void mousePressed(MouseEvent e) {
-                origin = new Point(e.getPoint());
+                holdPoint = new Point(e.getPoint());
             }
 
             @Override
@@ -135,19 +144,116 @@ public class CenterPane extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (origin != null) {
-                    JViewport viewPort = (JViewport) SwingUtilities.getAncestorOfClass(JViewport.class, componentImage);
-                    if (viewPort != null) {
-                        int deltaX = origin.x - e.getX();
-                        int deltaY = origin.y - e.getY();
+//                if (origin != null) {
+//                    JViewport viewPort = (JViewport) SwingUtilities.getAncestorOfClass(JViewport.class, componentImage);
+//                    if (viewPort != null) {
+//                        int deltaX = origin.x - e.getX();
+//                        int deltaY = origin.y - e.getY();
+//
+//                        Rectangle view = viewPort.getViewRect();
+//                        view.x += deltaX;
+//                        view.y += deltaY;
+//
+//                        componentImage.scrollRectToVisible(view);
+//                    }
+//                }
+                imagePane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 
-                        Rectangle view = viewPort.getViewRect();
-                        view.x += deltaX;
-                        view.y += deltaY;
+                Point dragEventPoint = e.getPoint();
+                JViewport viewport = (JViewport) componentImage.getParent();
+                Point viewPos = viewport.getViewPosition();
+                int maxViewPosX = componentImage.getWidth() - viewport.getWidth();
+                int maxViewPosY = componentImage.getHeight() - viewport.getHeight();
 
-                        componentImage.scrollRectToVisible(view);
+                if(componentImage.getWidth() > viewport.getWidth()) {
+                    viewPos.x -= dragEventPoint.x - holdPoint.x;
+
+                    if(viewPos.x < 0) {
+                        viewPos.x = 0;
+                        holdPoint.x = dragEventPoint.x;
+                    }
+
+                    if(viewPos.x > maxViewPosX) {
+                        viewPos.x = maxViewPosX;
+                        holdPoint.x = dragEventPoint.x;
                     }
                 }
+
+                if(componentImage.getHeight() > viewport.getHeight()) {
+                    viewPos.y -= dragEventPoint.y - holdPoint.y;
+
+                    if(viewPos.y < 0) {
+                        viewPos.y = 0;
+                        holdPoint.y = dragEventPoint.y;
+                    }
+
+                    if(viewPos.y > maxViewPosY) {
+                        viewPos.y = maxViewPosY;
+                        holdPoint.y = dragEventPoint.y;
+                    }
+                }
+
+                viewport.setViewPosition(viewPos);
+            }
+
+        };
+
+        MouseAdapter mb = new MouseAdapter() {
+
+            private Point origin;
+            private Point holdPoint;
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+                origin = new Point(e.getPoint());
+                holdPoint = e.getPoint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                boardScreen.setCursor(null);
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+
+                Point dragEventPoint = e.getPoint();
+                JViewport viewport = (JViewport) boardPane.getParent();
+                Point viewPos = viewport.getViewPosition();
+                int maxViewPosX = boardPane.getWidth() - viewport.getWidth();
+                int maxViewPosY = boardPane.getHeight() - viewport.getHeight();
+
+                if(boardPane.getWidth() > viewport.getWidth()) {
+                    viewPos.x -= dragEventPoint.x - holdPoint.x;
+
+                    if(viewPos.x < 0) {
+                        viewPos.x = 0;
+                        holdPoint.x = dragEventPoint.x;
+                    }
+
+                    if(viewPos.x > maxViewPosX) {
+                        viewPos.x = maxViewPosX;
+                        holdPoint.x = dragEventPoint.x;
+                    }
+                }
+
+                if(boardPane.getHeight() > viewport.getHeight()) {
+                    viewPos.y -= dragEventPoint.y - holdPoint.y;
+
+                    if(viewPos.y < 0) {
+                        viewPos.y = 0;
+                        holdPoint.y = dragEventPoint.y;
+                    }
+
+                    if(viewPos.y > maxViewPosY) {
+                        viewPos.y = maxViewPosY;
+                        holdPoint.y = dragEventPoint.y;
+                    }
+                }
+
+                viewport.setViewPosition(viewPos);
             }
 
         };
@@ -166,6 +272,9 @@ public class CenterPane extends JPanel {
                 }
             }
         });
+
+        boardPane.addMouseListener(mb);
+        boardPane.addMouseMotionListener(mb);
 
         imagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         imagePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -251,13 +360,14 @@ public class CenterPane extends JPanel {
     }
 
     void refreshBoard(){
-        textAndCardPane.remove(boardPane);
+        textAndCardPane.remove(boardScreen);
         this.boardPane = new BoardPane(game.getBoard());
-        textAndCardPane.add(boardPane);
+        this.boardScreen = new JScrollPane(boardPane);
+        textAndCardPane.add(boardScreen);
 
-        boardPane.removeAll();
-        boardPane.revalidate();
-        boardPane.repaint();
+        boardScreen.removeAll();
+        boardScreen.revalidate();
+        boardScreen.repaint();
     }
 
 }

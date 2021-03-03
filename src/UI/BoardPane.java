@@ -12,9 +12,12 @@ import javax.swing.*;
 public class BoardPane extends JPanel {
 
     private Board board;
+    private Dimension dimension;
 
     public BoardPane(Board board) {
         this.board = board;
+        this.dimension = new Dimension(board.getSize()[0]*40+40,board.getSize()[1]*40+40);
+        setPreferredSize(dimension);
     }
 
     public void paintComponent(Graphics g) {
@@ -30,11 +33,14 @@ public class BoardPane extends JPanel {
                 Space space = board.getSpace(i, j);
                 Color color = space.getColor();
                 g.setColor(color);
-                g.fillRect(i * 40, j * 40, 40, 40);
+                g.fillRect(i * 40 + 20, j * 40 + 20, 40, 40);
             }
         }
 
         addMouseListener(new MouseAdapter() {
+            private Point origin;
+            private Point mousePt;
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 Graphics g = getGraphics();
@@ -42,16 +48,16 @@ public class BoardPane extends JPanel {
                 Color color = Color.red;
                 g.setColor(color);
 
-                // get X and y position
+                // get X and y position on board
                 int x, y;
-                x = (e.getX()/40);
-                y = (e.getY()/40);
+                x = ((e.getX()-20)/40);
+                y = ((e.getY()-20)/40);
 
                 // draw a Oval at the point
                 // where mouse is moved
                 int[] size = board.getSize();
                 if(x < size[0] && y < size[1]){
-                    g.fillRect(x*40, y*40, 40, 40);
+                    g.fillRect(x*40+20, y*40+20, 40, 40);
                     board.setSquare(x,y,color);
                 }
 
@@ -59,6 +65,7 @@ public class BoardPane extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                //origin = new Point(e.getPoint());
                 super.mousePressed(e);
             }
 
@@ -84,8 +91,11 @@ public class BoardPane extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent e) {
+//
+
                 super.mouseDragged(e);
             }
+
 
             @Override
             public void mouseMoved(MouseEvent e) {
