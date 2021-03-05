@@ -19,6 +19,8 @@ public class BoardPane extends JPanel {
         setPreferredSize(dimension);
         setSize(dimension);
 
+        setLayout(new GridBagLayout());
+
     }
 
     public void paintComponent(Graphics g) {
@@ -41,8 +43,9 @@ public class BoardPane extends JPanel {
                 Color color = space.getColor();
                 g2.setColor(color);
                 g2.fillRect(i*40+20,j*40+20,40,40);
-                //g2.fillRect((int)((i * 40 + 20)*zoom), (int)((j * 40 + 20)*zoom), (int)(40*zoom), (int)(40*zoom));
-                //g2.scale(zoom,zoom);
+
+                g2.setColor(Color.BLACK);
+                g2.drawRect(i*40+20,j*40+20,40,40);
             }
         }
 
@@ -71,8 +74,10 @@ public class BoardPane extends JPanel {
                 int[] size = board.getSize();
                 if(x < size[0] && y < size[1]){
                     //g2.fillRect((int)((x*40+20)*zoom), (int)((y*40+20)*zoom), (int)(40*zoom), (int)(40*zoom));
-                    g2.fillRect((int)x*40+20,(int)y*40+20,40,40);
-                    board.setSquare((int)x,(int)y,color);
+                    g2.fillRect(x*40+20,y*40+20,40,40);
+                    g2.setColor(Color.BLACK);
+                    g2.drawRect(x*40+20,y*40+20,40,40);
+                    board.setSquare(x,y,color);
                 }
 
             }

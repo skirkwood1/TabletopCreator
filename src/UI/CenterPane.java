@@ -58,12 +58,14 @@ public class CenterPane extends JPanel {
         cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, imagePane);
         cardPane.setMaximumSize(new Dimension (300,600));
 
-        Dimension boardDimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
-        boardPane.setPreferredSize(boardDimension);
+//        Dimension boardDimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
+//        boardPane.setPreferredSize(boardDimension);
+//        boardPane.setSize(boardDimension);
         boardPane.setMinimumSize(new Dimension(400,300));
 
         //boardScreen.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         //boardScreen.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         boardScreen.setViewportView(boardPane);
 
         textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardScreen, cardPane);
@@ -287,12 +289,15 @@ public class CenterPane extends JPanel {
                         new Dimension((int)(boardScreen.getSize().getWidth()*zoom),
                                 (int)(boardScreen.getSize().getHeight()*zoom)));
 
+                boardPane.setSize(boardPane.getPreferredSize());
+
                 boardScreen.setViewportView(boardPane);
 
                 boardPane.removeAll();
                 boardPane.revalidate();
                 boardPane.repaint();
 
+                boardScreen.revalidate();
                 boardScreen.repaint();
 
             }
@@ -396,6 +401,11 @@ public class CenterPane extends JPanel {
         boardScreen.removeAll();
         boardScreen.revalidate();
         boardScreen.repaint();
+    }
+
+    void updateBoard(){
+        this.boardScreen.revalidate();
+        this.boardScreen.repaint();
     }
 
 }

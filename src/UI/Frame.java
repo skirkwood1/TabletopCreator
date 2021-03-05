@@ -76,6 +76,11 @@ public class Frame extends JFrame {
                     centerPane.refreshBoard();
                 }
             }
+            else if(text.equals("ChangeSize\n\r")){
+                game.getBoard().setSize(5,8);
+                System.out.println(game.getBoard());
+                centerPane.updateBoard();
+            }
         });
 
         cardBtn.addActionListener(e -> {

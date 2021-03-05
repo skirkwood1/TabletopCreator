@@ -2,14 +2,15 @@ package Models;
 
 import java.awt.*;
 import java.io.Serializable;
-import java.util.Random;
+//import java.util.Random;
 
 public class Board implements Serializable {
 
     private int height;
     private int width;
+    private final Color defaultColor = Color.WHITE;
     private Space[][] spaces;
-    private Random random = new Random();
+    //private Random random = new Random();
 
     public Board(){
         this.width = 4;
@@ -30,7 +31,8 @@ public class Board implements Serializable {
 
         for (int i = 0; i < width; i++){
             for (int j = 0; j < height; j++){
-                Color color = new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255));
+                Color color = Color.WHITE;
+                //Color color = new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255));
                 spaces[i][j] = new Space(color);
             }
         }
@@ -61,6 +63,25 @@ public class Board implements Serializable {
 
     public void setSquare(int x, int y, Color color){
         spaces[x][y] = new Space(color);
+    }
+
+    public void setSize(int x, int y){
+        Space[][] newSpaces = new Space[x][y];
+
+        for(int i = 0; i < x; i++){
+            for(int j = 0; j < y; j++){
+                if(i < width && j < height){
+                    newSpaces[i][j] = spaces[i][j];
+                }
+                else{
+                    newSpaces[i][j] = new Space(defaultColor);
+                }
+            }
+        }
+
+        spaces = newSpaces;
+        this.width = x;
+        this.height = y;
     }
 
     public String toString(){

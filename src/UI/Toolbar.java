@@ -13,7 +13,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
     private JMenuBar menuBar;
     private JMenu file,edit;
-    private JMenuItem copy,cut,paste;
+    private JMenuItem copy,cut,paste,changeSize;
 
     private StringListener stringListener;
 
@@ -52,13 +52,18 @@ public class Toolbar extends JPanel implements ActionListener {
         menuBar = new JMenuBar();
         file = new JMenu("File");
         edit = new JMenu("Edit");
+
         cut = new JMenuItem("Cut");
         copy = new JMenuItem("Copy");
         paste = new JMenuItem("Paste");
+        changeSize = new JMenuItem("Change Size");
+
+        changeSize.addActionListener(this);
 
         file.add(cut);
         file.add(copy);
         edit.add(paste);
+        edit.add(changeSize);
 
         menuBar.add(file);
         menuBar.add(edit);
@@ -75,14 +80,16 @@ public class Toolbar extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        JButton clicked = (JButton)e.getSource();
-
-        if (clicked == save){
+        if (e.getSource() == save){
             stringListener.textEmitted("Save\n\r");
 
         }
-        else if (clicked == open){
+        if (e.getSource() == open){
             stringListener.textEmitted("Open\n\r");
+        }
+        if (e.getSource() == changeSize){
+            stringListener.textEmitted("ChangeSize\n\r");
+            System.out.println("Change Size");
         }
 
     }
