@@ -273,8 +273,36 @@ public class CenterPane extends JPanel {
             }
         });
 
+        MouseWheelListener mwl = new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+
+                zoom -= e.getWheelRotation() * 0.1;
+                if(zoom < 0.1){
+                    zoom = 0.1;
+                }
+                boardPane.setZoom(zoom);
+
+                boardPane.setPreferredSize(
+                        new Dimension((int)(boardScreen.getSize().getWidth()*zoom),
+                                (int)(boardScreen.getSize().getHeight()*zoom)));
+
+                boardScreen.setViewportView(boardPane);
+
+                boardPane.removeAll();
+                boardPane.revalidate();
+                boardPane.repaint();
+
+                boardScreen.repaint();
+
+            }
+        };
+
+
+
         boardPane.addMouseListener(mb);
         boardPane.addMouseMotionListener(mb);
+        boardPane.addMouseWheelListener(mwl);
 
         imagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         imagePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
