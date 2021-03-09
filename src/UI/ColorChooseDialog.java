@@ -13,8 +13,13 @@ public class ColorChooseDialog extends JOptionPane {
         this.colorChooser = new JColorChooser(Color.WHITE);
         this.layout = new JPanel(new BorderLayout());
 
+        int length = 20;
+        UIManager.put("ColorChooser.swatchesRecentSwatchSize", new Dimension(length, length));
+        UIManager.put("ColorChooser.swatchesSwatchSize", new Dimension(length, length));
+
         AbstractColorChooserPanel[] oldPanels = colorChooser.getChooserPanels();
-        colorChooser.setChooserPanels(new AbstractColorChooserPanel[] { oldPanels[1] });
+        colorChooser.setChooserPanels(new AbstractColorChooserPanel[] { oldPanels[0], oldPanels[1] });
+
 
 
         JLabel preview = new JLabel();
