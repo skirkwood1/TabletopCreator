@@ -482,18 +482,9 @@ public class CenterPane extends JPanel {
         });
     }
 
-    void refreshBoard(){
-        textAndCardPane.remove(boardScreen);
-        this.boardPane = new BoardPane(game.getBoard());
-        this.boardScreen = new JScrollPane(boardPane);
-        textAndCardPane.add(boardScreen);
-
-        boardScreen.removeAll();
-        boardScreen.revalidate();
-        boardScreen.repaint();
-    }
-
     void updateBoard(){
+        boardScreen.removeAll();
+
         textAndCardPane.remove(boardScreen);
         this.boardPane = new BoardPane(game.getBoard());
         this.boardScreen = new JScrollPane(boardPane);
@@ -506,6 +497,10 @@ public class CenterPane extends JPanel {
 
         this.boardScreen.revalidate();
         this.boardScreen.repaint();
+    }
+
+    void updateColor(Color c){
+        boardPane.chosenColor = c;
     }
 
 }

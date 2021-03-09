@@ -21,6 +21,7 @@ public class Frame extends JFrame {
     private ResizeBoardPane resizePane;
 
     private JFileChooser fileChooser = new JFileChooser();
+    private ColorChooseDialog colorDialog = new ColorChooseDialog();
 
     Game game = new Game();
 
@@ -77,7 +78,7 @@ public class Frame extends JFrame {
                     System.out.println("Open file:" + fileToOpen.getAbsolutePath());
                     game = openGame(fileToOpen);
                     centerPane.refreshComponentTree(game);
-                    centerPane.refreshBoard();
+                    centerPane.updateBoard();
                 }
             }
             else if(text.equals("ChangeSize\n\r")){
@@ -88,6 +89,12 @@ public class Frame extends JFrame {
                 centerPane.updateBoard();
 
 
+            }
+            else if(text.equals("ColorChooser\n\r")){
+                colorDialog.display();
+                Color color = colorDialog.getColor();
+                centerPane.updateColor(color);
+                toolbar.updateColorLabel(color);
             }
         });
 

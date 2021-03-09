@@ -13,6 +13,8 @@ public class BoardPane extends JPanel {
 
     public double zoom = 1.0;
 
+    public Color chosenColor = Color.RED;
+
     public BoardPane(Board board) {
         this.board = board;
         this.dimension = new Dimension(board.getSize()[0]*40+40,board.getSize()[1]*40+40);
@@ -60,7 +62,7 @@ public class BoardPane extends JPanel {
                 Graphics g = getGraphics();
                 Graphics2D g2 = (Graphics2D)g;
 
-                Color color = Color.red;
+                Color color = chosenColor;
                 g2.setColor(color);
                 g2.scale(zoom,zoom);
 
