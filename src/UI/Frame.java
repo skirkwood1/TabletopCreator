@@ -18,6 +18,8 @@ public class Frame extends JFrame {
     private ComponentCreationDialog pieceCreationDialog;
     private JSplitPane buttonPane;
 
+    private ResizeBoardPane resizePane;
+
     private JFileChooser fileChooser = new JFileChooser();
 
     Game game = new Game();
@@ -44,6 +46,8 @@ public class Frame extends JFrame {
         buttonPane.add(cardBtn);
         buttonPane.add(pieceBtn);
         buttonPane.setResizeWeight(0.5);
+
+        this.resizePane = new ResizeBoardPane(game);
 
 
         add(toolbar, BorderLayout.NORTH);
@@ -77,9 +81,13 @@ public class Frame extends JFrame {
                 }
             }
             else if(text.equals("ChangeSize\n\r")){
-                game.getBoard().setSize(5,8);
+                resizePane.display();
+
+                game.getBoard().setSize(resizePane.getDesiredWidth(),resizePane.getDesiredHeight());
                 System.out.println(game.getBoard());
                 centerPane.updateBoard();
+
+
             }
         });
 

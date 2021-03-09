@@ -138,5 +138,16 @@ public class BoardPane extends JPanel {
         this.zoom = scale;
     }
 
+    public void updateSize(){
+        //this.dimension = new Dimension(board.getSize()[0]*40+40,board.getSize()[1]*40+40);
+
+
+        double x = (this.board.getSize()[0] * 40 + 40) * zoom;
+        double y = (this.board.getSize()[1] * 40 + 40) * zoom;
+
+        setPreferredSize(new Dimension((int)x,(int)y));
+        setSize(new Dimension((int)x,(int)y));
+    }
+
 
 }

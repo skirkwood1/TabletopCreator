@@ -32,6 +32,96 @@ public class CenterPane extends JPanel {
 
     private double zoom = 1.0;
 
+    MouseAdapter mb = new MouseAdapter() {
+
+        private Point origin;
+        private Point holdPoint;
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+            origin = new Point(e.getPoint());
+            holdPoint = e.getPoint();
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            boardScreen.setCursor(null);
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+
+            Point dragEventPoint = e.getPoint();
+            JViewport viewport = (JViewport) boardPane.getParent();
+            Point viewPos = viewport.getViewPosition();
+            int maxViewPosX = boardPane.getWidth() - viewport.getWidth();
+            int maxViewPosY = boardPane.getHeight() - viewport.getHeight();
+
+            if(boardPane.getWidth() > viewport.getWidth()) {
+                viewPos.x -= dragEventPoint.x - holdPoint.x;
+
+                if(viewPos.x < 0) {
+                    viewPos.x = 0;
+                    holdPoint.x = dragEventPoint.x;
+                }
+
+                if(viewPos.x > maxViewPosX) {
+                    viewPos.x = maxViewPosX;
+                    holdPoint.x = dragEventPoint.x;
+                }
+            }
+
+            if(boardPane.getHeight() > viewport.getHeight()) {
+                viewPos.y -= dragEventPoint.y - holdPoint.y;
+
+                if(viewPos.y < 0) {
+                    viewPos.y = 0;
+                    holdPoint.y = dragEventPoint.y;
+                }
+
+                if(viewPos.y > maxViewPosY) {
+                    viewPos.y = maxViewPosY;
+                    holdPoint.y = dragEventPoint.y;
+                }
+            }
+
+            viewport.setViewPosition(viewPos);
+        }
+
+    };
+
+    MouseWheelListener mwl = new MouseWheelListener() {
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
+
+            zoom -= e.getWheelRotation() * 0.1;
+            if(zoom < 0.1){
+                zoom = 0.1;
+            }
+            boardPane.setZoom(zoom);
+
+//            boardPane.setPreferredSize(
+//                    new Dimension((int)(boardScreen.getSize().getWidth()*zoom),
+//                            (int)(boardScreen.getSize().getHeight()*zoom)));
+//
+//            boardPane.setSize(boardPane.getPreferredSize());
+
+            boardPane.updateSize();
+
+            boardScreen.setViewportView(boardPane);
+
+            boardPane.removeAll();
+            boardPane.revalidate();
+            boardPane.repaint();
+
+            boardScreen.revalidate();
+            boardScreen.repaint();
+
+        }
+    };
+
     Game game;
 
     public CenterPane(Game game) {
@@ -200,65 +290,65 @@ public class CenterPane extends JPanel {
 
         };
 
-        MouseAdapter mb = new MouseAdapter() {
-
-            private Point origin;
-            private Point holdPoint;
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-                origin = new Point(e.getPoint());
-                holdPoint = e.getPoint();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                boardScreen.setCursor(null);
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-
-                Point dragEventPoint = e.getPoint();
-                JViewport viewport = (JViewport) boardPane.getParent();
-                Point viewPos = viewport.getViewPosition();
-                int maxViewPosX = boardPane.getWidth() - viewport.getWidth();
-                int maxViewPosY = boardPane.getHeight() - viewport.getHeight();
-
-                if(boardPane.getWidth() > viewport.getWidth()) {
-                    viewPos.x -= dragEventPoint.x - holdPoint.x;
-
-                    if(viewPos.x < 0) {
-                        viewPos.x = 0;
-                        holdPoint.x = dragEventPoint.x;
-                    }
-
-                    if(viewPos.x > maxViewPosX) {
-                        viewPos.x = maxViewPosX;
-                        holdPoint.x = dragEventPoint.x;
-                    }
-                }
-
-                if(boardPane.getHeight() > viewport.getHeight()) {
-                    viewPos.y -= dragEventPoint.y - holdPoint.y;
-
-                    if(viewPos.y < 0) {
-                        viewPos.y = 0;
-                        holdPoint.y = dragEventPoint.y;
-                    }
-
-                    if(viewPos.y > maxViewPosY) {
-                        viewPos.y = maxViewPosY;
-                        holdPoint.y = dragEventPoint.y;
-                    }
-                }
-
-                viewport.setViewPosition(viewPos);
-            }
-
-        };
+//        MouseAdapter mb = new MouseAdapter() {
+//
+//            private Point origin;
+//            private Point holdPoint;
+//
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//
+//                origin = new Point(e.getPoint());
+//                holdPoint = e.getPoint();
+//            }
+//
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//                boardScreen.setCursor(null);
+//            }
+//
+//            @Override
+//            public void mouseDragged(MouseEvent e) {
+//                boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+//
+//                Point dragEventPoint = e.getPoint();
+//                JViewport viewport = (JViewport) boardPane.getParent();
+//                Point viewPos = viewport.getViewPosition();
+//                int maxViewPosX = boardPane.getWidth() - viewport.getWidth();
+//                int maxViewPosY = boardPane.getHeight() - viewport.getHeight();
+//
+//                if(boardPane.getWidth() > viewport.getWidth()) {
+//                    viewPos.x -= dragEventPoint.x - holdPoint.x;
+//
+//                    if(viewPos.x < 0) {
+//                        viewPos.x = 0;
+//                        holdPoint.x = dragEventPoint.x;
+//                    }
+//
+//                    if(viewPos.x > maxViewPosX) {
+//                        viewPos.x = maxViewPosX;
+//                        holdPoint.x = dragEventPoint.x;
+//                    }
+//                }
+//
+//                if(boardPane.getHeight() > viewport.getHeight()) {
+//                    viewPos.y -= dragEventPoint.y - holdPoint.y;
+//
+//                    if(viewPos.y < 0) {
+//                        viewPos.y = 0;
+//                        holdPoint.y = dragEventPoint.y;
+//                    }
+//
+//                    if(viewPos.y > maxViewPosY) {
+//                        viewPos.y = maxViewPosY;
+//                        holdPoint.y = dragEventPoint.y;
+//                    }
+//                }
+//
+//                viewport.setViewPosition(viewPos);
+//            }
+//
+//        };
 
         componentImage.addMouseListener(ma);
         componentImage.addMouseMotionListener(ma);
@@ -275,33 +365,33 @@ public class CenterPane extends JPanel {
             }
         });
 
-        MouseWheelListener mwl = new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-
-                zoom -= e.getWheelRotation() * 0.1;
-                if(zoom < 0.1){
-                    zoom = 0.1;
-                }
-                boardPane.setZoom(zoom);
-
-                boardPane.setPreferredSize(
-                        new Dimension((int)(boardScreen.getSize().getWidth()*zoom),
-                                (int)(boardScreen.getSize().getHeight()*zoom)));
-
-                boardPane.setSize(boardPane.getPreferredSize());
-
-                boardScreen.setViewportView(boardPane);
-
-                boardPane.removeAll();
-                boardPane.revalidate();
-                boardPane.repaint();
-
-                boardScreen.revalidate();
-                boardScreen.repaint();
-
-            }
-        };
+//        MouseWheelListener mwl = new MouseWheelListener() {
+//            @Override
+//            public void mouseWheelMoved(MouseWheelEvent e) {
+//
+//                zoom -= e.getWheelRotation() * 0.1;
+//                if(zoom < 0.1){
+//                    zoom = 0.1;
+//                }
+//                boardPane.setZoom(zoom);
+//
+//                boardPane.setPreferredSize(
+//                        new Dimension((int)(boardScreen.getSize().getWidth()*zoom),
+//                                (int)(boardScreen.getSize().getHeight()*zoom)));
+//
+//                boardPane.setSize(boardPane.getPreferredSize());
+//
+//                boardScreen.setViewportView(boardPane);
+//
+//                boardPane.removeAll();
+//                boardPane.revalidate();
+//                boardPane.repaint();
+//
+//                boardScreen.revalidate();
+//                boardScreen.repaint();
+//
+//            }
+//        };
 
 
 
@@ -404,6 +494,16 @@ public class CenterPane extends JPanel {
     }
 
     void updateBoard(){
+        textAndCardPane.remove(boardScreen);
+        this.boardPane = new BoardPane(game.getBoard());
+        this.boardScreen = new JScrollPane(boardPane);
+
+        this.boardPane.addMouseListener(mb);
+        this.boardPane.addMouseMotionListener(mb);
+        this.boardPane.addMouseWheelListener(mwl);
+
+        textAndCardPane.add(boardScreen);
+
         this.boardScreen.revalidate();
         this.boardScreen.repaint();
     }

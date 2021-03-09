@@ -26,7 +26,7 @@ public class ComponentCreationDialog extends JOptionPane {
     }
 
     public int display(){
-        int n = showConfirmDialog(null,layout,"Test",
+        int n = showConfirmDialog(null,layout,"Component Import",
                 JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
 
         return n;
