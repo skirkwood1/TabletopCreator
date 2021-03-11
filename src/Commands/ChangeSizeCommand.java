@@ -6,6 +6,7 @@ public class ChangeSizeCommand extends GameCommand {
     int desiredWidth,desiredHeight;
 
     public ChangeSizeCommand(Game game, int desiredWidth, int desiredHeight){
+        this.memento = new GameMemento();
         this.game = game;
         this.desiredWidth = desiredWidth;
         this.desiredHeight = desiredHeight;

@@ -1,5 +1,8 @@
 package UI;
 
+import Commands.AddComponentCommand;
+import Commands.ChangeSizeCommand;
+import Commands.CommandStack;
 import Models.*;
 
 import javax.swing.*;
@@ -23,7 +26,7 @@ public class Frame extends JFrame {
     private JFileChooser fileChooser = new JFileChooser();
     private ColorChooseDialog colorDialog = new ColorChooseDialog();
 
-    Game game = new Game();
+    private Game game = new Game();
 
     public Frame() {
         super("Tabletop Creator v0.01");
@@ -84,7 +87,10 @@ public class Frame extends JFrame {
             else if(text.equals("ChangeSize\n\r")){
                 resizePane.display();
 
-                game.getBoard().setSize(resizePane.getDesiredWidth(),resizePane.getDesiredHeight());
+                ChangeSizeCommand csc = new ChangeSizeCommand(game,resizePane.getDesiredWidth(),resizePane.getDesiredHeight());
+                CommandStack.insertCommand(csc);
+
+                //game.getBoard().setSize(resizePane.getDesiredWidth(),resizePane.getDesiredHeight());
                 System.out.println(game.getBoard());
                 centerPane.updateBoard();
 
@@ -95,6 +101,11 @@ public class Frame extends JFrame {
                 Color color = colorDialog.getColor();
                 centerPane.updateColor(color);
                 toolbar.updateColorLabel(color);
+            }
+
+            else if(text.equals("Undo\n\r")){
+                CommandStack.undo();
+                //centerPane.updateBoard();
             }
         });
 
@@ -107,7 +118,9 @@ public class Frame extends JFrame {
 
                 Card card = new Card(cardName,cardText,fileSelected);
 
-                game.addCard(card);
+                AddComponentCommand acc = new AddComponentCommand(game,card);
+                CommandStack.insertCommand(acc);
+                //game.addCard(card);
 
                 centerPane.updateComponentTree(card);
 
@@ -122,8 +135,13 @@ public class Frame extends JFrame {
                 String pieceText = pieceCreationDialog.getComponentText();
                 String fileSelected = pieceCreationDialog.getFileSelect();
 
-                Piece piece = game.addPiece(
-                        pieceName,pieceText,fileSelected);
+                Piece piece = new Piece(pieceName,pieceText,fileSelected);
+
+                AddComponentCommand acc = new AddComponentCommand(game,piece);
+                CommandStack.insertCommand(acc);
+
+                //game.addPiece(piece);
+
                 centerPane.updateComponentTree(piece);
 
                 pieceCreationDialog.clear();
@@ -135,7 +153,7 @@ public class Frame extends JFrame {
         setVisible(true);
     }
 
-    public void saveGame(Game game, File file){
+    private void saveGame(Game game, File file){
         try{
 
             FileOutputStream fileOut = new FileOutputStream(file);
@@ -150,7 +168,9 @@ public class Frame extends JFrame {
         }
     }
 
-    public Game openGame(File file){
+    private Game openGame(File file){
+        //CommandStack.clear();
+
         try{
             FileInputStream fileIn = new FileInputStream(file);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);

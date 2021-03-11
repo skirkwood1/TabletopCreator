@@ -1,5 +1,7 @@
 package UI;
 
+import Commands.CommandStack;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +18,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
     private JMenuBar menuBar;
     private JMenu file,edit;
-    private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu;
+    private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo;
 
     private StringListener stringListener;
 
@@ -84,9 +86,14 @@ public class Toolbar extends JPanel implements ActionListener {
         paste = new JMenuItem("Paste");
         changeSize = new JMenuItem("Change Size");
 
+        undo = new JMenuItem("Undo");
+        redo = new JMenuItem("Redo");
+
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
         openMenu.addActionListener(this);
+        undo.addActionListener(this);
+        redo.addActionListener(this);
 
         file.add(cut);
         file.add(copy);
@@ -95,6 +102,8 @@ public class Toolbar extends JPanel implements ActionListener {
 
         edit.add(paste);
         edit.add(changeSize);
+        edit.add(undo);
+        edit.add(redo);
 
         menuBar.add(file);
         menuBar.add(edit);
@@ -127,6 +136,16 @@ public class Toolbar extends JPanel implements ActionListener {
             stringListener.textEmitted("ColorChooser\n\r");
             System.out.println("Choose Color");
 
+        }
+
+        if (e.getSource() == undo){
+            stringListener.textEmitted("Undo\n\r");
+            System.out.println("Undo");
+        }
+
+        if (e.getSource() == redo){
+            stringListener.textEmitted("Redo\n\r");
+            System.out.println("Redo");
         }
 
     }

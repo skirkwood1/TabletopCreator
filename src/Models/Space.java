@@ -14,7 +14,7 @@ public class Space implements Serializable {
     private Color color;
 
     public Space(){
-        this.color = Color.white;
+        this.color = Color.GRAY;
     }
 
     public Space(Color color){

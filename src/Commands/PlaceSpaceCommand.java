@@ -4,7 +4,7 @@ import Models.Game;
 
 public class PlaceSpaceCommand extends GameCommand {
 
-    int x,y;
+    private int x,y;
 
     public PlaceSpaceCommand(Game game, int x, int y){
         this.memento = new GameMemento();
@@ -17,7 +17,7 @@ public class PlaceSpaceCommand extends GameCommand {
     public void execute(){
         this.memento.setState(this.game);
 
-        this.game.getBoard().setSquare(x,y,this.game.getBoard().getColor());
+        game.getBoard().setSquare(x,y,this.game.getBoard().getColor());
     }
 
     public void unExecute(){

@@ -8,8 +8,8 @@ public class Board implements Serializable {
 
     private int height;
     private int width;
-    private final Color defaultColor = Color.WHITE;
-    private Color currentColor = Color.WHITE;
+    private final Color defaultColor = Color.RED;
+    private Color currentColor = Color.RED;
     private Space[][] spaces;
     //private Random random = new Random();
 

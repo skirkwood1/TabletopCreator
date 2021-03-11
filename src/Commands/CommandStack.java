@@ -1,5 +1,7 @@
 package Commands;
 
+import Models.Game;
+
 import java.util.Stack;
 
 public class CommandStack {
@@ -11,7 +13,6 @@ public class CommandStack {
         gc.execute();
         commandStack.push(gc);
         pointer++;
-
     }
 
     private static void deleteElementsAfterPointer(int undoRedoPointer)
@@ -28,6 +29,8 @@ public class CommandStack {
         GameCommand command = commandStack.get(pointer);
         command.unExecute();
         pointer--;
+
+        System.out.println("Undid command " + command.toString() + "\n\r Pointer set to + " + pointer);
     }
 
     public static void redo()
@@ -37,6 +40,13 @@ public class CommandStack {
         pointer++;
         GameCommand command = commandStack.get(pointer);
         command.execute();
+
+
+    }
+
+    public static void clear(){
+        commandStack.clear();
+        pointer = -1;
     }
 
 

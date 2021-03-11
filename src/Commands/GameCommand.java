@@ -9,4 +9,8 @@ public abstract class GameCommand {
     public abstract void execute();
 
     public abstract void unExecute();
+
+    public String toString(){
+        return this.getClass().toString();
+    }
 }

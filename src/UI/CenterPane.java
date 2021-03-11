@@ -1,5 +1,7 @@
 package UI;
 
+import Commands.CommandStack;
+import Commands.UpdateColorCommand;
 import Models.Card;
 import Models.Game;
 import Models.Piece;
@@ -130,7 +132,7 @@ public class CenterPane extends JPanel {
         cardText = new TextPanel();
         componentImage = new JLabel();
         //textPanel = new TextPanel();
-        boardPane = new BoardPane(game.getBoard());
+        boardPane = new BoardPane(game);
         boardScreen = new JScrollPane();
         componentTree = new ComponentTree(game);
         imagePane = new JScrollPane(componentImage);
@@ -236,19 +238,7 @@ public class CenterPane extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent e) {
-//                if (origin != null) {
-//                    JViewport viewPort = (JViewport) SwingUtilities.getAncestorOfClass(JViewport.class, componentImage);
-//                    if (viewPort != null) {
-//                        int deltaX = origin.x - e.getX();
-//                        int deltaY = origin.y - e.getY();
-//
-//                        Rectangle view = viewPort.getViewRect();
-//                        view.x += deltaX;
-//                        view.y += deltaY;
-//
-//                        componentImage.scrollRectToVisible(view);
-//                    }
-//                }
+
                 imagePane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 
                 Point dragEventPoint = e.getPoint();
@@ -290,66 +280,6 @@ public class CenterPane extends JPanel {
 
         };
 
-//        MouseAdapter mb = new MouseAdapter() {
-//
-//            private Point origin;
-//            private Point holdPoint;
-//
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//
-//                origin = new Point(e.getPoint());
-//                holdPoint = e.getPoint();
-//            }
-//
-//            @Override
-//            public void mouseReleased(MouseEvent e) {
-//                boardScreen.setCursor(null);
-//            }
-//
-//            @Override
-//            public void mouseDragged(MouseEvent e) {
-//                boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-//
-//                Point dragEventPoint = e.getPoint();
-//                JViewport viewport = (JViewport) boardPane.getParent();
-//                Point viewPos = viewport.getViewPosition();
-//                int maxViewPosX = boardPane.getWidth() - viewport.getWidth();
-//                int maxViewPosY = boardPane.getHeight() - viewport.getHeight();
-//
-//                if(boardPane.getWidth() > viewport.getWidth()) {
-//                    viewPos.x -= dragEventPoint.x - holdPoint.x;
-//
-//                    if(viewPos.x < 0) {
-//                        viewPos.x = 0;
-//                        holdPoint.x = dragEventPoint.x;
-//                    }
-//
-//                    if(viewPos.x > maxViewPosX) {
-//                        viewPos.x = maxViewPosX;
-//                        holdPoint.x = dragEventPoint.x;
-//                    }
-//                }
-//
-//                if(boardPane.getHeight() > viewport.getHeight()) {
-//                    viewPos.y -= dragEventPoint.y - holdPoint.y;
-//
-//                    if(viewPos.y < 0) {
-//                        viewPos.y = 0;
-//                        holdPoint.y = dragEventPoint.y;
-//                    }
-//
-//                    if(viewPos.y > maxViewPosY) {
-//                        viewPos.y = maxViewPosY;
-//                        holdPoint.y = dragEventPoint.y;
-//                    }
-//                }
-//
-//                viewport.setViewPosition(viewPos);
-//            }
-//
-//        };
-
         componentImage.addMouseListener(ma);
         componentImage.addMouseMotionListener(ma);
         componentImage.addMouseWheelListener(new MouseWheelListener() {
@@ -365,37 +295,7 @@ public class CenterPane extends JPanel {
             }
         });
 
-//        MouseWheelListener mwl = new MouseWheelListener() {
-//            @Override
-//            public void mouseWheelMoved(MouseWheelEvent e) {
-//
-//                zoom -= e.getWheelRotation() * 0.1;
-//                if(zoom < 0.1){
-//                    zoom = 0.1;
-//                }
-//                boardPane.setZoom(zoom);
-//
-//                boardPane.setPreferredSize(
-//                        new Dimension((int)(boardScreen.getSize().getWidth()*zoom),
-//                                (int)(boardScreen.getSize().getHeight()*zoom)));
-//
-//                boardPane.setSize(boardPane.getPreferredSize());
-//
-//                boardScreen.setViewportView(boardPane);
-//
-//                boardPane.removeAll();
-//                boardPane.revalidate();
-//                boardPane.repaint();
-//
-//                boardScreen.revalidate();
-//                boardScreen.repaint();
-//
-//            }
-//        };
-
-
-
-        boardPane.addMouseListener(mb);
+        //boardPane.addMouseListener(mb);
         boardPane.addMouseMotionListener(mb);
         boardPane.addMouseWheelListener(mwl);
 
@@ -486,7 +386,7 @@ public class CenterPane extends JPanel {
         boardScreen.removeAll();
 
         textAndCardPane.remove(boardScreen);
-        this.boardPane = new BoardPane(game.getBoard());
+        this.boardPane = new BoardPane(game);
         this.boardScreen = new JScrollPane(boardPane);
 
         this.boardPane.addMouseListener(mb);
@@ -500,7 +400,9 @@ public class CenterPane extends JPanel {
     }
 
     void updateColor(Color c){
-        boardPane.chosenColor = c;
+        UpdateColorCommand ucc = new UpdateColorCommand(game,c);
+        CommandStack.insertCommand(ucc);
+        //boardPane.chosenColor = c;
     }
 
 }

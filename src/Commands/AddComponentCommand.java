@@ -9,6 +9,7 @@ public class AddComponentCommand extends GameCommand {
     Component component;
 
     public AddComponentCommand(Game game, Component component){
+        this.memento = new GameMemento();
         this.game = game;
         this.component = component;
     }
