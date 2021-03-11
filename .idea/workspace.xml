@@ -7,16 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Commands/AddComponentCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/ChangeSizeCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/GameCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/GameMemento.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/PlaceSpaceCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/UpdateColorCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Commands/CommandStack.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Frame.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,18 +56,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Models/Component.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/CenterPane.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="7393">
@@ -113,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Commands/ChangeSizeCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+            <state relative-caret-position="391">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
               <folding>
                 <element signature="e#461#462#0" expanded="true" />
                 <element signature="e#479#480#0" expanded="true" />
@@ -138,11 +118,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Models/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1411">
-              <caret line="92" column="33" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
+            <state relative-caret-position="365">
+              <caret line="98" column="40" selection-start-line="98" selection-start-column="40" selection-end-line="98" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Commands/CommandStack.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -202,7 +191,6 @@
         <option value="$PROJECT_DIR$/src/Models/BoardMemento.java" />
         <option value="$PROJECT_DIR$/src/Models/Command.java" />
         <option value="$PROJECT_DIR$/src/Models/BoardCommand.java" />
-        <option value="$PROJECT_DIR$/src/Models/Board.java" />
         <option value="$PROJECT_DIR$/src/Models/GameCommand.java" />
         <option value="$PROJECT_DIR$/src/Models/GameMemento.java" />
         <option value="$PROJECT_DIR$/src/Models/PlaceSpaceCommand.java" />
@@ -212,6 +200,8 @@
         <option value="$PROJECT_DIR$/src/Commands/AddComponentCommand.java" />
         <option value="$PROJECT_DIR$/src/UI/Frame.java" />
         <option value="$PROJECT_DIR$/src/Commands/ChangeSizeCommand.java" />
+        <option value="$PROJECT_DIR$/src/Models/Board.java" />
+        <option value="$PROJECT_DIR$/src/Commands/CommandStack.java" />
       </list>
     </option>
   </component>
@@ -272,7 +262,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1615477014986" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1615483136808" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -343,12 +333,12 @@
       <workItem from="1614954722697" duration="11889000" />
       <workItem from="1615301012806" duration="11666000" />
       <workItem from="1615437997369" duration="3000" />
-      <workItem from="1615472867866" duration="4043000" />
+      <workItem from="1615472867866" duration="4984000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100229000" />
+    <option name="totallyTimeSpent" value="101170000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1018" y="0" width="1037" height="1118" extended-state="0" />
@@ -362,8 +352,8 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.3275862" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32595575" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3275862" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3255578" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39839035" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -567,16 +557,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Models/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1411">
-          <caret line="92" column="33" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/Toolbar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
@@ -648,12 +628,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Commands/ChangeSizeCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+        <state relative-caret-position="391">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
           <folding>
             <element signature="e#461#462#0" expanded="true" />
             <element signature="e#479#480#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Models/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="98" column="40" selection-start-line="98" selection-start-column="40" selection-end-line="98" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Commands/CommandStack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
         </state>
       </provider>
     </entry>
