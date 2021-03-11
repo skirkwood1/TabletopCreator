@@ -3,6 +3,7 @@ package UI;
 import Commands.AddComponentCommand;
 import Commands.ChangeSizeCommand;
 import Commands.CommandStack;
+import Commands.UpdateColorCommand;
 import Models.*;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ public class Frame extends JFrame {
     private ColorChooseDialog colorDialog = new ColorChooseDialog();
 
     private Game game = new Game();
+    private CommandStack commandStack = new CommandStack();
 
     public Frame() {
         super("Tabletop Creator v0.01");
@@ -36,8 +38,8 @@ public class Frame extends JFrame {
         //setLayout(new GridBagLayout());
         setLayout(new BorderLayout());
 
-        toolbar = new Toolbar();
-        centerPane = new CenterPane(game);
+        toolbar = new Toolbar(game);
+        centerPane = new CenterPane(game,commandStack);
         cardBtn = new JButton("Add card");
         pieceBtn = new JButton("Add piece");
 
@@ -88,7 +90,7 @@ public class Frame extends JFrame {
                 resizePane.display();
 
                 ChangeSizeCommand csc = new ChangeSizeCommand(game,resizePane.getDesiredWidth(),resizePane.getDesiredHeight());
-                CommandStack.insertCommand(csc);
+                commandStack.insertCommand(csc);
 
                 //game.getBoard().setSize(resizePane.getDesiredWidth(),resizePane.getDesiredHeight());
                 System.out.println(game.getBoard());
@@ -99,13 +101,22 @@ public class Frame extends JFrame {
             else if(text.equals("ColorChooser\n\r")){
                 colorDialog.display();
                 Color color = colorDialog.getColor();
-                centerPane.updateColor(color);
-                toolbar.updateColorLabel(color);
+
+                UpdateColorCommand ucc = new UpdateColorCommand(game,color,toolbar);
+                commandStack.insertCommand(ucc);
+
+                //toolbar.updateColorLabel();
             }
 
             else if(text.equals("Undo\n\r")){
-                CommandStack.undo();
-                //centerPane.updateBoard();
+                commandStack.undo();
+                //centerPane.refreshComponentTree(this.game);
+                centerPane.updateBoard();
+            }
+
+            else if(text.equals("Redo\n\r")){
+                commandStack.redo();
+                centerPane.updateBoard();
             }
         });
 
@@ -119,7 +130,7 @@ public class Frame extends JFrame {
                 Card card = new Card(cardName,cardText,fileSelected);
 
                 AddComponentCommand acc = new AddComponentCommand(game,card);
-                CommandStack.insertCommand(acc);
+                commandStack.insertCommand(acc);
                 //game.addCard(card);
 
                 centerPane.updateComponentTree(card);
@@ -138,7 +149,7 @@ public class Frame extends JFrame {
                 Piece piece = new Piece(pieceName,pieceText,fileSelected);
 
                 AddComponentCommand acc = new AddComponentCommand(game,piece);
-                CommandStack.insertCommand(acc);
+                commandStack.insertCommand(acc);
 
                 //game.addPiece(piece);
 

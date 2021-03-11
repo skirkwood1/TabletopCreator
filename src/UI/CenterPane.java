@@ -43,7 +43,7 @@ public class CenterPane extends JPanel {
         public void mousePressed(MouseEvent e) {
 
             origin = new Point(e.getPoint());
-            holdPoint = e.getPoint();
+            holdPoint = new Point(e.getPoint());
         }
 
         @Override
@@ -124,18 +124,21 @@ public class CenterPane extends JPanel {
         }
     };
 
-    Game game;
+    private Game game;
+    private CommandStack commandStack;
 
-    public CenterPane(Game game) {
+    public CenterPane(Game game,CommandStack commandStack) {
         this.game = game;
 
         cardText = new TextPanel();
         componentImage = new JLabel();
         //textPanel = new TextPanel();
-        boardPane = new BoardPane(game);
+        boardPane = new BoardPane(game,commandStack);
         boardScreen = new JScrollPane();
         componentTree = new ComponentTree(game);
         imagePane = new JScrollPane(componentImage);
+
+        this.commandStack = commandStack;
 
         cardText.setPreferredSize(new Dimension(200,100));
         cardText.setMinimumSize(new Dimension(200,100));
@@ -295,9 +298,11 @@ public class CenterPane extends JPanel {
             }
         });
 
-        //boardPane.addMouseListener(mb);
+        boardPane.addMouseListener(mb);
         boardPane.addMouseMotionListener(mb);
         boardPane.addMouseWheelListener(mwl);
+
+        updateBoard();
 
         imagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         imagePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -383,25 +388,33 @@ public class CenterPane extends JPanel {
     }
 
     void updateBoard(){
-        boardScreen.removeAll();
+        //boardScreen.removeAll();
 
-        textAndCardPane.remove(boardScreen);
-        this.boardPane = new BoardPane(game);
-        this.boardScreen = new JScrollPane(boardPane);
+        //textAndCardPane.remove(boardScreen);
+        //this.boardPane = new BoardPane(game,commandStack);
+        //this.boardScreen = new JScrollPane(boardPane);
 
-        this.boardPane.addMouseListener(mb);
-        this.boardPane.addMouseMotionListener(mb);
-        this.boardPane.addMouseWheelListener(mwl);
+        //this.boardScreen.set
 
-        textAndCardPane.add(boardScreen);
+        boardPane.setZoom(zoom);
+        boardPane.updateSize();
+
+        this.boardPane.removeAll();
+        this.boardPane.revalidate();
+        this.boardPane.repaint();
+
+        //this.boardPane.addMouseListener(mb);
+        //this.boardPane.addMouseMotionListener(mb);
+        //this.boardPane.addMouseWheelListener(mwl);
+
+        //textAndCardPane.add(boardScreen);
 
         this.boardScreen.revalidate();
         this.boardScreen.repaint();
     }
 
     void updateColor(Color c){
-        UpdateColorCommand ucc = new UpdateColorCommand(game,c);
-        CommandStack.insertCommand(ucc);
+
         //boardPane.chosenColor = c;
     }
 

@@ -16,11 +16,15 @@ public class BoardPane extends JPanel {
 
     public double zoom = 1.0;
 
-    public BoardPane(Game game) {
+    CommandStack commandStack;
+
+    public BoardPane(Game game,CommandStack commandStack) {
         this.game = game;
         this.dimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
         setPreferredSize(dimension);
         setSize(dimension);
+
+        this.commandStack = commandStack;
 
         setLayout(new GridBagLayout());
 
@@ -40,20 +44,18 @@ public class BoardPane extends JPanel {
 
             // get X and y position on board
             int x, y;
-            x = (int)(((e.getX()/zoom-20)/40));
-            y = (int)(((e.getY()/zoom-20)/40)); ///zoom);
+            x = (int)Math.floor((((e.getX()/zoom-20)/40)));
+            y = (int)Math.floor((((e.getY()/zoom-20)/40))); ///zoom);
 
-            // draw a Oval at the point
-            // where mouse is moved
             int[] size = game.getBoard().getSize();
-            if(x < size[0] && y < size[1]){
+            if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
                 //g2.fillRect((int)((x*40+20)*zoom), (int)((y*40+20)*zoom), (int)(40*zoom), (int)(40*zoom));
                 g2.fillRect(x*40+20,y*40+20,40,40);
                 g2.setColor(Color.BLACK);
                 g2.drawRect(x*40+20,y*40+20,40,40);
 
                 PlaceSpaceCommand psc = new PlaceSpaceCommand(game,x,y);
-                CommandStack.insertCommand(psc);
+                commandStack.insertCommand(psc);
 
                 System.out.println("Placed space at " + x + ", " + y);
 

@@ -18,6 +18,22 @@ public class Game implements Serializable {
         this.board = new Board(10,10);
     }
 
+    public Game(Game game){
+        this.deck = game.getDeck();
+        this.diceCollection = game.getDice();
+        this.pieces = game.pieces;
+
+        this.board = game.getBoard();
+    }
+
+    public Game(ArrayList<Card> deck, ArrayList<Dice> diceCollection, ArrayList<Piece> pieces, Board board){
+        this.deck = deck;
+        this.diceCollection = diceCollection;
+        this.pieces = pieces;
+
+        this.board = board;
+    }
+
     public Card addCard(String name, String text, String filename){
         Card card = new Card(name,text,filename);
         deck.add(card);
@@ -69,6 +85,8 @@ public class Game implements Serializable {
     public Board getBoard(){
         return this.board;
     }
+
+    public ArrayList<Dice> getDice(){ return this.diceCollection;}
 
     public String toString(){
         String finalString = "";

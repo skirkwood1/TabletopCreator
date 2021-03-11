@@ -9,8 +9,8 @@ public class Space implements Serializable {
         SQUARE,HEX
     }
 
-    private boolean empty = true;
-    private Shape shape = Shape.SQUARE;
+    //private boolean empty = true;
+    //private Shape shape = Shape.SQUARE;
     private Color color;
 
     public Space(){
@@ -19,7 +19,7 @@ public class Space implements Serializable {
 
     public Space(Color color){
         this.color = color;
-        this.empty = false;
+        //this.empty = false;
     }
 
     public Color getColor(){
@@ -27,6 +27,6 @@ public class Space implements Serializable {
     }
 
     public String toString(){
-        return color.toString();
+        return "R: " + color.getRed() + "\t G: " + color.getGreen() + "\tB: " + color.getBlue() + "\t| ";
     }
 }

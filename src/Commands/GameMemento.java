@@ -1,15 +1,34 @@
 package Commands;
 
-import Models.Game;
+import Models.*;
 
-public class GameMemento {
-    Game game;
+import java.awt.*;
+import java.util.ArrayList;
 
-    public Game getState(){
+class GameMemento {
+    private ArrayList<Card> deck;
+    private ArrayList<Dice> diceCollection;
+    private ArrayList<Piece> pieces;
+
+    private int height;
+    private int width;
+    private Space[][] spaces;
+
+    Game getState(){
+        Board board = new Board(height,width,spaces);
+        Game game = new Game(deck,diceCollection,pieces,board);
+
         return game;
     }
 
-    public void setState(Game game){
-        this.game = game;
+    void setState(Game game){
+        this.deck = game.getDeck();
+        this.diceCollection = game.getDice();
+        this.pieces = game.getPieces();
+
+        this.width = game.getBoard().getSize()[0];
+        this.height = game.getBoard().getSize()[1];
+        this.spaces = game.getBoard().getSpaces();
+
     }
 }

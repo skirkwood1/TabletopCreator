@@ -1,6 +1,7 @@
 package UI;
 
 import Commands.CommandStack;
+import Models.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,8 +23,12 @@ public class Toolbar extends JPanel implements ActionListener {
 
     private StringListener stringListener;
 
+    private Game game;
 
-    public Toolbar(){
+
+    public Toolbar(Game game){
+        this.game = game;
+
         setLayout(new BorderLayout());
 
         ImageIcon saveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons8-save-100.png"));
@@ -140,17 +145,17 @@ public class Toolbar extends JPanel implements ActionListener {
 
         if (e.getSource() == undo){
             stringListener.textEmitted("Undo\n\r");
-            System.out.println("Undo");
+            //System.out.println("Undo");
         }
 
         if (e.getSource() == redo){
             stringListener.textEmitted("Redo\n\r");
-            System.out.println("Redo");
+            //System.out.println("Redo");
         }
 
     }
 
-    public void updateColorLabel(Color c){
-        this.colorLabel.setBackground(c);
+    public void updateColorLabel(){
+        this.colorLabel.setBackground(game.getBoard().getColor());
     }
 }

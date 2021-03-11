@@ -1,26 +1,36 @@
 package Commands;
 
 import Models.Game;
+import UI.Toolbar;
 
 import java.awt.*;
 
 public class UpdateColorCommand extends GameCommand {
-    Color color;
+    private Color color,oldColor;
 
-    public UpdateColorCommand(Game game, Color color){
+    private Toolbar toolbar;
+
+    public UpdateColorCommand(Game game, Color color, Toolbar toolbar){
         this.memento = new GameMemento();
         this.game = game;
 
         this.color = color;
+        this.oldColor = new Color(game.getBoard().getColor().getRGB());
+
+        this.toolbar = toolbar;
     }
 
     public void execute(){
         memento.setState(this.game);
 
-        this.game.getBoard().setColor(this.color);
+        game.getBoard().setColor(this.color);
+        toolbar.updateColorLabel();
     }
 
     public void unExecute(){
-        this.game = memento.getState();
+        //game = memento.getState();
+
+        game.getBoard().setColor(this.oldColor);
+        toolbar.updateColorLabel();
     }
 }

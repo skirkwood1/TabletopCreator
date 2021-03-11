@@ -8,7 +8,7 @@ public class Board implements Serializable {
 
     private int height;
     private int width;
-    private final Color defaultColor = Color.RED;
+    private final Color defaultColor = Color.WHITE;
     private Color currentColor = Color.RED;
     private Space[][] spaces;
     //private Random random = new Random();
@@ -37,6 +37,12 @@ public class Board implements Serializable {
                 spaces[i][j] = new Space(color);
             }
         }
+    }
+
+    public Board(int width, int height, Space[][] spaces){
+        this.width = width;
+        this.height = height;
+        this.spaces = spaces;
     }
 
     public Space[][] getSpaces(){
@@ -95,9 +101,9 @@ public class Board implements Serializable {
 
     public String toString(){
         String str = "";
-        for(int i = 0; i < width; i++){
-            for(int j = 0; j < height; j++){
-                str += spaces[i][j].toString() + " ";
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                str += spaces[j][i].toString() + " ";
             }
             str += "\n";
         }

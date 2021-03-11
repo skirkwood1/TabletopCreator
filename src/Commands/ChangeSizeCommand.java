@@ -3,22 +3,31 @@ package Commands;
 import Models.Game;
 
 public class ChangeSizeCommand extends GameCommand {
-    int desiredWidth,desiredHeight;
+    private int desiredWidth,desiredHeight;
+    private int oldWidth,oldHeight;
 
     public ChangeSizeCommand(Game game, int desiredWidth, int desiredHeight){
-        this.memento = new GameMemento();
+        //this.memento = new GameMemento();
         this.game = game;
+
         this.desiredWidth = desiredWidth;
         this.desiredHeight = desiredHeight;
     }
 
     public void execute(){
-        this.memento.setState(this.game);
+        this.oldWidth = game.getBoard().getSize()[0];
+        this.oldHeight = game.getBoard().getSize()[1];
+
+        //this.memento.setState(this.game);
 
         game.getBoard().setSize(desiredWidth,desiredHeight);
     }
 
     public void unExecute(){
-        this.game = memento.getState();
+        //game = memento.getState();
+
+        game.getBoard().setSize(oldWidth,oldHeight);
+
+        System.out.println(game);
     }
 }

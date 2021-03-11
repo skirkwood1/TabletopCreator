@@ -6,7 +6,7 @@ import Models.Game;
 import Models.Piece;
 
 public class AddComponentCommand extends GameCommand {
-    Component component;
+    private Component component;
 
     public AddComponentCommand(Game game, Component component){
         this.memento = new GameMemento();
@@ -26,6 +26,6 @@ public class AddComponentCommand extends GameCommand {
     }
 
     public void unExecute(){
-        this.game = memento.getState();
+        game = memento.getState();
     }
 }
