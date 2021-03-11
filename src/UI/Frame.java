@@ -105,8 +105,10 @@ public class Frame extends JFrame {
                 String cardText = cardCreationDialog.getComponentText();
                 String fileSelected = cardCreationDialog.getFileSelect();
 
-                Card card = game.addCard(
-                     cardName,cardText,fileSelected);
+                Card card = new Card(cardName,cardText,fileSelected);
+
+                game.addCard(card);
+
                 centerPane.updateComponentTree(card);
 
                 cardCreationDialog.clear();

@@ -9,6 +9,7 @@ public class Board implements Serializable {
     private int height;
     private int width;
     private final Color defaultColor = Color.WHITE;
+    private Color currentColor = Color.WHITE;
     private Space[][] spaces;
     //private Random random = new Random();
 
@@ -84,10 +85,18 @@ public class Board implements Serializable {
         this.height = y;
     }
 
+    public void setColor(Color color){
+        this.currentColor = color;
+    }
+
+    public Color getColor(){
+        return this.currentColor;
+    }
+
     public String toString(){
         String str = "";
         for(int i = 0; i < width; i++){
-            for(int j = 0; j < width; j++){
+            for(int j = 0; j < height; j++){
                 str += spaces[i][j].toString() + " ";
             }
             str += "\n";

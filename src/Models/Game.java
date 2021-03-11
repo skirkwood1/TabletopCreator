@@ -24,8 +24,18 @@ public class Game implements Serializable {
         return card;
     }
 
+    public Card addCard(Card card){
+        deck.add(card);
+        return card;
+    }
+
     public Piece addPiece(String name, String text, String filename){
         Piece piece = new Piece(name,text,filename);
+        pieces.add(piece);
+        return piece;
+    }
+
+    public Piece addPiece(Piece piece){
         pieces.add(piece);
         return piece;
     }
