@@ -118,6 +118,11 @@ public class Frame extends JFrame {
                 commandStack.redo();
                 centerPane.updateBoard();
             }
+
+            else if(text.equals("Placement\n\r")){
+                centerPane.boardPane.setPlacementType(toolbar.getPlacementType());
+                centerPane.updateBoard();
+            }
         });
 
         cardBtn.addActionListener(e -> {

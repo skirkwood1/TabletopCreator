@@ -3,6 +3,7 @@ import Commands.CommandStack;
 import Commands.PlaceSpaceCommand;
 import Models.Board;
 import Models.Game;
+import Models.Piece;
 import Models.Space;
 
 import java.awt.*;
@@ -12,19 +13,23 @@ import javax.swing.*;
 public class BoardPane extends JPanel {
 
     private Game game;
-    private Dimension dimension;
+    //private Dimension dimension;
 
-    public double zoom = 1.0;
+    private double zoom = 1.0;
+    public enum PlacementType{SPACE,PIECE,NONE}
+
+    private PlacementType placementType;
 
     CommandStack commandStack;
 
     public BoardPane(Game game,CommandStack commandStack) {
         this.game = game;
-        this.dimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
+        Dimension dimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
         setPreferredSize(dimension);
         setSize(dimension);
 
         this.commandStack = commandStack;
+        this.placementType = PlacementType.NONE;
 
         setLayout(new GridBagLayout());
 
@@ -48,16 +53,38 @@ public class BoardPane extends JPanel {
             y = (int)Math.floor((((e.getY()/zoom-20)/40))); ///zoom);
 
             int[] size = game.getBoard().getSize();
+
+            Space space = game.getBoard().getSpace(x,y);
+
             if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
-                //g2.fillRect((int)((x*40+20)*zoom), (int)((y*40+20)*zoom), (int)(40*zoom), (int)(40*zoom));
-                g2.fillRect(x*40+20,y*40+20,40,40);
+                switch(placementType){
+                    case SPACE:
+                        PlaceSpaceCommand psc = new PlaceSpaceCommand(game,x,y);
+                        commandStack.insertCommand(psc);
+                        //g2.fillRect((int)((x*40+20)*zoom), (int)((y*40+20)*zoom), (int)(40*zoom), (int)(40*zoom));
+                        g2.fillRect(x*40+20,y*40+20,40,40);
+                        break;
+                    case PIECE:
+                        Piece piece = (Piece)game.getSelectedComponent();
+                        if(piece != null){
+                            space.addPiece(piece);
+                        }
+                        break;
+                    case NONE:
+                        break;
+                }
+
+
+                if(space.isOccupied()){
+                    g2.drawImage(space.getPiece().getPicture(),x*40+20,y*40+20,30,30,null);
+                }
+
                 g2.setColor(Color.BLACK);
                 g2.drawRect(x*40+20,y*40+20,40,40);
 
-                PlaceSpaceCommand psc = new PlaceSpaceCommand(game,x,y);
-                commandStack.insertCommand(psc);
 
-                System.out.println("Placed space at " + x + ", " + y);
+
+                //System.out.println("Placed space at " + x + ", " + y);
 
                 //game.getBoard().setSquare(x,y,game.getBoard().getColor());
 
@@ -131,15 +158,19 @@ public class BoardPane extends JPanel {
 
                 g2.setColor(Color.BLACK);
                 g2.drawRect(i*40+20,j*40+20,40,40);
+
+                if(space.isOccupied()){
+                    g2.drawImage(space.getPiece().getPicture(),i*40+20,j*40+20,30,30,null);
+                }
             }
         }
     }
 
-    public void setZoom(double scale){
+    void setZoom(double scale){
         this.zoom = scale;
     }
 
-    public void updateSize(){
+    void updateSize(){
         //this.dimension = new Dimension(board.getSize()[0]*40+40,board.getSize()[1]*40+40);
 
 
@@ -148,6 +179,10 @@ public class BoardPane extends JPanel {
 
         setPreferredSize(new Dimension((int)x,(int)y));
         setSize(new Dimension((int)x,(int)y));
+    }
+
+    public void setPlacementType(PlacementType pt){
+        this.placementType = pt;
     }
 
 

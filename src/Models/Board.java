@@ -35,6 +35,8 @@ public class Board implements Serializable {
                 Color color = Color.WHITE;
                 //Color color = new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255));
                 spaces[i][j] = new Space(color);
+//                Piece piece = new Piece("test","test","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
+//                spaces[i][j].addPiece(piece);
             }
         }
     }

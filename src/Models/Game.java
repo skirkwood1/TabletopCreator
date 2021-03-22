@@ -11,6 +11,8 @@ public class Game implements Serializable {
 
     private Board board;
 
+    private Component selectedComponent;
+
     public Game(){
         this.deck = new ArrayList<>();
         this.diceCollection = new ArrayList<>();
@@ -105,5 +107,13 @@ public class Game implements Serializable {
         finalString += board.toString();
 
         return finalString;
+    }
+
+    public Component getSelectedComponent(){
+        return selectedComponent;
+    }
+
+    public void setSelectedComponent(Component piece){
+        this.selectedComponent = piece;
     }
 }

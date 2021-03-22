@@ -15,6 +15,10 @@ public class Toolbar extends JPanel implements ActionListener {
     private JButton open;
     private JButton colorChoose;
 
+    private ButtonGroup buttonGroup;
+    private JToggleButton placeSpace;
+    private JToggleButton placePiece;
+
     private JLabel colorLabel;
 
     private JMenuBar menuBar;
@@ -25,9 +29,13 @@ public class Toolbar extends JPanel implements ActionListener {
 
     private Game game;
 
+    private BoardPane.PlacementType placementType;
+
 
     public Toolbar(Game game){
         this.game = game;
+
+        this.placementType = BoardPane.PlacementType.NONE;
 
         setLayout(new BorderLayout());
 
@@ -69,18 +77,34 @@ public class Toolbar extends JPanel implements ActionListener {
         colorChoose.setPreferredSize(new Dimension(25,25));
         colorChoose.setToolTipText("Choose Color");
 
+        placeSpace = new JToggleButton("Space");
+        placeSpace.setPreferredSize(new Dimension(100,25));
+
+        placePiece = new JToggleButton("Piece");
+        placePiece.setPreferredSize(new Dimension(100,25));
+
         save.addActionListener(this);
         open.addActionListener(this);
         colorChoose.addActionListener(this);
+        placePiece.addActionListener(this);
+        placeSpace.addActionListener(this);
 
         buttons = new JPanel();
 
         buttons.setLayout(new FlowLayout(FlowLayout.LEFT));
 
+//        buttonGroup = new ButtonGroup();
+//        buttonGroup.add(placeSpace);
+//        buttonGroup.add(placePiece);
+
         buttons.add(save);
         buttons.add(open);
         buttons.add(colorChoose);
         buttons.add(colorLabel);
+        buttons.add(placeSpace);
+        buttons.add(placePiece);
+
+
 
         menuBar = new JMenuBar();
         file = new JMenu("File");
@@ -125,37 +149,65 @@ public class Toolbar extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == save || e.getSource() == saveMenu){
+        JComponent c = (JComponent)e.getSource();
+
+        if (c == save || c == saveMenu){
             stringListener.textEmitted("Save\n\r");
 
         }
-        if (e.getSource() == open || e.getSource() == openMenu){
+        else if (c == open || c == openMenu){
             stringListener.textEmitted("Open\n\r");
         }
-        if (e.getSource() == changeSize){
+        else if (c == changeSize){
             stringListener.textEmitted("ChangeSize\n\r");
             System.out.println("Change Size");
         }
 
-        if (e.getSource() == colorChoose){
+        else if (c == colorChoose){
             stringListener.textEmitted("ColorChooser\n\r");
             System.out.println("Choose Color");
 
         }
 
-        if (e.getSource() == undo){
+        else if (c == undo){
             stringListener.textEmitted("Undo\n\r");
             //System.out.println("Undo");
         }
 
-        if (e.getSource() == redo){
+        else if (c == redo){
             stringListener.textEmitted("Redo\n\r");
             //System.out.println("Redo");
+        }
+
+
+        else if(c == placeSpace || c == placePiece){
+            if(c == placeSpace && placePiece.isSelected()){
+                placePiece.setSelected(false);
+            }
+            else if(c == placePiece && placeSpace.isSelected()){
+                placeSpace.setSelected(false);
+            }
+
+            if(placePiece.isSelected()){
+                this.placementType = BoardPane.PlacementType.PIECE;
+            }
+            else if(placeSpace.isSelected()){
+                this.placementType = BoardPane.PlacementType.SPACE;
+            }
+            else{
+                this.placementType = BoardPane.PlacementType.NONE;
+            }
+
+            stringListener.textEmitted("Placement\n\r");
         }
 
     }
 
     public void updateColorLabel(){
         this.colorLabel.setBackground(game.getBoard().getColor());
+    }
+
+    public BoardPane.PlacementType getPlacementType(){
+        return this.placementType;
     }
 }

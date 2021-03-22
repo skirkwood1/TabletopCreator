@@ -1,7 +1,6 @@
 package UI;
 
 import Commands.CommandStack;
-import Commands.UpdateColorCommand;
 import Models.Card;
 import Models.Game;
 import Models.Piece;
@@ -12,9 +11,6 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -218,6 +214,7 @@ public class CenterPane extends JPanel {
                 if(component != null){
                     displayImage(component.getPicture());
                     setCardText(component.getText());
+                    game.setSelectedComponent(component);
                 }
             }
         });
@@ -388,13 +385,6 @@ public class CenterPane extends JPanel {
     }
 
     void updateBoard(){
-        //boardScreen.removeAll();
-
-        //textAndCardPane.remove(boardScreen);
-        //this.boardPane = new BoardPane(game,commandStack);
-        //this.boardScreen = new JScrollPane(boardPane);
-
-        //this.boardScreen.set
 
         boardPane.setZoom(zoom);
         boardPane.updateSize();
@@ -402,12 +392,6 @@ public class CenterPane extends JPanel {
         this.boardPane.removeAll();
         this.boardPane.revalidate();
         this.boardPane.repaint();
-
-        //this.boardPane.addMouseListener(mb);
-        //this.boardPane.addMouseMotionListener(mb);
-        //this.boardPane.addMouseWheelListener(mwl);
-
-        //textAndCardPane.add(boardScreen);
 
         this.boardScreen.revalidate();
         this.boardScreen.repaint();
