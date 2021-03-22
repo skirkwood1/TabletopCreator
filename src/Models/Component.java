@@ -50,4 +50,9 @@ public class Component implements Serializable {
         picture = ImageIO.read(in);
 
     }
+
+    public String toString(){
+        return this.getName() + "," + this.getText();
+    }
+
 }

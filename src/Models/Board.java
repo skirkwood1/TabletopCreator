@@ -71,7 +71,12 @@ public class Board implements Serializable {
     }
 
     public void setSquare(int x, int y, Color color){
-        spaces[x][y] = new Space(color);
+        if(spaces[x][y].isOccupied()){
+            spaces[x][y].setColor(color);
+        }
+        else{
+            spaces[x][y] = new Space(color);
+        }
     }
 
     public void setSize(int x, int y){

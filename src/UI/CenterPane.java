@@ -32,60 +32,71 @@ public class CenterPane extends JPanel {
 
     MouseAdapter mb = new MouseAdapter() {
 
-        private Point origin;
+        //private Point origin;
         private Point holdPoint;
+
+        private int mouseButton = 0;
 
         @Override
         public void mousePressed(MouseEvent e) {
 
-            origin = new Point(e.getPoint());
             holdPoint = new Point(e.getPoint());
+            //origin = new Point(e.getPoint());
+            if((e.getModifiersEx() & InputEvent.BUTTON2_DOWN_MASK) != 0){
+                mouseButton = 3;
+            }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            mouseButton = 0;
             boardScreen.setCursor(null);
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+            if (mouseButton == 3) {
+                boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 
-            Point dragEventPoint = e.getPoint();
-            JViewport viewport = (JViewport) boardPane.getParent();
-            Point viewPos = viewport.getViewPosition();
-            int maxViewPosX = boardPane.getWidth() - viewport.getWidth();
-            int maxViewPosY = boardPane.getHeight() - viewport.getHeight();
+                Point dragEventPoint = e.getPoint();
+                JViewport viewport = (JViewport) boardPane.getParent();
+                Point viewPos = viewport.getViewPosition();
+                int maxViewPosX = boardPane.getWidth() - viewport.getWidth();
+                int maxViewPosY = boardPane.getHeight() - viewport.getHeight();
 
-            if(boardPane.getWidth() > viewport.getWidth()) {
-                viewPos.x -= dragEventPoint.x - holdPoint.x;
+                if (boardPane.getWidth() > viewport.getWidth()) {
+                    viewPos.x -= dragEventPoint.x - holdPoint.x;
 
-                if(viewPos.x < 0) {
-                    viewPos.x = 0;
-                    holdPoint.x = dragEventPoint.x;
+                    if (viewPos.x < 0) {
+                        viewPos.x = 0;
+                        holdPoint.x = dragEventPoint.x;
+                    }
+
+                    if (viewPos.x > maxViewPosX) {
+                        viewPos.x = maxViewPosX;
+                        holdPoint.x = dragEventPoint.x;
+                    }
                 }
 
-                if(viewPos.x > maxViewPosX) {
-                    viewPos.x = maxViewPosX;
-                    holdPoint.x = dragEventPoint.x;
+                if (boardPane.getHeight() > viewport.getHeight()) {
+                    viewPos.y -= dragEventPoint.y - holdPoint.y;
+
+                    if (viewPos.y < 0) {
+                        viewPos.y = 0;
+                        holdPoint.y = dragEventPoint.y;
+                    }
+
+                    if (viewPos.y > maxViewPosY) {
+                        viewPos.y = maxViewPosY;
+                        holdPoint.y = dragEventPoint.y;
+                    }
                 }
+
+                viewport.setViewPosition(viewPos);
             }
+            else if (mouseButton == 1){
 
-            if(boardPane.getHeight() > viewport.getHeight()) {
-                viewPos.y -= dragEventPoint.y - holdPoint.y;
-
-                if(viewPos.y < 0) {
-                    viewPos.y = 0;
-                    holdPoint.y = dragEventPoint.y;
-                }
-
-                if(viewPos.y > maxViewPosY) {
-                    viewPos.y = maxViewPosY;
-                    holdPoint.y = dragEventPoint.y;
-                }
             }
-
-            viewport.setViewPosition(viewPos);
         }
 
     };
@@ -238,7 +249,6 @@ public class CenterPane extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent e) {
-
                 imagePane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 
                 Point dragEventPoint = e.getPoint();
@@ -247,29 +257,29 @@ public class CenterPane extends JPanel {
                 int maxViewPosX = componentImage.getWidth() - viewport.getWidth();
                 int maxViewPosY = componentImage.getHeight() - viewport.getHeight();
 
-                if(componentImage.getWidth() > viewport.getWidth()) {
+                if (componentImage.getWidth() > viewport.getWidth()) {
                     viewPos.x -= dragEventPoint.x - holdPoint.x;
 
-                    if(viewPos.x < 0) {
+                    if (viewPos.x < 0) {
                         viewPos.x = 0;
                         holdPoint.x = dragEventPoint.x;
                     }
 
-                    if(viewPos.x > maxViewPosX) {
+                    if (viewPos.x > maxViewPosX) {
                         viewPos.x = maxViewPosX;
                         holdPoint.x = dragEventPoint.x;
                     }
                 }
 
-                if(componentImage.getHeight() > viewport.getHeight()) {
+                if (componentImage.getHeight() > viewport.getHeight()) {
                     viewPos.y -= dragEventPoint.y - holdPoint.y;
 
-                    if(viewPos.y < 0) {
+                    if (viewPos.y < 0) {
                         viewPos.y = 0;
                         holdPoint.y = dragEventPoint.y;
                     }
 
-                    if(viewPos.y > maxViewPosY) {
+                    if (viewPos.y > maxViewPosY) {
                         viewPos.y = maxViewPosY;
                         holdPoint.y = dragEventPoint.y;
                     }

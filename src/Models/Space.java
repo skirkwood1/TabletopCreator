@@ -51,4 +51,8 @@ public class Space implements Serializable {
     public boolean isOccupied(){
         return this.occupied;
     }
+
+    public void setColor(Color color){
+        this.color = color;
+    }
 }
