@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
+import static javax.swing.BorderFactory.createEmptyBorder;
 
 
 public class CenterPane extends JPanel {
@@ -51,10 +52,13 @@ public class CenterPane extends JPanel {
         public void mouseReleased(MouseEvent e) {
             mouseButton = 0;
             boardScreen.setCursor(null);
+
+            updateBoard();
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
+            updateBoard();
             if (mouseButton == 3) {
                 boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 
@@ -97,6 +101,9 @@ public class CenterPane extends JPanel {
             else if (mouseButton == 1){
 
             }
+        }
+        public void mouseMoved(MouseEvent e){
+            updateBoard();
         }
 
     };
@@ -169,6 +176,9 @@ public class CenterPane extends JPanel {
         //boardScreen.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         boardScreen.setViewportView(boardPane);
+        boardScreen.setBackground(Color.LIGHT_GRAY);
+        boardScreen.getViewport().setOpaque(true);
+        boardScreen.setBorder(createEmptyBorder());
 
         textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardScreen, cardPane);
         textAndCardPane.setResizeWeight(0.8);
@@ -245,6 +255,7 @@ public class CenterPane extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+
             }
 
             @Override
