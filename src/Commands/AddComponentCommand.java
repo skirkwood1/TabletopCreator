@@ -9,14 +9,11 @@ public class AddComponentCommand extends GameCommand {
     private Component component;
 
     public AddComponentCommand(Game game, Component component){
-        this.memento = new GameMemento();
         this.game = game;
         this.component = component;
     }
 
     public void execute(){
-        this.memento.setState(this.game);
-
         if(this.component instanceof Piece){
             game.addPiece((Piece)component);
         }
@@ -26,6 +23,11 @@ public class AddComponentCommand extends GameCommand {
     }
 
     public void unExecute(){
-        game = memento.getState();
+        if(this.component instanceof Piece){
+            game.removePiece((Piece)component);
+        }
+        else if(this.component instanceof Card){
+            game.removeCard((Card)component);
+        }
     }
 }

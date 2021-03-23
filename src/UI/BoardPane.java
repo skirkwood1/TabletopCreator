@@ -1,5 +1,7 @@
 package UI;
 import Commands.CommandStack;
+import Commands.PieceMoveCommand;
+import Commands.PlacePieceCommand;
 import Commands.PlaceSpaceCommand;
 import Models.Board;
 import Models.Game;
@@ -92,9 +94,13 @@ public class BoardPane extends JPanel {
                     case PIECE:
                         Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
                         //Piece piece = (Piece)game.getSelectedComponent();
+
                         if(piece != null){
-                            space.addPiece(piece);
+                            PlacePieceCommand ppc = new PlacePieceCommand(game,x,y,piece);
+                            commandStack.insertCommand(ppc);
                         }
+//                            space.addPiece(piece);
+//                        }
                         break;
                     case NONE:
                         break;
@@ -170,10 +176,13 @@ public class BoardPane extends JPanel {
             if(buttonPressed == 1) {
                 if ((start_x != end_x || start_y != end_y) &&
                 end_x < size[0] && end_x >= 0 && end_y < size[1] && end_y >= 0) {
-                    game.getBoard().getSpace(start_x, start_y).removePiece();
-                    game.getBoard().getSpace(end_x, end_y).addPiece(selectedPiece);
+                    //game.getBoard().getSpace(start_x, start_y).removePiece();
+                    //game.getBoard().getSpace(end_x, end_y).addPiece(selectedPiece);
 
-                    paintComponent(g);
+                    PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
+                    commandStack.insertCommand(pmc);
+
+                    //paintComponent(g);
 
 //                    removeAll();
 //                    revalidate();

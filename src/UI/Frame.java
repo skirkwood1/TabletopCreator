@@ -8,7 +8,10 @@ import Models.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.HashMap;
 
 public class Frame extends JFrame {
 
@@ -29,6 +32,8 @@ public class Frame extends JFrame {
 
     private Game game = new Game();
     private CommandStack commandStack = new CommandStack();
+
+    private HashMap<KeyStroke, Action> actionMap = new HashMap<KeyStroke, Action>();
 
     public Frame() {
         super("Tabletop Creator v0.01");
@@ -167,6 +172,8 @@ public class Frame extends JFrame {
         setSize(1280,720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
+        keyboardSetup();
     }
 
     private void saveGame(Game game, File file){
@@ -198,5 +205,54 @@ public class Frame extends JFrame {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    private void keyboardSetup(){
+        KeyStroke key1 = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK);
+        KeyStroke key2 = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK);
+
+        actionMap.put(key1, new AbstractAction("action1") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                commandStack.undo();
+                //centerPane.refreshComponentTree(this.game);
+                centerPane.updateBoard();
+                centerPane.refreshComponentTree(game);
+            }
+        });
+
+        actionMap.put(key2, new AbstractAction("action2") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                commandStack.redo();
+                centerPane.updateBoard();
+                centerPane.refreshComponentTree(game);
+            }
+        });
+
+
+
+
+
+        KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        kfm.addKeyEventDispatcher( new KeyEventDispatcher() {
+
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                KeyStroke keyStroke = KeyStroke.getKeyStrokeForEvent(e);
+                if ( actionMap.containsKey(keyStroke) ) {
+                    final Action a = actionMap.get(keyStroke);
+                    final ActionEvent ae = new ActionEvent(e.getSource(), e.getID(), null );
+                    SwingUtilities.invokeLater( new Runnable() {
+                        @Override
+                        public void run() {
+                            a.actionPerformed(ae);
+                        }
+                    } );
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

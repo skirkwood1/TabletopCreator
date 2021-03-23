@@ -116,4 +116,12 @@ public class Game implements Serializable {
     public void setSelectedComponent(Component piece){
         this.selectedComponent = piece;
     }
+
+    public void removeCard(Card card){
+        deck.remove(card);
+    }
+
+    public void removePiece(Piece piece){
+        deck.remove(piece);
+    }
 }

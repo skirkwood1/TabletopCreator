@@ -26,11 +26,13 @@ public class CommandStack {
 
     public void undo()
     {
-        GameCommand command = commandStack.get(pointer);
-        command.unExecute();
-        pointer--;
+        if(pointer >= 0){
+            GameCommand command = commandStack.get(pointer);
+            command.unExecute();
+            pointer--;
 
-        System.out.println("Undid command " + command.toString() + "\n\r Pointer set to + " + pointer);
+            System.out.println("Undid command " + command.toString() + "\n\r Pointer set to + " + pointer);
+        }
     }
 
     public void redo()
