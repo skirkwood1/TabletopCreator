@@ -22,4 +22,11 @@ public class TextPanel extends JPanel {
     }
 
     public void setText(String text) {textArea.setText(text);}
+
+    public void appendBottomText(String text){
+        String currentText = textArea.getText();
+        currentText = currentText.strip();
+        textArea.setText("\n\r\n\r\n\r\n\r" + currentText + "\n\r" + text);
+
+    }
 }

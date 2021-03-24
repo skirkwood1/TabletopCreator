@@ -80,14 +80,20 @@ public class ComponentTree extends JPanel {
         this.game = game;
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
         deck.removeAllChildren();
-        //model.reload();
+        pieces.removeAllChildren();
+
 
         for(Card card: this.game.getDeck()){
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(card.getName());
             model.insertNodeInto(node,deck,deck.getChildCount());
         }
 
+        for(Piece piece: this.game.getPieces()){
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(piece.getName());
+            model.insertNodeInto(node,pieces,pieces.getChildCount());
+        }
 
+        model.reload();
     }
 
 //    public void valueChanged(TreeSelectionEvent e) {

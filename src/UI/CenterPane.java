@@ -13,6 +13,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Random;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
@@ -23,13 +25,20 @@ public class CenterPane extends JPanel {
     private JSplitPane overallPane;
     private JSplitPane textAndCardPane;
     private JSplitPane cardPane;
+    private JSplitPane boardAndCmd;
     BoardPane boardPane;
     JScrollPane boardScreen;
     private TextPanel cardText;
     private JLabel componentImage;
     private JScrollPane imagePane;
 
+    private JTextField cmd;
+    private TextPanel cmdOutput;
+    private JSplitPane cmdPane;
+
     private double zoom = 1.0;
+
+    private HashMap<String,Action> commandMap;
 
     MouseAdapter mb = new MouseAdapter() {
 
@@ -180,8 +189,40 @@ public class CenterPane extends JPanel {
         boardScreen.getViewport().setOpaque(true);
         boardScreen.setBorder(createEmptyBorder());
 
-        textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardScreen, cardPane);
-        textAndCardPane.setResizeWeight(0.8);
+        cmd = new JTextField();
+        cmd.setSize(new Dimension(800,20));
+        cmd.setPreferredSize(new Dimension(800,20));
+
+
+        cmdOutput = new TextPanel();
+        cmdOutput.setSize(new Dimension(800,40));
+        cmdOutput.setPreferredSize(new Dimension(800,40));
+
+        cmd.addActionListener(e -> {
+            String[] command = cmd.getText().split(" ");
+            if(commandMap.containsKey(command[0])){
+                parseCommand(command);
+            }else{
+            cmdOutput.appendBottomText(cmd.getText());
+            cmd.setText("");
+            }
+        });
+
+        cmdPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        cmdPane.setDividerSize(0);
+
+        //buttonPane.add(cardBtn);
+        //buttonPane.add(pieceBtn);
+        cmdPane.add(cmdOutput);
+        cmdPane.add(cmd);
+
+        cmdPane.setResizeWeight(1);
+
+
+        boardAndCmd = new JSplitPane(JSplitPane.VERTICAL_SPLIT, boardScreen,cmdPane);
+
+        textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardAndCmd, cardPane);
+        textAndCardPane.setResizeWeight(1);
 
 
         componentTree.setMinimumSize(new Dimension(50,0));
@@ -325,7 +366,8 @@ public class CenterPane extends JPanel {
         imagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         imagePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-
+        commandMap = new HashMap<String,Action>();
+        actionSetup();
 
     }
 
@@ -370,19 +412,20 @@ public class CenterPane extends JPanel {
         componentImage.setIcon(icon);
     }
 
-    void updateComponentTree(Card card){
-        componentTree.updateTree(card);
+    void updateComponentTree(Component component){
+        componentTree.updateTree(component);
     }
 
-    void updateComponentTree(Piece piece){
-        componentTree.updateTree(piece);
-    }
+    //void updateComponentTree(Piece piece){
+    //    componentTree.updateTree(piece);
+    //}
 
     public void collapseComponentTree(){componentTree.collapseTree();}
 
     void refreshComponentTree(Game game){
         this.game = game;
         componentTree.refreshTree(game);
+        //componentTree.collapseTree();
         componentTree.getTree().addTreeSelectionListener(e -> {
 
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
@@ -393,7 +436,7 @@ public class CenterPane extends JPanel {
                     if(selectedNode.getParent().equals(componentTree.pieces)){
                         component = game.getPiece(name);
                     }
-                    else{
+                    else if (selectedNode.getParent().equals(componentTree.deck)){
                         component = game.getCard(name);
                     }
                 }
@@ -421,6 +464,30 @@ public class CenterPane extends JPanel {
     void updateColor(Color c){
 
         //boardPane.chosenColor = c;
+    }
+
+    private void actionSetup(){
+        commandMap.put("/roll", new AbstractAction("action1") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cmdOutput.appendBottomText("Roll dice");
+            }
+        });
+
+        commandMap.put("/undo", new AbstractAction("action2"){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
+
+    private void parseCommand(String[] command){
+        if(command[0].equals("/roll")){
+            Random r = new Random();
+            cmdOutput.appendBottomText("Rolling " + command[1] + " sided die: " + ((r.nextInt(Integer.parseInt(command[1]))) + 1));
+
+        }
     }
 
 }

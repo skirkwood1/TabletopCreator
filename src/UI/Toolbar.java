@@ -22,8 +22,8 @@ public class Toolbar extends JPanel implements ActionListener {
     private JLabel colorLabel;
 
     private JMenuBar menuBar;
-    private JMenu file,edit;
-    private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo;
+    private JMenu file,edit,add;
+    private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule;
 
     private StringListener stringListener;
 
@@ -109,6 +109,7 @@ public class Toolbar extends JPanel implements ActionListener {
         menuBar = new JMenuBar();
         file = new JMenu("File");
         edit = new JMenu("Edit");
+        add = new JMenu("Add");
 
         cut = new JMenuItem("Cut");
         copy = new JMenuItem("Copy");
@@ -118,11 +119,17 @@ public class Toolbar extends JPanel implements ActionListener {
         undo = new JMenuItem("Undo");
         redo = new JMenuItem("Redo");
 
+        addPiece = new JMenuItem("Piece");
+        addCard = new JMenuItem("Card");
+        addRule = new JMenuItem("Rule");
+
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
         openMenu.addActionListener(this);
         undo.addActionListener(this);
         redo.addActionListener(this);
+        addPiece.addActionListener(this);
+        addCard.addActionListener(this);
 
         file.add(cut);
         file.add(copy);
@@ -134,8 +141,13 @@ public class Toolbar extends JPanel implements ActionListener {
         edit.add(undo);
         edit.add(redo);
 
+        add.add(addPiece);
+        add.add(addCard);
+        add.add(addRule);
+
         menuBar.add(file);
         menuBar.add(edit);
+        menuBar.add(add);
 
         add(menuBar,BorderLayout.NORTH);
         add(buttons,BorderLayout.SOUTH);
@@ -167,6 +179,16 @@ public class Toolbar extends JPanel implements ActionListener {
             stringListener.textEmitted("ColorChooser\n\r");
             System.out.println("Choose Color");
 
+        }
+
+        else if (c == addPiece){
+            stringListener.textEmitted("AddPiece\n\r");
+            System.out.println("Add Piece");
+        }
+
+        else if (c == addCard){
+            stringListener.textEmitted("AddCard\n\r");
+            System.out.println("Add Card");
         }
 
         else if (c == undo){

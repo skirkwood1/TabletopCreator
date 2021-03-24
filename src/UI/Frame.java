@@ -17,13 +17,14 @@ public class Frame extends JFrame {
 
     private ComponentTree componentTree;
     private Toolbar toolbar;
-    private TextPanel textPanel;
+    private JTextField textPanel,cmd;
+    private TextPanel cmdOutput;
     private JButton cardBtn;
     private JButton pieceBtn;
     private CenterPane centerPane;
     private ComponentCreationDialog cardCreationDialog;
     private ComponentCreationDialog pieceCreationDialog;
-    private JSplitPane buttonPane;
+    private JSplitPane buttonPane,cmdPane,mainPane;
 
     private ResizeBoardPane resizePane;
 
@@ -48,15 +49,29 @@ public class Frame extends JFrame {
         cardBtn = new JButton("Add card");
         pieceBtn = new JButton("Add piece");
 
-        buttonPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        buttonPane.setDividerSize(0);
+
+
+//        cmd = new JTextField();
+//        cmdOutput = new TextPanel();
+//        cmdOutput.setPreferredSize(new Dimension(800,100));
+//
+//        cmd.addActionListener(e -> {
+//            cmdOutput.appendBottomText(cmd.getText());
+//            cmd.setText("");
+//        });
+//
+//        cmdPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+//        cmdPane.setDividerSize(0);
 
         cardCreationDialog = new ComponentCreationDialog();
         pieceCreationDialog = new ComponentCreationDialog();
 
-        buttonPane.add(cardBtn);
-        buttonPane.add(pieceBtn);
-        buttonPane.setResizeWeight(0.5);
+        //buttonPane.add(cardBtn);
+        //buttonPane.add(pieceBtn);
+//        cmdPane.add(cmdOutput);
+//        cmdPane.add(cmd);
+//
+//        cmdPane.setResizeWeight(0.2);
 
         this.resizePane = new ResizeBoardPane(game);
 
@@ -65,7 +80,7 @@ public class Frame extends JFrame {
 
         add(centerPane, BorderLayout.CENTER);
 
-        add(buttonPane, BorderLayout.SOUTH);
+        //add(cmdPane, BorderLayout.SOUTH);
 
         pack();
 
@@ -113,15 +128,25 @@ public class Frame extends JFrame {
                 //toolbar.updateColorLabel();
             }
 
+            else if(text.equals("AddCard\n\r")){
+                addCardDialog();
+            }
+
+            else if(text.equals("AddPiece\n\r")){
+                addPieceDialog();
+            }
+
             else if(text.equals("Undo\n\r")){
                 commandStack.undo();
                 //centerPane.refreshComponentTree(this.game);
                 centerPane.updateBoard();
+                centerPane.refreshComponentTree(game);
             }
 
             else if(text.equals("Redo\n\r")){
                 commandStack.redo();
                 centerPane.updateBoard();
+                centerPane.refreshComponentTree(game);
             }
 
             else if(text.equals("Placement\n\r")){
@@ -131,42 +156,11 @@ public class Frame extends JFrame {
         });
 
         cardBtn.addActionListener(e -> {
-            int n = cardCreationDialog.display();
-            if(n == JOptionPane.YES_OPTION){
-                String cardName = cardCreationDialog.getComponentName();
-                String cardText = cardCreationDialog.getComponentText();
-                String fileSelected = cardCreationDialog.getFileSelect();
-
-                Card card = new Card(cardName,cardText,fileSelected);
-
-                AddComponentCommand acc = new AddComponentCommand(game,card);
-                commandStack.insertCommand(acc);
-                //game.addCard(card);
-
-                centerPane.updateComponentTree(card);
-
-                cardCreationDialog.clear();
-            }
+            addCardDialog();
         });
 
         pieceBtn.addActionListener(e -> {
-            int n = pieceCreationDialog.display();
-            if(n == JOptionPane.YES_OPTION){
-                String pieceName = pieceCreationDialog.getComponentName();
-                String pieceText = pieceCreationDialog.getComponentText();
-                String fileSelected = pieceCreationDialog.getFileSelect();
-
-                Piece piece = new Piece(pieceName,pieceText,fileSelected);
-
-                AddComponentCommand acc = new AddComponentCommand(game,piece);
-                commandStack.insertCommand(acc);
-
-                //game.addPiece(piece);
-
-                centerPane.updateComponentTree(piece);
-
-                pieceCreationDialog.clear();
-            }
+            addPieceDialog();
         });
 
         setSize(1280,720);
@@ -205,6 +199,45 @@ public class Frame extends JFrame {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    private void addCardDialog(){
+        int n = cardCreationDialog.display();
+        if(n == JOptionPane.YES_OPTION){
+            String cardName = cardCreationDialog.getComponentName();
+            String cardText = cardCreationDialog.getComponentText();
+            String fileSelected = cardCreationDialog.getFileSelect();
+
+            Card card = new Card(cardName,cardText,fileSelected);
+
+            AddComponentCommand acc = new AddComponentCommand(game,card);
+            commandStack.insertCommand(acc);
+            //game.addCard(card);
+
+            centerPane.updateComponentTree(card);
+
+            cardCreationDialog.clear();
+        }
+    }
+
+    private void addPieceDialog(){
+        int n = pieceCreationDialog.display();
+        if(n == JOptionPane.YES_OPTION){
+            String pieceName = pieceCreationDialog.getComponentName();
+            String pieceText = pieceCreationDialog.getComponentText();
+            String fileSelected = pieceCreationDialog.getFileSelect();
+
+            Piece piece = new Piece(pieceName,pieceText,fileSelected);
+
+            AddComponentCommand acc = new AddComponentCommand(game,piece);
+            commandStack.insertCommand(acc);
+
+            //game.addPiece(piece);
+
+            centerPane.updateComponentTree(piece);
+
+            pieceCreationDialog.clear();
+        }
     }
 
     private void keyboardSetup(){

@@ -122,6 +122,6 @@ public class Game implements Serializable {
     }
 
     public void removePiece(Piece piece){
-        deck.remove(piece);
+        pieces.remove(piece);
     }
 }
