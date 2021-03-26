@@ -244,6 +244,8 @@ public class Frame extends JFrame {
         KeyStroke key1 = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK);
         KeyStroke key2 = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK);
 
+        KeyStroke del = KeyStroke.getKeyStroke("DELETE");
+
         actionMap.put(key1, new AbstractAction("action1") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -263,7 +265,15 @@ public class Frame extends JFrame {
             }
         });
 
-
+        actionMap.put(del, new AbstractAction("action3") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                centerPane.boardPane.deleteSelectedSpace();
+                //centerPane.refreshComponentTree(this.game);
+                centerPane.updateBoard();
+                centerPane.refreshComponentTree(game);
+            }
+        });
 
 
 

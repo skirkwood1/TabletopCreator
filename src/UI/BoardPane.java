@@ -1,8 +1,5 @@
 package UI;
-import Commands.CommandStack;
-import Commands.PieceMoveCommand;
-import Commands.PlacePieceCommand;
-import Commands.PlaceSpaceCommand;
+import Commands.*;
 import Models.Board;
 import Models.Game;
 import Models.Piece;
@@ -261,6 +258,8 @@ public class BoardPane extends JPanel {
 
             if(preview_x < size[0] && preview_x >= 0 && preview_y < size[1] && preview_y >= 0){
                 spacePreview = new Point(preview_x,preview_y);
+            }else{
+                spacePreview = null;
             }
 
             //super.mouseMoved(e);
@@ -336,6 +335,18 @@ public class BoardPane extends JPanel {
     private AlphaComposite makeComposite(float alpha) {
         int type = AlphaComposite.SRC_OVER;
         return(AlphaComposite.getInstance(type, alpha));
+    }
+
+    public void deleteSelectedSpace(){
+        if(spacePreview != null){
+            int x = (int)spacePreview.getX();
+            int y = (int)spacePreview.getY();
+
+            Space space = game.getBoard().getSpace(x,y);
+
+            DeleteSpaceCommand dsc = new DeleteSpaceCommand(game,x,y,space);
+            commandStack.insertCommand(dsc);
+        }
     }
 
 
