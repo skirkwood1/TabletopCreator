@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ public class CenterPane extends JPanel {
     private JSplitPane cmdPane;
 
     private double zoom = 1.0;
+    private double imageZoom = 1.0;
 
     private HashMap<String,Action> commandMap;
 
@@ -296,7 +298,7 @@ public class CenterPane extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                imagePane.setCursor(null);
             }
 
             @Override
@@ -342,20 +344,27 @@ public class CenterPane extends JPanel {
 
         };
 
+        MouseWheelListener mc = new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+
+                imageZoom -= e.getWheelRotation() * 0.1;
+                if(imageZoom < 0.1){
+                    imageZoom = 0.1;
+                }
+
+                BufferedImage image = game.getSelectedComponent().getPicture(); // transform it
+                Image newimg = image.getScaledInstance((int)(image.getWidth()*imageZoom), (int)(image.getHeight()*imageZoom),  Image.SCALE_DEFAULT); // scale it the smooth way
+
+                ImageIcon icon = new ImageIcon(newimg);
+                componentImage.setIcon(icon);
+
+            }
+        };
+
         componentImage.addMouseListener(ma);
         componentImage.addMouseMotionListener(ma);
-        componentImage.addMouseWheelListener(new MouseWheelListener() {
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                int notches = e.getWheelRotation();
-                double temp = zoom - (notches * 0.2);
-                // minimum zoom factor is 1.0
-                temp = Math.max(temp, 1.0);
-                if (temp != zoom) {
-                    zoom = temp;
-                    //resizeImage();
-                }
-            }
-        });
+        componentImage.addMouseWheelListener(mc);
 
         boardPane.addMouseListener(mb);
         boardPane.addMouseMotionListener(mb);

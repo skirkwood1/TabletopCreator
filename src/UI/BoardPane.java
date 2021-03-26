@@ -60,10 +60,6 @@ public class BoardPane extends JPanel {
 
         int buttonPressed = 0;
 
-        //BufferedImage image;
-
-
-
         @Override
         public void mouseClicked(MouseEvent e) {
             Graphics g = getGraphics();
@@ -89,8 +85,8 @@ public class BoardPane extends JPanel {
                         g2.fillRect(x*40+20,y*40+20,40,40);
                         break;
                     case PIECE:
-                        Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
-                        //Piece piece = (Piece)game.getSelectedComponent();
+                        //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
+                        Piece piece = (Piece)game.getSelectedComponent();
 
                         if(piece != null){
                             PlacePieceCommand ppc = new PlacePieceCommand(game,x,y,piece);
@@ -103,7 +99,6 @@ public class BoardPane extends JPanel {
                         break;
                 }
 
-
                 if(space.isOccupied()){
                     g2.drawImage(space.getPiece().getPicture(),x*40+25,y*40+25,30,30,null);
                 }
@@ -111,11 +106,7 @@ public class BoardPane extends JPanel {
                 g2.setColor(Color.BLACK);
                 g2.drawRect(x*40+20,y*40+20,40,40);
 
-
-
                 //System.out.println("Placed space at " + x + ", " + y);
-
-                //game.getBoard().setSquare(x,y,game.getBoard().getColor());
 
             }
 
@@ -173,17 +164,8 @@ public class BoardPane extends JPanel {
             if(buttonPressed == 1) {
                 if ((start_x != end_x || start_y != end_y) &&
                 end_x < size[0] && end_x >= 0 && end_y < size[1] && end_y >= 0) {
-                    //game.getBoard().getSpace(start_x, start_y).removePiece();
-                    //game.getBoard().getSpace(end_x, end_y).addPiece(selectedPiece);
-
                     PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
                     commandStack.insertCommand(pmc);
-
-                    //paintComponent(g);
-
-//                    removeAll();
-//                    revalidate();
-
                 }
                 image = null;
                 repaint();
@@ -265,8 +247,6 @@ public class BoardPane extends JPanel {
             //super.mouseMoved(e);
         }
 
-        //public double getZoom(){return zoom;}
-
     };
 
     public void paintComponent(Graphics g) {
@@ -301,11 +281,6 @@ public class BoardPane extends JPanel {
             g2.drawImage(image, (int) imagePreview.getX(), (int) imagePreview.getY(), 30, 30, null);
         }
 
-//        float alpha = 0.75f;
-//        int type = AlphaComposite.SRC_OVER;
-//        AlphaComposite composite =
-//                AlphaComposite.getInstance(type, alpha);
-//
         if (spacePreview != null) {
             g2.setComposite(makeComposite(0.2f));
             g2.setPaint(game.getBoard().getColor());
@@ -348,6 +323,5 @@ public class BoardPane extends JPanel {
             commandStack.insertCommand(dsc);
         }
     }
-
 
 }
