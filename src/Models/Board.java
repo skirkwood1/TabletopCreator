@@ -1,6 +1,7 @@
 package Models;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 //import java.util.Random;
 
@@ -10,6 +11,10 @@ public class Board implements Serializable {
     private int width;
     private final Color defaultColor = Color.WHITE;
     private Color currentColor = Color.RED;
+
+    private boolean useTexture = false;
+    private BufferedImage currentTexture = null;
+
     private Space[][] spaces;
     //private Random random = new Random();
 
@@ -74,6 +79,10 @@ public class Board implements Serializable {
         spaces[x][y].setColor(color);
     }
 
+    public void setSquare(int x, int y, BufferedImage texture){
+        spaces[x][y].setTexture(texture);
+    }
+
     public void setSize(int x, int y){
         Space[][] newSpaces = new Space[x][y];
 
@@ -95,6 +104,20 @@ public class Board implements Serializable {
 
     public void setColor(Color color){
         this.currentColor = color;
+        this.useTexture = false;
+    }
+
+    public void setTexture(BufferedImage texture){
+        this.currentTexture = texture;
+        this.useTexture = true;
+    }
+
+    public BufferedImage getTexture(){
+        return this.currentTexture;
+    }
+
+    public boolean useTexture(){
+        return this.useTexture;
     }
 
     public Color getColor(){

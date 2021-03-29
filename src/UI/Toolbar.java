@@ -23,7 +23,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
     private JMenuBar menuBar;
     private JMenu file,edit,add;
-    private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule;
+    private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture;
 
     private StringListener stringListener;
 
@@ -89,6 +89,7 @@ public class Toolbar extends JPanel implements ActionListener {
         placePiece.addActionListener(this);
         placeSpace.addActionListener(this);
 
+
         buttons = new JPanel();
 
         buttons.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -122,6 +123,7 @@ public class Toolbar extends JPanel implements ActionListener {
         addPiece = new JMenuItem("Piece");
         addCard = new JMenuItem("Card");
         addRule = new JMenuItem("Rule");
+        addTexture = new JMenuItem("Texture");
 
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
@@ -130,6 +132,7 @@ public class Toolbar extends JPanel implements ActionListener {
         redo.addActionListener(this);
         addPiece.addActionListener(this);
         addCard.addActionListener(this);
+        addTexture.addActionListener(this);
 
         file.add(cut);
         file.add(copy);
@@ -144,6 +147,7 @@ public class Toolbar extends JPanel implements ActionListener {
         add.add(addPiece);
         add.add(addCard);
         add.add(addRule);
+        add.add(addTexture);
 
         menuBar.add(file);
         menuBar.add(edit);
@@ -189,6 +193,11 @@ public class Toolbar extends JPanel implements ActionListener {
         else if (c == addCard){
             stringListener.textEmitted("AddCard\n\r");
             System.out.println("Add Card");
+        }
+
+        else if (c == addTexture){
+            stringListener.textEmitted("AddTexture\n\r");
+            System.out.println("Add Texture");
         }
 
         else if (c == undo){

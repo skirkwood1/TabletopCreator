@@ -1,5 +1,6 @@
 package Models;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -8,6 +9,8 @@ public class Game implements Serializable {
     private ArrayList<Card> deck;
     private ArrayList<Dice> diceCollection;
     private ArrayList<Piece> pieces;
+
+    private transient ArrayList<Texture> textures;
 
     private Board board;
 
@@ -18,12 +21,16 @@ public class Game implements Serializable {
         this.diceCollection = new ArrayList<>();
         this.pieces = new ArrayList<>();
         this.board = new Board(10,10);
+
+        this.textures = new ArrayList<>();
     }
 
     public Game(Game game){
         this.deck = game.getDeck();
         this.diceCollection = game.getDice();
         this.pieces = game.pieces;
+
+        this.textures = new ArrayList<>();
 
         this.board = game.getBoard();
     }
@@ -34,6 +41,8 @@ public class Game implements Serializable {
         this.pieces = pieces;
 
         this.board = board;
+
+        this.textures = new ArrayList<>();
     }
 
     public Card addCard(String name, String text, String filename){
@@ -56,6 +65,23 @@ public class Game implements Serializable {
     public Piece addPiece(Piece piece){
         pieces.add(piece);
         return piece;
+    }
+
+    public void addTexture(String name, BufferedImage texture){
+        this.textures.add(new Texture(name,texture));
+    }
+
+    public void addTexture(Texture texture){
+        this.textures.add(texture);
+    }
+
+    public Texture getTexture(String name){
+        for(Texture t: textures){
+            if(t.getName().equals(name)){
+                return t;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Card> getDeck(){

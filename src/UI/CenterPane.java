@@ -1,19 +1,15 @@
 package UI;
 
 import Commands.CommandStack;
-import Models.Card;
 import Models.Game;
-import Models.Piece;
 import Models.Component;
+import Models.Texture;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -262,6 +258,7 @@ public class CenterPane extends JPanel {
             if(selectedNode != null){
                 String name = selectedNode.toString();
                 Component component = null;
+                Texture texture = null;
 //                if(selectedNode.isLeaf()){
 //                    card = game.getCard(cardName);
 //                }
@@ -270,15 +267,22 @@ public class CenterPane extends JPanel {
                     if(selectedNode.getParent().equals(componentTree.pieces)){
                         component = game.getPiece(name);
                     }
-                    else{
+                    else if(selectedNode.getParent().equals(componentTree.cards)){
                         component = game.getCard(name);
                     }
+                    else if(selectedNode.getParent().equals(componentTree.textures)){
+                        texture = game.getTexture(name);
+                    }
+
                 }
 
                 if(component != null){
                     displayImage(component.getPicture());
                     setCardText(component.getText());
                     game.setSelectedComponent(component);
+                }else if(texture != null){
+                    displayImage(texture.getTexture());
+                    game.getBoard().setTexture(texture.getTexture());
                 }
             }
         });
@@ -354,6 +358,10 @@ public class CenterPane extends JPanel {
                 }
 
                 BufferedImage image = game.getSelectedComponent().getPicture(); // transform it
+                if(image == null){
+                    image = game.getBoard().getTexture();
+                }
+
                 Image newimg = image.getScaledInstance((int)(image.getWidth()*imageZoom), (int)(image.getHeight()*imageZoom),  Image.SCALE_DEFAULT); // scale it the smooth way
 
                 ImageIcon icon = new ImageIcon(newimg);
@@ -408,6 +416,10 @@ public class CenterPane extends JPanel {
         componentTree.updateTree(component);
     }
 
+    void updateComponentTree(Texture texture){
+        componentTree.updateTree(texture);
+    }
+
     //void updateComponentTree(Piece piece){
     //    componentTree.updateTree(piece);
     //}
@@ -428,7 +440,7 @@ public class CenterPane extends JPanel {
                     if(selectedNode.getParent().equals(componentTree.pieces)){
                         component = game.getPiece(name);
                     }
-                    else if (selectedNode.getParent().equals(componentTree.deck)){
+                    else if (selectedNode.getParent().equals(componentTree.cards)){
                         component = game.getCard(name);
                     }
                 }

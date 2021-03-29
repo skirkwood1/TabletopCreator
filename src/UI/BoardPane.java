@@ -1,9 +1,6 @@
 package UI;
 import Commands.*;
-import Models.Board;
-import Models.Game;
-import Models.Piece;
-import Models.Space;
+import Models.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -81,10 +78,15 @@ public class BoardPane extends JPanel {
                 Space space = game.getBoard().getSpace(x,y);
                 switch(placementType){
                     case SPACE:
-                        PlaceSpaceCommand psc = new PlaceSpaceCommand(game,x,y);
-                        commandStack.insertCommand(psc);
+                        //PlaceSpaceCommand psc = new PlaceSpaceCommand(game,x,y);
+                        //commandStack.insertCommand(psc);
                         //g2.fillRect((int)((x*40+20)*zoom), (int)((y*40+20)*zoom), (int)(40*zoom), (int)(40*zoom));
-                        g2.fillRect(x*40+20,y*40+20,40,40);
+                        if(game.getBoard().useTexture()){
+                            g2.drawImage(game.getBoard().getTexture(),x*40+20,y*40+20,40,40,null);
+                        }
+                        else{
+                            g2.fillRect(x*40+20,y*40+20,40,40);
+                        }
                         break;
                     case PIECE:
                         //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
@@ -180,7 +182,7 @@ public class BoardPane extends JPanel {
                             if(start_x == end_x & start_y == end_y){
                                 PlaceSpaceCommand psc = new PlaceSpaceCommand(game,start_x,start_y);
                                 commandStack.insertCommand(psc);
-                            }else if(start_x <= end_x & start_y <= end_y){
+                            } else if(start_x <= end_x & start_y <= end_y){
                                 MultipleSpacesCommand msc = new MultipleSpacesCommand(game,start_x,start_y,end_x,end_y);
                                 commandStack.insertCommand(msc);
                             }else if(start_x >= end_x & start_y <= end_y){
@@ -300,13 +302,23 @@ public class BoardPane extends JPanel {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Space space = game.getBoard().getSpace(i, j);
-                Color color = space.getColor();
-                g2.setColor(color);
-                g2.fillRect(i * 40 + 20, j * 40 + 20, 40, 40);
+
+                if(space.isUsingTexture()){
+                    BufferedImage texture = space.getTexture();
+                    g2.drawImage(texture,i*40+20,j*40+20,40,40,null);
+                }
+                else{
+                    Color color = space.getColor();
+                    g2.setColor(color);
+                    g2.fillRect(i * 40 + 20, j * 40 + 20, 40, 40);
+                }
 
                 if(showGrid){
                     g2.setColor(Color.BLACK);
+                    Stroke oldStroke = g2.getStroke();
+                    g2.setStroke(new BasicStroke(0.5f));
                     g2.drawRect(i * 40 + 20, j * 40 + 20, 40, 40);
+                    g2.setStroke(oldStroke);
                 }
 
                 if (space.getPiece() != null) {
@@ -316,7 +328,10 @@ public class BoardPane extends JPanel {
         }
 
         g2.setColor(Color.BLACK);
+        Stroke oldStroke = g2.getStroke();
+        g2.setStroke(new BasicStroke(2f));
         g2.drawRect(20,20,width*40,height*40);
+        g2.setStroke(oldStroke);
 
         if (this.image != null) {
             g2.drawImage(image, (int) imagePreview.getX(), (int) imagePreview.getY(), 30, 30, null);
@@ -326,34 +341,47 @@ public class BoardPane extends JPanel {
             g2.setComposite(makeComposite(0.2f));
             g2.setPaint(game.getBoard().getColor());
             if(spacePreviewEnd == null){
-                g2.fillRect((int) spacePreview.getX() * 40 + 20, (int) spacePreview.getY() * 40 + 20, 40, 40);
+                drawSpace(g2,(int)spacePreview.getX(),(int)spacePreview.getY());
+                //g2.fillRect((int) spacePreview.getX() * 40 + 20, (int) spacePreview.getY() * 40 + 20, 40, 40);
             }else{
                 if(spacePreview.getX() <= spacePreviewEnd.getX() & spacePreview.getY() <= spacePreviewEnd.getY()){
                     for(int i = (int)spacePreview.getX(); i <= spacePreviewEnd.getX(); i++){
                         for(int j = (int)spacePreview.getY(); j <= spacePreviewEnd.getY(); j++){
-                            g2.fillRect(i*40+20,j*40+20,40,40);
+                            drawSpace(g2,i,j);
+                            //g2.fillRect(i*40+20,j*40+20,40,40);
                         }
                     }
                 }else if(spacePreview.getX() <= spacePreviewEnd.getX() & spacePreview.getY() >= spacePreviewEnd.getY()){
                     for(int i = (int)spacePreview.getX(); i <= spacePreviewEnd.getX(); i++){
                         for(int j = (int)spacePreviewEnd.getY(); j <= spacePreview.getY(); j++){
-                            g2.fillRect(i*40+20,j*40+20,40,40);
+                            drawSpace(g2,i,j);
+                            //g2.fillRect(i*40+20,j*40+20,40,40);
                         }
                     }
                 }else if(spacePreview.getX() >= spacePreviewEnd.getX() & spacePreview.getY() <= spacePreviewEnd.getY()){
                     for(int i = (int)spacePreviewEnd.getX(); i <= spacePreview.getX(); i++){
                         for(int j = (int)spacePreview.getY(); j <= spacePreviewEnd.getY(); j++){
-                            g2.fillRect(i*40+20,j*40+20,40,40);
+                            drawSpace(g2,i,j);
+                            //g2.fillRect(i*40+20,j*40+20,40,40);
                         }
                     }
                 }else if(spacePreview.getX() >= spacePreviewEnd.getX() & spacePreview.getY() >= spacePreviewEnd.getY()){
                     for(int i = (int)spacePreviewEnd.getX(); i <= spacePreview.getX(); i++){
                         for(int j = (int)spacePreviewEnd.getY(); j <= spacePreview.getY(); j++){
-                            g2.fillRect(i*40+20,j*40+20,40,40);
+                            drawSpace(g2,i,j);
+                            //g2.fillRect(i*40+20,j*40+20,40,40);
                         }
                     }
                 }
             }
+        }
+    }
+
+    public void drawSpace(Graphics2D g2, int x, int y){
+        if(game.getBoard().useTexture()){
+            g2.drawImage(game.getBoard().getTexture(),x*40+20,y*40+20,40,40,null);
+        }else{
+            g2.fillRect(x*40+20,y*40+20,40,40);
         }
     }
 

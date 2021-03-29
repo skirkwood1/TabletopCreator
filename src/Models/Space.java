@@ -1,6 +1,7 @@
 package Models;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 public class Space implements Serializable {
@@ -15,19 +16,41 @@ public class Space implements Serializable {
     private boolean occupied;
     private Piece piece = null;
 
+    private boolean useTexture;
+    private BufferedImage texture;
+
     public Space(){
         this.color = Color.GRAY;
         this.occupied = false;
+
+        this.useTexture = false;
     }
 
     public Space(Color color){
         this.color = color;
         this.occupied = false;
+
+        this.useTexture = false;
         //this.empty = false;
+    }
+
+    public Space(BufferedImage image){
+        this.texture = image;
+        this.occupied = false;
+
+        this.useTexture = true;
     }
 
     public Color getColor(){
         return color;
+    }
+
+    public BufferedImage getTexture(){
+        return texture;
+    }
+
+    public boolean isUsingTexture(){
+        return useTexture;
     }
 
     public String toString(){
@@ -54,5 +77,11 @@ public class Space implements Serializable {
 
     public void setColor(Color color){
         this.color = color;
+        this.useTexture = false;
+    }
+
+    public void setTexture(BufferedImage image){
+        this.texture = image;
+        this.useTexture = true;
     }
 }

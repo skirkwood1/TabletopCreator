@@ -2,6 +2,7 @@ package UI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class ComponentCreationDialog extends JOptionPane {
     private JTextField name;
@@ -43,7 +44,7 @@ public class ComponentCreationDialog extends JOptionPane {
     String getFileSelect(){
         try{
             return imageChooser.getSelectedFile().getCanonicalPath();
-        }catch(Exception ex){
+        }catch(IOException ex){
             ex.printStackTrace();
         }
         return null;

@@ -24,6 +24,7 @@ public class Frame extends JFrame {
     private CenterPane centerPane;
     private ComponentCreationDialog cardCreationDialog;
     private ComponentCreationDialog pieceCreationDialog;
+    private ComponentCreationDialog textureCreationDialog;
     private JSplitPane buttonPane,cmdPane,mainPane;
 
     private ResizeBoardPane resizePane;
@@ -65,6 +66,8 @@ public class Frame extends JFrame {
 
         cardCreationDialog = new ComponentCreationDialog();
         pieceCreationDialog = new ComponentCreationDialog();
+
+        textureCreationDialog = new ComponentCreationDialog();
 
         //buttonPane.add(cardBtn);
         //buttonPane.add(pieceBtn);
@@ -134,6 +137,10 @@ public class Frame extends JFrame {
 
             else if(text.equals("AddPiece\n\r")){
                 addPieceDialog();
+            }
+
+            else if(text.equals("AddTexture\n\r")){
+                addTextureDialog();
             }
 
             else if(text.equals("Undo\n\r")){
@@ -237,6 +244,24 @@ public class Frame extends JFrame {
             centerPane.updateComponentTree(piece);
 
             pieceCreationDialog.clear();
+        }
+    }
+
+    private void addTextureDialog(){
+        int n = textureCreationDialog.display();
+        if(n == JOptionPane.YES_OPTION){
+            String name = textureCreationDialog.getComponentName();
+            String fileSelected = textureCreationDialog.getFileSelect();
+
+            Texture texture = new Texture(name,fileSelected);
+
+            game.addTexture(texture);
+
+            //game.addPiece(piece);
+
+            centerPane.updateComponentTree(texture);
+
+            textureCreationDialog.clear();
         }
     }
 
