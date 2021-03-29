@@ -381,42 +381,25 @@ public class CenterPane extends JPanel {
     }
 
 
-    void appendText(String text){
-        textPanel.appendText(text);
-    }
+    //void appendText(String text){
+    //    textPanel.appendText(text);
+    //}
 
     void setCardText(String text){
         cardText.setText(text);
     }
 
-    void displayImage(File imageFile){
-        try {
-            Image image = ImageIO.read(imageFile);
-            displayImage(image);
-
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
-    }
+//    void displayImage(File imageFile){
+//        try {
+//            Image image = ImageIO.read(imageFile);
+//            displayImage(image);
+//
+//        }catch (IOException ex){
+//            ex.printStackTrace();
+//        }
+//    }
 
     void displayImage(Image image){
-//        int baseHeight = ((BufferedImage)image).getHeight();
-//        int baseWidth = ((BufferedImage)image).getWidth();
-
-//        int imageSize;
-//        float imageScale;
-//        if(imagePane.getHeight()>imagePane.getWidth()){
-//            imageSize = imagePane.getWidth();
-//            imageScale = (float)imageSize/baseWidth;
-//        }
-//        else{
-//            imageSize = imagePane.getHeight();
-//            imageScale = (float)imageSize/baseHeight;
-//        }
-//
-//        image = image.getScaledInstance((int)(baseHeight*imageScale),
-//                (int)(((BufferedImage)image).getHeight()*imageScale),
-//                Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(image);
         componentImage.setIcon(icon);
     }

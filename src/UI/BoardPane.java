@@ -24,6 +24,7 @@ public class BoardPane extends JPanel {
     BufferedImage image;
 
     Point spacePreview;
+    Point spacePreviewEnd;
 
     CommandStack commandStack;
 
@@ -42,7 +43,6 @@ public class BoardPane extends JPanel {
         addMouseMotionListener(ma);
 
         imagePreview = new Point(0,0);
-
     }
 
     MouseAdapter ma = new MouseAdapter() {
@@ -130,18 +130,22 @@ public class BoardPane extends JPanel {
             if((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0){
                 if(start_x < size[0] && start_x >= 0 && start_y < size[1] && start_y >= 0){
                     Space start_space = spaces[start_x][start_y];
-                    selectedPiece = start_space.getPiece();
+                    if(placementType == PlacementType.NONE){
+                        selectedPiece = start_space.getPiece();
 
-                    if(selectedPiece != null){
-                        image = selectedPiece.getPicture();
-                        BufferedImage preview = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_INT_ARGB);
+                        if(selectedPiece != null){
+                            image = selectedPiece.getPicture();
+                            BufferedImage preview = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_INT_ARGB);
 
-                        Graphics2D g2d = (Graphics2D)preview.getGraphics();
-                        g2d.setComposite(AlphaComposite.SrcOver.derive(0.5f));
+                            Graphics2D g2d = (Graphics2D)preview.getGraphics();
+                            g2d.setComposite(AlphaComposite.SrcOver.derive(0.5f));
 
-                        g2d.drawImage(image, 0, 0, null);
+                            g2d.drawImage(image, 0, 0, null);
 
-                        image = preview;
+                            image = preview;
+                        }
+                    } else if (placementType == PlacementType.SPACE) {
+
                     }
                 }
 
@@ -154,7 +158,7 @@ public class BoardPane extends JPanel {
         public void mouseReleased(MouseEvent e) {
 
             Graphics g = getGraphics();
-            //Graphics2D g2 = (Graphics2D)g;
+            Graphics2D g2 = (Graphics2D)g;
 
             end_x = (int) Math.floor(((e.getX() / zoom - 20) / 40));
             end_y = (int) Math.floor(((e.getY() / zoom - 20) / 40));
@@ -162,16 +166,41 @@ public class BoardPane extends JPanel {
             int[] size = game.getBoard().getSize();
 
             if(buttonPressed == 1) {
-                if ((start_x != end_x || start_y != end_y) &&
-                end_x < size[0] && end_x >= 0 && end_y < size[1] && end_y >= 0) {
-                    PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
-                    commandStack.insertCommand(pmc);
+                if (end_x < size[0] && end_x >= 0 && end_y < size[1] && end_y >= 0) {
+                    switch(placementType){
+                        case NONE:
+                            if(start_x != end_x || start_y != end_y){
+                                PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
+                                commandStack.insertCommand(pmc);
+                            }
+                            break;
+                        case SPACE:
+                            if(start_x == end_x & start_y == end_y){
+                                PlaceSpaceCommand psc = new PlaceSpaceCommand(game,start_x,start_y);
+                                commandStack.insertCommand(psc);
+                            }else if(start_x <= end_x & start_y <= end_y){
+                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,start_x,start_y,end_x,end_y);
+                                commandStack.insertCommand(msc);
+                            }else if(start_x >= end_x & start_y <= end_y){
+                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,end_x,start_y,start_x,end_y);
+                                commandStack.insertCommand(msc);
+                            }else if(start_x <= end_x & start_y >= end_y){
+                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,start_x,end_y,end_x,start_y);
+                                commandStack.insertCommand(msc);
+                            }else if(start_x >= end_x & start_y >= end_y){
+                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,end_x,end_y,start_x,start_y);
+                                commandStack.insertCommand(msc);
+                            }
+                            break;
+                    }
                 }
                 image = null;
                 repaint();
 
                 buttonPressed = 0;
             }
+
+            spacePreviewEnd = null;
 
             //super.mouseReleased(e);
         }
@@ -217,13 +246,18 @@ public class BoardPane extends JPanel {
 
             if(buttonPressed == 1){
 
-                imagePreview = currentPoint;
+                switch(placementType){
+                    case NONE:
+                        imagePreview = currentPoint;
+                        break;
+                    case SPACE:
+                        int end_x = (int)((e.getX() / zoom - 20) / 40);
+                        int end_y = (int)((e.getY() / zoom - 20) / 40);
 
-                //revalidate();
-                //repaint();
-                //g2.drawImage(image,e.getX()-15,e.getY()-15,30,30,null);
+                        spacePreviewEnd = new Point(end_x,end_y);
 
-                //repaint();
+                }
+
             }
 
             //super.mouseDragged(e);
@@ -284,7 +318,35 @@ public class BoardPane extends JPanel {
         if (spacePreview != null) {
             g2.setComposite(makeComposite(0.2f));
             g2.setPaint(game.getBoard().getColor());
-            g2.fillRect((int) spacePreview.getX() * 40 + 20, (int) spacePreview.getY() * 40 + 20, 40, 40);
+            if(spacePreviewEnd == null){
+                g2.fillRect((int) spacePreview.getX() * 40 + 20, (int) spacePreview.getY() * 40 + 20, 40, 40);
+            }else{
+                if(spacePreview.getX() <= spacePreviewEnd.getX() & spacePreview.getY() <= spacePreviewEnd.getY()){
+                    for(int i = (int)spacePreview.getX(); i <= spacePreviewEnd.getX(); i++){
+                        for(int j = (int)spacePreview.getY(); j <= spacePreviewEnd.getY(); j++){
+                            g2.fillRect(i*40+20,j*40+20,40,40);
+                        }
+                    }
+                }else if(spacePreview.getX() <= spacePreviewEnd.getX() & spacePreview.getY() >= spacePreviewEnd.getY()){
+                    for(int i = (int)spacePreview.getX(); i <= spacePreviewEnd.getX(); i++){
+                        for(int j = (int)spacePreviewEnd.getY(); j <= spacePreview.getY(); j++){
+                            g2.fillRect(i*40+20,j*40+20,40,40);
+                        }
+                    }
+                }else if(spacePreview.getX() >= spacePreviewEnd.getX() & spacePreview.getY() <= spacePreviewEnd.getY()){
+                    for(int i = (int)spacePreviewEnd.getX(); i <= spacePreview.getX(); i++){
+                        for(int j = (int)spacePreview.getY(); j <= spacePreviewEnd.getY(); j++){
+                            g2.fillRect(i*40+20,j*40+20,40,40);
+                        }
+                    }
+                }else if(spacePreview.getX() >= spacePreviewEnd.getX() & spacePreview.getY() >= spacePreviewEnd.getY()){
+                    for(int i = (int)spacePreviewEnd.getX(); i <= spacePreview.getX(); i++){
+                        for(int j = (int)spacePreviewEnd.getY(); j <= spacePreview.getY(); j++){
+                            g2.fillRect(i*40+20,j*40+20,40,40);
+                        }
+                    }
+                }
+            }
         }
     }
 
