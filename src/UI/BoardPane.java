@@ -18,6 +18,8 @@ public class BoardPane extends JPanel {
     private double zoom = 1.0;
     public enum PlacementType{SPACE,PIECE,NONE}
 
+    private boolean showGrid = true;
+
     private PlacementType placementType;
 
     Point imagePreview;
@@ -302,14 +304,19 @@ public class BoardPane extends JPanel {
                 g2.setColor(color);
                 g2.fillRect(i * 40 + 20, j * 40 + 20, 40, 40);
 
-                g2.setColor(Color.BLACK);
-                g2.drawRect(i * 40 + 20, j * 40 + 20, 40, 40);
+                if(showGrid){
+                    g2.setColor(Color.BLACK);
+                    g2.drawRect(i * 40 + 20, j * 40 + 20, 40, 40);
+                }
 
                 if (space.getPiece() != null) {
                     g2.drawImage(space.getPiece().getPicture(), i * 40 + 25, j * 40 + 25, 30, 30, null);
                 }
             }
         }
+
+        g2.setColor(Color.BLACK);
+        g2.drawRect(20,20,width*40,height*40);
 
         if (this.image != null) {
             g2.drawImage(image, (int) imagePreview.getX(), (int) imagePreview.getY(), 30, 30, null);
@@ -384,6 +391,10 @@ public class BoardPane extends JPanel {
             DeleteSpaceCommand dsc = new DeleteSpaceCommand(game,x,y,space);
             commandStack.insertCommand(dsc);
         }
+    }
+
+    public void toggleGrid(){
+        this.showGrid = !this.showGrid;
     }
 
 }

@@ -241,12 +241,13 @@ public class Frame extends JFrame {
     }
 
     private void keyboardSetup(){
-        KeyStroke key1 = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK);
-        KeyStroke key2 = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK);
+        KeyStroke undo = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK);
+        KeyStroke redo = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK);
+        KeyStroke toggleGrid = KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_DOWN_MASK);
 
         KeyStroke del = KeyStroke.getKeyStroke("DELETE");
 
-        actionMap.put(key1, new AbstractAction("action1") {
+        actionMap.put(undo, new AbstractAction("action1") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 commandStack.undo();
@@ -256,7 +257,7 @@ public class Frame extends JFrame {
             }
         });
 
-        actionMap.put(key2, new AbstractAction("action2") {
+        actionMap.put(redo, new AbstractAction("action2") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 commandStack.redo();
@@ -269,6 +270,16 @@ public class Frame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 centerPane.boardPane.deleteSelectedSpace();
+                //centerPane.refreshComponentTree(this.game);
+                centerPane.updateBoard();
+                centerPane.refreshComponentTree(game);
+            }
+        });
+
+        actionMap.put(toggleGrid, new AbstractAction("action4") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                centerPane.boardPane.toggleGrid();
                 //centerPane.refreshComponentTree(this.game);
                 centerPane.updateBoard();
                 centerPane.refreshComponentTree(game);
