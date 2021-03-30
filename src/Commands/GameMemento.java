@@ -2,7 +2,6 @@ package Commands;
 
 import Models.*;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 class GameMemento {
@@ -22,7 +21,7 @@ class GameMemento {
     }
 
     void setState(Game game){
-        this.deck = game.getDeck();
+        this.deck = game.getCards();
         this.diceCollection = game.getDice();
         this.pieces = game.getPieces();
 

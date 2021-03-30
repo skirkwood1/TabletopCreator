@@ -32,7 +32,7 @@ public class Frame extends JFrame {
     private JFileChooser fileChooser = new JFileChooser();
     private ColorChooseDialog colorDialog = new ColorChooseDialog();
 
-    private Game game = new Game();
+    private Game game = new Game(10,10);
     private CommandStack commandStack = new CommandStack();
 
     private HashMap<KeyStroke, Action> actionMap = new HashMap<KeyStroke, Action>();

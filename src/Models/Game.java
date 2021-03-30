@@ -6,9 +6,10 @@ import java.util.ArrayList;
 
 public class Game implements Serializable {
 
-    private ArrayList<Card> deck;
+    private ArrayList<Card> cards;
     private ArrayList<Dice> diceCollection;
     private ArrayList<Piece> pieces;
+    private ArrayList<Deck> decks;
 
     private transient ArrayList<Texture> textures;
 
@@ -17,16 +18,17 @@ public class Game implements Serializable {
     private Component selectedComponent;
 
     public Game(){
-        this.deck = new ArrayList<>();
+        this.cards = new ArrayList<>();
         this.diceCollection = new ArrayList<>();
         this.pieces = new ArrayList<>();
         this.board = new Board(10,10);
+        this.decks = new ArrayList<>();
 
         this.textures = new ArrayList<>();
     }
 
     public Game(Game game){
-        this.deck = game.getDeck();
+        this.cards = game.getCards();
         this.diceCollection = game.getDice();
         this.pieces = game.pieces;
 
@@ -35,8 +37,18 @@ public class Game implements Serializable {
         this.board = game.getBoard();
     }
 
-    public Game(ArrayList<Card> deck, ArrayList<Dice> diceCollection, ArrayList<Piece> pieces, Board board){
-        this.deck = deck;
+    public Game(int x,int y){
+        this.cards = new ArrayList<>();
+        this.diceCollection = new ArrayList<>();
+        this.pieces = new ArrayList<>();
+        this.board = new Board(x,y);
+        this.decks = new ArrayList<>();
+
+        this.textures = new ArrayList<>();
+    }
+
+    public Game(ArrayList<Card> cards, ArrayList<Dice> diceCollection, ArrayList<Piece> pieces, Board board){
+        this.cards = cards;
         this.diceCollection = diceCollection;
         this.pieces = pieces;
 
@@ -47,12 +59,12 @@ public class Game implements Serializable {
 
     public Card addCard(String name, String text, String filename){
         Card card = new Card(name,text,filename);
-        deck.add(card);
+        cards.add(card);
         return card;
     }
 
     public Card addCard(Card card){
-        deck.add(card);
+        cards.add(card);
         return card;
     }
 
@@ -62,9 +74,25 @@ public class Game implements Serializable {
         return piece;
     }
 
-    public Piece addPiece(Piece piece){
+    public void addPiece(Piece piece){
         pieces.add(piece);
-        return piece;
+    }
+
+    public void createDeck(String name,ArrayList<Card> cards){
+        this.decks.add(new Deck(name,cards));
+    }
+
+    public Deck getDeck(String name){
+        for(Deck deck: decks){
+            if(deck.getName().equals(name)){
+                return deck;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Deck> getDecks(){
+        return this.decks;
     }
 
     public void addTexture(String name, BufferedImage texture){
@@ -84,8 +112,8 @@ public class Game implements Serializable {
         return null;
     }
 
-    public ArrayList<Card> getDeck(){
-        return deck;
+    public ArrayList<Card> getCards(){
+        return cards;
     }
 
     public ArrayList<Piece> getPieces(){
@@ -93,7 +121,7 @@ public class Game implements Serializable {
     }
 
     public Card getCard(String name){
-        for(Card card: deck){
+        for(Card card: cards){
             if(card.getName().equals(name)){
                 return card;
             }
@@ -119,7 +147,7 @@ public class Game implements Serializable {
     public String toString(){
         String finalString = "";
         int numDice = 0;
-        for(Card card: deck){
+        for(Card card: cards){
             finalString += card.getName() + "   ";
             finalString += card.getText() + "   ";
             //finalString += card.getImage().getAbsolutePath();
@@ -144,7 +172,7 @@ public class Game implements Serializable {
     }
 
     public void removeCard(Card card){
-        deck.remove(card);
+        cards.remove(card);
     }
 
     public void removePiece(Piece piece){

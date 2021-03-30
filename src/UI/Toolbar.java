@@ -22,8 +22,9 @@ public class Toolbar extends JPanel implements ActionListener {
     private JLabel colorLabel;
 
     private JMenuBar menuBar;
-    private JMenu file,edit,add;
+    private JMenu file,edit,add,create;
     private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture;
+    private JMenuItem createDeck;
 
     private StringListener stringListener;
 
@@ -105,12 +106,11 @@ public class Toolbar extends JPanel implements ActionListener {
         buttons.add(placeSpace);
         buttons.add(placePiece);
 
-
-
         menuBar = new JMenuBar();
         file = new JMenu("File");
         edit = new JMenu("Edit");
         add = new JMenu("Add");
+        create = new JMenu("Create");
 
         cut = new JMenuItem("Cut");
         copy = new JMenuItem("Copy");
@@ -124,6 +124,8 @@ public class Toolbar extends JPanel implements ActionListener {
         addCard = new JMenuItem("Card");
         addRule = new JMenuItem("Rule");
         addTexture = new JMenuItem("Texture");
+
+        createDeck = new JMenuItem("Deck");
 
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
@@ -149,9 +151,12 @@ public class Toolbar extends JPanel implements ActionListener {
         add.add(addRule);
         add.add(addTexture);
 
+        create.add(createDeck);
+
         menuBar.add(file);
         menuBar.add(edit);
         menuBar.add(add);
+        menuBar.add(create);
 
         add(menuBar,BorderLayout.NORTH);
         add(buttons,BorderLayout.SOUTH);

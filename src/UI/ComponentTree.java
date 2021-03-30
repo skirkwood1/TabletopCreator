@@ -4,6 +4,7 @@ import Models.*;
 import Models.Component;
 
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -20,6 +21,7 @@ public class ComponentTree extends JPanel {
     DefaultMutableTreeNode pieces = new DefaultMutableTreeNode("Pieces");
     DefaultMutableTreeNode textures = new DefaultMutableTreeNode("Textures");
     DefaultMutableTreeNode rules = new DefaultMutableTreeNode("Rules");
+    DefaultMutableTreeNode decks = new DefaultMutableTreeNode("Decks");
 
     public ComponentTree(Game game){
         super();
@@ -30,6 +32,7 @@ public class ComponentTree extends JPanel {
         top.add(pieces);
         top.add(textures);
         top.add(rules);
+        top.add(decks);
         //top.add(new DefaultMutableTreeNode("Dice"));
 
         tree = new JTree(top);
@@ -59,7 +62,16 @@ public class ComponentTree extends JPanel {
         else if(component instanceof Card){
             model.insertNodeInto(node, cards, cards.getChildCount());
         }
+    }
 
+    public void addDeck(Deck deck){
+        //DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(deck.getName());
+        tree.scrollPathToVisible(new TreePath(node.getPath()));
+        for(Card card: deck.getCards()){
+            node.add(new DefaultMutableTreeNode(card.getName()));
+        }
+        this.decks.add(node);
     }
 
     public void updateTree(Texture texture){
@@ -91,7 +103,7 @@ public class ComponentTree extends JPanel {
         pieces.removeAllChildren();
 
 
-        for(Card card: this.game.getDeck()){
+        for(Card card: this.game.getCards()){
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(card.getName());
             model.insertNodeInto(node, cards, cards.getChildCount());
         }
