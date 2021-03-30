@@ -1,6 +1,7 @@
 package UI;
 
 import Commands.CommandStack;
+import Models.Deck;
 import Models.Game;
 import Models.Component;
 import Models.Texture;
@@ -17,7 +18,7 @@ import static javax.swing.BorderFactory.createEmptyBorder;
 
 
 public class CenterPane extends JPanel {
-    private ComponentTree componentTree;
+    ComponentTree componentTree;
     private TextPanel textPanel;
     private JSplitPane overallPane;
     private JSplitPane textAndCardPane;
@@ -273,10 +274,14 @@ public class CenterPane extends JPanel {
                     else if(selectedNode.getParent().equals(componentTree.textures)){
                         texture = game.getTexture(name);
                     }
+                    else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
+                        component = game.getCard(name);
+                    }
 
                 }
 
                 if(component != null){
+                    imageZoom = 1.0;
                     displayImage(component.getPicture());
                     setCardText(component.getText());
                     game.setSelectedComponent(component);
@@ -416,6 +421,10 @@ public class CenterPane extends JPanel {
         componentTree.updateTree(component);
     }
 
+    void updateComponentTree(Deck deck){
+        componentTree.addDeck(deck);
+    }
+
     void updateComponentTree(Texture texture){
         componentTree.updateTree(texture);
     }
@@ -442,9 +451,12 @@ public class CenterPane extends JPanel {
                     }
                     else if (selectedNode.getParent().equals(componentTree.cards)){
                         component = game.getCard(name);
+                    }else if (selectedNode.getParent().getParent().equals(componentTree.decks)){
+                        component = game.getCard(name);
                     }
                 }
                 if(component != null){
+                    imageZoom = 1.0;
                     displayImage(component.getPicture());
                     setCardText(component.getText());
                 }

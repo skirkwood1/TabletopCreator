@@ -3,6 +3,8 @@ package UI;
 import javax.swing.*;
 import java.awt.*;
 
+import static java.awt.Color.white;
+
 public class TextPanel extends JPanel {
     private JTextArea textArea;
 
@@ -26,7 +28,8 @@ public class TextPanel extends JPanel {
     public void appendBottomText(String text){
         String currentText = textArea.getText();
         currentText = currentText.strip();
-        textArea.setText("\n\r\n\r\n\r\n\r" + currentText + "\n\r" + text);
+
+        textArea.setText("\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r" + currentText + "\n\r" + text);
 
     }
 }

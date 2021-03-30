@@ -1,13 +1,11 @@
 package UI;
 
-import Commands.CommandStack;
 import Models.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class Toolbar extends JPanel implements ActionListener {
     private JPanel buttons;
@@ -22,9 +20,9 @@ public class Toolbar extends JPanel implements ActionListener {
     private JLabel colorLabel;
 
     private JMenuBar menuBar;
-    private JMenu file,edit,add,create;
+    private JMenu file,edit,add,decks;
     private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture;
-    private JMenuItem createDeck;
+    private JMenuItem createDeck,addToDeck;
 
     private StringListener stringListener;
 
@@ -79,10 +77,12 @@ public class Toolbar extends JPanel implements ActionListener {
         colorChoose.setToolTipText("Choose Color");
 
         placeSpace = new JToggleButton("Space");
-        placeSpace.setPreferredSize(new Dimension(100,25));
+        placeSpace.setPreferredSize(new Dimension(45,25));
+        placeSpace.setMargin(new Insets(1,1,1,1));
 
         placePiece = new JToggleButton("Piece");
-        placePiece.setPreferredSize(new Dimension(100,25));
+        placePiece.setPreferredSize(new Dimension(45,25));
+        placePiece.setMargin(new Insets(1,1,1,1));
 
         save.addActionListener(this);
         open.addActionListener(this);
@@ -110,7 +110,7 @@ public class Toolbar extends JPanel implements ActionListener {
         file = new JMenu("File");
         edit = new JMenu("Edit");
         add = new JMenu("Add");
-        create = new JMenu("Create");
+        decks = new JMenu("Decks");
 
         cut = new JMenuItem("Cut");
         copy = new JMenuItem("Copy");
@@ -125,7 +125,8 @@ public class Toolbar extends JPanel implements ActionListener {
         addRule = new JMenuItem("Rule");
         addTexture = new JMenuItem("Texture");
 
-        createDeck = new JMenuItem("Deck");
+        createDeck = new JMenuItem("Create");
+        addToDeck = new JMenuItem("Add");
 
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
@@ -135,6 +136,8 @@ public class Toolbar extends JPanel implements ActionListener {
         addPiece.addActionListener(this);
         addCard.addActionListener(this);
         addTexture.addActionListener(this);
+        createDeck.addActionListener(this);
+        addToDeck.addActionListener(this);
 
         file.add(cut);
         file.add(copy);
@@ -151,12 +154,13 @@ public class Toolbar extends JPanel implements ActionListener {
         add.add(addRule);
         add.add(addTexture);
 
-        create.add(createDeck);
+        decks.add(createDeck);
+        decks.add(addToDeck);
 
         menuBar.add(file);
         menuBar.add(edit);
         menuBar.add(add);
-        menuBar.add(create);
+        menuBar.add(decks);
 
         add(menuBar,BorderLayout.NORTH);
         add(buttons,BorderLayout.SOUTH);
@@ -213,6 +217,14 @@ public class Toolbar extends JPanel implements ActionListener {
         else if (c == redo){
             stringListener.textEmitted("Redo\n\r");
             //System.out.println("Redo");
+        }
+
+        else if (c == createDeck){
+            stringListener.textEmitted("CreateDeck\n\r");
+        }
+
+        else if (c == addToDeck){
+            stringListener.textEmitted("AddToDeck\n\r");
         }
 
 

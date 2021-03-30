@@ -7,6 +7,8 @@ import Commands.UpdateColorCommand;
 import Models.*;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -19,8 +21,6 @@ public class Frame extends JFrame {
     private Toolbar toolbar;
     private JTextField textPanel,cmd;
     private TextPanel cmdOutput;
-    private JButton cardBtn;
-    private JButton pieceBtn;
     private CenterPane centerPane;
     private ComponentCreationDialog cardCreationDialog;
     private ComponentCreationDialog pieceCreationDialog;
@@ -47,10 +47,6 @@ public class Frame extends JFrame {
 
         toolbar = new Toolbar(game);
         centerPane = new CenterPane(game,commandStack);
-        cardBtn = new JButton("Add card");
-        pieceBtn = new JButton("Add piece");
-
-
 
 //        cmd = new JTextField();
 //        cmdOutput = new TextPanel();
@@ -68,13 +64,6 @@ public class Frame extends JFrame {
         pieceCreationDialog = new ComponentCreationDialog();
 
         textureCreationDialog = new ComponentCreationDialog();
-
-        //buttonPane.add(cardBtn);
-        //buttonPane.add(pieceBtn);
-//        cmdPane.add(cmdOutput);
-//        cmdPane.add(cmd);
-//
-//        cmdPane.setResizeWeight(0.2);
 
         this.resizePane = new ResizeBoardPane(game);
 
@@ -143,6 +132,30 @@ public class Frame extends JFrame {
                 addTextureDialog();
             }
 
+            else if(text.equals("CreateDeck\n\r")){
+                addDeckDialog();
+                centerPane.refreshComponentTree(game);
+            }
+
+            else if(text.equals("AddToDeck\n\r")){
+                try{
+                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)centerPane.componentTree.getTree().getLastSelectedPathComponent();
+                    if(selectedNode.isLeaf()){
+                        selectedNode = (DefaultMutableTreeNode)selectedNode.getParent();
+                    }
+                    String selected = selectedNode.toString();
+                    Deck deck = game.getDeck(selected);
+                    if(deck != null){
+                        addDeckDialog(deck);
+                    }else{
+                        addDeckDialog();
+                    }
+                }catch(NullPointerException e){
+                    addDeckDialog();
+                }
+                centerPane.refreshComponentTree(game);
+            }
+
             else if(text.equals("Undo\n\r")){
                 commandStack.undo();
                 //centerPane.refreshComponentTree(this.game);
@@ -160,14 +173,6 @@ public class Frame extends JFrame {
                 centerPane.boardPane.setPlacementType(toolbar.getPlacementType());
                 centerPane.updateBoard();
             }
-        });
-
-        cardBtn.addActionListener(e -> {
-            addCardDialog();
-        });
-
-        pieceBtn.addActionListener(e -> {
-            addPieceDialog();
         });
 
         setSize(1280,720);
@@ -262,6 +267,42 @@ public class Frame extends JFrame {
             centerPane.updateComponentTree(texture);
 
             textureCreationDialog.clear();
+        }
+    }
+
+    private void addDeckDialog(){
+        DeckCreationDialog deckCreationDialog = new DeckCreationDialog(game);
+        int n = deckCreationDialog.display();
+
+        if(n == JOptionPane.YES_OPTION){
+            Deck deck = new Deck(deckCreationDialog.getDeckName());
+
+            for(Card card: deckCreationDialog.getSelection()){
+                if(deckCreationDialog.getNumCopies() != null){
+                    deck.addCard(card,deckCreationDialog.getNumCopies());
+                }else{
+                    deck.addCard(card);
+                }
+            }
+
+            game.createDeck(deck);
+            centerPane.updateComponentTree(deck);
+        }
+    }
+
+    private void addDeckDialog(Deck deck){
+        DeckCreationDialog deckCreationDialog = new DeckCreationDialog(game);
+        int n = deckCreationDialog.displayNoName();
+
+        if(n == JOptionPane.YES_OPTION){
+            for(Card card: deckCreationDialog.getSelection()){
+                if(deckCreationDialog.getNumCopies() != null){
+                    deck.addCard(card,deckCreationDialog.getNumCopies());
+                }else{
+                    deck.addCard(card);
+                }
+            }
+            centerPane.updateComponentTree(deck);
         }
     }
 

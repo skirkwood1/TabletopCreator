@@ -82,6 +82,10 @@ public class Game implements Serializable {
         this.decks.add(new Deck(name,cards));
     }
 
+    public void createDeck(Deck deck){
+        this.decks.add(deck);
+    }
+
     public Deck getDeck(String name){
         for(Deck deck: decks){
             if(deck.getName().equals(name)){

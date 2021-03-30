@@ -52,7 +52,7 @@ public class Component implements Serializable {
     }
 
     public String toString(){
-        return this.getName() + "," + this.getText();
+        return this.getName();
     }
 
 }

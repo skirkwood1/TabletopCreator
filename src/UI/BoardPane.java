@@ -13,7 +13,7 @@ public class BoardPane extends JPanel {
     //private Dimension dimension;
 
     private double zoom = 1.0;
-    public enum PlacementType{SPACE,PIECE,NONE}
+    public enum PlacementType{SPACE,PIECE,DECK,NONE}
 
     private boolean showGrid = true;
 
@@ -29,7 +29,7 @@ public class BoardPane extends JPanel {
 
     public BoardPane(Game game,CommandStack commandStack) {
         this.game = game;
-        Dimension dimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
+        Dimension dimension = new Dimension(game.getBoard().getSize()[0]*40+40+200,game.getBoard().getSize()[1]*40+40);
         setPreferredSize(dimension);
         setSize(dimension);
 
@@ -90,7 +90,10 @@ public class BoardPane extends JPanel {
                         break;
                     case PIECE:
                         //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
-                        Piece piece = (Piece)game.getSelectedComponent();
+                        Piece piece = null;
+                        if(game.getSelectedComponent() instanceof Piece){
+                            piece = (Piece)game.getSelectedComponent();
+                        }
 
                         if(piece != null){
                             PlacePieceCommand ppc = new PlacePieceCommand(game,x,y,piece);
@@ -255,10 +258,12 @@ public class BoardPane extends JPanel {
                         imagePreview = currentPoint;
                         break;
                     case SPACE:
+                        int[] size = game.getBoard().getSize();
                         int end_x = (int)((e.getX() / zoom - 20) / 40);
                         int end_y = (int)((e.getY() / zoom - 20) / 40);
-
-                        spacePreviewEnd = new Point(end_x,end_y);
+                        if(end_x < size[0] && end_x >= 0 && end_y < size[1] && end_y >= 0){
+                            spacePreviewEnd = new Point(end_x,end_y);
+                        }
 
                 }
 
@@ -327,10 +332,14 @@ public class BoardPane extends JPanel {
             }
         }
 
+        g2.setColor(game.getBoard().getDefaultColor());
+        g2.fillRect(width*40+20,20,300,height*40);
+
         g2.setColor(Color.BLACK);
         Stroke oldStroke = g2.getStroke();
         g2.setStroke(new BasicStroke(2f));
         g2.drawRect(20,20,width*40,height*40);
+        g2.drawRect(width*40+20,20,300,height*40);
         g2.setStroke(oldStroke);
 
         if (this.image != null) {
@@ -396,8 +405,8 @@ public class BoardPane extends JPanel {
         double x = (this.game.getBoard().getSize()[0] * 40 + 40) * zoom;
         double y = (this.game.getBoard().getSize()[1] * 40 + 40) * zoom;
 
-        setPreferredSize(new Dimension((int)x,(int)y));
-        setSize(new Dimension((int)x,(int)y));
+        setPreferredSize(new Dimension((int)x+200,(int)y));
+        setSize(new Dimension((int)x+200,(int)y));
     }
 
     public void setPlacementType(PlacementType pt){
