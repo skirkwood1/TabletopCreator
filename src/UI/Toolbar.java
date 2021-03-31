@@ -5,9 +5,12 @@ import Models.Game;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Toolbar extends JPanel implements ActionListener {
     private JPanel buttons;
@@ -38,7 +41,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
         this.placementType = BoardPane.PlacementType.NONE;
 
-        Color buttonBG = new Color(220,220,220);
+        Color buttonBG = new Color(210,210,210);
 
         setLayout(new BorderLayout(0,0));
         //setBorder(BorderFactory.createLoweredBevelBorder());
@@ -73,8 +76,29 @@ public class Toolbar extends JPanel implements ActionListener {
                 if (model.isRollover()) {
                     button.setBackground(Color.LIGHT_GRAY);
                 } else {
-                    button.setBackground(new Color(220,220,220));
+                    button.setBackground(buttonBG);
                 }
+            }
+        };
+
+        ChangeListener menuListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JMenu button = (JMenu) e.getSource();
+                ButtonModel model = button.getModel();
+
+                if (model.isRollover()) {
+                    button.setBackground(Color.LIGHT_GRAY);
+                } else {
+                    button.setBackground(buttonBG);
+                }
+            }
+        };
+
+        MetalToggleButtonUI mtbUI = new MetalToggleButtonUI() {
+            @Override
+            protected Color getSelectColor() {
+                return new Color(170,170,170);
             }
         };
 
@@ -87,6 +111,7 @@ public class Toolbar extends JPanel implements ActionListener {
         save.setFocusPainted(false);
 
         save.addChangeListener(changeListener);
+        save.setUI(mtbUI);
 
         open = new JButton(openIcon);
         open.setPreferredSize(new Dimension(30,30));
@@ -97,6 +122,7 @@ public class Toolbar extends JPanel implements ActionListener {
         open.setFocusPainted(false);
 
         open.addChangeListener(changeListener);
+        open.setUI(mtbUI);
 
         saveMenu = new JMenuItem("Save");
         saveMenu.setIcon(saveIcon);
@@ -106,7 +132,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
         System.out.println(javax.swing.UIManager.getDefaults().getFont("Label.font"));
 
-        colorChoose = new JButton("⬛");//colorIcon);
+        colorChoose = new JButton("⬛");
         colorChoose.setPreferredSize(new Dimension(30,30));
         colorChoose.setMargin(new Insets(0,0,0,0));
         colorChoose.setToolTipText("Choose Color");
@@ -117,6 +143,7 @@ public class Toolbar extends JPanel implements ActionListener {
         colorChoose.setFocusPainted(false);
 
         colorChoose.addChangeListener(changeListener);
+        colorChoose.setUI(mtbUI);
 
         placeSpace = new JToggleButton("Space");
         placeSpace.setPreferredSize(new Dimension(45,30));
@@ -124,8 +151,10 @@ public class Toolbar extends JPanel implements ActionListener {
         placeSpace.setBackground(buttonBG);
         placeSpace.setBorder(BorderFactory.createEmptyBorder());
         placeSpace.setFocusPainted(false);
+        placeSpace.setRolloverEnabled(true);
 
         placeSpace.addChangeListener(changeListener);
+        placeSpace.setUI(mtbUI);
 
         placePiece = new JToggleButton("Piece");
         placePiece.setPreferredSize(new Dimension(45,30));
@@ -133,8 +162,10 @@ public class Toolbar extends JPanel implements ActionListener {
         placePiece.setBackground(buttonBG);
         placePiece.setBorder(BorderFactory.createEmptyBorder());
         placePiece.setFocusPainted(false);
+        placePiece.setRolloverEnabled(true);
 
         placePiece.addChangeListener(changeListener);
+        placePiece.setUI(mtbUI);
 
         save.addActionListener(this);
         open.addActionListener(this);
@@ -144,8 +175,10 @@ public class Toolbar extends JPanel implements ActionListener {
 
         buttons = new JPanel();
 
-        buttons.setLayout(new FlowLayout(FlowLayout.LEFT,2,2));
+        buttons.setLayout(new FlowLayout(FlowLayout.LEFT,0,0));
+        //buttons.setBackground(new Color(240,240,240));
         buttons.setBackground(Color.WHITE);
+        buttons.setBorder(BorderFactory.createLoweredBevelBorder());
 
 //        buttonGroup = new ButtonGroup();
 //        buttonGroup.add(placeSpace);
@@ -154,9 +187,9 @@ public class Toolbar extends JPanel implements ActionListener {
         buttons.add(save);
         buttons.add(open);
         buttons.add(colorChoose);
-        buttons.add(colorLabel);
         buttons.add(placeSpace);
         buttons.add(placePiece);
+        buttons.add(colorLabel);
 
         menuBar = new JMenuBar();
         menuBar.setBackground(Color.WHITE);
@@ -166,6 +199,9 @@ public class Toolbar extends JPanel implements ActionListener {
         edit = new JMenu("Edit");
         add = new JMenu("Add");
         decks = new JMenu("Decks");
+
+        decks.setRolloverEnabled(true);
+        decks.addChangeListener(menuListener);
 
         cut = new JMenuItem("Cut");
         copy = new JMenuItem("Copy");
