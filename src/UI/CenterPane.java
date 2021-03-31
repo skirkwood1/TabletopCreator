@@ -1,6 +1,7 @@
 package UI;
 
 import Commands.CommandStack;
+import Commands.UpdateColorCommand;
 import Models.Deck;
 import Models.Game;
 import Models.Component;
@@ -8,6 +9,8 @@ import Models.Texture;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
@@ -147,11 +150,56 @@ public class CenterPane extends JPanel {
         }
     };
 
+
+
     private Game game;
     private CommandStack commandStack;
+    private Toolbar toolbar;
 
-    public CenterPane(Game game,CommandStack commandStack) {
+    TreeSelectionListener tsl = e -> {
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
+        if(selectedNode != null){
+            String name = selectedNode.toString();
+            Component component = null;
+            Texture texture = null;
+//                if(selectedNode.isLeaf()){
+//                    card = game.getCard(cardName);
+//                }
+
+            if(selectedNode.isLeaf()){
+                if(selectedNode.getParent().equals(componentTree.pieces)){
+                    component = game.getPiece(name);
+                }
+                else if(selectedNode.getParent().equals(componentTree.cards)){
+                    component = game.getCard(name);
+                }
+                else if(selectedNode.getParent().equals(componentTree.textures)){
+                    texture = game.getTexture(name);
+                }
+                else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
+                    component = game.getCard(name);
+                }
+
+            }
+
+            if(component != null){
+                imageZoom = 1.0;
+                displayImage(component.getPicture());
+                setCardText(component.getText());
+                game.setSelectedComponent(component);
+            }else if(texture != null){
+                displayImage(texture.getTexture());
+                //game.getBoard().setTexture(texture);
+                UpdateColorCommand ucc = new UpdateColorCommand(game,texture,toolbar);
+                commandStack.insertCommand(ucc);
+
+            }
+        }
+    };
+
+    public CenterPane(Game game,Toolbar toolbar,CommandStack commandStack) {
         this.game = game;
+        this.toolbar = toolbar;
 
         cardText = new TextPanel();
         componentImage = new JLabel();
@@ -279,44 +327,7 @@ public class CenterPane extends JPanel {
 
         add(overallPane);
 
-        componentTree.getTree().addTreeSelectionListener(e -> {
-
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
-            if(selectedNode != null){
-                String name = selectedNode.toString();
-                Component component = null;
-                Texture texture = null;
-//                if(selectedNode.isLeaf()){
-//                    card = game.getCard(cardName);
-//                }
-
-                if(selectedNode.isLeaf()){
-                    if(selectedNode.getParent().equals(componentTree.pieces)){
-                        component = game.getPiece(name);
-                    }
-                    else if(selectedNode.getParent().equals(componentTree.cards)){
-                        component = game.getCard(name);
-                    }
-                    else if(selectedNode.getParent().equals(componentTree.textures)){
-                        texture = game.getTexture(name);
-                    }
-                    else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
-                        component = game.getCard(name);
-                    }
-
-                }
-
-                if(component != null){
-                    imageZoom = 1.0;
-                    displayImage(component.getPicture());
-                    setCardText(component.getText());
-                    game.setSelectedComponent(component);
-                }else if(texture != null){
-                    displayImage(texture.getTexture());
-                    game.getBoard().setTexture(texture.getTexture());
-                }
-            }
-        });
+        componentTree.getTree().addTreeSelectionListener(tsl);
 
         componentImage.setAutoscrolls(true);
 
@@ -390,10 +401,10 @@ public class CenterPane extends JPanel {
 
                 BufferedImage image = game.getSelectedComponent().getPicture(); // transform it
                 if(image == null){
-                    image = game.getBoard().getTexture();
+                    image = game.getBoard().getTextureImage();
                 }
 
-                Image newimg = image.getScaledInstance((int)(image.getWidth()*imageZoom), (int)(image.getHeight()*imageZoom),  Image.SCALE_DEFAULT); // scale it the smooth way
+                Image newimg = image.getScaledInstance((int)(image.getWidth()*imageZoom), (int)(image.getHeight()*imageZoom),  Image.SCALE_SMOOTH); // scale it the smooth way
 
                 ImageIcon icon = new ImageIcon(newimg);
                 componentImage.setIcon(icon);
@@ -465,29 +476,7 @@ public class CenterPane extends JPanel {
         this.game = game;
         componentTree.refreshTree(game);
         //componentTree.collapseTree();
-        componentTree.getTree().addTreeSelectionListener(e -> {
-
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
-            if(selectedNode != null){
-                String name = selectedNode.toString();
-                Component component = null;
-                if(selectedNode.isLeaf()){
-                    if(selectedNode.getParent().equals(componentTree.pieces)){
-                        component = game.getPiece(name);
-                    }
-                    else if (selectedNode.getParent().equals(componentTree.cards)){
-                        component = game.getCard(name);
-                    }else if (selectedNode.getParent().getParent().equals(componentTree.decks)){
-                        component = game.getCard(name);
-                    }
-                }
-                if(component != null){
-                    imageZoom = 1.0;
-                    displayImage(component.getPicture());
-                    setCardText(component.getText());
-                }
-            }
-        });
+        componentTree.getTree().addTreeSelectionListener(tsl);
     }
 
     void updateBoard(){

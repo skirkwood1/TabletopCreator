@@ -3,7 +3,6 @@ package UI;
 import Models.Game;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -105,10 +104,14 @@ public class Toolbar extends JPanel implements ActionListener {
         openMenu = new JMenuItem("Open");
         openMenu.setIcon(openIcon);
 
-        colorChoose = new JButton(colorIcon);
+        System.out.println(javax.swing.UIManager.getDefaults().getFont("Label.font"));
+
+        colorChoose = new JButton("⬛");//colorIcon);
         colorChoose.setPreferredSize(new Dimension(30,30));
         colorChoose.setMargin(new Insets(0,0,0,0));
         colorChoose.setToolTipText("Choose Color");
+        colorChoose.setFont(new Font("Dialog",Font.PLAIN,25));
+        colorChoose.setForeground(game.getBoard().getColor());
         colorChoose.setBackground(buttonBG);
         colorChoose.setBorder(BorderFactory.createEmptyBorder());
         colorChoose.setFocusPainted(false);
@@ -304,6 +307,13 @@ public class Toolbar extends JPanel implements ActionListener {
 
     public void updateColorLabel(){
         this.colorLabel.setBackground(game.getBoard().getColor());
+        if(game.getBoard().useTexture()){
+            Image image = game.getBoard().getTextureImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            this.colorLabel.setIcon(new ImageIcon(image));
+        }else{
+            this.colorLabel.setIcon(null);
+        }
+        this.colorChoose.setForeground(game.getBoard().getColor());
     }
 
     public BoardPane.PlacementType getPlacementType(){

@@ -27,7 +27,7 @@ public class PlaceSpaceCommand extends GameCommand {
     public void execute(){
         //this.memento.setState(this.game);
         if(game.getBoard().useTexture()){
-            game.getBoard().setSquare(x,y,game.getBoard().getTexture());
+            game.getBoard().setSquare(x,y,game.getBoard().getTextureImage());
         }else{
             game.getBoard().setSquare(x,y,this.game.getBoard().getColor());
         }

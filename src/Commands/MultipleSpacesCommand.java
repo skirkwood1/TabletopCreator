@@ -42,7 +42,7 @@ public class MultipleSpacesCommand extends GameCommand {
         for(int i = start_x; i <= end_x; i++){
             for(int j = start_y; j <= end_y; j++){
                 if(game.getBoard().useTexture()){
-                    game.getBoard().setSquare(i,j,this.game.getBoard().getTexture());
+                    game.getBoard().setSquare(i,j,this.game.getBoard().getTextureImage());
                 }else{
                     game.getBoard().setSquare(i,j,this.game.getBoard().getColor());
                 }

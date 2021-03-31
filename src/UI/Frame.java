@@ -46,7 +46,7 @@ public class Frame extends JFrame {
         setLayout(new BorderLayout());
 
         toolbar = new Toolbar(game);
-        centerPane = new CenterPane(game,commandStack);
+        centerPane = new CenterPane(game,toolbar,commandStack);
         centerPane.setOpaque(false);
         //centerPane.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
 

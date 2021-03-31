@@ -14,7 +14,7 @@ public class Board implements Serializable {
     private Color currentColor = Color.RED;
 
     private boolean useTexture = false;
-    private BufferedImage currentTexture = null;
+    private Texture currentTexture = null;
 
     private Space[][] spaces;
     //private Random random = new Random();
@@ -108,12 +108,16 @@ public class Board implements Serializable {
         this.useTexture = false;
     }
 
-    public void setTexture(BufferedImage texture){
+    public void setTexture(Texture texture){
         this.currentTexture = texture;
         this.useTexture = true;
     }
 
-    public BufferedImage getTexture(){
+    public BufferedImage getTextureImage(){
+        return this.currentTexture.getTexture();
+    }
+
+    public Texture getTexture(){
         return this.currentTexture;
     }
 

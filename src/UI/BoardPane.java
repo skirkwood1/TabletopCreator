@@ -82,7 +82,7 @@ public class BoardPane extends JPanel {
                         //commandStack.insertCommand(psc);
                         //g2.fillRect((int)((x*40+20)*zoom), (int)((y*40+20)*zoom), (int)(40*zoom), (int)(40*zoom));
                         if(game.getBoard().useTexture()){
-                            g2.drawImage(game.getBoard().getTexture(),x*40+20,y*40+20,40,40,null);
+                            g2.drawImage(game.getBoard().getTextureImage(),x*40+20,y*40+20,40,40,null);
                         }
                         else{
                             g2.fillRect(x*40+20,y*40+20,40,40);
@@ -388,7 +388,7 @@ public class BoardPane extends JPanel {
 
     public void drawSpace(Graphics2D g2, int x, int y){
         if(game.getBoard().useTexture()){
-            g2.drawImage(game.getBoard().getTexture(),x*40+20,y*40+20,40,40,null);
+            g2.drawImage(game.getBoard().getTextureImage(),x*40+20,y*40+20,40,40,null);
         }else{
             g2.fillRect(x*40+20,y*40+20,40,40);
         }
