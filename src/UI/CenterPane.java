@@ -201,6 +201,9 @@ public class CenterPane extends JPanel {
         this.game = game;
         this.toolbar = toolbar;
 
+        UIManager.put("ScrollPane.border",BorderFactory.createEmptyBorder());
+        UIManager.put("SplitPane.border",BorderFactory.createEmptyBorder());
+
         cardText = new TextPanel();
         componentImage = new JLabel();
         //textPanel = new TextPanel();
@@ -238,10 +241,9 @@ public class CenterPane extends JPanel {
 
         boardScreen.setViewportView(boardPane);
         boardScreen.getViewport().setOpaque(false);
-        boardScreen.setBorder(createEmptyBorder(-2,-2,-2,-2));
         boardScreen.setMinimumSize(new Dimension(800,400));
-        boardScreen.setBackground(Color.LIGHT_GRAY);
-        boardScreen.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
+        //boardScreen.setBackground(Color.LIGHT_GRAY);
+        //boardScreen.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
 
 
         cmd = new JTextField();
@@ -267,7 +269,7 @@ public class CenterPane extends JPanel {
 
         cmdPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         cmdPane.setDividerSize(0);
-        cmdPane.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
+        //cmdPane.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
 
         //buttonPane.add(cardBtn);
         //buttonPane.add(pieceBtn);
@@ -280,7 +282,7 @@ public class CenterPane extends JPanel {
         boardAndCmd = new JSplitPane(JSplitPane.VERTICAL_SPLIT, boardScreen,cmdPane);
         boardAndCmd.setDividerSize(6);
         boardAndCmd.setResizeWeight(0.8);
-        boardAndCmd.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
+        //boardAndCmd.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         boardAndCmd.addPropertyChangeListener("dividerLocation", e -> {
             int location = ((Integer)e.getNewValue()).intValue();

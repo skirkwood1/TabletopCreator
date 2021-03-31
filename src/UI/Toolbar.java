@@ -7,10 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class Toolbar extends JPanel implements ActionListener {
     private JPanel buttons;
@@ -42,6 +39,29 @@ public class Toolbar extends JPanel implements ActionListener {
         this.placementType = BoardPane.PlacementType.NONE;
 
         Color buttonBG = new Color(210,210,210);
+
+        UIManager.put("MenuBar.border",BorderFactory.createEmptyBorder());
+
+        UIManager.put("Menu.selectionBackground", Color.LIGHT_GRAY);
+        UIManager.put("Menu.selectionForeground", Color.BLACK);
+        UIManager.put("Menu.background", Color.WHITE);
+        UIManager.put("Menu.foreground", Color.BLACK);
+        UIManager.put("Menu.opaque", false);
+        UIManager.put("Menu.border",BorderFactory.createEmptyBorder(3,1,3,1));
+        UIManager.put("Menu.font",new Font("Segoe UI",Font.PLAIN,14));
+
+
+        UIManager.put("MenuItem.background",Color.WHITE);
+        UIManager.put("MenuItem.selectionBackground",buttonBG);
+        UIManager.put("MenuItem.background",Color.WHITE);
+        UIManager.put("MenuItem.foreground",Color.BLACK);
+        UIManager.put("MenuItem.border",BorderFactory.createEmptyBorder(2,2,2,2));
+        UIManager.put("MenuItem.font",new Font("Segoe UI",Font.PLAIN,14));
+
+        UIManager.put("ToolTip.font", new Font("Segoe UI", Font.PLAIN, 14));
+        UIManager.put("ToolTip.background", Color.WHITE);
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.border", BorderFactory.createLineBorder(Color.BLACK,1));
 
         setLayout(new BorderLayout(0,0));
         //setBorder(BorderFactory.createLoweredBevelBorder());
@@ -81,17 +101,18 @@ public class Toolbar extends JPanel implements ActionListener {
             }
         };
 
-        ChangeListener menuListener = new ChangeListener() {
+        MouseListener menuListener = new MouseAdapter(){
             @Override
-            public void stateChanged(ChangeEvent e) {
-                JMenu button = (JMenu) e.getSource();
-                ButtonModel model = button.getModel();
+            public void mouseEntered(MouseEvent e) {
+                JMenu item = (JMenu) e.getSource(); // is this implementation
+                // correct ?
+                item.setSelected(true);
+            }
 
-                if (model.isRollover()) {
-                    button.setBackground(Color.LIGHT_GRAY);
-                } else {
-                    button.setBackground(buttonBG);
-                }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                JMenu item = (JMenu) e.getSource();
+                item.setSelected(false);
             }
         };
 
@@ -152,6 +173,7 @@ public class Toolbar extends JPanel implements ActionListener {
         placeSpace.setBorder(BorderFactory.createEmptyBorder());
         placeSpace.setFocusPainted(false);
         placeSpace.setRolloverEnabled(true);
+        placeSpace.setFont(new Font("Segoe UI",Font.BOLD,13));
 
         placeSpace.addChangeListener(changeListener);
         placeSpace.setUI(mtbUI);
@@ -163,6 +185,7 @@ public class Toolbar extends JPanel implements ActionListener {
         placePiece.setBorder(BorderFactory.createEmptyBorder());
         placePiece.setFocusPainted(false);
         placePiece.setRolloverEnabled(true);
+        placePiece.setFont(new Font("Segoe UI",Font.BOLD,13));
 
         placePiece.addChangeListener(changeListener);
         placePiece.setUI(mtbUI);
@@ -175,10 +198,10 @@ public class Toolbar extends JPanel implements ActionListener {
 
         buttons = new JPanel();
 
-        buttons.setLayout(new FlowLayout(FlowLayout.LEFT,0,0));
-        //buttons.setBackground(new Color(240,240,240));
+        buttons.setLayout(new FlowLayout(FlowLayout.LEFT,2,0));
+        //buttons.setBackground(new Color(230,230,230));
         buttons.setBackground(Color.WHITE);
-        buttons.setBorder(BorderFactory.createLoweredBevelBorder());
+        buttons.setBorder(BorderFactory.createEmptyBorder(2,0,2,0));
 
 //        buttonGroup = new ButtonGroup();
 //        buttonGroup.add(placeSpace);
@@ -200,8 +223,17 @@ public class Toolbar extends JPanel implements ActionListener {
         add = new JMenu("Add");
         decks = new JMenu("Decks");
 
+        file.setRolloverEnabled(true);
+        file.addMouseListener(menuListener);
+
+        edit.setRolloverEnabled(true);
+        edit.addMouseListener(menuListener);
+
+        add.setRolloverEnabled(true);
+        add.addMouseListener(menuListener);
+
         decks.setRolloverEnabled(true);
-        decks.addChangeListener(menuListener);
+        decks.addMouseListener(menuListener);
 
         cut = new JMenuItem("Cut");
         copy = new JMenuItem("Copy");

@@ -45,10 +45,13 @@ public class Frame extends JFrame {
         //setLayout(new GridBagLayout());
         setLayout(new BorderLayout());
 
+        UIManager.put("Separator.foreground",Color.BLACK);
+        UIManager.put("Separator.background",Color.BLACK);
+
         toolbar = new Toolbar(game);
         centerPane = new CenterPane(game,toolbar,commandStack);
         centerPane.setOpaque(false);
-        //centerPane.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
+        toolbar.setBorder(BorderFactory.createRaisedBevelBorder());
 
 //        cmd = new JTextField();
 //        cmdOutput = new TextPanel();
@@ -69,9 +72,11 @@ public class Frame extends JFrame {
 
         this.resizePane = new ResizeBoardPane(game);
 
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        separator.setPreferredSize(new Dimension(800,50));
 
         add(toolbar, BorderLayout.NORTH);
-
+        add(separator, BorderLayout.CENTER);
         add(centerPane, BorderLayout.CENTER);
 
         //add(cmdPane, BorderLayout.SOUTH);

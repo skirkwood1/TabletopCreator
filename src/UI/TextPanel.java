@@ -14,8 +14,10 @@ public class TextPanel extends JPanel {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
+        UIManager.put("TextArea.border",BorderFactory.createEmptyBorder(2,2,2,2));
+
         //textArea.setBorder(BorderFactory.createEmptyBorder());
-        textArea.setMargin(new Insets(0,2,0,5));
+        //textArea.setMargin(new Insets(0,2,0,5));
         textArea.setAutoscrolls(true);
 
         setLayout(new BorderLayout());

@@ -28,6 +28,9 @@ public class ComponentTree extends JPanel {
 
         this.game = game;
 
+        UIManager.put("Tree.font",new Font("Segoe UI",Font.PLAIN,12));
+        UIManager.put("Tree.border",BorderFactory.createEmptyBorder(2,2,2,2));
+
         top.add(cards);
         top.add(pieces);
         top.add(textures);
