@@ -47,6 +47,8 @@ public class Frame extends JFrame {
 
         toolbar = new Toolbar(game);
         centerPane = new CenterPane(game,commandStack);
+        centerPane.setOpaque(false);
+        //centerPane.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
 
 //        cmd = new JTextField();
 //        cmdOutput = new TextPanel();

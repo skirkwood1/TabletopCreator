@@ -14,6 +14,10 @@ public class TextPanel extends JPanel {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
+        //textArea.setBorder(BorderFactory.createEmptyBorder());
+        textArea.setMargin(new Insets(0,2,0,5));
+        textArea.setAutoscrolls(true);
+
         setLayout(new BorderLayout());
 
         add(new JScrollPane(textArea), BorderLayout.CENTER);

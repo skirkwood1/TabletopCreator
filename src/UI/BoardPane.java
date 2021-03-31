@@ -296,7 +296,7 @@ public class BoardPane extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        setBackground(Color.WHITE);
+        //setBackground(Color.WHITE);
 
         int[] boardSize = game.getBoard().getSize();
         int width = boardSize[0];
@@ -402,7 +402,7 @@ public class BoardPane extends JPanel {
         //this.dimension = new Dimension(board.getSize()[0]*40+40,board.getSize()[1]*40+40);
 
 
-        double x = (this.game.getBoard().getSize()[0] * 40 + 40) * zoom;
+        double x = (this.game.getBoard().getSize()[0] * 40 + 240) * zoom;
         double y = (this.game.getBoard().getSize()[1] * 40 + 40) * zoom;
 
         setPreferredSize(new Dimension((int)x+200,(int)y));

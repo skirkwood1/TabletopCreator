@@ -3,6 +3,9 @@ package UI;
 import Models.Game;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,11 +39,15 @@ public class Toolbar extends JPanel implements ActionListener {
 
         this.placementType = BoardPane.PlacementType.NONE;
 
-        setLayout(new BorderLayout());
+        Color buttonBG = new Color(220,220,220);
+
+        setLayout(new BorderLayout(0,0));
+        //setBorder(BorderFactory.createLoweredBevelBorder());
+        setOpaque(false);
 
         ImageIcon saveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons8-save-100.png"));
         Image image = saveIcon.getImage();
-        Image newImg = image.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
+        Image newImg = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
         saveIcon = new ImageIcon(newImg);
 
         ImageIcon openIcon = new ImageIcon(getClass().getClassLoader().getResource("folder-open-outline-filled.png"));
@@ -50,21 +57,47 @@ public class Toolbar extends JPanel implements ActionListener {
 
         ImageIcon colorIcon = new ImageIcon(getClass().getClassLoader().getResource("img_colormap.gif"));
         image = colorIcon.getImage();
-        newImg = image.getScaledInstance(20,20, Image.SCALE_SMOOTH);
+        newImg = image.getScaledInstance(25,25, Image.SCALE_SMOOTH);
         colorIcon = new ImageIcon(newImg);
 
         colorLabel = new JLabel();
         colorLabel.setBackground(Color.RED);
         colorLabel.setOpaque(true);
-        colorLabel.setPreferredSize(new Dimension(25,25));
+        colorLabel.setPreferredSize(new Dimension(30,30));
+
+        ChangeListener changeListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                AbstractButton button = (AbstractButton) e.getSource();
+                ButtonModel model = button.getModel();
+
+                if (model.isRollover()) {
+                    button.setBackground(Color.LIGHT_GRAY);
+                } else {
+                    button.setBackground(new Color(220,220,220));
+                }
+            }
+        };
 
         save = new JButton(saveIcon);
-        save.setPreferredSize(new Dimension(25,25));
+        save.setPreferredSize(new Dimension(30,30));
         save.setToolTipText("Save");
+        //save.setMargin(new Insets(0,0,0,0));
+        save.setBackground(buttonBG);
+        save.setBorder(BorderFactory.createEmptyBorder());
+        save.setFocusPainted(false);
+
+        save.addChangeListener(changeListener);
 
         open = new JButton(openIcon);
-        open.setPreferredSize(new Dimension(25,25));
+        open.setPreferredSize(new Dimension(30,30));
         open.setToolTipText("Open");
+        open.setMargin(new Insets(0,0,0,0));
+        open.setBackground(buttonBG);
+        open.setBorder(BorderFactory.createEmptyBorder());
+        open.setFocusPainted(false);
+
+        open.addChangeListener(changeListener);
 
         saveMenu = new JMenuItem("Save");
         saveMenu.setIcon(saveIcon);
@@ -73,16 +106,32 @@ public class Toolbar extends JPanel implements ActionListener {
         openMenu.setIcon(openIcon);
 
         colorChoose = new JButton(colorIcon);
-        colorChoose.setPreferredSize(new Dimension(25,25));
+        colorChoose.setPreferredSize(new Dimension(30,30));
+        colorChoose.setMargin(new Insets(0,0,0,0));
         colorChoose.setToolTipText("Choose Color");
+        colorChoose.setBackground(buttonBG);
+        colorChoose.setBorder(BorderFactory.createEmptyBorder());
+        colorChoose.setFocusPainted(false);
+
+        colorChoose.addChangeListener(changeListener);
 
         placeSpace = new JToggleButton("Space");
-        placeSpace.setPreferredSize(new Dimension(45,25));
-        placeSpace.setMargin(new Insets(1,1,1,1));
+        placeSpace.setPreferredSize(new Dimension(45,30));
+        placeSpace.setMargin(new Insets(0,0,0,0));
+        placeSpace.setBackground(buttonBG);
+        placeSpace.setBorder(BorderFactory.createEmptyBorder());
+        placeSpace.setFocusPainted(false);
+
+        placeSpace.addChangeListener(changeListener);
 
         placePiece = new JToggleButton("Piece");
-        placePiece.setPreferredSize(new Dimension(45,25));
-        placePiece.setMargin(new Insets(1,1,1,1));
+        placePiece.setPreferredSize(new Dimension(45,30));
+        placePiece.setMargin(new Insets(0,0,0,0));
+        placePiece.setBackground(buttonBG);
+        placePiece.setBorder(BorderFactory.createEmptyBorder());
+        placePiece.setFocusPainted(false);
+
+        placePiece.addChangeListener(changeListener);
 
         save.addActionListener(this);
         open.addActionListener(this);
@@ -90,10 +139,10 @@ public class Toolbar extends JPanel implements ActionListener {
         placePiece.addActionListener(this);
         placeSpace.addActionListener(this);
 
-
         buttons = new JPanel();
 
-        buttons.setLayout(new FlowLayout(FlowLayout.LEFT));
+        buttons.setLayout(new FlowLayout(FlowLayout.LEFT,2,2));
+        buttons.setBackground(Color.WHITE);
 
 //        buttonGroup = new ButtonGroup();
 //        buttonGroup.add(placeSpace);
@@ -107,6 +156,9 @@ public class Toolbar extends JPanel implements ActionListener {
         buttons.add(placePiece);
 
         menuBar = new JMenuBar();
+        menuBar.setBackground(Color.WHITE);
+        menuBar.setBorder(null);
+
         file = new JMenu("File");
         edit = new JMenu("Edit");
         add = new JMenu("Add");
@@ -164,7 +216,6 @@ public class Toolbar extends JPanel implements ActionListener {
 
         add(menuBar,BorderLayout.NORTH);
         add(buttons,BorderLayout.SOUTH);
-
 
 
     }
@@ -257,5 +308,20 @@ public class Toolbar extends JPanel implements ActionListener {
 
     public BoardPane.PlacementType getPlacementType(){
         return this.placementType;
+    }
+
+    public ChangeListener changeListener(JButton button){
+        return new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                DefaultButtonModel model = (DefaultButtonModel) e.getSource();
+
+                if (model.isRollover()) {
+                    button.setBackground(Color.LIGHT_GRAY);
+                } else {
+                    button.setBackground(new Color(220,220,220));
+                }
+            }
+        };
     }
 }

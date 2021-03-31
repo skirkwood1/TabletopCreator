@@ -7,6 +7,7 @@ import Models.Component;
 import Models.Texture;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,7 +20,7 @@ import static javax.swing.BorderFactory.createEmptyBorder;
 
 public class CenterPane extends JPanel {
     ComponentTree componentTree;
-    private TextPanel textPanel;
+    //private TextPanel textPanel;
     private JSplitPane overallPane;
     private JSplitPane textAndCardPane;
     private JSplitPane cardPane;
@@ -165,15 +166,19 @@ public class CenterPane extends JPanel {
         cardText.setPreferredSize(new Dimension(200,100));
         cardText.setMinimumSize(new Dimension(200,100));
         cardText.setMaximumSize(new Dimension(300,500));
+        cardText.setBorder(null);
 
         imagePane.setPreferredSize(new Dimension(200, 300));
         imagePane.setMinimumSize(new Dimension(200,100));
         imagePane.setMaximumSize(new Dimension(300,500));
+        imagePane.setBorder(null);
+
         componentImage.setHorizontalAlignment(SwingConstants.CENTER);
         componentImage.setVerticalAlignment(SwingConstants.CENTER);
 
         cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, imagePane);
         cardPane.setMaximumSize(new Dimension (300,600));
+        cardPane.setDividerSize(6);
 
 //        Dimension boardDimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
 //        boardPane.setPreferredSize(boardDimension);
@@ -184,18 +189,23 @@ public class CenterPane extends JPanel {
         //boardScreen.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         boardScreen.setViewportView(boardPane);
+        boardScreen.getViewport().setOpaque(false);
+        boardScreen.setBorder(createEmptyBorder(-2,-2,-2,-2));
+        boardScreen.setMinimumSize(new Dimension(800,400));
         boardScreen.setBackground(Color.LIGHT_GRAY);
-        boardScreen.getViewport().setOpaque(true);
-        boardScreen.setBorder(createEmptyBorder());
+        boardScreen.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
+
 
         cmd = new JTextField();
         cmd.setSize(new Dimension(800,20));
+        cmd.setMinimumSize(new Dimension(800,20));
         cmd.setPreferredSize(new Dimension(800,20));
-
+        //cmd.setBorder(null);
 
         cmdOutput = new TextPanel();
-        cmdOutput.setSize(new Dimension(800,40));
-        cmdOutput.setPreferredSize(new Dimension(800,40));
+        cmdOutput.setSize(new Dimension(800,100));
+        cmdOutput.setPreferredSize(new Dimension(800,100));
+        //cmdOutput.setBorder(BorderFactory.createEmptyBorder(-2,-1,-2,-1));
 
         cmd.addActionListener(e -> {
             String[] command = cmd.getText().split(" ");
@@ -209,19 +219,34 @@ public class CenterPane extends JPanel {
 
         cmdPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         cmdPane.setDividerSize(0);
+        cmdPane.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
 
         //buttonPane.add(cardBtn);
         //buttonPane.add(pieceBtn);
         cmdPane.add(cmdOutput);
         cmdPane.add(cmd);
+        cmdPane.setMinimumSize(new Dimension(0,80));
 
         cmdPane.setResizeWeight(1);
 
-
         boardAndCmd = new JSplitPane(JSplitPane.VERTICAL_SPLIT, boardScreen,cmdPane);
+        boardAndCmd.setDividerSize(6);
+        boardAndCmd.setResizeWeight(0.8);
+        boardAndCmd.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
+
+        boardAndCmd.addPropertyChangeListener("dividerLocation", e -> {
+            int location = ((Integer)e.getNewValue()).intValue();
+
+            if (location < 400)
+            {
+                JSplitPane splitPane = (JSplitPane)e.getSource();
+                splitPane.setDividerLocation( 400 );
+            }
+        });
 
         textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardAndCmd, cardPane);
         textAndCardPane.setResizeWeight(1);
+        textAndCardPane.setDividerSize(6);
 
 
         componentTree.setMinimumSize(new Dimension(50,0));
@@ -234,7 +259,8 @@ public class CenterPane extends JPanel {
 
         overallPane.setResizeWeight(0);
         overallPane.setPreferredSize(new Dimension(1200,600));
-        overallPane.setDividerLocation(0.25);
+        overallPane.setDividerSize(6);
+        //overallPane.setDividerLocation(200);
 
         overallPane.addPropertyChangeListener("dividerLocation", e -> {
             int location = ((Integer)e.getNewValue()).intValue();
@@ -504,6 +530,10 @@ public class CenterPane extends JPanel {
             cmdOutput.appendBottomText("Rolling " + command[1] + " sided die: " + ((r.nextInt(Integer.parseInt(command[1]))) + 1));
 
         }
+    }
+
+    @Override public void setBorder(Border border) {
+        // No!
     }
 
 }
