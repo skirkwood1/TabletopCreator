@@ -261,9 +261,10 @@ public class CenterPane extends JPanel {
             String[] command = cmd.getText().split(" ");
             if(commandMap.containsKey(command[0])){
                 parseCommand(command);
+                cmd.setText("");
             }else{
-            cmdOutput.appendBottomText(cmd.getText());
-            cmd.setText("");
+                cmdOutput.appendBottomText(cmd.getText());
+                cmd.setText("");
             }
         });
 

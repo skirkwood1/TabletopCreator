@@ -72,11 +72,11 @@ public class Frame extends JFrame {
 
         this.resizePane = new ResizeBoardPane(game);
 
-        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-        separator.setPreferredSize(new Dimension(800,50));
+        //JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        //separator.setPreferredSize(new Dimension(800,50));
 
         add(toolbar, BorderLayout.NORTH);
-        add(separator, BorderLayout.CENTER);
+        //add(separator, BorderLayout.CENTER);
         add(centerPane, BorderLayout.CENTER);
 
         //add(cmdPane, BorderLayout.SOUTH);
