@@ -42,8 +42,6 @@ public class CommandStack {
         pointer++;
         GameCommand command = commandStack.get(pointer);
         command.execute();
-
-
     }
 
     public void clear(){

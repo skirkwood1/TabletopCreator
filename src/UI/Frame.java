@@ -1,9 +1,6 @@
 package UI;
 
-import Commands.AddComponentCommand;
-import Commands.ChangeSizeCommand;
-import Commands.CommandStack;
-import Commands.UpdateColorCommand;
+import Commands.*;
 import Models.*;
 
 import javax.swing.*;
@@ -100,7 +97,11 @@ public class Frame extends JFrame {
                 if(userSelection == JFileChooser.APPROVE_OPTION){
                     File fileToOpen = fileChooser.getSelectedFile();
                     System.out.println("Open file:" + fileToOpen.getAbsolutePath());
-                    this.game = openGame(fileToOpen);
+                    Game newGame = openGame(fileToOpen);
+
+                    OpenGameCommand ogc = new OpenGameCommand(this,this.game,newGame);
+                    commandStack.insertCommand(ogc);
+
                     centerPane.refreshComponentTree(game);
                     centerPane.updateBoard();
                 }
@@ -166,14 +167,15 @@ public class Frame extends JFrame {
             else if(text.equals("Undo\n\r")){
                 commandStack.undo();
                 //centerPane.refreshComponentTree(this.game);
-                centerPane.updateBoard();
                 centerPane.refreshComponentTree(game);
+                centerPane.updateBoard();
+
             }
 
             else if(text.equals("Redo\n\r")){
                 commandStack.redo();
-                centerPane.updateBoard();
                 centerPane.refreshComponentTree(game);
+                centerPane.updateBoard();
             }
 
             else if(text.equals("Placement\n\r")){
@@ -187,6 +189,14 @@ public class Frame extends JFrame {
         setVisible(true);
 
         keyboardSetup();
+    }
+
+    public void setGame(Game game){
+        this.game = game;
+    }
+
+    public void updateBoard(){
+        this.centerPane.updateBoard();
     }
 
     private void saveGame(Game game, File file){
@@ -325,8 +335,9 @@ public class Frame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 commandStack.undo();
                 //centerPane.refreshComponentTree(this.game);
-                centerPane.updateBoard();
                 centerPane.refreshComponentTree(game);
+                centerPane.updateBoard();
+
             }
         });
 
@@ -334,8 +345,8 @@ public class Frame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 commandStack.redo();
-                centerPane.updateBoard();
                 centerPane.refreshComponentTree(game);
+                centerPane.updateBoard();
             }
         });
 
