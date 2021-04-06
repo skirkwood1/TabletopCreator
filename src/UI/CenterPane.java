@@ -483,6 +483,7 @@ public class CenterPane extends JPanel {
     }
 
     void updateBoard(){
+        boardPane.updateGame(game);
 
         boardPane.setZoom(zoom);
         boardPane.updateSize();

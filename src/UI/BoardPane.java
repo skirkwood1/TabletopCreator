@@ -309,8 +309,8 @@ public class BoardPane extends JPanel {
                 Space space = game.getBoard().getSpace(i, j);
 
                 if(space.isUsingTexture()){
-                    BufferedImage texture = space.getTexture();
-                    g2.drawImage(texture,i*40+20,j*40+20,40,40,null);
+                    Texture texture = space.getTexture();
+                    g2.drawImage(texture.getTexture(),i*40+20,j*40+20,40,40,null);
                 }
                 else{
                     Color color = space.getColor();
@@ -432,6 +432,10 @@ public class BoardPane extends JPanel {
 
     public void toggleGrid(){
         this.showGrid = !this.showGrid;
+    }
+
+    public void updateGame(Game game){
+        this.game = game;
     }
 
 }

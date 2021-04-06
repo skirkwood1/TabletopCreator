@@ -1,6 +1,7 @@
 package Commands;
 
 import Models.Game;
+import Models.Texture;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +10,7 @@ public class PlaceSpaceCommand extends GameCommand {
 
     private int x,y;
     private Color oldColor;
-    private BufferedImage oldTexture;
+    private Texture oldTexture;
 
     public PlaceSpaceCommand(Game game, int x, int y){
         //this.memento = new GameMemento();
@@ -27,7 +28,7 @@ public class PlaceSpaceCommand extends GameCommand {
     public void execute(){
         //this.memento.setState(this.game);
         if(game.getBoard().useTexture()){
-            game.getBoard().setSquare(x,y,game.getBoard().getTextureImage());
+            game.getBoard().setSquare(x,y,game.getBoard().getTexture());
         }else{
             game.getBoard().setSquare(x,y,this.game.getBoard().getColor());
         }

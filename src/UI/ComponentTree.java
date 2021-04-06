@@ -107,6 +107,7 @@ public class ComponentTree extends JPanel {
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
         cards.removeAllChildren();
         pieces.removeAllChildren();
+        textures.removeAllChildren();
         decks.removeAllChildren();
 
         for(Card card: this.game.getCards()){
@@ -117,6 +118,11 @@ public class ComponentTree extends JPanel {
         for(Piece piece: this.game.getPieces()){
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(piece.getName());
             model.insertNodeInto(node,pieces,pieces.getChildCount());
+        }
+
+        for(Texture texture: this.game.getTextures()){
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(texture.getName());
+            model.insertNodeInto(node,textures,textures.getChildCount());
         }
 
         for(Deck deck: this.game.getDecks()){

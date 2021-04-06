@@ -100,7 +100,7 @@ public class Frame extends JFrame {
                 if(userSelection == JFileChooser.APPROVE_OPTION){
                     File fileToOpen = fileChooser.getSelectedFile();
                     System.out.println("Open file:" + fileToOpen.getAbsolutePath());
-                    game = openGame(fileToOpen);
+                    this.game = openGame(fileToOpen);
                     centerPane.refreshComponentTree(game);
                     centerPane.updateBoard();
                 }

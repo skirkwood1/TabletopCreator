@@ -1,6 +1,7 @@
 package Commands;
 
 import Models.Game;
+import Models.Texture;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +10,7 @@ public class MultipleSpacesCommand extends GameCommand {
     int start_x, start_y, end_x, end_y;
 
     Color[][] oldColors;
-    BufferedImage[][] oldTextures;
+    Texture[][] oldTextures;
     boolean[][] usedTexture;
 
     Color newColor;
@@ -22,7 +23,7 @@ public class MultipleSpacesCommand extends GameCommand {
         this.end_y = end_y;
 
         this.oldColors = new Color[end_x - start_x + 1][end_y - start_y + 1];
-        this.oldTextures = new BufferedImage[end_x - start_x + 1][end_y - start_y + 1];
+        this.oldTextures = new Texture[end_x - start_x + 1][end_y - start_y + 1];
         this.usedTexture = new boolean[end_x - start_x + 1][end_y - start_y + 1];
 
         for(int i = 0; i <= end_x - start_x; i++){
@@ -42,7 +43,7 @@ public class MultipleSpacesCommand extends GameCommand {
         for(int i = start_x; i <= end_x; i++){
             for(int j = start_y; j <= end_y; j++){
                 if(game.getBoard().useTexture()){
-                    game.getBoard().setSquare(i,j,this.game.getBoard().getTextureImage());
+                    game.getBoard().setSquare(i,j,this.game.getBoard().getTexture());
                 }else{
                     game.getBoard().setSquare(i,j,this.game.getBoard().getColor());
                 }

@@ -1,8 +1,9 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
     private ArrayList<Card> hand;
     private ArrayList<Piece> controlledPieces;
     private ArrayList<Resource> resources;

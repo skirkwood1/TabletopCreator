@@ -17,7 +17,7 @@ public class Space implements Serializable {
     private Piece piece = null;
 
     private boolean useTexture;
-    private BufferedImage texture;
+    private Texture texture;
 
     public Space(){
         this.color = Color.GRAY;
@@ -34,7 +34,7 @@ public class Space implements Serializable {
         //this.empty = false;
     }
 
-    public Space(BufferedImage image){
+    public Space(Texture image){
         this.texture = image;
         this.occupied = false;
 
@@ -45,7 +45,7 @@ public class Space implements Serializable {
         return color;
     }
 
-    public BufferedImage getTexture(){
+    public Texture getTexture(){
         return texture;
     }
 
@@ -54,7 +54,11 @@ public class Space implements Serializable {
     }
 
     public String toString(){
-        return "R: " + color.getRed() + "\t G: " + color.getGreen() + "\tB: " + color.getBlue() + "\t| ";
+        if(useTexture){
+            return "Texture: \t" + texture.getName() + "\t\t| ";
+        }else{
+            return "R: " + color.getRed() + "\t G: " + color.getGreen() + "\tB: " + color.getBlue() + "\t| ";
+        }
     }
 
     public void addPiece(Piece piece){
@@ -80,7 +84,7 @@ public class Space implements Serializable {
         this.useTexture = false;
     }
 
-    public void setTexture(BufferedImage image){
+    public void setTexture(Texture image){
         this.texture = image;
         this.useTexture = true;
     }

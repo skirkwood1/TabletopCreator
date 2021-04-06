@@ -80,7 +80,7 @@ public class Board implements Serializable {
         spaces[x][y].setColor(color);
     }
 
-    public void setSquare(int x, int y, BufferedImage texture){
+    public void setSquare(int x, int y, Texture texture){
         spaces[x][y].setTexture(texture);
     }
 

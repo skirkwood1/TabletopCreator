@@ -11,7 +11,7 @@ public class Game implements Serializable {
     private ArrayList<Piece> pieces;
     private ArrayList<Deck> decks;
 
-    private transient ArrayList<Texture> textures;
+    private ArrayList<Texture> textures;
 
     private Board board;
 
@@ -114,6 +114,10 @@ public class Game implements Serializable {
             }
         }
         return null;
+    }
+
+    public ArrayList<Texture> getTextures(){
+        return this.textures;
     }
 
     public ArrayList<Card> getCards(){

@@ -1,6 +1,8 @@
 package Models;
 
-public class Resource {
+import java.io.Serializable;
+
+public class Resource implements Serializable {
     private String name;
     private int value;
 
