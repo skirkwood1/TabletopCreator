@@ -4,73 +4,111 @@ import UI.TextPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Scanner;
 
-public class ClientWindow extends JFrame {
+public class ClientWindow implements ActionListener,Runnable {
+
+    JFrame frame;
     TextPanel log;
     JTextField prompt;
 
     HashMap<String, String> commandMap;
 
-    private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
-
     private final int port = 8888;
     private String ip;
 
-    public ClientWindow(String ip) {
-        super("Chat Server");
+    private Scanner in;
+    private InputStream input;
+
+    private OutputStream output;
+    private volatile PrintWriter out;
+
+    private Thread thread;
+
+    public ClientWindow(String ip) throws Exception {
+        this.frame = new JFrame("Chat Client");
 
         this.ip = ip;
 
-        setPreferredSize(new Dimension(400, 400));
+        frame.setPreferredSize(new Dimension(400, 400));
 
         this.log = new TextPanel();
         this.prompt = new JTextField();
         this.commandMap = new HashMap<>();
 
-        setLayout(new BorderLayout());
+        frame.setLayout(new BorderLayout());
 
-        add(prompt, BorderLayout.SOUTH);
-        add(log, BorderLayout.CENTER);
+        frame.add(prompt, BorderLayout.SOUTH);
+        frame.add(log, BorderLayout.CENTER);
 
-        pack();
+        frame.pack();
+        frame.setSize(400, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setSize(400, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        prompt.addActionListener(this);
+
+        this.thread = new Thread(this);
     }
 
-    public String sendMessage(String msg) throws IOException {
-        out.println(msg);
-        String resp = in.readLine();
-        return resp;
-    }
+     public void handleInput() throws IOException{
+        String inLine;
+        while((inLine = in.nextLine()) != null){
+             log.appendBottomText(inLine);
+         }
+     }
 
-    public void startConnection() throws Exception{
-        clientSocket = new Socket(ip, port);
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+     public void start(){
+         frame.setVisible(true);
+         thread.start();
+     }
 
-        prompt.addActionListener(e -> {
-            String promptText = prompt.getText();
-            try{
-                String resp = sendMessage(promptText);
-                log.appendBottomText(resp);
-            }catch(IOException ioe){ }
+     public void run(){
+         try {
+             Socket socket = new Socket(ip,port);
+             this.input = socket.getInputStream();
+             this.in = new Scanner(input);
+
+             this.output = socket.getOutputStream();
+             this.out = new PrintWriter(output,true);
+             while (true) {
+                 display(in.nextLine());
+             }
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+     }
+
+     public void actionPerformed(ActionEvent e){
+         String s = prompt.getText();
+         if (out != null) {
+             out.println(s);
+         }
+         //display(s);
+         prompt.setText("");
+     }
+
+    private void display(final String s) {
+        EventQueue.invokeLater(new Runnable() {
+            //@Override
+            public void run() {
+                log.appendText(s + "\n\r");
+            }
         });
     }
 
-    public void stopConnection() throws IOException{
-        in.close();
-        out.close();
-        clientSocket.close();
-    }
+    public static void main(String[] args){
 
+        EventQueue.invokeLater(new Runnable(){
+            public void run(){
+                try{
+                    new ClientWindow("localhost").start();
+                }catch(Exception e){}
+            }
+        });
+    }
 }
