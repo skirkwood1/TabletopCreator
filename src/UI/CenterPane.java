@@ -10,6 +10,7 @@ import Observers.BoardPaneObserver;
 import Observers.ColorLabelObserver;
 import Observers.Observer;
 import UI.Listeners.BoardPaneViewScroll;
+import UI.Listeners.ImageViewScroll;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -249,90 +250,11 @@ public class CenterPane extends JPanel {
 
         componentImage.setAutoscrolls(true);
 
+        ImageViewScroll ivs = new ImageViewScroll(this.game,imagePane,componentImage);
 
-
-        MouseAdapter ma = new MouseAdapter() {
-
-            private Point holdPoint;
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                holdPoint = new Point(e.getPoint());
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                imagePane.setCursor(null);
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                imagePane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-
-                Point dragEventPoint = e.getPoint();
-                JViewport viewport = (JViewport) componentImage.getParent();
-                Point viewPos = viewport.getViewPosition();
-                int maxViewPosX = componentImage.getWidth() - viewport.getWidth();
-                int maxViewPosY = componentImage.getHeight() - viewport.getHeight();
-
-                if (componentImage.getWidth() > viewport.getWidth()) {
-                    viewPos.x -= dragEventPoint.x - holdPoint.x;
-
-                    if (viewPos.x < 0) {
-                        viewPos.x = 0;
-                        holdPoint.x = dragEventPoint.x;
-                    }
-
-                    if (viewPos.x > maxViewPosX) {
-                        viewPos.x = maxViewPosX;
-                        holdPoint.x = dragEventPoint.x;
-                    }
-                }
-
-                if (componentImage.getHeight() > viewport.getHeight()) {
-                    viewPos.y -= dragEventPoint.y - holdPoint.y;
-
-                    if (viewPos.y < 0) {
-                        viewPos.y = 0;
-                        holdPoint.y = dragEventPoint.y;
-                    }
-
-                    if (viewPos.y > maxViewPosY) {
-                        viewPos.y = maxViewPosY;
-                        holdPoint.y = dragEventPoint.y;
-                    }
-                }
-
-                viewport.setViewPosition(viewPos);
-            }
-
-        };
-
-        MouseWheelListener mc = new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-
-                imageZoom -= e.getWheelRotation() * 0.1;
-                if(imageZoom < 0.1){
-                    imageZoom = 0.1;
-                }
-
-                BufferedImage image = game.getSelectedComponent().getPicture(); // transform it
-                if(image == null){
-                    image = game.getBoard().getTextureImage();
-                }
-
-                Image newimg = image.getScaledInstance((int)(image.getWidth()*imageZoom), (int)(image.getHeight()*imageZoom),  Image.SCALE_SMOOTH); // scale it the smooth way
-
-                ImageIcon icon = new ImageIcon(newimg);
-                componentImage.setIcon(icon);
-
-            }
-        };
-
-        componentImage.addMouseListener(ma);
-        componentImage.addMouseMotionListener(ma);
-        componentImage.addMouseWheelListener(mc);
+        componentImage.addMouseListener(ivs);
+        componentImage.addMouseMotionListener(ivs);
+        componentImage.addMouseWheelListener(ivs);
 
         BoardPaneViewScroll bpvs = new BoardPaneViewScroll(boardScreen,boardPane,observers);
 
