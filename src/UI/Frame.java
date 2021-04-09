@@ -1,12 +1,16 @@
 package UI;
 
+import ChatServer.ClientWindow;
 import Commands.*;
 import Models.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -44,6 +48,13 @@ public class Frame extends JFrame {
 
         UIManager.put("Separator.foreground",Color.BLACK);
         UIManager.put("Separator.background",Color.BLACK);
+
+        Component[] comp =  fileChooser.getComponents();
+
+        fileChooser.setBackground(Color.WHITE);
+        fileChooser.setOpaque(true);
+        fileChooser.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+        setFileChooserUI(comp);
 
         toolbar = new Toolbar(game);
         centerPane = new CenterPane(game,toolbar,commandStack);
@@ -128,6 +139,14 @@ public class Frame extends JFrame {
                 //toolbar.updateColorLabel();
             }
 
+            else if(text.equals("Message\n\r")){
+                try {
+                    new ClientWindow("localhost").start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             else if(text.equals("AddCard\n\r")){
                 addCardDialog();
             }
@@ -189,6 +208,23 @@ public class Frame extends JFrame {
         setVisible(true);
 
         keyboardSetup();
+    }
+
+    public void setFileChooserUI(Component[] comp){
+        for(int x = 0; x < comp.length; x++) {
+            if(comp[x] instanceof Container) setFileChooserUI(((Container)comp[x]).getComponents());
+            try{
+                comp[x].setFont(new Font("Segoe UI",Font.PLAIN,12));
+            } catch(Exception e){}//do nothing
+            try{
+                comp[x].setBackground(Color.WHITE);
+            }catch(Exception e){}
+            if(comp[x] instanceof JButton){
+                JButton jb = (JButton)comp[x];
+                jb.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+                jb.setBackground(new Color(220,220,220));
+            }
+        }
     }
 
     public void setGame(Game game){

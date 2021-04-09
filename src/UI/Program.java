@@ -13,7 +13,5 @@ public class Program {
                 new Frame();
             }
         });
-
-        Dice die = new Dice(6);
     }
 }

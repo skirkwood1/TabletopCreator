@@ -14,6 +14,7 @@ public class Toolbar extends JPanel implements ActionListener {
     private JButton save;
     private JButton open;
     private JButton colorChoose;
+    private JButton message;
 
     private ButtonGroup buttonGroup;
     private JToggleButton placeSpace;
@@ -81,6 +82,11 @@ public class Toolbar extends JPanel implements ActionListener {
         image = colorIcon.getImage();
         newImg = image.getScaledInstance(25,25, Image.SCALE_SMOOTH);
         colorIcon = new ImageIcon(newImg);
+
+        ImageIcon messageIcon = new ImageIcon(getClass().getClassLoader().getResource("SendIcon.png"));
+        image = messageIcon.getImage();
+        newImg = image.getScaledInstance(24,24, Image.SCALE_SMOOTH);
+        messageIcon = new ImageIcon(newImg);
 
         colorLabel = new JLabel();
         colorLabel.setBackground(Color.RED);
@@ -166,6 +172,17 @@ public class Toolbar extends JPanel implements ActionListener {
         colorChoose.addChangeListener(changeListener);
         colorChoose.setUI(mtbUI);
 
+        message = new JButton(messageIcon);
+        message.setPreferredSize(new Dimension(30,30));
+        message.setMargin(new Insets(0,0,0,0));
+        message.setForeground(game.getBoard().getColor());
+        message.setBackground(buttonBG);
+        message.setBorder(BorderFactory.createEmptyBorder());
+        message.setFocusPainted(false);
+
+        message.addChangeListener(changeListener);
+        message.setUI(mtbUI);
+
         placeSpace = new JToggleButton("Space");
         placeSpace.setPreferredSize(new Dimension(45,30));
         placeSpace.setMargin(new Insets(0,0,0,0));
@@ -193,6 +210,7 @@ public class Toolbar extends JPanel implements ActionListener {
         save.addActionListener(this);
         open.addActionListener(this);
         colorChoose.addActionListener(this);
+        message.addActionListener(this);
         placePiece.addActionListener(this);
         placeSpace.addActionListener(this);
 
@@ -210,6 +228,7 @@ public class Toolbar extends JPanel implements ActionListener {
         buttons.add(save);
         buttons.add(open);
         buttons.add(colorChoose);
+        buttons.add(message);
         buttons.add(placeSpace);
         buttons.add(placePiece);
         buttons.add(colorLabel);
@@ -313,7 +332,11 @@ public class Toolbar extends JPanel implements ActionListener {
         else if (c == colorChoose){
             stringListener.textEmitted("ColorChooser\n\r");
             System.out.println("Choose Color");
+        }
 
+        else if(c == message){
+            stringListener.textEmitted("Message\n\r");
+            System.out.println("Open Chat");
         }
 
         else if (c == addPiece){

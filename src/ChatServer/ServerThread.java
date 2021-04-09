@@ -2,7 +2,6 @@ package ChatServer;
 
 import java.io.*;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,7 +11,7 @@ public class ServerThread implements Runnable {
         private Socket socket;
         private ArrayList<ServerThread> clients;
 
-        private OutputStream output;
+        private volatile PrintWriter printWriter;
 
         private String username;
 
@@ -25,34 +24,44 @@ public class ServerThread implements Runnable {
             try {
                 InputStream input = socket.getInputStream();
                 Scanner in = new Scanner(new InputStreamReader(input));
-                this.output = socket.getOutputStream();
+                OutputStream output = socket.getOutputStream();
+                this.printWriter = new PrintWriter(output,true);
 
-                output.write(("Please enter a username: \n").getBytes());
+                printWriter.println("Please enter a username:");
 
                 this.username = in.nextLine();
-                output.write(("Username set to: " + username + "\n").getBytes());
+                printWriter.println("Username set to: " + username);
                 //this.out = new PrintWriter(output, true);
 
                 while(!socket.isClosed()){
-                    String s = in.nextLine();
+                    String s = "";
+                    if(in.hasNextLine()){
+                        s = in.nextLine();
+                    }
 
                     if(!s.equals("")){
                         for(ServerThread client: this.clients){
-                            String message = this.username + ": " + s + "\n";
-                            client.getWriter().write(message.getBytes());
+                            if(!client.isClosed()){
+                                String message = this.username + ": " + s;
+                                client.getWriter().println(message);
+                            }
                         }
                     }
                 }
+                clients.remove(this);
 
-                socket.close();
             } catch (IOException ex) {
                 System.out.println("Server exception: " + ex.getMessage());
                 ex.printStackTrace();
             }
         }
 
-        public OutputStream getWriter(){
-            return this.output;
+        public PrintWriter getWriter(){
+            return this.printWriter;
+        }
+
+        public boolean isClosed(){
+            return this.socket.isClosed();
         }
 
 

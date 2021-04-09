@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
@@ -242,6 +243,15 @@ public class CenterPane extends JPanel {
         boardScreen.setViewportView(boardPane);
         boardScreen.getViewport().setOpaque(false);
         boardScreen.setMinimumSize(new Dimension(800,400));
+
+        boardScreen.getVerticalScrollBar().setOpaque(false);
+
+        boardScreen.getVerticalScrollBar().setUI(scrollBarUI());
+
+        boardScreen.getHorizontalScrollBar().setOpaque(false);
+
+        boardScreen.getHorizontalScrollBar().setUI(scrollBarUI());
+
         //boardScreen.setBackground(Color.LIGHT_GRAY);
         //boardScreen.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
 
@@ -527,6 +537,38 @@ public class CenterPane extends JPanel {
 
     @Override public void setBorder(Border border) {
         // No!
+    }
+
+    public BasicScrollBarUI scrollBarUI(){
+        return new BasicScrollBarUI() {
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                return zeroButton();
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                return zeroButton();
+            }
+
+            @Override
+            protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds)
+            {
+            }
+
+            JButton zeroButton(){
+                JButton jbutton = new JButton();
+                jbutton.setPreferredSize(new Dimension(0, 0));
+                jbutton.setMinimumSize(new Dimension(0, 0));
+                jbutton.setMaximumSize(new Dimension(0, 0));
+                return jbutton;
+            }
+
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.LIGHT_GRAY;
+            }
+        };
     }
 
 }
