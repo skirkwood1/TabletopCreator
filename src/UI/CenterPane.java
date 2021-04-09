@@ -6,6 +6,9 @@ import Models.Deck;
 import Models.Game;
 import Models.Component;
 import Models.Texture;
+import Observers.BoardPaneObserver;
+import Observers.ColorLabelObserver;
+import Observers.Observer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,6 +19,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -43,6 +47,7 @@ public class CenterPane extends JPanel {
     private double imageZoom = 1.0;
 
     private HashMap<String,Action> commandMap;
+    private ArrayList<Observer> observers;
 
     MouseAdapter mb = new MouseAdapter() {
 
@@ -168,7 +173,10 @@ public class CenterPane extends JPanel {
 //                }
 
             if(selectedNode.isLeaf()){
-                if(selectedNode.getParent().equals(componentTree.pieces)){
+                if(selectedNode.getParent().equals(componentTree.top)){
+
+                }
+                else if(selectedNode.getParent().equals(componentTree.pieces)){
                     component = game.getPiece(name);
                 }
                 else if(selectedNode.getParent().equals(componentTree.cards)){
@@ -191,8 +199,10 @@ public class CenterPane extends JPanel {
             }else if(texture != null){
                 displayImage(texture.getTexture());
                 //game.getBoard().setTexture(texture);
-                UpdateColorCommand ucc = new UpdateColorCommand(game,texture,toolbar);
+                UpdateColorCommand ucc = new UpdateColorCommand(game,texture);
                 commandStack.insertCommand(ucc);
+
+                updateObservers();
 
             }
         }
@@ -214,6 +224,7 @@ public class CenterPane extends JPanel {
         imagePane = new JScrollPane(componentImage);
 
         this.commandStack = commandStack;
+        this.observers = new ArrayList<>();
 
         cardText.setPreferredSize(new Dimension(200,100));
         cardText.setMinimumSize(new Dimension(200,100));
@@ -251,6 +262,8 @@ public class CenterPane extends JPanel {
         boardScreen.getHorizontalScrollBar().setOpaque(false);
 
         boardScreen.getHorizontalScrollBar().setUI(scrollBarUI());
+
+        boardScreen.setAutoscrolls(true);
 
         //boardScreen.setBackground(Color.LIGHT_GRAY);
         //boardScreen.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
@@ -341,6 +354,8 @@ public class CenterPane extends JPanel {
         add(overallPane);
 
         componentTree.getTree().addTreeSelectionListener(tsl);
+        BoardPaneObserver boardPaneObserver = new BoardPaneObserver(this);
+        componentTree.addObserver(boardPaneObserver);
 
         componentImage.setAutoscrolls(true);
 
@@ -492,7 +507,7 @@ public class CenterPane extends JPanel {
         componentTree.getTree().addTreeSelectionListener(tsl);
     }
 
-    void updateBoard(){
+    public void updateBoard(){
         boardPane.updateGame(game);
 
         boardPane.setZoom(zoom);
@@ -569,6 +584,21 @@ public class CenterPane extends JPanel {
                 this.thumbColor = Color.LIGHT_GRAY;
             }
         };
+    }
+
+    public void addObserver(Observer obs){
+        this.observers.add(obs);
+        this.componentTree.addObserver(obs);
+    }
+
+    public void updateObservers(){
+        for(Observer observer:observers){
+            observer.update();
+        }
+    }
+
+    public ComponentTree getComponentTree(){
+        return this.componentTree;
     }
 
 }

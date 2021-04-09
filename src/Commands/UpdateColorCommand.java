@@ -2,9 +2,12 @@ package Commands;
 
 import Models.Game;
 import Models.Texture;
+import Observers.ColorLabelObserver;
+import Observers.Observer;
 import UI.Toolbar;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class UpdateColorCommand extends GameCommand {
     private Color color,oldColor;
@@ -12,11 +15,11 @@ public class UpdateColorCommand extends GameCommand {
     private Texture texture,oldTexture;
     private boolean usedTexture,useTexture;
 
-    private Toolbar toolbar;
-
-    public UpdateColorCommand(Game game, Color color, Toolbar toolbar){
+    public UpdateColorCommand(Game game, Color color){
         this.memento = new GameMemento();
         this.game = game;
+
+
 
         this.color = color;
         this.useTexture = false;
@@ -29,13 +32,13 @@ public class UpdateColorCommand extends GameCommand {
             this.oldColor = new Color(game.getBoard().getColor().getRGB());
             this.usedTexture = false;
         }
-
-        this.toolbar = toolbar;
     }
 
-    public UpdateColorCommand(Game game, Texture texture, Toolbar toolbar){
+    public UpdateColorCommand(Game game, Texture texture){
         this.memento = new GameMemento();
         this.game = game;
+
+
 
         this.texture = texture;
         this.useTexture = true;
@@ -48,8 +51,6 @@ public class UpdateColorCommand extends GameCommand {
             this.oldColor = new Color(game.getBoard().getColor().getRGB());
             this.usedTexture = false;
         }
-
-        this.toolbar = toolbar;
     }
 
     public void execute(){
@@ -59,7 +60,6 @@ public class UpdateColorCommand extends GameCommand {
         else{
             game.getBoard().setColor(this.color);
         }
-        toolbar.updateColorLabel();
     }
 
     public void unExecute(){
@@ -70,7 +70,5 @@ public class UpdateColorCommand extends GameCommand {
             game.getBoard().setColor(this.oldColor);
         }
 
-
-        toolbar.updateColorLabel();
     }
 }

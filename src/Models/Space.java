@@ -81,6 +81,7 @@ public class Space implements Serializable {
 
     public void setColor(Color color){
         this.color = color;
+        this.texture = null;
         this.useTexture = false;
     }
 

@@ -18,6 +18,12 @@ public class Player implements Serializable {
         }
     }
 
+    public Player(ArrayList<Resource> resources){
+        this.hand = new ArrayList<>();
+        this.controlledPieces = new ArrayList<>();
+        this.resources = resources;
+    }
+
     public void addCard(Card card){
         this.hand.add(card);
     }
@@ -53,6 +59,14 @@ public class Player implements Serializable {
             }
         }
         return 0;
+    }
+
+    public void setResource(String name, int value){
+        for(Resource resource: this.resources){
+            if(resource.getName().equals(name)){
+                resource.setValue(value);
+            }
+        }
     }
 
     public ArrayList<Resource> getResources(){

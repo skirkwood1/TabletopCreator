@@ -3,6 +3,7 @@ package UI;
 import ChatServer.ClientWindow;
 import Commands.*;
 import Models.*;
+import Observers.ColorLabelObserver;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -39,7 +40,7 @@ public class Frame extends JFrame {
     private HashMap<KeyStroke, Action> actionMap = new HashMap<KeyStroke, Action>();
 
     public Frame() {
-        super("Tabletop Creator v0.01");
+        super("Tabletop Creator v0.02");
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -58,6 +59,8 @@ public class Frame extends JFrame {
 
         toolbar = new Toolbar(game);
         centerPane = new CenterPane(game,toolbar,commandStack);
+        ColorLabelObserver colorLabelObserver = new ColorLabelObserver(toolbar);
+        centerPane.addObserver(colorLabelObserver);
         centerPane.setOpaque(false);
         toolbar.setBorder(BorderFactory.createRaisedBevelBorder());
 
@@ -133,8 +136,10 @@ public class Frame extends JFrame {
                 colorDialog.display();
                 Color color = colorDialog.getColor();
 
-                UpdateColorCommand ucc = new UpdateColorCommand(game,color,toolbar);
+                UpdateColorCommand ucc = new UpdateColorCommand(game,color);
                 commandStack.insertCommand(ucc);
+
+                centerPane.updateObservers();
 
                 //toolbar.updateColorLabel();
             }
@@ -184,17 +189,12 @@ public class Frame extends JFrame {
             }
 
             else if(text.equals("Undo\n\r")){
-                commandStack.undo();
-                //centerPane.refreshComponentTree(this.game);
-                centerPane.refreshComponentTree(game);
-                centerPane.updateBoard();
+                undo();
 
             }
 
             else if(text.equals("Redo\n\r")){
-                commandStack.redo();
-                centerPane.refreshComponentTree(game);
-                centerPane.updateBoard();
+                redo();
             }
 
             else if(text.equals("Placement\n\r")){
@@ -208,6 +208,20 @@ public class Frame extends JFrame {
         setVisible(true);
 
         keyboardSetup();
+    }
+
+    private void undo() {
+        commandStack.undo();
+        centerPane.refreshComponentTree(game);
+        centerPane.updateBoard();
+        centerPane.updateObservers();
+    }
+
+    private void redo() {
+        commandStack.redo();
+        centerPane.refreshComponentTree(game);
+        centerPane.updateBoard();
+        centerPane.updateObservers();
     }
 
     public void setFileChooserUI(Component[] comp){
@@ -369,20 +383,14 @@ public class Frame extends JFrame {
         actionMap.put(undo, new AbstractAction("action1") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                commandStack.undo();
-                //centerPane.refreshComponentTree(this.game);
-                centerPane.refreshComponentTree(game);
-                centerPane.updateBoard();
-
+                undo();
             }
         });
 
         actionMap.put(redo, new AbstractAction("action2") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                commandStack.redo();
-                centerPane.refreshComponentTree(game);
-                centerPane.updateBoard();
+                redo();
             }
         });
 
@@ -393,6 +401,7 @@ public class Frame extends JFrame {
                 //centerPane.refreshComponentTree(this.game);
                 centerPane.updateBoard();
                 centerPane.refreshComponentTree(game);
+                centerPane.updateObservers();
             }
         });
 
