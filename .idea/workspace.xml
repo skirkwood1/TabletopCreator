@@ -7,21 +7,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Observers/BoardPaneObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Observers/ColorLabelObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Observers/Observer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/Listeners/BoardPaneViewScroll.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$7.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$3.class" afterDir="false" />
@@ -29,11 +25,8 @@
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/UpdateColorCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/UpdateColorCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Space.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/BoardPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/BoardPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/CenterPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/CenterPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/ComponentTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ComponentTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Frame.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -50,11 +43,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/PlacePieceCommand.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+            <state relative-caret-position="132">
+              <caret line="60" column="40" selection-start-line="60" selection-start-column="40" selection-end-line="60" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#13052#13053#0" expanded="true" />
+                <element signature="e#13090#13091#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UI/CenterPane.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2958">
+              <caret line="104" column="32" lean-forward="true" selection-start-line="104" selection-start-column="32" selection-end-line="104" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,10 +70,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/PieceMoveCommand.java">
+        <entry file="file://$PROJECT_DIR$/src/UI/Listeners/BoardPaneViewScroll.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="476">
-              <caret line="28" column="58" lean-forward="true" selection-start-line="28" selection-start-column="58" selection-end-line="28" selection-end-column="58" />
+              <caret line="114" column="24" selection-start-line="114" selection-start-column="24" selection-end-line="114" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,10 +82,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/OpenGameCommand.java">
+        <entry file="file://$PROJECT_DIR$/src/UI/BoardPane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+            <state relative-caret-position="86">
+              <caret line="400" column="11" selection-start-line="400" selection-start-column="11" selection-end-line="400" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -87,36 +94,21 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/MultipleSpacesCommand.java">
+        <entry file="file://$PROJECT_DIR$/src/UI/CardDisplay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="930">
-              <caret line="58" column="58" selection-start-line="58" selection-start-column="58" selection-end-line="58" selection-end-column="58" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="68">
+              <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/GameMemento.java">
+        <entry file="file://$PROJECT_DIR$/src/Observers/BoardPaneObserver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
+            <state relative-caret-position="170">
+              <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/GameCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
-              <folding>
-                <element signature="e#270#271#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -155,7 +147,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Commands/AddComponentCommand.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="273">
@@ -179,9 +171,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>textures</find>
-      <find>refreshco</find>
-      <find>textandcardpane</find>
       <find>addmouse</find>
       <find>mouse</find>
       <find>mouseada</find>
@@ -209,6 +198,9 @@
       <find>keyboard</find>
       <find>redo()</find>
       <find>updatecolorc</find>
+      <find>mb</find>
+      <find>mb</find>
+      <find>mwl</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -218,8 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Models/BoardCommand.java" />
-        <option value="$PROJECT_DIR$/src/Models/GameCommand.java" />
         <option value="$PROJECT_DIR$/src/Models/GameMemento.java" />
         <option value="$PROJECT_DIR$/src/Models/PlaceSpaceCommand.java" />
         <option value="$PROJECT_DIR$/src/Models/UpdateColorCommand.java" />
@@ -248,7 +238,6 @@
         <option value="$PROJECT_DIR$/src/Commands/PlaceSpaceCommand.java" />
         <option value="$PROJECT_DIR$/src/Models/Texture.java" />
         <option value="$PROJECT_DIR$/src/Models/Game.java" />
-        <option value="$PROJECT_DIR$/src/UI/BoardPane.java" />
         <option value="$PROJECT_DIR$/src/Commands/CommandStack.java" />
         <option value="$PROJECT_DIR$/src/Commands/OpenGameCommand.java" />
         <option value="$PROJECT_DIR$/src/ChatClient/ClientMain.java" />
@@ -267,6 +256,9 @@
         <option value="$PROJECT_DIR$/src/UI/ComponentTree.java" />
         <option value="$PROJECT_DIR$/src/Observers/BoardPaneObserver.java" />
         <option value="$PROJECT_DIR$/src/Commands/UpdateColorCommand.java" />
+        <option value="$PROJECT_DIR$/src/UI/Listeners/ImageViewScroll.java" />
+        <option value="$PROJECT_DIR$/src/UI/Listeners/BoardPaneViewScroll.java" />
+        <option value="$PROJECT_DIR$/src/UI/BoardPane.java" />
         <option value="$PROJECT_DIR$/src/UI/CenterPane.java" />
         <option value="$PROJECT_DIR$/src/UI/Frame.java" />
       </list>
@@ -328,13 +320,14 @@
               <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
               <item name="TabletopCreator" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Observers" type="462c0819:PsiDirectoryNode" />
+              <item name="UI" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
               <item name="TabletopCreator" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="UI" type="462c0819:PsiDirectoryNode" />
+              <item name="Listeners" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
@@ -350,7 +343,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1617992900046" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1617994407536" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -504,18 +497,18 @@
       <workItem from="1617631102174" duration="599000" />
       <workItem from="1617717965320" duration="14107000" />
       <workItem from="1617890704064" duration="25747000" />
-      <workItem from="1617976325325" duration="9341000" />
+      <workItem from="1617976325325" duration="10626000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="271734000" />
+    <option name="totallyTimeSpent" value="273019000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.121878125" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.121878125" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -524,7 +517,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.326572" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32394367" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32394367" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39336017" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -551,16 +544,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Models/Dice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/cardback.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -580,13 +563,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/res/icons8-save-100.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/CardDisplay.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/ResizeBoardPane.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -778,16 +754,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/BoardPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1582">
-          <caret line="300" column="16" selection-start-line="300" selection-start-column="16" selection-end-line="300" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Models/Space.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="409">
@@ -831,34 +797,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Observers/BoardPaneObserver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#141#142#0" expanded="true" />
-            <element signature="e#182#183#0" expanded="true" />
-            <element signature="e#272#273#0" expanded="true" />
-            <element signature="e#298#299#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="247" column="13" lean-forward="true" selection-start-line="247" selection-start-column="13" selection-end-line="247" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#13052#13053#0" expanded="true" />
-            <element signature="e#13090#13091#0" expanded="true" />
-            <element signature="e#13497#13498#0" expanded="true" />
-            <element signature="e#13535#13536#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/ComponentTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
@@ -868,20 +806,6 @@
             <element signature="e#7958#7959#0" expanded="true" />
             <element signature="e#7982#7983#0" expanded="true" />
             <element signature="e#8680#8681#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/CenterPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="201" column="76" selection-start-line="201" selection-start-column="76" selection-end-line="201" selection-end-column="76" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#17767#17768#0" expanded="true" />
-            <element signature="e#17818#17819#0" expanded="true" />
-            <element signature="e#18753#18754#0" expanded="true" />
-            <element signature="e#18793#18794#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -999,6 +923,65 @@
           <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Observers/BoardPaneObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/CardDisplay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/Listeners/BoardPaneViewScroll.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="114" column="24" selection-start-line="114" selection-start-column="24" selection-end-line="114" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/BoardPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="400" column="11" selection-start-line="400" selection-start-column="11" selection-end-line="400" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/CenterPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2958">
+          <caret line="104" column="32" lean-forward="true" selection-start-line="104" selection-start-column="32" selection-end-line="104" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="60" column="40" selection-start-line="60" selection-start-column="40" selection-end-line="60" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#13052#13053#0" expanded="true" />
+            <element signature="e#13090#13091#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -394,11 +394,11 @@ public class BoardPane extends JPanel {
         }
     }
 
-    void setZoom(double scale){
+    public void setZoom(double scale){
         this.zoom = scale;
     }
 
-    void updateSize(){
+    public void updateSize(){
         //this.dimension = new Dimension(board.getSize()[0]*40+40,board.getSize()[1]*40+40);
 
 

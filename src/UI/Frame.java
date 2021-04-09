@@ -58,7 +58,7 @@ public class Frame extends JFrame {
         setFileChooserUI(comp);
 
         toolbar = new Toolbar(game);
-        centerPane = new CenterPane(game,toolbar,commandStack);
+        centerPane = new CenterPane(game,commandStack);
         ColorLabelObserver colorLabelObserver = new ColorLabelObserver(toolbar);
         centerPane.addObserver(colorLabelObserver);
         centerPane.setOpaque(false);

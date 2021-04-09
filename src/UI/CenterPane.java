@@ -9,6 +9,7 @@ import Models.Texture;
 import Observers.BoardPaneObserver;
 import Observers.ColorLabelObserver;
 import Observers.Observer;
+import UI.Listeners.BoardPaneViewScroll;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -49,118 +50,8 @@ public class CenterPane extends JPanel {
     private HashMap<String,Action> commandMap;
     private ArrayList<Observer> observers;
 
-    MouseAdapter mb = new MouseAdapter() {
-
-        //private Point origin;
-        private Point holdPoint;
-
-        private int mouseButton = 0;
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-            holdPoint = new Point(e.getPoint());
-            //origin = new Point(e.getPoint());
-            if((e.getModifiersEx() & InputEvent.BUTTON2_DOWN_MASK) != 0){
-                mouseButton = 3;
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            mouseButton = 0;
-            boardScreen.setCursor(null);
-
-            updateBoard();
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            updateBoard();
-            if (mouseButton == 3) {
-                boardScreen.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-
-                Point dragEventPoint = e.getPoint();
-                JViewport viewport = (JViewport) boardPane.getParent();
-                Point viewPos = viewport.getViewPosition();
-                int maxViewPosX = boardPane.getWidth() - viewport.getWidth();
-                int maxViewPosY = boardPane.getHeight() - viewport.getHeight();
-
-                if (boardPane.getWidth() > viewport.getWidth()) {
-                    viewPos.x -= dragEventPoint.x - holdPoint.x;
-
-                    if (viewPos.x < 0) {
-                        viewPos.x = 0;
-                        holdPoint.x = dragEventPoint.x;
-                    }
-
-                    if (viewPos.x > maxViewPosX) {
-                        viewPos.x = maxViewPosX;
-                        holdPoint.x = dragEventPoint.x;
-                    }
-                }
-
-                if (boardPane.getHeight() > viewport.getHeight()) {
-                    viewPos.y -= dragEventPoint.y - holdPoint.y;
-
-                    if (viewPos.y < 0) {
-                        viewPos.y = 0;
-                        holdPoint.y = dragEventPoint.y;
-                    }
-
-                    if (viewPos.y > maxViewPosY) {
-                        viewPos.y = maxViewPosY;
-                        holdPoint.y = dragEventPoint.y;
-                    }
-                }
-
-                viewport.setViewPosition(viewPos);
-            }
-            else if (mouseButton == 1){
-
-            }
-        }
-        public void mouseMoved(MouseEvent e){
-            updateBoard();
-        }
-
-    };
-
-    MouseWheelListener mwl = new MouseWheelListener() {
-        @Override
-        public void mouseWheelMoved(MouseWheelEvent e) {
-
-            zoom -= e.getWheelRotation() * 0.1;
-            if(zoom < 0.1){
-                zoom = 0.1;
-            }
-            boardPane.setZoom(zoom);
-
-//            boardPane.setPreferredSize(
-//                    new Dimension((int)(boardScreen.getSize().getWidth()*zoom),
-//                            (int)(boardScreen.getSize().getHeight()*zoom)));
-//
-//            boardPane.setSize(boardPane.getPreferredSize());
-
-            boardPane.updateSize();
-
-            boardScreen.setViewportView(boardPane);
-
-            boardPane.removeAll();
-            boardPane.revalidate();
-            boardPane.repaint();
-
-            boardScreen.revalidate();
-            boardScreen.repaint();
-
-        }
-    };
-
-
-
     private Game game;
     private CommandStack commandStack;
-    private Toolbar toolbar;
 
     TreeSelectionListener tsl = e -> {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
@@ -208,9 +99,8 @@ public class CenterPane extends JPanel {
         }
     };
 
-    public CenterPane(Game game,Toolbar toolbar,CommandStack commandStack) {
+    public CenterPane(Game game,CommandStack commandStack) {
         this.game = game;
-        this.toolbar = toolbar;
 
         UIManager.put("ScrollPane.border",BorderFactory.createEmptyBorder());
         UIManager.put("SplitPane.border",BorderFactory.createEmptyBorder());
@@ -444,9 +334,11 @@ public class CenterPane extends JPanel {
         componentImage.addMouseMotionListener(ma);
         componentImage.addMouseWheelListener(mc);
 
-        boardPane.addMouseListener(mb);
-        boardPane.addMouseMotionListener(mb);
-        boardPane.addMouseWheelListener(mwl);
+        BoardPaneViewScroll bpvs = new BoardPaneViewScroll(boardScreen,boardPane,observers);
+
+        boardPane.addMouseListener(bpvs);
+        boardPane.addMouseMotionListener(bpvs);
+        boardPane.addMouseWheelListener(bpvs);
 
         updateBoard();
 
