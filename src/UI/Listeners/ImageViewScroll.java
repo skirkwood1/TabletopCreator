@@ -12,9 +12,9 @@ import java.awt.image.BufferedImage;
 public class ImageViewScroll extends MouseAdapter {
     private Point holdPoint;
 
-    private JScrollPane imagePane;
-    private JLabel componentImage;
-    private Game game;
+    private final JScrollPane imagePane;
+    private final JLabel componentImage;
+    private final Game game;
 
     private double imageZoom = 1.0;
 

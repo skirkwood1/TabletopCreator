@@ -8,6 +8,8 @@ public class CommandStack {
     private int pointer = -1;
     private Stack<GameCommand> commandStack = new Stack<>();
 
+    // Adds a command to the stack at the pointer and executes it.
+    // Removes all commands past the pointer
     public void insertCommand(GameCommand gc){
         deleteElementsAfterPointer(pointer);
         gc.execute();
@@ -24,6 +26,8 @@ public class CommandStack {
         }
     }
 
+    // Gets the command at the pointer and calls unExecute(),
+    // Moves the pointer to the previous command
     public void undo()
     {
         if(pointer >= 0){
@@ -35,6 +39,8 @@ public class CommandStack {
         }
     }
 
+    // If the pointer is not at the top of the stack,
+    // increment the pointer and execute that command
     public void redo()
     {
         if(pointer == commandStack.size() - 1)

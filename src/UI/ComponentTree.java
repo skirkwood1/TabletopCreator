@@ -15,7 +15,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 public class ComponentTree extends JPanel {
-    private JTree tree;
+    private final JTree tree;
 
     private Game game;
 

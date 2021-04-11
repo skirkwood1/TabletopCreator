@@ -9,26 +9,22 @@ import java.util.ArrayList;
 import javax.swing.JList;
 
 public class DeckCreationDialog extends JOptionPane {
-    private JTextField name;
+    private final JTextField name;
     private JList<Card> cards;
-    private JPanel layout;
+    private final JPanel layout;
 
-    private JPanel numberPanel;
-    private JTextField number;
-    private JLabel numberLabel;
-
-    private JScrollPane listScroller;
+    private final JTextField number;
 
     public DeckCreationDialog(Game game){
         this.name = new JTextField();
         this.cards = new JList<>();
         this.layout = new JPanel(new BorderLayout());
 
-        this.numberPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel numberPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.number = new JTextField();
 
         number.setPreferredSize(new Dimension(50,20));
-        this.numberLabel = new JLabel("Copies of Each:");
+        JLabel numberLabel = new JLabel("Copies of Each:");
         numberLabel.setPreferredSize(new Dimension(100,20));
 
         numberPanel.add(numberLabel);
@@ -45,7 +41,7 @@ public class DeckCreationDialog extends JOptionPane {
 
         cards.setModel(dlm);
 
-        this.listScroller = new JScrollPane(cards);
+        JScrollPane listScroller = new JScrollPane(cards);
         layout.add(name,BorderLayout.NORTH);
         layout.add(listScroller,BorderLayout.CENTER);
         layout.add(numberPanel,BorderLayout.SOUTH);

@@ -6,14 +6,19 @@ import Models.Texture;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/* Assigns color/texture to multiple new squares at a time to the board
+* Saves arrays for each square containing their textures and/or colors
+* */
 public class MultipleSpacesCommand extends GameCommand {
     int start_x, start_y, end_x, end_y;
 
-    Color[][] oldColors;
-    Texture[][] oldTextures;
-    boolean[][] usedTexture;
+    private final Color[][] oldColors;
+    private final Texture[][] oldTextures;
+    private final boolean[][] usedTexture;
 
-    Color newColor;
+    private final boolean useTexture;
+    private Color newColor;
+    private Texture newTexture;
 
     public MultipleSpacesCommand(Game game,int start_x,int start_y,int end_x, int end_y){
         this.game = game;
@@ -21,6 +26,14 @@ public class MultipleSpacesCommand extends GameCommand {
         this.start_y = start_y;
         this.end_x = end_x;
         this.end_y = end_y;
+
+        if(game.getBoard().useTexture()){
+            this.useTexture = true;
+            this.newTexture = game.getBoard().getTexture();
+        }else{
+            this.useTexture = false;
+            this.newColor = game.getBoard().getColor();
+        }
 
         this.oldColors = new Color[end_x - start_x + 1][end_y - start_y + 1];
         this.oldTextures = new Texture[end_x - start_x + 1][end_y - start_y + 1];
@@ -42,10 +55,10 @@ public class MultipleSpacesCommand extends GameCommand {
     public void execute() {
         for(int i = start_x; i <= end_x; i++){
             for(int j = start_y; j <= end_y; j++){
-                if(game.getBoard().useTexture()){
-                    game.getBoard().setSquare(i,j,this.game.getBoard().getTexture());
+                if(useTexture){
+                    game.getBoard().setSquare(i,j,newTexture);
                 }else{
-                    game.getBoard().setSquare(i,j,this.game.getBoard().getColor());
+                    game.getBoard().setSquare(i,j,newColor);
                 }
             }
         }

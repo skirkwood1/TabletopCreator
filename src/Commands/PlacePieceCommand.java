@@ -4,10 +4,13 @@ import Models.Game;
 import Models.Piece;
 import Models.Space;
 
+/* Place a piece at a square
+* Undo removes the piece from the square
+* */
 public class PlacePieceCommand extends GameCommand {
 
-    private int x,y;
-    private Piece piece;
+    private final int x,y;
+    private final Piece piece;
 
     public PlacePieceCommand(Game game, int x, int y, Piece piece){
         this.game = game;

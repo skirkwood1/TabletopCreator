@@ -40,11 +40,15 @@ public class Component implements Serializable {
         return picture;
     }
 
+    // BufferedImage cannot be written to an ObjectOutputStream so this writes the image to IO
+    @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         ImageIO.write(picture, "png", out); // png is lossless
     }
 
+    // Reads the image from the ObjectInputStream and assigns it to the BufferedImage
+    @Serial
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         picture = ImageIO.read(in);

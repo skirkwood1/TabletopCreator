@@ -30,22 +30,15 @@ import static javax.swing.BorderFactory.createEmptyBorder;
 
 public class CenterPane extends JPanel {
     ComponentTree componentTree;
-    //private TextPanel textPanel;
-    private JSplitPane overallPane;
-    private JSplitPane textAndCardPane;
-    private JSplitPane cardPane;
-    private JSplitPane boardAndCmd;
     BoardPane boardPane;
     JScrollPane boardScreen;
-    private TextPanel cardText;
-    private JLabel componentImage;
-    private JScrollPane imagePane;
+    private final TextPanel cardText;
+    private final JLabel componentImage;
 
-    private JTextField cmd;
-    private TextPanel cmdOutput;
-    private JSplitPane cmdPane;
+    private final JTextField cmd;
+    private final TextPanel cmdOutput;
 
-    private double zoom = 1.0;
+    //private double zoom = 1.0;
     private double imageZoom = 1.0;
 
     private HashMap<String,Action> commandMap;
@@ -53,6 +46,8 @@ public class CenterPane extends JPanel {
 
     private Game game;
     private CommandStack commandStack;
+
+    BoardPaneViewScroll bpvs;
 
     TreeSelectionListener tsl = e -> {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
@@ -112,7 +107,7 @@ public class CenterPane extends JPanel {
         boardPane = new BoardPane(game,commandStack);
         boardScreen = new JScrollPane();
         componentTree = new ComponentTree(game);
-        imagePane = new JScrollPane(componentImage);
+        JScrollPane imagePane = new JScrollPane(componentImage);
 
         this.commandStack = commandStack;
         this.observers = new ArrayList<>();
@@ -130,7 +125,7 @@ public class CenterPane extends JPanel {
         componentImage.setHorizontalAlignment(SwingConstants.CENTER);
         componentImage.setVerticalAlignment(SwingConstants.CENTER);
 
-        cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, imagePane);
+        JSplitPane cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, imagePane);
         cardPane.setMaximumSize(new Dimension (300,600));
         cardPane.setDividerSize(6);
 
@@ -182,7 +177,7 @@ public class CenterPane extends JPanel {
             }
         });
 
-        cmdPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        JSplitPane cmdPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         cmdPane.setDividerSize(0);
         //cmdPane.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
 
@@ -194,7 +189,7 @@ public class CenterPane extends JPanel {
 
         cmdPane.setResizeWeight(1);
 
-        boardAndCmd = new JSplitPane(JSplitPane.VERTICAL_SPLIT, boardScreen,cmdPane);
+        JSplitPane boardAndCmd = new JSplitPane(JSplitPane.VERTICAL_SPLIT, boardScreen, cmdPane);
         boardAndCmd.setDividerSize(6);
         boardAndCmd.setResizeWeight(0.8);
         //boardAndCmd.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
@@ -209,7 +204,7 @@ public class CenterPane extends JPanel {
             }
         });
 
-        textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardAndCmd, cardPane);
+        JSplitPane textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardAndCmd, cardPane);
         textAndCardPane.setResizeWeight(1);
         textAndCardPane.setDividerSize(6);
 
@@ -220,7 +215,8 @@ public class CenterPane extends JPanel {
         componentTree.setSize(new Dimension(150,0));
         componentTree.revalidate();
 
-        overallPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentTree, textAndCardPane);
+        //private TextPanel textPanel;
+        JSplitPane overallPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentTree, textAndCardPane);
 
         overallPane.setResizeWeight(0);
         overallPane.setPreferredSize(new Dimension(1200,600));
@@ -250,13 +246,13 @@ public class CenterPane extends JPanel {
 
         componentImage.setAutoscrolls(true);
 
-        ImageViewScroll ivs = new ImageViewScroll(this.game,imagePane,componentImage);
+        ImageViewScroll ivs = new ImageViewScroll(this.game, imagePane,componentImage);
 
         componentImage.addMouseListener(ivs);
         componentImage.addMouseMotionListener(ivs);
         componentImage.addMouseWheelListener(ivs);
 
-        BoardPaneViewScroll bpvs = new BoardPaneViewScroll(boardScreen,boardPane,observers);
+        this.bpvs = new BoardPaneViewScroll(boardScreen,boardPane,observers);
 
         boardPane.addMouseListener(bpvs);
         boardPane.addMouseMotionListener(bpvs);
@@ -324,7 +320,7 @@ public class CenterPane extends JPanel {
     public void updateBoard(){
         boardPane.updateGame(game);
 
-        boardPane.setZoom(zoom);
+        boardPane.setZoom(bpvs.getZoom());
         boardPane.updateSize();
 
         this.boardPane.removeAll();

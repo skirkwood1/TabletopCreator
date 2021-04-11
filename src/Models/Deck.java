@@ -3,6 +3,10 @@ package Models;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/*Represents an individual list of cards. The project has a set of cards,
+* but they can be separated into decks which can contain multiple copies
+* of each card for use in separate parts of the game
+* */
 public class Deck {
     private String name;
     private ArrayList<Card> cards;
@@ -16,9 +20,7 @@ public class Deck {
         this.name = name;
         this.cards = new ArrayList<>();
 
-        for(Card card:cards){
-            this.cards.add(card);
-        }
+        Collections.addAll(this.cards, cards);
     }
 
     public Deck(String name,ArrayList<Card> cards){
@@ -44,6 +46,10 @@ public class Deck {
         for(int i = 0; i < n; i++){
             this.cards.add(card);
         }
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     public String getName(){

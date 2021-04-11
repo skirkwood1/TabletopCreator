@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class Game implements Serializable {
 
+    //Lists of components that have been imported into the project
     private ArrayList<Card> cards;
     private ArrayList<Dice> diceCollection;
     private ArrayList<Piece> pieces;
     private ArrayList<Deck> decks;
-
     private ArrayList<Texture> textures;
 
     private Board board;

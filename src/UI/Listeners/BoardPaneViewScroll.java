@@ -125,9 +125,19 @@ public class BoardPaneViewScroll extends MouseAdapter {
 
     }
 
+    public void setZoom(double zoom){
+            this.zoom = zoom;
+    }
+
+    public double getZoom(){
+            return this.zoom;
+    }
+
         private void notifyObservers(){
             for(Observer obs: observers){
                 obs.update();
             }
         }
+
+
 }

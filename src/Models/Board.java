@@ -3,14 +3,14 @@ package Models;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
-import java.util.ArrayList;
 //import java.util.Random;
 
 public class Board implements Serializable {
 
     private int height;
     private int width;
-    private final Color defaultColor = Color.WHITE;
+
+    private final Color DEFAULT_COLOR = Color.WHITE;
     private Color currentColor = Color.RED;
 
     private boolean useTexture = false;
@@ -31,6 +31,7 @@ public class Board implements Serializable {
         }
     }
 
+    //Creates a board with the given width/height and fills it with white squares
     public Board(int width, int height){
         this.width = width;
         this.height = height;
@@ -47,6 +48,8 @@ public class Board implements Serializable {
         }
     }
 
+    //Creates a board with already-created spaces
+    //Used for making a copy of a board
     public Board(int width, int height, Space[][] spaces){
         this.width = width;
         this.height = height;
@@ -93,7 +96,7 @@ public class Board implements Serializable {
                     newSpaces[i][j] = spaces[i][j];
                 }
                 else{
-                    newSpaces[i][j] = new Space(defaultColor);
+                    newSpaces[i][j] = new Space(DEFAULT_COLOR);
                 }
             }
         }
@@ -130,7 +133,7 @@ public class Board implements Serializable {
     }
 
     public Color getDefaultColor(){
-        return this.defaultColor;
+        return this.DEFAULT_COLOR;
     }
 
     public String toString(){

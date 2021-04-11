@@ -3,10 +3,14 @@ package Commands;
 import Models.Game;
 import Models.Piece;
 
+/* Move piece to a new location
+* Save old space piece was at for undo
+* TODO: Handle if new space is already occupied
+* */
 public class PieceMoveCommand extends GameCommand {
-    private int start_x,start_y,end_x,end_y;
+    private final int start_x,start_y,end_x,end_y;
 
-    private Piece piece;
+    private final Piece piece;
 
     public PieceMoveCommand(Game game, int start_x, int start_y, int end_x, int end_y, Piece piece){
         this.game = game;

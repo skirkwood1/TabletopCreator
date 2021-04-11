@@ -5,8 +5,11 @@ import Models.Component;
 import Models.Game;
 import Models.Piece;
 
+/* Adds a component (piece or card) to the project.
+* Undo removes the component.
+* */
 public class AddComponentCommand extends GameCommand {
-    private Component component;
+    private final Component component;
 
     public AddComponentCommand(Game game, Component component){
         this.game = game;

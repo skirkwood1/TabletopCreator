@@ -2,24 +2,21 @@ package Commands;
 
 import Models.Game;
 import Models.Texture;
-import Observers.ColorLabelObserver;
-import Observers.Observer;
-import UI.Toolbar;
 
 import java.awt.*;
-import java.util.ArrayList;
 
+/*Change the board's color to a new color or texture.
+* Saves the old color/texture in case of an undo.
+* */
 public class UpdateColorCommand extends GameCommand {
     private Color color,oldColor;
 
     private Texture texture,oldTexture;
-    private boolean usedTexture,useTexture;
+    private final boolean usedTexture,useTexture;
 
     public UpdateColorCommand(Game game, Color color){
         this.memento = new GameMemento();
         this.game = game;
-
-
 
         this.color = color;
         this.useTexture = false;
@@ -37,8 +34,6 @@ public class UpdateColorCommand extends GameCommand {
     public UpdateColorCommand(Game game, Texture texture){
         this.memento = new GameMemento();
         this.game = game;
-
-
 
         this.texture = texture;
         this.useTexture = true;
