@@ -112,6 +112,8 @@ public class CenterPane extends JPanel {
         this.commandStack = commandStack;
         this.observers = new ArrayList<>();
 
+        observers.add(new BoardPaneObserver(this));
+
         cardText.setPreferredSize(new Dimension(200,100));
         cardText.setMinimumSize(new Dimension(200,100));
         cardText.setMaximumSize(new Dimension(300,500));
