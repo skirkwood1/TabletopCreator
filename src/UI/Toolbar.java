@@ -8,6 +8,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 
 public class Toolbar extends JPanel implements ActionListener {
     private JPanel buttons;
@@ -27,17 +28,19 @@ public class Toolbar extends JPanel implements ActionListener {
     private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture;
     private JMenuItem createDeck,addToDeck;
 
-    private StringListener stringListener;
+    private StateListener stateListener;
 
     private Game game;
 
     private BoardPane.PlacementType placementType;
 
+    private HashMap<JComponent,StateListener.ButtonOutput> actionDescription;
 
     public Toolbar(Game game){
         this.game = game;
 
         this.placementType = BoardPane.PlacementType.NONE;
+        this.actionDescription = new HashMap<>();
 
         Color buttonBG = new Color(210,210,210);
 
@@ -136,9 +139,10 @@ public class Toolbar extends JPanel implements ActionListener {
         save.setBackground(buttonBG);
         save.setBorder(BorderFactory.createEmptyBorder());
         save.setFocusPainted(false);
-
         save.addChangeListener(changeListener);
         save.setUI(mtbUI);
+
+        actionDescription.put(save, StateListener.ButtonOutput.SAVE);
 
         open = new JButton(openIcon);
         open.setPreferredSize(new Dimension(30,30));
@@ -147,15 +151,20 @@ public class Toolbar extends JPanel implements ActionListener {
         open.setBackground(buttonBG);
         open.setBorder(BorderFactory.createEmptyBorder());
         open.setFocusPainted(false);
-
         open.addChangeListener(changeListener);
         open.setUI(mtbUI);
+
+        actionDescription.put(open, StateListener.ButtonOutput.OPEN);
 
         saveMenu = new JMenuItem("Save");
         saveMenu.setIcon(saveIcon);
 
+        actionDescription.put(saveMenu, StateListener.ButtonOutput.SAVE);
+
         openMenu = new JMenuItem("Open");
         openMenu.setIcon(openIcon);
+
+        actionDescription.put(openMenu, StateListener.ButtonOutput.OPEN);
 
         System.out.println(javax.swing.UIManager.getDefaults().getFont("Label.font"));
 
@@ -168,9 +177,10 @@ public class Toolbar extends JPanel implements ActionListener {
         colorChoose.setBackground(buttonBG);
         colorChoose.setBorder(BorderFactory.createEmptyBorder());
         colorChoose.setFocusPainted(false);
-
         colorChoose.addChangeListener(changeListener);
         colorChoose.setUI(mtbUI);
+
+        actionDescription.put(colorChoose, StateListener.ButtonOutput.COLOR_CHOOSE);
 
         message = new JButton(messageIcon);
         message.setPreferredSize(new Dimension(30,30));
@@ -179,9 +189,10 @@ public class Toolbar extends JPanel implements ActionListener {
         message.setBackground(buttonBG);
         message.setBorder(BorderFactory.createEmptyBorder());
         message.setFocusPainted(false);
-
         message.addChangeListener(changeListener);
         message.setUI(mtbUI);
+
+        actionDescription.put(message, StateListener.ButtonOutput.MESSAGE);
 
         placeSpace = new JToggleButton("Space");
         placeSpace.setPreferredSize(new Dimension(45,30));
@@ -191,9 +202,10 @@ public class Toolbar extends JPanel implements ActionListener {
         placeSpace.setFocusPainted(false);
         placeSpace.setRolloverEnabled(true);
         placeSpace.setFont(new Font("Segoe UI",Font.BOLD,13));
-
         placeSpace.addChangeListener(changeListener);
         placeSpace.setUI(mtbUI);
+
+        actionDescription.put(placeSpace, StateListener.ButtonOutput.PLACE);
 
         placePiece = new JToggleButton("Piece");
         placePiece.setPreferredSize(new Dimension(45,30));
@@ -203,16 +215,10 @@ public class Toolbar extends JPanel implements ActionListener {
         placePiece.setFocusPainted(false);
         placePiece.setRolloverEnabled(true);
         placePiece.setFont(new Font("Segoe UI",Font.BOLD,13));
-
         placePiece.addChangeListener(changeListener);
         placePiece.setUI(mtbUI);
 
-        save.addActionListener(this);
-        open.addActionListener(this);
-        colorChoose.addActionListener(this);
-        message.addActionListener(this);
-        placePiece.addActionListener(this);
-        placeSpace.addActionListener(this);
+        actionDescription.put(placePiece, StateListener.ButtonOutput.PLACE);
 
         buttons = new JPanel();
 
@@ -257,19 +263,40 @@ public class Toolbar extends JPanel implements ActionListener {
         cut = new JMenuItem("Cut");
         copy = new JMenuItem("Copy");
         paste = new JMenuItem("Paste");
+
         changeSize = new JMenuItem("Change Size");
+        actionDescription.put(changeSize, StateListener.ButtonOutput.CHANGE_SIZE);
 
         undo = new JMenuItem("Undo");
+        actionDescription.put(undo, StateListener.ButtonOutput.UNDO);
+
         redo = new JMenuItem("Redo");
+        actionDescription.put(redo, StateListener.ButtonOutput.REDO);
 
         addPiece = new JMenuItem("Piece");
+        actionDescription.put(addPiece, StateListener.ButtonOutput.ADD_PIECE);
+
         addCard = new JMenuItem("Card");
+        actionDescription.put(addCard, StateListener.ButtonOutput.ADD_CARD);
+
         addRule = new JMenuItem("Rule");
+        actionDescription.put(addRule, StateListener.ButtonOutput.ADD_RULE);
+
         addTexture = new JMenuItem("Texture");
+        actionDescription.put(addTexture, StateListener.ButtonOutput.ADD_TEXTURE);
 
         createDeck = new JMenuItem("Create");
-        addToDeck = new JMenuItem("Add");
+        actionDescription.put(createDeck, StateListener.ButtonOutput.CREATE_DECK);
 
+        addToDeck = new JMenuItem("Add");
+        actionDescription.put(addToDeck, StateListener.ButtonOutput.ADD_DECK);
+
+        save.addActionListener(this);
+        open.addActionListener(this);
+        colorChoose.addActionListener(this);
+        message.addActionListener(this);
+        placePiece.addActionListener(this);
+        placeSpace.addActionListener(this);
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
         openMenu.addActionListener(this);
@@ -310,70 +337,14 @@ public class Toolbar extends JPanel implements ActionListener {
 
     }
 
-    public void setStringListener(StringListener listener){
-        this.stringListener = listener;
+    public void setStateListener(StateListener listener){
+        this.stateListener = listener;
     }
 
     public void actionPerformed(ActionEvent e) {
         JComponent c = (JComponent)e.getSource();
 
-        if (c == save || c == saveMenu){
-            stringListener.textEmitted("Save\n\r");
-
-        }
-        else if (c == open || c == openMenu){
-            stringListener.textEmitted("Open\n\r");
-        }
-        else if (c == changeSize){
-            stringListener.textEmitted("ChangeSize\n\r");
-            System.out.println("Change Size");
-        }
-
-        else if (c == colorChoose){
-            stringListener.textEmitted("ColorChooser\n\r");
-            System.out.println("Choose Color");
-        }
-
-        else if(c == message){
-            stringListener.textEmitted("Message\n\r");
-            System.out.println("Open Chat");
-        }
-
-        else if (c == addPiece){
-            stringListener.textEmitted("AddPiece\n\r");
-            System.out.println("Add Piece");
-        }
-
-        else if (c == addCard){
-            stringListener.textEmitted("AddCard\n\r");
-            System.out.println("Add Card");
-        }
-
-        else if (c == addTexture){
-            stringListener.textEmitted("AddTexture\n\r");
-            System.out.println("Add Texture");
-        }
-
-        else if (c == undo){
-            stringListener.textEmitted("Undo\n\r");
-            //System.out.println("Undo");
-        }
-
-        else if (c == redo){
-            stringListener.textEmitted("Redo\n\r");
-            //System.out.println("Redo");
-        }
-
-        else if (c == createDeck){
-            stringListener.textEmitted("CreateDeck\n\r");
-        }
-
-        else if (c == addToDeck){
-            stringListener.textEmitted("AddToDeck\n\r");
-        }
-
-
-        else if(c == placeSpace || c == placePiece){
+        if(c == placeSpace || c == placePiece){
             if(c == placeSpace && placePiece.isSelected()){
                 placePiece.setSelected(false);
             }
@@ -390,9 +361,9 @@ public class Toolbar extends JPanel implements ActionListener {
             else{
                 this.placementType = BoardPane.PlacementType.NONE;
             }
-
-            stringListener.textEmitted("Placement\n\r");
         }
+
+        stateListener.stateEmitted(actionDescription.get(c));
 
     }
 

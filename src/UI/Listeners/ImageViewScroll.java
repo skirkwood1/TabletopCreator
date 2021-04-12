@@ -94,4 +94,8 @@ public class ImageViewScroll extends MouseAdapter {
         componentImage.setIcon(icon);
 
     }
+
+    public void setImageZoom(double zoom){
+        this.imageZoom = zoom;
+    }
 }

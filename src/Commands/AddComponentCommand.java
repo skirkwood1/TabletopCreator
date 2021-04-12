@@ -1,9 +1,6 @@
 package Commands;
 
-import Models.Card;
-import Models.Component;
-import Models.Game;
-import Models.Piece;
+import Models.*;
 
 /* Adds a component (piece or card) to the project.
 * Undo removes the component.
@@ -23,6 +20,9 @@ public class AddComponentCommand extends GameCommand {
         else if(this.component instanceof Card){
             game.addCard((Card)component);
         }
+        else if(this.component instanceof Texture){
+            game.addTexture((Texture)component);
+        }
     }
 
     public void unExecute(){
@@ -31,6 +31,9 @@ public class AddComponentCommand extends GameCommand {
         }
         else if(this.component instanceof Card){
             game.removeCard((Card)component);
+        }
+        else if(this.component instanceof Texture){
+            game.removeTexture((Texture)component);
         }
     }
 }

@@ -78,15 +78,6 @@ public class BoardPane extends JPanel {
                 Space space = game.getBoard().getSpace(x,y);
                 switch(placementType){
                     case SPACE:
-                        //PlaceSpaceCommand psc = new PlaceSpaceCommand(game,x,y);
-                        //commandStack.insertCommand(psc);
-                        //g2.fillRect((int)((x*40+20)*zoom), (int)((y*40+20)*zoom), (int)(40*zoom), (int)(40*zoom));
-                        if(game.getBoard().useTexture()){
-                            g2.drawImage(game.getBoard().getTextureImage(),x*40+20,y*40+20,40,40,null);
-                        }
-                        else{
-                            g2.fillRect(x*40+20,y*40+20,40,40);
-                        }
                         break;
                     case PIECE:
                         //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
@@ -182,22 +173,19 @@ public class BoardPane extends JPanel {
                             }
                             break;
                         case SPACE:
-                            if(start_x == end_x & start_y == end_y){
-                                PlaceSpaceCommand psc = new PlaceSpaceCommand(game,start_x,start_y);
-                                commandStack.insertCommand(psc);
-                            } else if(start_x <= end_x & start_y <= end_y){
-                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,start_x,start_y,end_x,end_y);
+//                            if(start_x == end_x & start_y == end_y){
+//                                PlaceSpaceCommand psc = new PlaceSpaceCommand(game,start_x,start_y);
+//                                commandStack.insertCommand(psc);
+//                            } else{
+                                int minx = Math.min(start_x,end_x);
+                                int maxx = Math.max(start_x,end_x);
+
+                                int miny = Math.min(start_y,end_y);
+                                int maxy = Math.max(start_y,end_y);
+
+                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,minx,miny,maxx,maxy);
                                 commandStack.insertCommand(msc);
-                            }else if(start_x >= end_x & start_y <= end_y){
-                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,end_x,start_y,start_x,end_y);
-                                commandStack.insertCommand(msc);
-                            }else if(start_x <= end_x & start_y >= end_y){
-                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,start_x,end_y,end_x,start_y);
-                                commandStack.insertCommand(msc);
-                            }else if(start_x >= end_x & start_y >= end_y){
-                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,end_x,end_y,start_x,start_y);
-                                commandStack.insertCommand(msc);
-                            }
+                            //}
                             break;
                     }
                 }
@@ -310,7 +298,7 @@ public class BoardPane extends JPanel {
 
                 if(space.isUsingTexture()){
                     Texture texture = space.getTexture();
-                    g2.drawImage(texture.getTexture(),i*40+20,j*40+20,40,40,null);
+                    g2.drawImage(texture.getPicture(),i*40+20,j*40+20,40,40,null);
                 }
                 else{
                     Color color = space.getColor();
@@ -353,33 +341,16 @@ public class BoardPane extends JPanel {
                 drawSpace(g2,(int)spacePreview.getX(),(int)spacePreview.getY());
                 //g2.fillRect((int) spacePreview.getX() * 40 + 20, (int) spacePreview.getY() * 40 + 20, 40, 40);
             }else{
-                if(spacePreview.getX() <= spacePreviewEnd.getX() & spacePreview.getY() <= spacePreviewEnd.getY()){
-                    for(int i = (int)spacePreview.getX(); i <= spacePreviewEnd.getX(); i++){
-                        for(int j = (int)spacePreview.getY(); j <= spacePreviewEnd.getY(); j++){
+                int minx = (int)Math.min(spacePreview.getX(),spacePreviewEnd.getX());
+                int maxx = (int)Math.max(spacePreview.getX(),spacePreviewEnd.getX());
+
+                int miny = (int)Math.min(spacePreview.getY(),spacePreviewEnd.getY());
+                int maxy = (int)Math.max(spacePreview.getY(),spacePreviewEnd.getY());
+
+                for(int i = minx; i <= maxx; i++){
+                    for(int j = miny; j <= maxy; j++){
                             drawSpace(g2,i,j);
                             //g2.fillRect(i*40+20,j*40+20,40,40);
-                        }
-                    }
-                }else if(spacePreview.getX() <= spacePreviewEnd.getX() & spacePreview.getY() >= spacePreviewEnd.getY()){
-                    for(int i = (int)spacePreview.getX(); i <= spacePreviewEnd.getX(); i++){
-                        for(int j = (int)spacePreviewEnd.getY(); j <= spacePreview.getY(); j++){
-                            drawSpace(g2,i,j);
-                            //g2.fillRect(i*40+20,j*40+20,40,40);
-                        }
-                    }
-                }else if(spacePreview.getX() >= spacePreviewEnd.getX() & spacePreview.getY() <= spacePreviewEnd.getY()){
-                    for(int i = (int)spacePreviewEnd.getX(); i <= spacePreview.getX(); i++){
-                        for(int j = (int)spacePreview.getY(); j <= spacePreviewEnd.getY(); j++){
-                            drawSpace(g2,i,j);
-                            //g2.fillRect(i*40+20,j*40+20,40,40);
-                        }
-                    }
-                }else if(spacePreview.getX() >= spacePreviewEnd.getX() & spacePreview.getY() >= spacePreviewEnd.getY()){
-                    for(int i = (int)spacePreviewEnd.getX(); i <= spacePreview.getX(); i++){
-                        for(int j = (int)spacePreviewEnd.getY(); j <= spacePreview.getY(); j++){
-                            drawSpace(g2,i,j);
-                            //g2.fillRect(i*40+20,j*40+20,40,40);
-                        }
                     }
                 }
             }

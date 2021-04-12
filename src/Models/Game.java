@@ -99,8 +99,8 @@ public class Game implements Serializable {
         return this.decks;
     }
 
-    public void addTexture(String name, BufferedImage texture){
-        this.textures.add(new Texture(name,texture));
+    public void addTexture(String name, String description, BufferedImage texture){
+        this.textures.add(new Texture(name,description,texture));
     }
 
     public void addTexture(Texture texture){
@@ -186,4 +186,6 @@ public class Game implements Serializable {
     public void removePiece(Piece piece){
         pieces.remove(piece);
     }
+
+    public void removeTexture(Texture texture){textures.remove(texture);}
 }

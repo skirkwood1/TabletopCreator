@@ -117,7 +117,7 @@ public class Board implements Serializable {
     }
 
     public BufferedImage getTextureImage(){
-        return this.currentTexture.getTexture();
+        return this.currentTexture.getPicture();
     }
 
     public Texture getTexture(){

@@ -2,7 +2,7 @@ package Observers;
 
 import UI.Toolbar;
 
-public class ColorLabelObserver extends Observer {
+public class ColorLabelObserver implements Observer {
     Toolbar toolbar;
 
     public ColorLabelObserver(Toolbar toolbar){

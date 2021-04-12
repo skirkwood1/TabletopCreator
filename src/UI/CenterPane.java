@@ -7,32 +7,27 @@ import Models.Game;
 import Models.Component;
 import Models.Texture;
 import Observers.BoardPaneObserver;
-import Observers.ColorLabelObserver;
 import Observers.Observer;
 import UI.Listeners.BoardPaneViewScroll;
 import UI.Listeners.ImageViewScroll;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
 
-public class CenterPane extends JPanel {
+public class CenterPane extends JPanel implements Observable {
     ComponentTree componentTree;
     BoardPane boardPane;
     JScrollPane boardScreen;
-    private final TextPanel cardText;
+    private final TextPanel componentText;
     private final JLabel componentImage;
 
     private final JTextField cmd;
@@ -42,22 +37,19 @@ public class CenterPane extends JPanel {
     private double imageZoom = 1.0;
 
     private HashMap<String,Action> commandMap;
-    private ArrayList<Observer> observers;
+    //private ArrayList<Observer> observers;
 
     private Game game;
     private CommandStack commandStack;
 
     BoardPaneViewScroll bpvs;
+    ImageViewScroll ivs;
 
     TreeSelectionListener tsl = e -> {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
         if(selectedNode != null){
             String name = selectedNode.toString();
             Component component = null;
-            Texture texture = null;
-//                if(selectedNode.isLeaf()){
-//                    card = game.getCard(cardName);
-//                }
 
             if(selectedNode.isLeaf()){
                 if(selectedNode.getParent().equals(componentTree.top)){
@@ -70,27 +62,23 @@ public class CenterPane extends JPanel {
                     component = game.getCard(name);
                 }
                 else if(selectedNode.getParent().equals(componentTree.textures)){
-                    texture = game.getTexture(name);
+                    component = game.getTexture(name);
                 }
                 else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
                     component = game.getCard(name);
                 }
-
             }
 
             if(component != null){
-                imageZoom = 1.0;
+                ivs.setImageZoom(1.0);
                 displayImage(component.getPicture());
-                setCardText(component.getText());
+                setComponentText(component.getText());
                 game.setSelectedComponent(component);
-            }else if(texture != null){
-                displayImage(texture.getTexture());
-                //game.getBoard().setTexture(texture);
-                UpdateColorCommand ucc = new UpdateColorCommand(game,texture);
-                commandStack.insertCommand(ucc);
-
+                if(component instanceof Texture){
+                    UpdateColorCommand ucc = new UpdateColorCommand(game,(Texture)component);
+                    commandStack.insertCommand(ucc);
+                }
                 updateObservers();
-
             }
         }
     };
@@ -98,26 +86,28 @@ public class CenterPane extends JPanel {
     public CenterPane(Game game,CommandStack commandStack) {
         this.game = game;
 
+        //setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new BorderLayout());
+
         UIManager.put("ScrollPane.border",BorderFactory.createEmptyBorder());
         UIManager.put("SplitPane.border",BorderFactory.createEmptyBorder());
 
-        cardText = new TextPanel();
+        componentText = new TextPanel();
         componentImage = new JLabel();
-        //textPanel = new TextPanel();
         boardPane = new BoardPane(game,commandStack);
         boardScreen = new JScrollPane();
         componentTree = new ComponentTree(game);
         JScrollPane imagePane = new JScrollPane(componentImage);
 
         this.commandStack = commandStack;
-        this.observers = new ArrayList<>();
+        //this.observers = new ArrayList<>();
 
-        observers.add(new BoardPaneObserver(this));
+        addObserver(new BoardPaneObserver(this));
 
-        cardText.setPreferredSize(new Dimension(200,100));
-        cardText.setMinimumSize(new Dimension(200,100));
-        cardText.setMaximumSize(new Dimension(300,500));
-        cardText.setBorder(null);
+        componentText.setPreferredSize(new Dimension(200,100));
+        componentText.setMinimumSize(new Dimension(200,100));
+        componentText.setMaximumSize(new Dimension(300,500));
+        componentText.setBorder(null);
 
         imagePane.setPreferredSize(new Dimension(200, 300));
         imagePane.setMinimumSize(new Dimension(200,100));
@@ -127,35 +117,23 @@ public class CenterPane extends JPanel {
         componentImage.setHorizontalAlignment(SwingConstants.CENTER);
         componentImage.setVerticalAlignment(SwingConstants.CENTER);
 
-        JSplitPane cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, cardText, imagePane);
+        JSplitPane cardPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, componentText, imagePane);
         cardPane.setMaximumSize(new Dimension (300,600));
         cardPane.setDividerSize(6);
 
-//        Dimension boardDimension = new Dimension(game.getBoard().getSize()[0]*40+40,game.getBoard().getSize()[1]*40+40);
-//        boardPane.setPreferredSize(boardDimension);
-//        boardPane.setSize(boardDimension);
         boardPane.setMinimumSize(new Dimension(400,300));
-
-        //boardScreen.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        //boardScreen.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         boardScreen.setViewportView(boardPane);
         boardScreen.getViewport().setOpaque(false);
         boardScreen.setMinimumSize(new Dimension(800,400));
-
         boardScreen.getVerticalScrollBar().setOpaque(false);
-
         boardScreen.getVerticalScrollBar().setUI(scrollBarUI());
-
         boardScreen.getHorizontalScrollBar().setOpaque(false);
-
         boardScreen.getHorizontalScrollBar().setUI(scrollBarUI());
-
         boardScreen.setAutoscrolls(true);
 
         //boardScreen.setBackground(Color.LIGHT_GRAY);
         //boardScreen.setBorder(BorderFactory.createEmptyBorder(-2,-2,-2,-2));
-
 
         cmd = new JTextField();
         cmd.setSize(new Dimension(800,20));
@@ -188,19 +166,17 @@ public class CenterPane extends JPanel {
         cmdPane.add(cmdOutput);
         cmdPane.add(cmd);
         cmdPane.setMinimumSize(new Dimension(0,80));
-
         cmdPane.setResizeWeight(1);
 
         JSplitPane boardAndCmd = new JSplitPane(JSplitPane.VERTICAL_SPLIT, boardScreen, cmdPane);
         boardAndCmd.setDividerSize(6);
         boardAndCmd.setResizeWeight(0.8);
+        boardAndCmd.setContinuousLayout(true);
         //boardAndCmd.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         boardAndCmd.addPropertyChangeListener("dividerLocation", e -> {
             int location = ((Integer)e.getNewValue()).intValue();
-
-            if (location < 400)
-            {
+            if (location < 400) {
                 JSplitPane splitPane = (JSplitPane)e.getSource();
                 splitPane.setDividerLocation( 400 );
             }
@@ -209,7 +185,7 @@ public class CenterPane extends JPanel {
         JSplitPane textAndCardPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boardAndCmd, cardPane);
         textAndCardPane.setResizeWeight(1);
         textAndCardPane.setDividerSize(6);
-
+        textAndCardPane.setContinuousLayout(true);
 
         componentTree.setMinimumSize(new Dimension(50,0));
         componentTree.setMaximumSize(new Dimension(250,0));
@@ -227,7 +203,6 @@ public class CenterPane extends JPanel {
 
         overallPane.addPropertyChangeListener("dividerLocation", e -> {
             int location = ((Integer)e.getNewValue()).intValue();
-
             if (location > 400)
             {
                 JSplitPane splitPane = (JSplitPane)e.getSource();
@@ -235,11 +210,7 @@ public class CenterPane extends JPanel {
             }
         });
 
-        //setLayout(new FlowLayout(FlowLayout.LEFT));
-        setLayout(new BorderLayout());
-
         overallPane.setContinuousLayout(true);
-
         add(overallPane);
 
         componentTree.getTree().addTreeSelectionListener(tsl);
@@ -248,7 +219,7 @@ public class CenterPane extends JPanel {
 
         componentImage.setAutoscrolls(true);
 
-        ImageViewScroll ivs = new ImageViewScroll(this.game, imagePane,componentImage);
+        this.ivs = new ImageViewScroll(this.game, imagePane,componentImage);
 
         componentImage.addMouseListener(ivs);
         componentImage.addMouseMotionListener(ivs);
@@ -270,24 +241,9 @@ public class CenterPane extends JPanel {
 
     }
 
-
-    //void appendText(String text){
-    //    textPanel.appendText(text);
-    //}
-
-    void setCardText(String text){
-        cardText.setText(text);
+    void setComponentText(String text){
+        componentText.setText(text);
     }
-
-//    void displayImage(File imageFile){
-//        try {
-//            Image image = ImageIO.read(imageFile);
-//            displayImage(image);
-//
-//        }catch (IOException ex){
-//            ex.printStackTrace();
-//        }
-//    }
 
     void displayImage(Image image){
         ImageIcon icon = new ImageIcon(image);
@@ -305,10 +261,6 @@ public class CenterPane extends JPanel {
     void updateComponentTree(Texture texture){
         componentTree.updateTree(texture);
     }
-
-    //void updateComponentTree(Piece piece){
-    //    componentTree.updateTree(piece);
-    //}
 
     public void collapseComponentTree(){componentTree.collapseTree();}
 
@@ -331,11 +283,6 @@ public class CenterPane extends JPanel {
 
         this.boardScreen.revalidate();
         this.boardScreen.repaint();
-    }
-
-    void updateColor(Color c){
-
-        //boardPane.chosenColor = c;
     }
 
     private void actionSetup(){
@@ -362,9 +309,9 @@ public class CenterPane extends JPanel {
         }
     }
 
-    @Override public void setBorder(Border border) {
-        // No!
-    }
+//    @Override public void setBorder(Border border) {
+//        // No!
+//    }
 
     public BasicScrollBarUI scrollBarUI(){
         return new BasicScrollBarUI() {
@@ -401,12 +348,6 @@ public class CenterPane extends JPanel {
     public void addObserver(Observer obs){
         this.observers.add(obs);
         this.componentTree.addObserver(obs);
-    }
-
-    public void updateObservers(){
-        for(Observer observer:observers){
-            observer.update();
-        }
     }
 
     public ComponentTree getComponentTree(){

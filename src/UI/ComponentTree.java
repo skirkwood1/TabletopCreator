@@ -2,19 +2,16 @@ package UI;
 
 import Models.*;
 import Models.Component;
-import Observers.ColorLabelObserver;
-import Observers.Observer;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-public class ComponentTree extends JPanel {
+public class ComponentTree extends JPanel implements Observable {
     private final JTree tree;
 
     private Game game;
@@ -27,16 +24,15 @@ public class ComponentTree extends JPanel {
     DefaultMutableTreeNode decks = new DefaultMutableTreeNode("Decks");
     DefaultMutableTreeNode players = new DefaultMutableTreeNode("Players");
 
-    JPopupMenu rightClickMenu;
-    JMenuItem delete,add;
+    private JPopupMenu rightClickMenu;
+    private JMenuItem delete,add;
 
-    ArrayList<Observer> observers;
 
     public ComponentTree(Game game){
         super();
 
         this.game = game;
-        this.observers = new ArrayList<>();
+        //this.observers = new ArrayList<>();
 
         UIManager.put("Tree.font",new Font("Segoe UI",Font.PLAIN,12));
         UIManager.put("Tree.border",BorderFactory.createEmptyBorder(2,2,2,2));
@@ -95,9 +91,7 @@ public class ComponentTree extends JPanel {
                     refreshTree(game);
                 }
 
-                for(Observer observer:observers){
-                    observer.update();
-                }
+                updateObservers();
             }
         });
 
@@ -137,6 +131,9 @@ public class ComponentTree extends JPanel {
         }
         else if(component instanceof Card){
             model.insertNodeInto(node, cards, cards.getChildCount());
+        }
+        else if(component instanceof Texture){
+            model.insertNodeInto(node, textures, textures.getChildCount());
         }
     }
 
@@ -207,10 +204,6 @@ public class ComponentTree extends JPanel {
         }
 
         model.reload();
-    }
-
-    public void addObserver(Observer obs){
-        observers.add(obs);
     }
 
 //    public void valueChanged(TreeSelectionEvent e) {

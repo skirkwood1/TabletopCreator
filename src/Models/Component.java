@@ -24,6 +24,14 @@ public class Component implements Serializable {
         }
     }
 
+    public Component(String name, String text, BufferedImage picture){
+        this.name = name;
+        this.text = text;
+        this.picture = picture;
+    }
+
+
+
     public String getName(){
         return name;
     }
