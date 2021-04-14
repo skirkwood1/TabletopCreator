@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class Component implements Serializable {
+public abstract class Component implements Serializable {
 
     private String name;
     private String text;
@@ -29,8 +29,6 @@ public class Component implements Serializable {
         this.text = text;
         this.picture = picture;
     }
-
-
 
     public String getName(){
         return name;

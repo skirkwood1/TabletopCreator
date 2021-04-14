@@ -1,8 +1,10 @@
 package Models;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Game implements Serializable {
 
@@ -17,24 +19,25 @@ public class Game implements Serializable {
 
     private Component selectedComponent;
 
+    private HashMap<Card, Point> placedCards;
+
     public Game(){
         this.cards = new ArrayList<>();
         this.diceCollection = new ArrayList<>();
         this.pieces = new ArrayList<>();
         this.board = new Board(10,10);
         this.decks = new ArrayList<>();
-
         this.textures = new ArrayList<>();
+        this.placedCards = new HashMap<>();
     }
 
     public Game(Game game){
         this.cards = game.getCards();
         this.diceCollection = game.getDice();
         this.pieces = game.pieces;
-
         this.textures = new ArrayList<>();
-
         this.board = game.getBoard();
+        this.placedCards = new HashMap<>();
     }
 
     public Game(int x,int y){
@@ -43,18 +46,17 @@ public class Game implements Serializable {
         this.pieces = new ArrayList<>();
         this.board = new Board(x,y);
         this.decks = new ArrayList<>();
-
         this.textures = new ArrayList<>();
+        this.placedCards = new HashMap<>();
     }
 
     public Game(ArrayList<Card> cards, ArrayList<Dice> diceCollection, ArrayList<Piece> pieces, Board board){
         this.cards = cards;
         this.diceCollection = diceCollection;
         this.pieces = pieces;
-
         this.board = board;
-
         this.textures = new ArrayList<>();
+        this.placedCards = new HashMap<>();
     }
 
     public Card addCard(String name, String text, String filename){
@@ -169,6 +171,14 @@ public class Game implements Serializable {
         finalString += board.toString();
 
         return finalString;
+    }
+
+    public void placeCard(Card card,Point point){
+        this.placedCards.put(card.copy(),point);
+    }
+
+    public HashMap<Card,Point> getPlacedCards(){
+        return this.placedCards;
     }
 
     public Component getSelectedComponent(){

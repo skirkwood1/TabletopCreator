@@ -20,6 +20,7 @@ public class Toolbar extends JPanel implements ActionListener {
     private ButtonGroup buttonGroup;
     private JToggleButton placeSpace;
     private JToggleButton placePiece;
+    private JToggleButton placeCard;
 
     private JLabel colorLabel;
 
@@ -220,6 +221,19 @@ public class Toolbar extends JPanel implements ActionListener {
 
         actionDescription.put(placePiece, StateListener.ButtonOutput.PLACE);
 
+        placeCard = new JToggleButton("Card");
+        placeCard.setPreferredSize(new Dimension(45,30));
+        placeCard.setMargin(new Insets(0,0,0,0));
+        placeCard.setBackground(buttonBG);
+        placeCard.setBorder(BorderFactory.createEmptyBorder());
+        placeCard.setFocusPainted(false);
+        placeCard.setRolloverEnabled(true);
+        placeCard.setFont(new Font("Segoe UI",Font.BOLD,13));
+        placeCard.addChangeListener(changeListener);
+        placeCard.setUI(mtbUI);
+
+        actionDescription.put(placeCard, StateListener.ButtonOutput.PLACE);
+
         buttons = new JPanel();
 
         buttons.setLayout(new FlowLayout(FlowLayout.LEFT,2,0));
@@ -237,6 +251,7 @@ public class Toolbar extends JPanel implements ActionListener {
         buttons.add(message);
         buttons.add(placeSpace);
         buttons.add(placePiece);
+        buttons.add(placeCard);
         buttons.add(colorLabel);
 
         menuBar = new JMenuBar();
@@ -297,6 +312,7 @@ public class Toolbar extends JPanel implements ActionListener {
         message.addActionListener(this);
         placePiece.addActionListener(this);
         placeSpace.addActionListener(this);
+        placeCard.addActionListener(this);
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
         openMenu.addActionListener(this);
@@ -344,12 +360,18 @@ public class Toolbar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JComponent c = (JComponent)e.getSource();
 
-        if(c == placeSpace || c == placePiece){
-            if(c == placeSpace && placePiece.isSelected()){
+        if(c == placeSpace || c == placePiece || c == placeCard){
+            if(c == placeSpace){
                 placePiece.setSelected(false);
+                placeCard.setSelected(false);
             }
-            else if(c == placePiece && placeSpace.isSelected()){
+            else if(c == placePiece){
                 placeSpace.setSelected(false);
+                placeCard.setSelected(false);
+            }
+            else if(c == placeCard){
+                placeSpace.setSelected(false);
+                placePiece.setSelected(false);
             }
 
             if(placePiece.isSelected()){
@@ -358,12 +380,16 @@ public class Toolbar extends JPanel implements ActionListener {
             else if(placeSpace.isSelected()){
                 this.placementType = BoardPane.PlacementType.SPACE;
             }
+            else if(placeCard.isSelected()){
+                this.placementType = BoardPane.PlacementType.CARD;
+            }
             else{
                 this.placementType = BoardPane.PlacementType.NONE;
             }
         }
 
         stateListener.stateEmitted(actionDescription.get(c));
+        //System.out.println(placementType);
 
     }
 

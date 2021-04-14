@@ -5,6 +5,7 @@ import Models.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import javax.swing.*;
 
 public class BoardPane extends JPanel {
@@ -13,7 +14,7 @@ public class BoardPane extends JPanel {
     //private Dimension dimension;
 
     private double zoom = 1.0;
-    public enum PlacementType{SPACE,PIECE,DECK,NONE}
+    public enum PlacementType{SPACE,PIECE,CARD,NONE}
 
     private boolean showGrid = true;
 
@@ -67,19 +68,19 @@ public class BoardPane extends JPanel {
             g2.setColor(game.getBoard().getColor());
             g2.scale(zoom,zoom);
 
-            // get X and y position on board
-            int x, y;
-            x = (int)Math.floor((((e.getX()/zoom-20)/40)));
-            y = (int)Math.floor((((e.getY()/zoom-20)/40))); ///zoom);
-
             int[] size = game.getBoard().getSize();
 
-            if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
-                Space space = game.getBoard().getSpace(x,y);
-                switch(placementType){
-                    case SPACE:
-                        break;
-                    case PIECE:
+            int x, y;
+
+            switch(placementType){
+                case SPACE:
+                    break;
+                case PIECE:
+                    // get X and y position on board
+                    x = (int)Math.floor((((e.getX()/zoom-20)/40)));
+                    y = (int)Math.floor((((e.getY()/zoom-20)/40))); ///zoom);
+                    if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
+                        Space space = game.getBoard().getSpace(x,y);
                         //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
                         Piece piece = null;
                         if(game.getSelectedComponent() instanceof Piece){
@@ -90,23 +91,59 @@ public class BoardPane extends JPanel {
                             PlacePieceCommand ppc = new PlacePieceCommand(game,x,y,piece);
                             commandStack.insertCommand(ppc);
                         }
+                    }
 //                            space.addPiece(piece);
 //                        }
-                        break;
-                    case NONE:
-                        break;
-                }
+                    break;
+                case CARD:
+                    if(game.getSelectedComponent() instanceof Card){
+                        Card card = (Card)game.getSelectedComponent();
+                        Dimension d = scaleCard(card);
+                        Point point = new Point((int)(e.getX()/zoom-d.getWidth()/2),(int)(e.getY()/zoom-d.getHeight()/2));
+                        game.placeCard(card,point);
+                    }
+                    break;
+                case NONE:
+                    break;
+            }
 
-                if(space.isOccupied()){
-                    g2.drawImage(space.getPiece().getPicture(),x*40+25,y*40+25,30,30,null);
-                }
+//            if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
+//                Space space = game.getBoard().getSpace(x,y);
+//                switch(placementType){
+//                    case SPACE:
+//                        break;
+//                    case PIECE:
+//                        //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
+//                        Piece piece = null;
+//                        if(game.getSelectedComponent() instanceof Piece){
+//                            piece = (Piece)game.getSelectedComponent();
+//                        }
+//
+//                        if(piece != null){
+//                            PlacePieceCommand ppc = new PlacePieceCommand(game,x,y,piece);
+//                            commandStack.insertCommand(ppc);
+//                        }
+////                            space.addPiece(piece);
+////                        }
+//                        break;
+//                    case CARD:
+//                        Card card = new Card("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
+//                        game.placeCard(card,e.getPoint());
+//                        break;
+//                    case NONE:
+//                        break;
+//                }
 
-                g2.setColor(Color.BLACK);
-                g2.drawRect(x*40+20,y*40+20,40,40);
+//                if(space.isOccupied()){
+//                    g2.drawImage(space.getPiece().getPicture(),x*40+25,y*40+25,30,30,null);
+//                }
+
+//                g2.setColor(Color.BLACK);
+//                g2.drawRect(x*40+20,y*40+20,40,40);
 
                 //System.out.println("Placed space at " + x + ", " + y);
 
-            }
+            //}
 
         }
 
@@ -330,6 +367,15 @@ public class BoardPane extends JPanel {
         g2.drawRect(width*40+20,20,300,height*40);
         g2.setStroke(oldStroke);
 
+        for(HashMap.Entry<Card,Point> placedCard: game.getPlacedCards().entrySet()){
+            Card card = placedCard.getKey();
+            Point point = placedCard.getValue();
+
+            Dimension d = scaleCard(card);
+
+            g2.drawImage(card.getPicture(),(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight(),null);
+        }
+
         if (this.image != null) {
             g2.drawImage(image, (int) imagePreview.getX(), (int) imagePreview.getY(), 30, 30, null);
         }
@@ -407,6 +453,14 @@ public class BoardPane extends JPanel {
 
     public void updateGame(Game game){
         this.game = game;
+    }
+
+    public Dimension scaleCard(Card card){
+        double width = 100.0;
+        double heightScale = card.getPicture().getWidth() / width;
+        double height = card.getPicture().getHeight() / heightScale;
+
+        return new Dimension((int)width,(int)height);
     }
 
 }
