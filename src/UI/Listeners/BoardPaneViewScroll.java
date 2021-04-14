@@ -106,12 +106,6 @@ public class BoardPaneViewScroll extends MouseAdapter {
         }
         boardPane.setZoom(zoom);
 
-//            boardPane.setPreferredSize(
-//                    new Dimension((int)(boardScreen.getSize().getWidth()*zoom),
-//                            (int)(boardScreen.getSize().getHeight()*zoom)));
-//
-//            boardPane.setSize(boardPane.getPreferredSize());
-
         boardPane.updateSize();
 
         boardScreen.setViewportView(boardPane);

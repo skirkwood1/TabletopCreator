@@ -17,6 +17,7 @@ public class Board implements Serializable {
     private Texture currentTexture = null;
 
     private Space[][] spaces;
+    private int[] margins;
     //private Random random = new Random();
 
     public Board(){
@@ -29,6 +30,9 @@ public class Board implements Serializable {
                 spaces[i][j] = new Space();
             }
         }
+
+        int[] margins = {2,2,2,2};
+        this.margins = margins;
     }
 
     //Creates a board with the given width/height and fills it with white squares
@@ -46,6 +50,9 @@ public class Board implements Serializable {
 //                spaces[i][j].addPiece(piece);
             }
         }
+
+        int[] margins = {2,2,2,2};
+        this.margins = margins;
     }
 
     //Creates a board with already-created spaces
@@ -54,6 +61,9 @@ public class Board implements Serializable {
         this.width = width;
         this.height = height;
         this.spaces = spaces;
+
+        int[] margins = {2,2,2,2};
+        this.margins = margins;
     }
 
     public Space[][] getSpaces(){
@@ -145,5 +155,20 @@ public class Board implements Serializable {
             str += "\n";
         }
         return str;
+    }
+
+    public void setMargins(int[] margins){
+        this.margins = margins;
+    }
+
+    public void setMargins(int top, int bottom, int left, int right){
+        this.margins[0] = top;
+        this.margins[1] = bottom;
+        this.margins[2] = left;
+        this.margins[3] = right;
+    }
+
+    public int[] getMargins(){
+        return this.margins;
     }
 }

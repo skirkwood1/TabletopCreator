@@ -101,7 +101,7 @@ public class Frame extends JFrame {
                     break;
                 case CHANGE_SIZE:
                     resizePane.display();
-                    ChangeSizeCommand csc = new ChangeSizeCommand(game,resizePane.getDesiredWidth(),resizePane.getDesiredHeight());
+                    ChangeSizeCommand csc = new ChangeSizeCommand(game,resizePane.getDesiredWidth(),resizePane.getDesiredHeight(),resizePane.getMargins());
                     commandStack.insertCommand(csc);
                     System.out.println(game.getBoard());
                     centerPane.updateBoard();

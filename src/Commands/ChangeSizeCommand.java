@@ -10,27 +10,46 @@ public class ChangeSizeCommand extends GameCommand {
     private int desiredWidth,desiredHeight;
     private int oldWidth,oldHeight;
 
+    private int[] oldMargins;
+    private int[] margins;
+
     public ChangeSizeCommand(Game game, int desiredWidth, int desiredHeight){
         //this.memento = new GameMemento();
         this.game = game;
 
         this.desiredWidth = desiredWidth;
         this.desiredHeight = desiredHeight;
+
+        this.oldMargins = game.getBoard().getMargins();
+        this.margins = null;
+    }
+
+    public ChangeSizeCommand(Game game, int desiredWidth, int desiredHeight, int[] margins){
+        this.game = game;
+        this.desiredWidth = desiredWidth;
+        this.desiredHeight = desiredHeight;
+
+        this.oldMargins = game.getBoard().getMargins();
+        this.margins = margins;
     }
 
     public void execute(){
         this.oldWidth = game.getBoard().getSize()[0];
         this.oldHeight = game.getBoard().getSize()[1];
-
         //this.memento.setState(this.game);
 
         game.getBoard().setSize(desiredWidth,desiredHeight);
+
+        if(this.margins != null){
+            game.getBoard().setMargins(this.margins);
+        }
     }
 
     public void unExecute(){
         //game = memento.getState();
 
         game.getBoard().setSize(oldWidth,oldHeight);
+        game.getBoard().setMargins(oldMargins);
 
         System.out.println(game);
     }

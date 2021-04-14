@@ -13,6 +13,10 @@ public class BoardPane extends JPanel {
     private Game game;
     //private Dimension dimension;
 
+    private final int SCALE = 40;
+    private int leftMarginOffset;
+    private int topMarginOffset;
+
     private double zoom = 1.0;
     public enum PlacementType{SPACE,PIECE,CARD,NONE}
 
@@ -30,7 +34,11 @@ public class BoardPane extends JPanel {
 
     public BoardPane(Game game,CommandStack commandStack) {
         this.game = game;
-        Dimension dimension = new Dimension(game.getBoard().getSize()[0]*40+40+200,game.getBoard().getSize()[1]*40+40);
+
+        int horizontalSize = game.getBoard().getSize()[0] + game.getBoard().getMargins()[2]+ game.getBoard().getMargins()[3];
+        int verticalSize = game.getBoard().getSize()[1] + game.getBoard().getMargins()[0]+ game.getBoard().getMargins()[1];
+        Dimension dimension = new Dimension((horizontalSize)* SCALE + 40,
+                verticalSize*SCALE + 40);
         setPreferredSize(dimension);
         setSize(dimension);
 
@@ -77,8 +85,8 @@ public class BoardPane extends JPanel {
                     break;
                 case PIECE:
                     // get X and y position on board
-                    x = (int)Math.floor((((e.getX()/zoom-20)/40)));
-                    y = (int)Math.floor((((e.getY()/zoom-20)/40))); ///zoom);
+                    x = (int)Math.floor((((e.getX()/zoom-20)/SCALE))) - leftMarginOffset;
+                    y = (int)Math.floor((((e.getY()/zoom-20)/SCALE))) - topMarginOffset; ///zoom);
                     if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
                         Space space = game.getBoard().getSpace(x,y);
                         //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
@@ -152,8 +160,8 @@ public class BoardPane extends JPanel {
 
             Graphics2D g2 = (Graphics2D)getGraphics();
 
-            start_x = (int)Math.floor((((e.getX()/zoom-20)/40)));
-            start_y = (int)Math.floor((((e.getY()/zoom-20)/40)));
+            start_x = (int)Math.floor((((e.getX()/zoom-20)/SCALE))) - leftMarginOffset/SCALE;
+            start_y = (int)Math.floor((((e.getY()/zoom-20)/SCALE))) - topMarginOffset/SCALE;
 
             origin = e.getPoint();
             previewPoint = e.getPoint();
@@ -163,7 +171,8 @@ public class BoardPane extends JPanel {
             int[] size = game.getBoard().getSize();
 
             if((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0){
-                if(start_x < size[0] && start_x >= 0 && start_y < size[1] && start_y >= 0){
+                if(start_x < size[0] && start_x >= 0 &&
+                        start_y < size[1] && start_y >= 0){
                     Space start_space = spaces[start_x][start_y];
                     if(placementType == PlacementType.NONE){
                         selectedPiece = start_space.getPiece();
@@ -195,13 +204,16 @@ public class BoardPane extends JPanel {
             Graphics g = getGraphics();
             Graphics2D g2 = (Graphics2D)g;
 
-            end_x = (int) Math.floor(((e.getX() / zoom - 20) / 40));
-            end_y = (int) Math.floor(((e.getY() / zoom - 20) / 40));
+            end_x = (int) Math.floor(((e.getX() / zoom - 20) / SCALE)) - leftMarginOffset/SCALE;
+            end_y = (int) Math.floor(((e.getY() / zoom - 20) / SCALE)) - topMarginOffset/SCALE;
 
             int[] size = game.getBoard().getSize();
 
             if(buttonPressed == 1) {
-                if (end_x < size[0] && end_x >= 0 && end_y < size[1] && end_y >= 0) {
+                if (end_x < size[0] && end_x >= 0 &&
+                        end_y < size[1] && end_y >= 0 &&
+                        start_x < size[0] && start_x >= 0 &&
+                        start_y < size[1] && start_y >= 0) {
                     switch(placementType){
                         case NONE:
                             if(start_x != end_x || start_y != end_y){
@@ -214,8 +226,8 @@ public class BoardPane extends JPanel {
 //                                PlaceSpaceCommand psc = new PlaceSpaceCommand(game,start_x,start_y);
 //                                commandStack.insertCommand(psc);
 //                            } else{
-                                int minx = Math.min(start_x,end_x);
-                                int maxx = Math.max(start_x,end_x);
+                                int minx = Math.min(start_x, end_x);
+                                int maxx = Math.max(start_x, end_x);
 
                                 int miny = Math.min(start_y,end_y);
                                 int maxy = Math.max(start_y,end_y);
@@ -260,15 +272,15 @@ public class BoardPane extends JPanel {
             int current_x = (int)(e.getX() / zoom) - 15;
             int current_y = (int)(e.getY() / zoom) - 15;
 
-            if(current_x >= (int)(game.getBoard().getSize()[0]*40)-5){
-                current_x = (int)(game.getBoard().getSize()[0]*40)-5;
+            if(current_x >= (int)(game.getBoard().getSize()[0]*SCALE)-5){
+                current_x = (int)(game.getBoard().getSize()[0]*SCALE)-5;
             }
             else if(current_x <= 15){
                 current_x = 15;
             }
 
-            if(current_y >= (int)(game.getBoard().getSize()[1]*40)-5){
-                current_y = (int)(game.getBoard().getSize()[1]*40)-5;
+            if(current_y >= (int)(game.getBoard().getSize()[1]*SCALE)-5){
+                current_y = (int)(game.getBoard().getSize()[1]*SCALE)-5;
             }
             else if(current_y <= 15){
                 current_y = 15;
@@ -284,9 +296,10 @@ public class BoardPane extends JPanel {
                         break;
                     case SPACE:
                         int[] size = game.getBoard().getSize();
-                        int end_x = (int)((e.getX() / zoom - 20) / 40);
-                        int end_y = (int)((e.getY() / zoom - 20) / 40);
-                        if(end_x < size[0] && end_x >= 0 && end_y < size[1] && end_y >= 0){
+                        int end_x = (int)((e.getX() / zoom - 20) / SCALE);
+                        int end_y = (int)((e.getY() / zoom - 20) / SCALE);
+                        if(end_x < size[0] + leftMarginOffset/SCALE && end_x >= leftMarginOffset/SCALE &&
+                                end_y < size[1] + topMarginOffset/SCALE && end_y >= topMarginOffset/SCALE){
                             spacePreviewEnd = new Point(end_x,end_y);
                         }
 
@@ -303,10 +316,11 @@ public class BoardPane extends JPanel {
 
             int[] size = game.getBoard().getSize();
 
-            int preview_x = (int)Math.floor((((e.getX()/zoom-20)/40)));
-            int preview_y = (int)Math.floor((((e.getY()/zoom-20)/40)));
+            int preview_x = (int)Math.floor((((e.getX()/zoom-20)/SCALE)));
+            int preview_y = (int)Math.floor((((e.getY()/zoom-20)/SCALE)));
 
-            if(preview_x < size[0] && preview_x >= 0 && preview_y < size[1] && preview_y >= 0){
+            if(preview_x < size[0] + leftMarginOffset/SCALE && preview_x >= leftMarginOffset/SCALE &&
+                    preview_y < size[1] + topMarginOffset/SCALE && preview_y >= topMarginOffset/SCALE){
                 spacePreview = new Point(preview_x,preview_y);
             }else{
                 spacePreview = null;
@@ -327,27 +341,53 @@ public class BoardPane extends JPanel {
         int width = boardSize[0];
         int height = boardSize[1];
 
+        int[] boardMargins = game.getBoard().getMargins();
+        int top = boardMargins[0];
+        int bottom = boardMargins[1];
+        int left = boardMargins[2];
+        int right = boardMargins[3];
+
         g2.scale(zoom, zoom);
 
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                Space space = game.getBoard().getSpace(i, j);
+        int playWidth = (left + width + right)*SCALE;
+        int playHeight = (top + height + bottom)*SCALE;
+        this.topMarginOffset = top * SCALE;
+        this.leftMarginOffset = left * SCALE;
+
+        g2.setColor(game.getBoard().getDefaultColor());
+        g2.fillRect(20,20, playWidth, playHeight);
+
+        Stroke oldStroke = g2.getStroke();
+        g2.setStroke(new BasicStroke(2f));
+        //g2.drawRect(width*SCALE+20,20,300,height*SCALE);
+        g2.setColor(Color.BLACK);
+        g2.drawRect(20,20, playWidth, playHeight);
+        g2.setStroke(oldStroke);
+
+        for (int i = left; i < width + left; i++) {
+            for (int j = top; j < height + top; j++) {
+                Space space = game.getBoard().getSpace(i-left, j-top);
 
                 if(space.isUsingTexture()){
                     Texture texture = space.getTexture();
-                    g2.drawImage(texture.getPicture(),i*40+20,j*40+20,40,40,null);
+                    g2.drawImage(texture.getPicture(),
+                            spaceScale(i),
+                            spaceScale(j),
+                            SCALE,SCALE,null);
                 }
                 else{
                     Color color = space.getColor();
                     g2.setColor(color);
-                    g2.fillRect(i * 40 + 20, j * 40 + 20, 40, 40);
+                    g2.fillRect(spaceScale(i),
+                            spaceScale(j),
+                            SCALE, SCALE);
                 }
 
                 if(showGrid){
                     g2.setColor(Color.BLACK);
-                    Stroke oldStroke = g2.getStroke();
+                    oldStroke = g2.getStroke();
                     g2.setStroke(new BasicStroke(0.5f));
-                    g2.drawRect(i * 40 + 20, j * 40 + 20, 40, 40);
+                    g2.drawRect(spaceScale(i), spaceScale(j), SCALE, SCALE);
                     g2.setStroke(oldStroke);
                 }
 
@@ -357,14 +397,14 @@ public class BoardPane extends JPanel {
             }
         }
 
-        g2.setColor(game.getBoard().getDefaultColor());
-        g2.fillRect(width*40+20,20,300,height*40);
+//        g2.setColor(game.getBoard().getDefaultColor());
+//        g2.fillRect(spaceScale(width),20,300,height*SCALE);
 
         g2.setColor(Color.BLACK);
-        Stroke oldStroke = g2.getStroke();
+        oldStroke = g2.getStroke();
         g2.setStroke(new BasicStroke(2f));
-        g2.drawRect(20,20,width*40,height*40);
-        g2.drawRect(width*40+20,20,300,height*40);
+        g2.drawRect(20 + leftMarginOffset,20 + topMarginOffset,width*SCALE,height*SCALE);
+        //g2.drawRect(width*SCALE+20,20,300,height*SCALE);
         g2.setStroke(oldStroke);
 
         for(HashMap.Entry<Card,Point> placedCard: game.getPlacedCards().entrySet()){
@@ -405,9 +445,9 @@ public class BoardPane extends JPanel {
 
     public void drawSpace(Graphics2D g2, int x, int y){
         if(game.getBoard().useTexture()){
-            g2.drawImage(game.getBoard().getTextureImage(),x*40+20,y*40+20,40,40,null);
+            g2.drawImage(game.getBoard().getTextureImage(),spaceScale(x),spaceScale(y),SCALE,SCALE,null);
         }else{
-            g2.fillRect(x*40+20,y*40+20,40,40);
+            g2.fillRect(spaceScale(x), spaceScale(y), SCALE, SCALE);
         }
     }
 
@@ -416,14 +456,11 @@ public class BoardPane extends JPanel {
     }
 
     public void updateSize(){
-        //this.dimension = new Dimension(board.getSize()[0]*40+40,board.getSize()[1]*40+40);
+        int horizontalSize = game.getBoard().getSize()[0] + game.getBoard().getMargins()[2]+ game.getBoard().getMargins()[3];
+        int verticalSize = game.getBoard().getSize()[1] + game.getBoard().getMargins()[0]+ game.getBoard().getMargins()[1];
 
-
-        double x = (this.game.getBoard().getSize()[0] * 40 + 240) * zoom;
-        double y = (this.game.getBoard().getSize()[1] * 40 + 40) * zoom;
-
-        setPreferredSize(new Dimension((int)x+200,(int)y));
-        setSize(new Dimension((int)x+200,(int)y));
+        setPreferredSize(new Dimension((int)(horizontalSize*SCALE*zoom)+(int)(SCALE*zoom),(int)(verticalSize*SCALE*zoom)+(int)(SCALE*zoom)));
+        setSize(new Dimension((int)(horizontalSize*SCALE*zoom)+(int)(SCALE*zoom),(int)(verticalSize*SCALE*zoom)+(int)(SCALE*zoom)));
     }
 
     public void setPlacementType(PlacementType pt){
@@ -461,6 +498,10 @@ public class BoardPane extends JPanel {
         double height = card.getPicture().getHeight() / heightScale;
 
         return new Dimension((int)width,(int)height);
+    }
+
+    public int spaceScale(int size){
+        return size * SCALE + 20;
     }
 
 }
