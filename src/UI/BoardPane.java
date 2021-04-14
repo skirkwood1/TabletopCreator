@@ -85,8 +85,8 @@ public class BoardPane extends JPanel {
                     break;
                 case PIECE:
                     // get X and y position on board
-                    x = (int)Math.floor((((e.getX()/zoom-20)/SCALE))) - leftMarginOffset;
-                    y = (int)Math.floor((((e.getY()/zoom-20)/SCALE))) - topMarginOffset; ///zoom);
+                    x = (int)Math.floor((((e.getX()/zoom-20)/SCALE))) - leftMarginOffset/SCALE;
+                    y = (int)Math.floor((((e.getY()/zoom-20)/SCALE))) - topMarginOffset/SCALE; ///zoom);
                     if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
                         Space space = game.getBoard().getSpace(x,y);
                         //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
@@ -269,21 +269,21 @@ public class BoardPane extends JPanel {
             //Graphics g = getGraphics();
             //Graphics2D g2 = (Graphics2D)g;
 
-            int current_x = (int)(e.getX() / zoom) - 15;
-            int current_y = (int)(e.getY() / zoom) - 15;
+            int current_x = (int)(e.getX() / zoom) - (int)(SCALE*.375) - leftMarginOffset;
+            int current_y = (int)(e.getY() / zoom) - (int)(SCALE*.375) - topMarginOffset;
 
-            if(current_x >= (int)(game.getBoard().getSize()[0]*SCALE)-5){
-                current_x = (int)(game.getBoard().getSize()[0]*SCALE)-5;
+            if(current_x >= (int)(game.getBoard().getSize()[0]*SCALE)-(int)(SCALE*.125)){
+                current_x = (int)(game.getBoard().getSize()[0]*SCALE)-(int)(SCALE*.125);
             }
             else if(current_x <= 15){
                 current_x = 15;
             }
 
-            if(current_y >= (int)(game.getBoard().getSize()[1]*SCALE)-5){
-                current_y = (int)(game.getBoard().getSize()[1]*SCALE)-5;
+            if(current_y >= (int)(game.getBoard().getSize()[1]*SCALE)-(int)(SCALE*.125)){
+                current_y = (int)(game.getBoard().getSize()[1]*SCALE)-(int)(SCALE*.125);
             }
-            else if(current_y <= 15){
-                current_y = 15;
+            else if(current_y <= SCALE*.375){
+                current_y = (int)(SCALE*.375);
             }
 
             Point currentPoint = new Point(current_x,current_y);
@@ -392,7 +392,8 @@ public class BoardPane extends JPanel {
                 }
 
                 if (space.getPiece() != null) {
-                    g2.drawImage(space.getPiece().getPicture(), i * 40 + 25, j * 40 + 25, 30, 30, null);
+                    g2.drawImage(space.getPiece().getPicture(), spaceScale(i) + (int)(SCALE*.125),
+                            spaceScale(j) + (int)(SCALE*.125), (int)(SCALE*.75), (int)(SCALE*.75), null);
                 }
             }
         }
@@ -417,7 +418,7 @@ public class BoardPane extends JPanel {
         }
 
         if (this.image != null) {
-            g2.drawImage(image, (int) imagePreview.getX(), (int) imagePreview.getY(), 30, 30, null);
+            g2.drawImage(image, (int) imagePreview.getX() + leftMarginOffset, (int) imagePreview.getY() + topMarginOffset, (int)(SCALE*.75), (int)(SCALE*.75), null);
         }
 
         if (spacePreview != null) {

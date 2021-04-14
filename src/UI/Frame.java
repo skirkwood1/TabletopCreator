@@ -40,7 +40,7 @@ public class Frame extends JFrame {
     private HashMap<KeyStroke, Action> actionMap = new HashMap<KeyStroke, Action>();
 
     public Frame() {
-        super("Tabletop Creator v0.02");
+        super("Tabletop Creator v0.03");
 
         //GridBagConstraints gbc = new GridBagConstraints();
         //setLayout(new GridBagLayout());
