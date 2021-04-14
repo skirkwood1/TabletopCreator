@@ -85,8 +85,8 @@ public class BoardPane extends JPanel {
                     break;
                 case PIECE:
                     // get X and y position on board
-                    x = (int)Math.floor((((e.getX()/zoom-20)/SCALE))) - leftMarginOffset/SCALE;
-                    y = (int)Math.floor((((e.getY()/zoom-20)/SCALE))) - topMarginOffset/SCALE; ///zoom);
+                    x = (int)Math.floor((((e.getX()/zoom-20)/SCALE))) - leftMarginOffset;
+                    y = (int)Math.floor((((e.getY()/zoom-20)/SCALE))) - topMarginOffset; ///zoom);
                     if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
                         Space space = game.getBoard().getSpace(x,y);
                         //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
@@ -160,8 +160,8 @@ public class BoardPane extends JPanel {
 
             Graphics2D g2 = (Graphics2D)getGraphics();
 
-            start_x = (int)Math.floor((((e.getX()/zoom-20)/SCALE))) - leftMarginOffset/SCALE;
-            start_y = (int)Math.floor((((e.getY()/zoom-20)/SCALE))) - topMarginOffset/SCALE;
+            start_x = (int)Math.floor((((e.getX()/zoom-20)/SCALE))) - leftMarginOffset;
+            start_y = (int)Math.floor((((e.getY()/zoom-20)/SCALE))) - topMarginOffset;
 
             origin = e.getPoint();
             previewPoint = e.getPoint();
@@ -204,8 +204,8 @@ public class BoardPane extends JPanel {
             Graphics g = getGraphics();
             Graphics2D g2 = (Graphics2D)g;
 
-            end_x = (int) Math.floor(((e.getX() / zoom - 20) / SCALE)) - leftMarginOffset/SCALE;
-            end_y = (int) Math.floor(((e.getY() / zoom - 20) / SCALE)) - topMarginOffset/SCALE;
+            end_x = (int) Math.floor(((e.getX() / zoom - 20) / SCALE)) - leftMarginOffset;
+            end_y = (int) Math.floor(((e.getY() / zoom - 20) / SCALE)) - topMarginOffset;
 
             int[] size = game.getBoard().getSize();
 
@@ -269,8 +269,8 @@ public class BoardPane extends JPanel {
             //Graphics g = getGraphics();
             //Graphics2D g2 = (Graphics2D)g;
 
-            int current_x = (int)(e.getX() / zoom) - (int)(SCALE*.375) - leftMarginOffset;
-            int current_y = (int)(e.getY() / zoom) - (int)(SCALE*.375) - topMarginOffset;
+            int current_x = (int)(e.getX() / zoom) - (int)(SCALE*.375) - leftMarginOffset*SCALE;
+            int current_y = (int)(e.getY() / zoom) - (int)(SCALE*.375) - topMarginOffset*SCALE;
 
             if(current_x >= (int)(game.getBoard().getSize()[0]*SCALE)-(int)(SCALE*.125)){
                 current_x = (int)(game.getBoard().getSize()[0]*SCALE)-(int)(SCALE*.125);
@@ -298,8 +298,8 @@ public class BoardPane extends JPanel {
                         int[] size = game.getBoard().getSize();
                         int end_x = (int)((e.getX() / zoom - 20) / SCALE);
                         int end_y = (int)((e.getY() / zoom - 20) / SCALE);
-                        if(end_x < size[0] + leftMarginOffset/SCALE && end_x >= leftMarginOffset/SCALE &&
-                                end_y < size[1] + topMarginOffset/SCALE && end_y >= topMarginOffset/SCALE){
+                        if(end_x < size[0] + leftMarginOffset && end_x >= leftMarginOffset &&
+                                end_y < size[1] + topMarginOffset && end_y >= topMarginOffset){
                             spacePreviewEnd = new Point(end_x,end_y);
                         }
 
@@ -319,8 +319,8 @@ public class BoardPane extends JPanel {
             int preview_x = (int)Math.floor((((e.getX()/zoom-20)/SCALE)));
             int preview_y = (int)Math.floor((((e.getY()/zoom-20)/SCALE)));
 
-            if(preview_x < size[0] + leftMarginOffset/SCALE && preview_x >= leftMarginOffset/SCALE &&
-                    preview_y < size[1] + topMarginOffset/SCALE && preview_y >= topMarginOffset/SCALE){
+            if(preview_x < size[0] + leftMarginOffset && preview_x >= leftMarginOffset &&
+                    preview_y < size[1] + topMarginOffset && preview_y >= topMarginOffset){
                 spacePreview = new Point(preview_x,preview_y);
             }else{
                 spacePreview = null;
@@ -351,8 +351,8 @@ public class BoardPane extends JPanel {
 
         int playWidth = (left + width + right)*SCALE;
         int playHeight = (top + height + bottom)*SCALE;
-        this.topMarginOffset = top * SCALE;
-        this.leftMarginOffset = left * SCALE;
+        this.topMarginOffset = top;
+        this.leftMarginOffset = left;
 
         g2.setColor(game.getBoard().getDefaultColor());
         g2.fillRect(20,20, playWidth, playHeight);
@@ -404,7 +404,7 @@ public class BoardPane extends JPanel {
         g2.setColor(Color.BLACK);
         oldStroke = g2.getStroke();
         g2.setStroke(new BasicStroke(2f));
-        g2.drawRect(20 + leftMarginOffset,20 + topMarginOffset,width*SCALE,height*SCALE);
+        g2.drawRect(20 + leftMarginOffset*SCALE,20 + topMarginOffset*SCALE,width*SCALE,height*SCALE);
         //g2.drawRect(width*SCALE+20,20,300,height*SCALE);
         g2.setStroke(oldStroke);
 
@@ -418,7 +418,7 @@ public class BoardPane extends JPanel {
         }
 
         if (this.image != null) {
-            g2.drawImage(image, (int) imagePreview.getX() + leftMarginOffset, (int) imagePreview.getY() + topMarginOffset, (int)(SCALE*.75), (int)(SCALE*.75), null);
+            g2.drawImage(image, (int) imagePreview.getX() + leftMarginOffset*SCALE, (int) imagePreview.getY() + topMarginOffset*SCALE, (int)(SCALE*.75), (int)(SCALE*.75), null);
         }
 
         if (spacePreview != null) {

@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,7 +8,7 @@ import java.util.Collections;
 * but they can be separated into decks which can contain multiple copies
 * of each card for use in separate parts of the game
 * */
-public class Deck {
+public class Deck implements Serializable {
     private String name;
     private ArrayList<Card> cards;
 
