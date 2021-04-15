@@ -118,7 +118,7 @@ public class ResizeBoardPane extends JOptionPane {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Segoe UI",Font.PLAIN,13));
         panel.add(label);
-        field.setPreferredSize(new Dimension(150,20));
+        field.setPreferredSize(new Dimension(100,20));
         panel.add(field);
 
         return panel;
