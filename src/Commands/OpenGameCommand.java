@@ -17,10 +17,10 @@ public class OpenGameCommand extends GameCommand {
 
     private final Frame frame;
 
-    public OpenGameCommand(Frame frame, Game oldGame, Game newGame){
+    public OpenGameCommand(Frame frame, Game newGame){
         this.frame = frame;
 
-        this.oldGame = oldGame;
+        this.oldGame = frame.getGame();
         this.newGame = newGame;
     }
 

@@ -1,9 +1,13 @@
 package ChatServer;
 
+import Commands.CommandStack;
+import Commands.GameCommand;
 import Models.Game;
 import UI.TextPanel;
 
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -31,6 +36,9 @@ public class ClientWindow implements ActionListener,Runnable {
     private JFileChooser fileUpload;
     private JButton upload;
 
+    private GameListener gameListener;
+    private ArrayList<Game> pastMessages;
+
     HashMap<String, String> commandMap;
 
     private final int port = 8888;
@@ -46,12 +54,13 @@ public class ClientWindow implements ActionListener,Runnable {
 
     private Thread thread;
 
-    GameMessage gameMessage;
+    private GameMessage gameMessage;
 
     public ClientWindow(String ip) throws Exception {
         this.frame = new JFrame("Chat Client");
 
         this.ip = ip;
+        this.pastMessages = new ArrayList<>();
 
         this.frame.setPreferredSize(new Dimension(400, 400));
 
@@ -110,6 +119,18 @@ public class ClientWindow implements ActionListener,Runnable {
                 }catch(IOException ex){}
             }
         });
+
+        log.addHyperlinkListener(new HyperlinkListener() {
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+                if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    // Do something with e.getURL() here
+                    System.out.println(e.getDescription());
+
+                    Game gameMessage = pastMessages.get(Integer.parseInt(e.getDescription()));
+                    gameListener.gameEmitted(gameMessage);
+                }
+            }
+        });
     }
 
      public void start(){
@@ -119,27 +140,36 @@ public class ClientWindow implements ActionListener,Runnable {
 
      public void run(){
          try {
+             OutputStream output = socket.getOutputStream();
+             this.out = new ObjectOutputStream(output);
+
              InputStream input = socket.getInputStream();
              //this.in = new Scanner(input);
              this.in = new ObjectInputStream(input);
 
-             OutputStream output = socket.getOutputStream();
-             this.out = new ObjectOutputStream(output);
 
              //this.out = new PrintWriter(output,true);
 
              while(true){
+                 int index = 0;
+
                  try{
                      GameMessage gm = (GameMessage)in.readObject();
                      String str = gm.getMessage();
                      Game game = gm.getGame();
 
-                     System.out.println(str);
-
-                     display(str);
                      if(game != null){
-                         display(game.toString());
+                         this.pastMessages.add(game);
+                         String gameName = game.getName();
+                         System.out.println(str + "; " + gameName);
+                         String hyperlink = ("<a href=\"" + index + "\">" + gameName +"</a>");
+                         display(str + "; " + hyperlink);
+                         index++;
+                     }else{
+                         display(str);
                      }
+
+                     //gameListener.gameEmitted(game);
                  }catch(ClassNotFoundException ce){
                      ce.printStackTrace();
                  }
@@ -195,13 +225,17 @@ public class ClientWindow implements ActionListener,Runnable {
                 FileInputStream fileIn = new FileInputStream(file);
                 ObjectInputStream objectIn = new ObjectInputStream(fileIn);
                 Game gameIn = (Game)objectIn.readObject();
-                System.out.println(gameIn.toString());
+                //System.out.println(gameIn.toString());
                 return gameIn;
             }catch(Exception ex){
                 ex.printStackTrace();
             }
         }
         return null;
+    }
+
+    public void setGameListener(GameListener gameListener){
+        this.gameListener = gameListener;
     }
 
 //    public static void main(String[] args){

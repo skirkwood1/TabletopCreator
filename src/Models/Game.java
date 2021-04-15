@@ -10,6 +10,9 @@ public class Game implements Serializable {
 
     private static final long serialVersionUID = -458626325330702518L;
     //Lists of components that have been imported into the project
+
+    private String name;
+
     private ArrayList<Card> cards;
     private ArrayList<Dice> diceCollection;
     private ArrayList<Piece> pieces;
@@ -172,6 +175,14 @@ public class Game implements Serializable {
         finalString += board.toString();
 
         return finalString;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public void placeCard(Card card,Point point){

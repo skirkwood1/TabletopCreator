@@ -1,6 +1,7 @@
 package UI;
 
 import ChatServer.ClientWindow;
+import ChatServer.GameListener;
 import Commands.*;
 import Models.*;
 import Observers.ColorLabelObserver;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 
 import static UI.StateListener.ButtonOutput.*;
 
-public class Frame extends JFrame {
+public class Frame extends JFrame implements Observable {
 
     private ComponentTree componentTree;
     private Toolbar toolbar;
@@ -36,6 +37,9 @@ public class Frame extends JFrame {
 
     private Game game = new Game(10,10);
     private CommandStack commandStack = new CommandStack();
+
+    private ClientWindow clientWindow;
+    private GameListener gameListener;
 
     private HashMap<KeyStroke, Action> actionMap = new HashMap<KeyStroke, Action>();
 
@@ -83,6 +87,7 @@ public class Frame extends JFrame {
                     if(userSelection == JFileChooser.APPROVE_OPTION){
                         File fileToSave = fileChooser.getSelectedFile();
                         System.out.println("Save as file:" + fileToSave.getAbsolutePath());
+                        game.setName(fileToSave.getName());
                         saveGame(game, fileToSave);
                     }
                     break;
@@ -93,7 +98,7 @@ public class Frame extends JFrame {
                         File fileToOpen = fileChooser.getSelectedFile();
                         System.out.println("Open file:" + fileToOpen.getAbsolutePath());
                         Game newGame = openGame(fileToOpen);
-                        OpenGameCommand ogc = new OpenGameCommand(this,this.game,newGame);
+                        OpenGameCommand ogc = new OpenGameCommand(this,newGame);
                         commandStack.insertCommand(ogc);
                         centerPane.refreshComponentTree(game);
                         centerPane.updateBoard();
@@ -115,7 +120,16 @@ public class Frame extends JFrame {
                     break;
                 case MESSAGE:
                     try {
-                        new ClientWindow("localhost").start();
+                        this.clientWindow = new ClientWindow("localhost");
+
+                        clientWindow.setGameListener(game -> {
+                            OpenGameCommand ogc = new OpenGameCommand(this,game);
+                            commandStack.insertCommand(ogc);
+                            centerPane.refreshComponentTree(game);
+                            centerPane.updateBoard();
+                        });
+
+                        clientWindow.start();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -213,6 +227,10 @@ public class Frame extends JFrame {
 
     public void setGame(Game game){
         this.game = game;
+    }
+
+    public Game getGame(){
+        return this.game;
     }
 
     public void updateBoard(){
