@@ -3,6 +3,7 @@ package Models;
 import java.io.Serializable;
 
 public class Resource implements Serializable {
+    private static final long serialVersionUID = 8607053040307709847L;
     private String name;
     private int value;
 

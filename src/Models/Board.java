@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class Board implements Serializable {
 
+    private static final long serialVersionUID = 1025211286521173848L;
     private int height;
     private int width;
 

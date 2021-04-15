@@ -6,6 +6,7 @@ import java.io.*;
 
 public abstract class Component implements Serializable {
 
+    private static final long serialVersionUID = -4508231856381829745L;
     private String name;
     private String text;
     //private File image;

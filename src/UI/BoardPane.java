@@ -14,7 +14,7 @@ public class BoardPane extends JPanel {
     private Game game;
     //private Dimension dimension;
 
-    private final int SCALE = 50;
+    private final int SCALE = 40;
     private final int PADDING = 30;
     private int leftMarginOffset;
     private int topMarginOffset;
@@ -331,19 +331,26 @@ public class BoardPane extends JPanel {
 
                             if((new_x) >= (horizontal_size)*SCALE - cardWidth/4){
                                 new_x = (horizontal_size)*SCALE - cardWidth/4;
+                                mouse_x = last_x;
                             }
                             if((new_x) <= cardWidth/4){
                                 new_x = cardWidth/4;
+                                mouse_x = last_x;
                             }
-                            if((new_y) >= vertical_size*SCALE - cardHeight/4){
-                                new_y = vertical_size*SCALE- cardHeight/4;
+                            if((new_y) >= vertical_size*SCALE - cardHeight/2){
+                                new_y = vertical_size*SCALE- cardHeight/2;
+                                mouse_y = last_y;
                             }
-                            if((new_y) <= cardHeight/4){
-                                new_y = cardHeight/4;
+                            if((new_y) <= cardHeight/3){
+                                new_y = cardHeight/3;
+                                mouse_y = last_y;
                             }
 
                             Point newPoint = new Point(new_x, new_y);
                             cards.put(selectedCard,newPoint);
+
+                            last_x = mouse_x;//(int)(e.getX()/zoom);
+                            last_y = mouse_y;
                         }else{
                             int current_x = (int)(e.getX() / zoom - SCALE*.375) - leftMarginOffset*SCALE;
                             int current_y = (int)(e.getY() / zoom - SCALE*.375) - topMarginOffset*SCALE;
@@ -377,8 +384,7 @@ public class BoardPane extends JPanel {
                     default:
                         break;
                 }
-                last_x = (int)(e.getX()/zoom);
-                last_y = (int)(e.getY()/zoom);
+
             }
 
             //super.mouseDragged(e);

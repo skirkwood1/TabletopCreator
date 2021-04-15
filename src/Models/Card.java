@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class Card extends Component implements Serializable {
 
+    private static final long serialVersionUID = 469671549044569183L;
+
     public Card(String name, String text, String filename){
         super(name,text,filename);
     }

@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class Space implements Serializable {
 
+    private static final long serialVersionUID = -4487328749916531207L;
+
     public enum Shape{
         SQUARE,HEX
     }

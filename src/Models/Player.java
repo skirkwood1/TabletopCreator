@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
+    private static final long serialVersionUID = 6607801587212017657L;
     private ArrayList<Card> hand;
     private ArrayList<Piece> controlledPieces;
     private ArrayList<Resource> resources;

@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class Game implements Serializable {
 
+    private static final long serialVersionUID = -458626325330702518L;
     //Lists of components that have been imported into the project
     private ArrayList<Card> cards;
     private ArrayList<Dice> diceCollection;

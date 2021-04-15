@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class Texture extends Component implements Serializable {
+    private static final long serialVersionUID = 5757975696680667974L;
 
 //    private String name;
 //

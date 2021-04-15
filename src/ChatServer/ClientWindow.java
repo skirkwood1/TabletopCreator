@@ -4,6 +4,7 @@ import Models.Game;
 import UI.TextPanel;
 
 import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,11 +18,15 @@ import java.util.Scanner;
 public class ClientWindow implements ActionListener,Runnable {
 
     private JFrame frame;
-    private TextPanel log;
+    //private TextPanel log;
+    private JEditorPane log;
+    private JScrollPane logPane;
     private JTextField prompt;
     private JSplitPane center;
     private JPanel buttons;
     private JList users;
+
+    String chatText = "";
 
     private JFileChooser fileUpload;
     private JButton upload;
@@ -33,10 +38,15 @@ public class ClientWindow implements ActionListener,Runnable {
 
     private Socket socket;
 
-    private Scanner in;
-    private volatile PrintWriter out;
+    //private Scanner in;
+    //private volatile PrintWriter out;
+
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
 
     private Thread thread;
+
+    GameMessage gameMessage;
 
     public ClientWindow(String ip) throws Exception {
         this.frame = new JFrame("Chat Client");
@@ -45,7 +55,17 @@ public class ClientWindow implements ActionListener,Runnable {
 
         this.frame.setPreferredSize(new Dimension(400, 400));
 
-        this.log = new TextPanel();
+        this.log = new JEditorPane();
+        log.setEditable(false);
+        log.setContentType("text/html");
+
+        Font font = new Font("Segoe UI", Font.PLAIN, 13);
+        String bodyRule = "body { font-family: " + font.getFamily() + "; " +
+                "font-size: " + font.getSize() + "pt; }";
+        ((HTMLDocument)log.getDocument()).getStyleSheet().addRule(bodyRule);
+
+        this.logPane = new JScrollPane(log);
+
         this.prompt = new JTextField();
         this.center = new JSplitPane();
         this.commandMap = new HashMap<>();
@@ -55,14 +75,21 @@ public class ClientWindow implements ActionListener,Runnable {
 
         this.upload = new JButton("File Upload");
 
-        this.upload.addActionListener(e -> uploadGameFile());
+        this.gameMessage = new GameMessage();
+
+        this.upload.addActionListener(e -> {
+            Game game = uploadGameFile();
+            if(game!=null){
+                gameMessage.setGame(game);
+            }
+        });
 
         this.buttons.add(upload);
 
         this.center.setLayout(new BorderLayout());
         this.frame.setLayout(new BorderLayout());
 
-        this.center.add(log, BorderLayout.CENTER);
+        this.center.add(logPane, BorderLayout.CENTER);
         this.center.add(prompt, BorderLayout.SOUTH);
         this.center.add(buttons,BorderLayout.NORTH);
 
@@ -74,6 +101,15 @@ public class ClientWindow implements ActionListener,Runnable {
         this.prompt.addActionListener(this);
 
         this.thread = new Thread(this);
+        this.socket = new Socket(ip,port);
+
+        this.frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                try{
+                    socket.close();
+                }catch(IOException ex){}
+            }
+        });
     }
 
      public void start(){
@@ -83,33 +119,53 @@ public class ClientWindow implements ActionListener,Runnable {
 
      public void run(){
          try {
-             this.socket = new Socket(ip,port);
              InputStream input = socket.getInputStream();
-             this.in = new Scanner(input);
+             //this.in = new Scanner(input);
+             this.in = new ObjectInputStream(input);
 
              OutputStream output = socket.getOutputStream();
-             this.out = new PrintWriter(output,true);
+             this.out = new ObjectOutputStream(output);
 
-             this.frame.addWindowListener(new WindowAdapter() {
-                 public void windowClosing(WindowEvent e) {
-                     try{
-                         socket.close();
-                     }catch(IOException ex){}
+             //this.out = new PrintWriter(output,true);
+
+             while(true){
+                 try{
+                     GameMessage gm = (GameMessage)in.readObject();
+                     String str = gm.getMessage();
+                     Game game = gm.getGame();
+
+                     System.out.println(str);
+
+                     display(str);
+                     if(game != null){
+                         display(game.toString());
+                     }
+                 }catch(ClassNotFoundException ce){
+                     ce.printStackTrace();
                  }
-             });
-
-             while (in.hasNextLine()) {
-                 display(in.nextLine());
              }
+
+//             while (in.hasNextLine()) {
+//                 display(in.nextLine());
+//             }
          } catch (IOException e) {
              e.printStackTrace();
          }
      }
 
      public void actionPerformed(ActionEvent e){
-         String s = prompt.getText();
-         if (out != null) {
-             out.println(s);
+         //String s = prompt.getText();
+         if(prompt.getText() != ""){
+             gameMessage.setMessage(prompt.getText());
+             if (out != null) {
+                 try{
+                     out.writeObject(gameMessage);
+                 }catch(IOException ie){
+
+                 }
+                 //out.println(s);
+             }
+             this.gameMessage = new GameMessage();
          }
          //display(s);
          prompt.setText("");
@@ -119,7 +175,12 @@ public class ClientWindow implements ActionListener,Runnable {
         EventQueue.invokeLater(new Runnable() {
             //@Override
             public void run() {
-                log.appendText(s + "\n\r");
+                chatText = chatText + s + "\n <br>";
+                //System.out.print(chatText);
+                log.setText("<html>" +
+                        "<head><style></style></head>" +
+                        chatText +
+                        "</html>");
             }
         });
     }

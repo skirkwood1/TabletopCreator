@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Dice implements Serializable {
 
+    private static final long serialVersionUID = 4915119969397691077L;
     private int sides;
 
     public static ArrayList<Dice> dieList = new ArrayList<>();
