@@ -5,7 +5,7 @@ import Models.Game;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameMessage implements Serializable {
+public class GameMessage implements Serializable,Message {
 
     private static final long serialVersionUID = -1362608971386820237L;
 
@@ -44,7 +44,7 @@ public class GameMessage implements Serializable {
         return this.game;
     }
 
-    //public ArrayList<ServerThread> getClients(){
-    //    return this.clients;
-    //}
+    public ArrayList<String> getClients(){
+        return this.clients;
+    }
 }

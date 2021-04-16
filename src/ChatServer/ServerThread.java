@@ -1,5 +1,7 @@
 package ChatServer;
 
+import Commands.GameCommand;
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -11,7 +13,6 @@ public class ServerThread implements Runnable {
         private Socket socket;
         private ArrayList<ServerThread> clients;
 
-        private volatile PrintWriter printWriter;
         private volatile ObjectOutputStream oos;
 
         private ObjectInputStream ois;
@@ -25,74 +26,80 @@ public class ServerThread implements Runnable {
 
         public void run() {
             try {
-                //InputStream input = socket.getInputStream();
                 this.oos = new ObjectOutputStream(socket.getOutputStream());
                 this.ois = new ObjectInputStream(socket.getInputStream());
 
                 System.out.println("Created ObjectInputStream");
-                //Scanner in = new Scanner(new InputStreamReader(input));
-                //OutputStream output = socket.getOutputStream();
-                //this.printWriter = new PrintWriter(output,true);
 
                 System.out.println("Created ObjectOutputStream");
 
                 oos.writeObject(new GameMessage("Please enter a username:",this.clients));
-                //printWriter.println("Please enter a username:");
 
-                //this.username = in.nextLine();
                 try{
-                    GameMessage gm = (GameMessage)ois.readObject();
+                    Message gm = (Message)ois.readObject();
                     this.username = gm.getMessage();
-                    System.out.println(username);
                     oos.writeObject(new GameMessage("Username set to: " + username,this.clients));
+                    for(ServerThread client: this.clients){
+                        if(!client.isClosed()){
+                            try{
+                                client.getObjectOutputStream().writeObject(
+                                        new GameMessage(username + " joined the server.",this.clients));
+                            }catch(SocketException se){
+                                client.socket.close();
+                            }
+                        }
+                    }
                 }catch(ClassNotFoundException ce){
 
                 }
-                //printWriter.println("Username set to: " + username);
-                //this.out = new PrintWriter(output, true);
 
                 while(!socket.isClosed()){
                     String s;
-//                    if(in.hasNextLine()){
-//                        s = in.nextLine();
-//                    }
 
                     try{
-                        GameMessage gm = (GameMessage)ois.readObject();
-                        s = gm.getMessage();
-                        gm.setMessage(this.username + ": " + s);
+                        Message msg = (Message)ois.readObject();
+                        if(msg instanceof QuitMessage){
+                            System.out.println(username + " quit");
+                            socket.close();
+                        }else{
+                            GameMessage gm = (GameMessage)msg;
+                            s = gm.getMessage();
+                            gm.setMessage(this.username + ": " + s);
 
-                        //System.out.println(s);
-
-                        for(ServerThread client: this.clients){
-                            if(!client.isClosed()){
-                                client.getObjectOutputStream().writeObject(gm);
+                            for(ServerThread client: this.clients){
+                                if(!client.isClosed()){
+                                    try{
+                                        client.getObjectOutputStream().writeObject(gm);
+                                    }catch(SocketException se){
+                                        client.socket.close();
+                                    }
+                                }
                             }
                         }
 
                     }catch(ClassNotFoundException ce){
-
+                        System.err.println("Class not found");
                     }
-
-//                    if(!s.equals("")){
-//                        for(ServerThread client: this.clients){
-//                            if(!client.isClosed()){
-//                                String message = this.username + ": " + s;
-//                                client.getWriter().println(message);
-//                            }
-//                        }
-//                    }
                 }
+
                 clients.remove(this);
 
+                for(ServerThread client: this.clients){
+                    if(!client.isClosed()){
+                        client.getObjectOutputStream().writeObject(
+                                new GameMessage(username + " left the server.",this.clients));
+                    }
+                }
+                socket.getOutputStream().close();
+                socket.getInputStream().close();
+                oos.close();
+                ois.close();
+                socket.close();
             } catch (IOException ex) {
+
                 System.out.println("Server exception: " + ex.getMessage());
                 ex.printStackTrace();
             }
-        }
-
-        public PrintWriter getWriter(){
-            return this.printWriter;
         }
 
         public ObjectOutputStream getObjectOutputStream(){

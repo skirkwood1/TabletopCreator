@@ -3,6 +3,7 @@ package ChatServer;
 import Commands.CommandStack;
 import Commands.GameCommand;
 import Models.Game;
+import UI.Factories.ScrollBarUICreator;
 import UI.TextPanel;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class ClientWindow implements ActionListener,Runnable {
     private JTextField prompt;
     private JSplitPane center;
     private JPanel buttons;
-    private JList users;
+    private JList<String> users;
 
     String chatText = "";
 
@@ -74,6 +75,7 @@ public class ClientWindow implements ActionListener,Runnable {
         ((HTMLDocument)log.getDocument()).getStyleSheet().addRule(bodyRule);
 
         this.logPane = new JScrollPane(log);
+        logPane.getVerticalScrollBar().setUI(ScrollBarUICreator.scrollBarUI());
 
         this.prompt = new JTextField();
         this.center = new JSplitPane();
@@ -102,23 +104,22 @@ public class ClientWindow implements ActionListener,Runnable {
         this.center.add(prompt, BorderLayout.SOUTH);
         this.center.add(buttons,BorderLayout.NORTH);
 
-        this.frame.add(center,BorderLayout.CENTER);
+        this.center.setPreferredSize(new Dimension(400,400));
 
-        this.frame.setSize(400, 400);
+        this.users = new JList<>();
+        JScrollPane userPane = new JScrollPane(users);
+        userPane.setPreferredSize(new Dimension(200,400));
+
+        this.frame.add(center,BorderLayout.CENTER);
+        this.frame.add(userPane,BorderLayout.EAST);
+
+        this.frame.setSize(600, 400);
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.prompt.addActionListener(this);
 
         this.thread = new Thread(this);
         this.socket = new Socket(ip,port);
-
-        this.frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                try{
-                    socket.close();
-                }catch(IOException ex){}
-            }
-        });
 
         log.addHyperlinkListener(new HyperlinkListener() {
             public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -147,6 +148,23 @@ public class ClientWindow implements ActionListener,Runnable {
              //this.in = new Scanner(input);
              this.in = new ObjectInputStream(input);
 
+             this.frame.addWindowListener(new WindowAdapter() {
+                 public void windowClosing(WindowEvent e) {
+                     try{
+                         out.writeObject(new QuitMessage());
+                         System.out.println("Quit");
+                         out.close();
+                         output.close();
+                         in.close();
+                         input.close();
+
+                         socket.close();
+                     }catch(IOException ex){
+
+                     }
+                 }
+             });
+
 
              //this.out = new PrintWriter(output,true);
 
@@ -157,6 +175,12 @@ public class ClientWindow implements ActionListener,Runnable {
                      GameMessage gm = (GameMessage)in.readObject();
                      String str = gm.getMessage();
                      Game game = gm.getGame();
+
+                     if(gm.getClients().size() != 0){
+                         DefaultListModel<String> dlm = new DefaultListModel<>();
+                         dlm.addAll(gm.getClients());
+                         users.setModel(dlm);
+                     }
 
                      if(game != null){
                          this.pastMessages.add(game);
@@ -185,7 +209,7 @@ public class ClientWindow implements ActionListener,Runnable {
 
      public void actionPerformed(ActionEvent e){
          //String s = prompt.getText();
-         if(prompt.getText() != ""){
+         if(!prompt.getText().equals("")){
              gameMessage.setMessage(prompt.getText());
              if (out != null) {
                  try{
