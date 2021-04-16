@@ -102,6 +102,7 @@ public class Frame extends JFrame implements Observable {
                         commandStack.insertCommand(ogc);
                         centerPane.refreshComponentTree(game);
                         centerPane.updateBoard();
+                        centerPane.updateObservers();
                     }
                     break;
                 case CHANGE_SIZE:
@@ -227,6 +228,7 @@ public class Frame extends JFrame implements Observable {
 
     public void setGame(Game game){
         this.game = game;
+        this.toolbar.setGame(game);
     }
 
     public Game getGame(){

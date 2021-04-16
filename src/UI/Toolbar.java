@@ -408,6 +408,10 @@ public class Toolbar extends JPanel implements ActionListener {
         return this.placementType;
     }
 
+    public void setGame(Game game){
+        this.game = game;
+    }
+
     public ChangeListener changeListener(JButton button){
         return new ChangeListener() {
             @Override
