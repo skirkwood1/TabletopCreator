@@ -16,13 +16,13 @@ public class Deck implements Serializable,CardInterface,Component {
     private String name;
     private ArrayList<Card> cards;
 
-    private transient BufferedImage cardBack;
+    private ComponentImage cardBack;
 
     public Deck(String name){
         this.name = name;
         this.cards = new ArrayList<>();
         try{
-            this.cardBack = ImageIO.read(getClass().getClassLoader().getResource("cardback.png"));
+            this.cardBack = new ComponentImage(ImageIO.read(getClass().getClassLoader().getResource("cardback.png")));
         }catch(IOException i){
 
         }
@@ -40,10 +40,16 @@ public class Deck implements Serializable,CardInterface,Component {
         this.cards = cards;
 
         try{
-            this.cardBack = ImageIO.read(getClass().getClassLoader().getResource("cardback.png"));
+            this.cardBack = new ComponentImage(ImageIO.read(getClass().getClassLoader().getResource("cardback.png")));
         }catch(IOException i){
 
         }
+    }
+
+    public Deck(String name,ArrayList<Card> cards, ComponentImage cardBack){
+        this.name = name;
+        this.cards = cards;
+        this.cardBack = cardBack;
     }
 
     public void shuffle(){
@@ -62,7 +68,7 @@ public class Deck implements Serializable,CardInterface,Component {
         for(Card card: this.cards){
             cardCopies.add(card.copy());
         }
-        return new Deck(this.name,cardCopies);
+        return new Deck(this.name,cardCopies,cardBack);
     }
 
     public void addCard(Card card){
@@ -96,6 +102,6 @@ public class Deck implements Serializable,CardInterface,Component {
     }
 
     public BufferedImage getImage(){
-        return this.cardBack;
+        return this.cardBack.getImage();
     }
 }

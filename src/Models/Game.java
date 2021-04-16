@@ -64,21 +64,9 @@ public class Game implements Serializable {
         this.placedCards = new HashMap<>();
     }
 
-    public Card addCard(String name, String text, String filename){
-        Card card = new Card(name,text,filename);
-        cards.add(card);
-        return card;
-    }
-
     public Card addCard(Card card){
         cards.add(card);
         return card;
-    }
-
-    public Piece addPiece(String name, String text, String filename){
-        Piece piece = new Piece(name,text,filename);
-        pieces.add(piece);
-        return piece;
     }
 
     public void addPiece(Piece piece){
@@ -104,10 +92,6 @@ public class Game implements Serializable {
 
     public ArrayList<Deck> getDecks(){
         return this.decks;
-    }
-
-    public void addTexture(String name, String description, BufferedImage texture){
-        this.textures.add(new Texture(name,description,texture));
     }
 
     public void addTexture(Texture texture){

@@ -273,17 +273,19 @@ public class Frame extends JFrame implements Observable {
             String text = componentCreationDialog.getComponentText();
             String fileSelected = componentCreationDialog.getFileSelect();
 
+            ComponentImage ci = new ComponentImage(fileSelected);
+
             Models.Component component = null;
 
             switch(state){
                 case ADD_CARD:
-                    component = new Card(name,text,fileSelected);
+                    component = new Card(name,text,ci);
                     break;
                 case ADD_PIECE:
-                    component = new Piece(name,text,fileSelected);
+                    component = new Piece(name,text,ci);
                     break;
                 case ADD_TEXTURE:
-                    component = new Texture(name,text,fileSelected);
+                    component = new Texture(name,text,ci);
                     break;
                 default:
                     break;

@@ -9,24 +9,12 @@ public class Texture implements Serializable, Component {
 
     private String name,text;
 
-    private transient BufferedImage image;
+    private ComponentImage image;
 
-    public Texture(String name, String description, BufferedImage texture){
+    public Texture(String name, String description, ComponentImage texture){
         this.name = name;
         this.text = text;
-        this.image = image;
-    }
-
-    public Texture(String name, String description, String filename){
-        this.name = name;
-        //this.image = new File(filename);
-        this.text = text;
-
-        try{
-            this.image = ImageIO.read(new File(filename));}
-        catch(IOException e){
-
-        }
+        this.image = texture;
     }
 
     public String getName(){
@@ -38,20 +26,14 @@ public class Texture implements Serializable, Component {
     }
 
     public BufferedImage getImage(){
+        return this.image.getImage();
+    }
+
+    public ComponentImage getComponentImage(){
         return this.image;
     }
 
     public String toString(){
         return getName();
-    }
-
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        ImageIO.write(image, "png", out); // png is lossless
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        image = ImageIO.read(in);
     }
 }
