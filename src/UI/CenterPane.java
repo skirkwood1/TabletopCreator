@@ -2,10 +2,8 @@ package UI;
 
 import Commands.CommandStack;
 import Commands.UpdateColorCommand;
-import Models.Deck;
-import Models.Game;
+import Models.*;
 import Models.Component;
-import Models.Texture;
 import Observers.BoardPaneObserver;
 import Observers.Observer;
 import UI.Listeners.BoardPaneViewScroll;
@@ -50,32 +48,38 @@ public class CenterPane extends JPanel implements Observable {
         if(selectedNode != null){
             String name = selectedNode.toString();
             Component component = null;
+            CardInterface card = null;
 
-            if(selectedNode.isLeaf()){
-                if(selectedNode.getParent().equals(componentTree.top)){
+            if(selectedNode.getParent().equals(componentTree.top)){
 
-                }
-                else if(selectedNode.getParent().equals(componentTree.pieces)){
-                    component = game.getPiece(name);
-                }
-                else if(selectedNode.getParent().equals(componentTree.cards)){
-                    component = game.getCard(name);
-                }
-                else if(selectedNode.getParent().equals(componentTree.textures)){
-                    component = game.getTexture(name);
-                }
-                else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
-                    component = game.getCard(name);
-                }
+            }
+            else if(selectedNode.getParent().equals(componentTree.pieces)){
+                component = game.getPiece(name);
+            }
+            else if(selectedNode.getParent().equals(componentTree.cards)){
+                component = game.getCard(name);
+                card = game.getCard(name);
+            }
+            else if(selectedNode.getParent().equals(componentTree.textures)){
+                component = game.getTexture(name);
+            }
+            else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
+                component = game.getCard(name);
+            }
+            else if(selectedNode.getParent().equals(componentTree.decks)){
+                component = game.getDeck(name);
+                card = game.getDeck(name);
             }
 
             if(component != null){
                 ivs.setImageZoom(1.0);
-                displayImage(component.getPicture());
+                displayImage(component.getImage());
                 setComponentText(component.getText());
                 game.setSelectedComponent(component);
+                game.setSelectedCard(card);
+
                 if(component instanceof Texture){
-                    UpdateColorCommand ucc = new UpdateColorCommand(game,(Texture)component);
+                    UpdateColorCommand ucc = new UpdateColorCommand(game,(Texture) component);
                     commandStack.insertCommand(ucc);
                 }
                 updateObservers();

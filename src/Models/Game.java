@@ -21,9 +21,10 @@ public class Game implements Serializable {
 
     private Board board;
 
-    private Component selectedComponent;
+    private Component selectedComponent = null;
+    private CardInterface selectedCard = null;
 
-    private HashMap<Card, Point> placedCards;
+    private HashMap<CardInterface, Point> placedCards;
 
     public Game(){
         this.cards = new ArrayList<>();
@@ -185,11 +186,15 @@ public class Game implements Serializable {
         return this.name;
     }
 
-    public void placeCard(Card card,Point point){
-        this.placedCards.put(card.copy(),point);
+//    public void placeCard(Card card,Point point){
+//        this.placedCards.put(card.copy(),point);
+//    }
+
+    public void placePlaceable(CardInterface cardInterface, Point point){
+        this.placedCards.put(cardInterface.copy(),point);
     }
 
-    public HashMap<Card,Point> getPlacedCards(){
+    public HashMap<CardInterface,Point> getPlacedCards(){
         return this.placedCards;
     }
 
@@ -197,8 +202,16 @@ public class Game implements Serializable {
         return selectedComponent;
     }
 
-    public void setSelectedComponent(Component piece){
-        this.selectedComponent = piece;
+    public void setSelectedComponent(Component component){
+        this.selectedComponent = component;
+    }
+
+    public CardInterface getSelectedCard(){
+        return selectedCard;
+    }
+
+    public void setSelectedCard(CardInterface card){
+        this.selectedCard = card;
     }
 
     public void removeCard(Card card){

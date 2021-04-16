@@ -83,7 +83,7 @@ public class ImageViewScroll extends MouseAdapter {
             imageZoom = 0.1;
         }
 
-        BufferedImage image = game.getSelectedComponent().getPicture(); // transform it
+        BufferedImage image = game.getSelectedComponent().getImage(); // transform it
         if(image == null){
             image = game.getBoard().getTextureImage();
         }

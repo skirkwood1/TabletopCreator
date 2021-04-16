@@ -1,5 +1,8 @@
 package Models;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,14 +11,21 @@ import java.util.Collections;
 * but they can be separated into decks which can contain multiple copies
 * of each card for use in separate parts of the game
 * */
-public class Deck implements Serializable {
+public class Deck implements Serializable,CardInterface,Component {
     private static final long serialVersionUID = -1499205425401974194L;
     private String name;
     private ArrayList<Card> cards;
 
+    private transient BufferedImage cardBack;
+
     public Deck(String name){
         this.name = name;
         this.cards = new ArrayList<>();
+        try{
+            this.cardBack = ImageIO.read(getClass().getClassLoader().getResource("cardback.png"));
+        }catch(IOException i){
+
+        }
     }
 
     public Deck(String name,Card ... cards){
@@ -28,6 +38,12 @@ public class Deck implements Serializable {
     public Deck(String name,ArrayList<Card> cards){
         this.name = name;
         this.cards = cards;
+
+        try{
+            this.cardBack = ImageIO.read(getClass().getClassLoader().getResource("cardback.png"));
+        }catch(IOException i){
+
+        }
     }
 
     public void shuffle(){
@@ -38,6 +54,15 @@ public class Deck implements Serializable {
         Card card = this.cards.get(0);
         this.cards.remove(0);
         return card;
+    }
+
+    public Deck copy(){
+        ArrayList<Card> cardCopies = new ArrayList<>();
+
+        for(Card card: this.cards){
+            cardCopies.add(card.copy());
+        }
+        return new Deck(this.name,cardCopies);
     }
 
     public void addCard(Card card){
@@ -57,7 +82,20 @@ public class Deck implements Serializable {
     public String getName(){
         return this.name;
     }
+
+    public String getText(){
+        return "";
+    }
+
+    public String toString(){
+        return getName();
+    }
+
     public ArrayList<Card> getCards(){
         return this.cards;
+    }
+
+    public BufferedImage getImage(){
+        return this.cardBack;
     }
 }

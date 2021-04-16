@@ -4,32 +4,54 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class Texture extends Component implements Serializable {
+public class Texture implements Serializable, Component {
     private static final long serialVersionUID = 5757975696680667974L;
 
-//    private String name;
-//
-//    private transient BufferedImage picture;
+    private String name,text;
+
+    private transient BufferedImage image;
 
     public Texture(String name, String description, BufferedImage texture){
-        super(name,description,texture);
+        this.name = name;
+        this.text = text;
+        this.image = image;
     }
 
     public Texture(String name, String description, String filename){
-        super(name,description,filename);
+        this.name = name;
+        //this.image = new File(filename);
+        this.text = text;
+
+        try{
+            this.image = ImageIO.read(new File(filename));}
+        catch(IOException e){
+
+        }
     }
 
-    //public String getName(){
-    //    return this.name;
-    //}
+    public String getName(){
+        return this.name;
+    }
 
-//    private void writeObject(ObjectOutputStream out) throws IOException {
-//        out.defaultWriteObject();
-//        ImageIO.write(picture, "png", out); // png is lossless
-//    }
+    public String getText(){
+        return this.text;
+    }
 
-//    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-//        in.defaultReadObject();
-//        picture = ImageIO.read(in);
-//    }
+    public BufferedImage getImage(){
+        return this.image;
+    }
+
+    public String toString(){
+        return getName();
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        ImageIO.write(image, "png", out); // png is lossless
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        image = ImageIO.read(in);
+    }
 }
