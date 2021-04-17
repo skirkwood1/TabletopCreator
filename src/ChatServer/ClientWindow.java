@@ -8,12 +8,11 @@ import UI.UIHelpers.ScrollBarUICreator;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyledDocument;
 import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class ClientWindow implements ActionListener,Runnable {
 
     private JFrame frame;
     //private CommandLog log;
-    private JEditorPane log;
+    private JTextPane log;
     private JScrollPane logPane;
     private JTextField prompt;
     private JSplitPane center;
@@ -58,19 +57,28 @@ public class ClientWindow implements ActionListener,Runnable {
     public ClientWindow(String ip) throws Exception {
         this.frame = new JFrame("Chat Client");
 
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("ChatIcon.png"));
+        this.frame.setIconImage(icon.getImage());
+
         this.ip = ip;
         this.pastMessages = new ArrayList<>();
 
         this.frame.setPreferredSize(new Dimension(400, 400));
 
-        this.log = new JEditorPane();
+        this.log = new JTextPane();
         log.setEditable(false);
-        log.setContentType("text/html");
+        //log.setContentType("text/html");
 
-        Font font = new Font("Segoe UI", Font.PLAIN, 13);
-        String bodyRule = "body { font-family: " + font.getFamily() + "; " +
-                "font-size: " + font.getSize() + "pt; }";
-        ((HTMLDocument)log.getDocument()).getStyleSheet().addRule(bodyRule);
+        Font font = new Font("Segoe UI", Font.PLAIN, 14);
+        log.setFont(font);
+//        String bodyRule = "body { font-family: " + font.getFamily() + "; " +
+//                "font-size: " + font.getSize() + "pt; }";
+//        String wordWrap = "div {\n" +
+//                "    width: 400px;\n" +
+//                "    word-wrap: break-word;\n" +
+//                "}";
+//        ((HTMLDocument)log.getDocument()).getStyleSheet().addRule(bodyRule);
+//        ((HTMLDocument)log.getDocument()).getStyleSheet().addRule(wordWrap);
 
         this.logPane = new JScrollPane(log);
         logPane.getVerticalScrollBar().setUI(ScrollBarUICreator.scrollBarUI());
@@ -125,8 +133,8 @@ public class ClientWindow implements ActionListener,Runnable {
                     // Do something with e.getURL() here
                     System.out.println(e.getDescription());
 
-                    Game gameMessage = pastMessages.get(Integer.parseInt(e.getDescription()));
-                    gameListener.gameEmitted(gameMessage);
+                    Game game = pastMessages.get(Integer.parseInt(e.getDescription()));
+                    gameListener.gameEmitted(game);
                 }
             }
         });
@@ -183,12 +191,21 @@ public class ClientWindow implements ActionListener,Runnable {
                      if(game != null){
                          this.pastMessages.add(game);
                          String gameName = game.getName();
-                         System.out.println(str + "; " + gameName);
-                         String hyperlink = ("<a href=\"" + index + "\">" + gameName +"</a>");
-                         display(str + "; " + hyperlink);
+
+                         JButton gameButton = new JButton(gameName);
+                         gameButton.addActionListener(new ActionListener() {
+                             @Override
+                             public void actionPerformed(ActionEvent e) {
+                                 gameListener.gameEmitted(game);
+                             }
+                         });
+
+                         display(str,gameButton);
+                         log.insertComponent(gameButton);
+
                          index++;
                      }else{
-                         display(str);
+                         display(str,null);
                      }
 
                      //gameListener.gameEmitted(game);
@@ -223,16 +240,20 @@ public class ClientWindow implements ActionListener,Runnable {
          prompt.setText("");
      }
 
-    private void display(final String s) {
+    private void display(final String s, JButton button) {
         EventQueue.invokeLater(new Runnable() {
             //@Override
             public void run() {
-                chatText = chatText + s + "\n <br>";
-                //System.out.print(chatText);
-                log.setText("<html>" +
-                        "<head><style></style></head>" +
-                        chatText +
-                        "</html>");
+                StyledDocument doc = log.getStyledDocument();
+                SimpleAttributeSet attr = new SimpleAttributeSet();
+                try{
+                    doc.insertString(doc.getLength(),s + "\n\r" ,attr);
+                    log.setCaretPosition(log.getDocument().getLength());
+                    log.insertComponent(button);
+                    doc.insertString(doc.getLength(), "\n\r", attr );
+                }catch(Exception e){
+
+                }
             }
         });
     }

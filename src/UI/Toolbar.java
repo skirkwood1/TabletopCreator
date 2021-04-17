@@ -2,12 +2,16 @@ package UI;
 
 import Models.Game;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 
 public class Toolbar extends JPanel implements ActionListener {
@@ -72,30 +76,20 @@ public class Toolbar extends JPanel implements ActionListener {
         //setBorder(BorderFactory.createLoweredBevelBorder());
         setOpaque(false);
 
-        ImageIcon saveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons8-save-100.png"));
-        Image image = saveIcon.getImage();
-        Image newImg = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
-        saveIcon = new ImageIcon(newImg);
+        ImageIcon saveIcon = null;
+        ImageIcon openIcon = null;
+        ImageIcon messageIcon = null;
+        try {
+            saveIcon = createIcon(getClass().getClassLoader().getResource("icons8-save-100.png"));
+            openIcon = createIcon(getClass().getClassLoader().getResource("folder-open-outline-filled.png"));
+            messageIcon = createIcon(getClass().getClassLoader().getResource("ChatIconSmall.png"));
+        }catch(IOException ie){
 
-        ImageIcon openIcon = new ImageIcon(getClass().getClassLoader().getResource("folder-open-outline-filled.png"));
-        image = openIcon.getImage();
-        newImg = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
-        openIcon = new ImageIcon(newImg);
-
-        ImageIcon colorIcon = new ImageIcon(getClass().getClassLoader().getResource("img_colormap.gif"));
-        image = colorIcon.getImage();
-        newImg = image.getScaledInstance(25,25, Image.SCALE_SMOOTH);
-        colorIcon = new ImageIcon(newImg);
-
-        ImageIcon messageIcon = new ImageIcon(getClass().getClassLoader().getResource("SendIcon.png"));
-        image = messageIcon.getImage();
-        newImg = image.getScaledInstance(24,24, Image.SCALE_SMOOTH);
-        messageIcon = new ImageIcon(newImg);
-
+        }
         colorLabel = new JLabel();
         colorLabel.setBackground(Color.RED);
         colorLabel.setOpaque(true);
-        colorLabel.setPreferredSize(new Dimension(30,30));
+        colorLabel.setPreferredSize(new Dimension(36,36));
 
         ChangeListener changeListener = new ChangeListener() {
             @Override
@@ -134,7 +128,7 @@ public class Toolbar extends JPanel implements ActionListener {
         };
 
         save = new JButton(saveIcon);
-        save.setPreferredSize(new Dimension(30,30));
+        save.setPreferredSize(new Dimension(36,36));
         save.setToolTipText("Save");
         //save.setMargin(new Insets(0,0,0,0));
         save.setBackground(buttonBG);
@@ -146,7 +140,7 @@ public class Toolbar extends JPanel implements ActionListener {
         actionDescription.put(save, StateListener.ButtonOutput.SAVE);
 
         open = new JButton(openIcon);
-        open.setPreferredSize(new Dimension(30,30));
+        open.setPreferredSize(new Dimension(36,36));
         open.setToolTipText("Open");
         open.setMargin(new Insets(0,0,0,0));
         open.setBackground(buttonBG);
@@ -170,10 +164,10 @@ public class Toolbar extends JPanel implements ActionListener {
         System.out.println(javax.swing.UIManager.getDefaults().getFont("Label.font"));
 
         colorChoose = new JButton("⬛");
-        colorChoose.setPreferredSize(new Dimension(30,30));
+        colorChoose.setPreferredSize(new Dimension(36,36));
         colorChoose.setMargin(new Insets(0,0,0,0));
         colorChoose.setToolTipText("Choose Color");
-        colorChoose.setFont(new Font("Dialog",Font.PLAIN,25));
+        colorChoose.setFont(new Font("Dialog",Font.PLAIN,30));
         colorChoose.setForeground(game.getBoard().getColor());
         colorChoose.setBackground(buttonBG);
         colorChoose.setBorder(BorderFactory.createEmptyBorder());
@@ -184,7 +178,7 @@ public class Toolbar extends JPanel implements ActionListener {
         actionDescription.put(colorChoose, StateListener.ButtonOutput.COLOR_CHOOSE);
 
         message = new JButton(messageIcon);
-        message.setPreferredSize(new Dimension(30,30));
+        message.setPreferredSize(new Dimension(36,36));
         message.setMargin(new Insets(0,0,0,0));
         message.setForeground(game.getBoard().getColor());
         message.setBackground(buttonBG);
@@ -196,7 +190,7 @@ public class Toolbar extends JPanel implements ActionListener {
         actionDescription.put(message, StateListener.ButtonOutput.MESSAGE);
 
         placeSpace = new JToggleButton("Space");
-        placeSpace.setPreferredSize(new Dimension(45,30));
+        placeSpace.setPreferredSize(new Dimension(48,36));
         placeSpace.setMargin(new Insets(0,0,0,0));
         placeSpace.setBackground(buttonBG);
         placeSpace.setBorder(BorderFactory.createEmptyBorder());
@@ -209,7 +203,7 @@ public class Toolbar extends JPanel implements ActionListener {
         actionDescription.put(placeSpace, StateListener.ButtonOutput.PLACE);
 
         placePiece = new JToggleButton("Piece");
-        placePiece.setPreferredSize(new Dimension(45,30));
+        placePiece.setPreferredSize(new Dimension(48,36));
         placePiece.setMargin(new Insets(0,0,0,0));
         placePiece.setBackground(buttonBG);
         placePiece.setBorder(BorderFactory.createEmptyBorder());
@@ -222,7 +216,7 @@ public class Toolbar extends JPanel implements ActionListener {
         actionDescription.put(placePiece, StateListener.ButtonOutput.PLACE);
 
         placeCard = new JToggleButton("Card");
-        placeCard.setPreferredSize(new Dimension(45,30));
+        placeCard.setPreferredSize(new Dimension(48,36));
         placeCard.setMargin(new Insets(0,0,0,0));
         placeCard.setBackground(buttonBG);
         placeCard.setBorder(BorderFactory.createEmptyBorder());
@@ -410,6 +404,12 @@ public class Toolbar extends JPanel implements ActionListener {
 
     public void setGame(Game game){
         this.game = game;
+    }
+
+    public ImageIcon createIcon(URL iconPath) throws IOException {
+        Image img = ImageIO.read(iconPath).getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(img);
+
     }
 
     public ChangeListener changeListener(JButton button){

@@ -7,66 +7,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ChatServer/ChatCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ChatServer/Messages/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ChatServer/Messages/QuitMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/UIHelpers/FileChooserCreator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/GameMessage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/QuitMessage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerWindow$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerWindow.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/AddComponentCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/AddComponentCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Card.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Component.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Deck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Deck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Piece.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Piece.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Texture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Texture.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentCreationDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentCreationDialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Factories/ScrollBarUICreator$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Factories/ScrollBarUICreator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Listeners/ImageViewScroll.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Listeners/ImageViewScroll.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/TextPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ProgramIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ProgramIcon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/ProgramIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/ProgramIcon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChatServer/ClientWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatServer/ClientWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChatServer/GameMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatServer/Messages/GameMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChatServer/Message.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChatServer/QuitMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChatServer/ServerProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatServer/ServerProgram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChatServer/ServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatServer/ServerThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/AddComponentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/AddComponentCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/GameComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Piece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Texture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/CenterPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/CenterPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/ComponentCreationDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ComponentCreationDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/ComponentTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ComponentTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Factories/ScrollBarUICreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/UIHelpers/ScrollBarUICreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/ResizeBoardPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ResizeBoardPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/TextPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/CommandLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/Toolbar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Toolbar.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -82,22 +35,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="51" column="43" lean-forward="true" selection-start-line="51" selection-start-column="43" selection-end-line="51" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/ResizeBoardPane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
+            <state relative-caret-position="952">
               <caret line="64" column="85" selection-start-line="64" selection-start-column="85" selection-end-line="64" selection-end-column="85" />
             </state>
           </provider>
@@ -106,20 +47,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/UIHelpers/FileChooserCreator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="119">
               <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Models/GameComponent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -130,29 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/CenterPane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
+            <state relative-caret-position="2006">
               <caret line="136" column="21" selection-start-line="136" selection-start-column="21" selection-end-line="136" selection-end-column="21" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/UI/ColorChooseDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-174">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/UI/BoardPane.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3328">
-              <caret line="527" column="42" selection-start-line="527" selection-start-column="42" selection-end-line="527" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -163,7 +71,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/ComponentCreationDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-221">
+            <state relative-caret-position="221">
               <caret line="17" column="62" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
             </state>
           </provider>
@@ -172,8 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/Toolbar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="90" column="21" lean-forward="true" selection-start-line="90" selection-start-column="21" selection-end-line="90" selection-end-column="21" />
+            <state relative-caret-position="289">
+              <caret line="96" column="21" lean-forward="true" selection-start-line="96" selection-start-column="21" selection-end-line="96" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -182,10 +90,59 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/UI/CommandLog.java">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/Messages/GameMessage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
-              <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+            <state relative-caret-position="68">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerProgram.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/GameListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="394">
+              <caret line="204" column="25" selection-start-line="204" selection-start-column="25" selection-end-line="204" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6335#6336#0" expanded="true" />
+                <element signature="e#6435#6436#0" expanded="true" />
+                <element signature="e#9552#9553#0" expanded="true" />
+                <element signature="e#9600#9601#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerThread.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="67" column="20" lean-forward="true" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -276,9 +233,7 @@
         <option value="$PROJECT_DIR$/src/Models/Texture.java" />
         <option value="$PROJECT_DIR$/src/Models/Game.java" />
         <option value="$PROJECT_DIR$/src/Models/Deck.java" />
-        <option value="$PROJECT_DIR$/src/UI/Toolbar.java" />
         <option value="$PROJECT_DIR$/src/UI/Factories/ScrollBarUICreator.java" />
-        <option value="$PROJECT_DIR$/src/ChatServer/ClientWindow.java" />
         <option value="$PROJECT_DIR$/src/ChatServer/ServerWindow.java" />
         <option value="$PROJECT_DIR$/src/ChatServer/ServerProgram.java" />
         <option value="$PROJECT_DIR$/src/ChatServer/ChatCommand.java" />
@@ -295,12 +250,13 @@
         <option value="$PROJECT_DIR$/src/UI/ComponentCreationDialog.java" />
         <option value="$PROJECT_DIR$/src/UI/ResizeBoardPane.java" />
         <option value="$PROJECT_DIR$/src/UI/Frame.java" />
+        <option value="$PROJECT_DIR$/src/UI/Toolbar.java" />
+        <option value="$PROJECT_DIR$/src/ChatServer/ClientWindow.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1272" />
     <option name="width" value="1297" />
     <option name="height" value="1398" />
   </component>
@@ -311,6 +267,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -338,13 +296,6 @@
               <item name="TabletopCreator" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="ChatServer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TabletopCreator" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ChatServer" type="462c0819:PsiDirectoryNode" />
-              <item name="Messages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
@@ -388,8 +339,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -399,7 +348,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1618619798753" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1618677544267" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -535,12 +484,13 @@
       <workItem from="1618499805811" duration="11178000" />
       <workItem from="1618523440108" duration="5035000" />
       <workItem from="1618543260956" duration="8108000" />
-      <workItem from="1618599854367" duration="15758000" />
+      <workItem from="1618599854367" duration="20224000" />
+      <workItem from="1618673606689" duration="3820000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="356240000" />
+    <option name="totallyTimeSpent" value="364526000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -552,10 +502,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
+    <frame x="1018" y="0" width="1037" height="1118" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14135864" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2958035" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -564,7 +514,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49001" weight="0.3249497" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48351648" visible="true" weight="0.3219316" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.48208803" visible="true" weight="0.32150102" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49846467" weight="0.39655173" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -573,8 +523,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.51648355" side_tool="true" visible="true" weight="0.3219316" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.4975025" weight="0.3249497" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.517912" side_tool="true" visible="true" weight="0.32150102" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.497003" weight="0.3249497" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -664,13 +614,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="42" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatServer/GameListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -841,20 +784,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3214">
-          <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4374#4700#0" expanded="true" />
-            <element signature="e#4699#4700#0" expanded="true" />
-            <element signature="e#7592#7593#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ChatServer/MessagePane.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -866,44 +795,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerProgram.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2842#2843#0" expanded="true" />
-            <element signature="e#2881#2882#0" expanded="true" />
-            <element signature="e#2917#2918#0" expanded="true" />
-            <element signature="e#2970#2971#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatServer/Messages/GameMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1055#1056#0" expanded="true" />
-            <element signature="e#1090#1091#0" expanded="true" />
-            <element signature="e#1249#1250#0" expanded="true" />
-            <element signature="e#1275#1276#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -982,20 +873,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/CenterPane.java">
+    <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="136" column="21" selection-start-line="136" selection-start-column="21" selection-end-line="136" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/UIHelpers/FileChooserCreator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+        <state relative-caret-position="578">
+          <caret line="51" column="34" selection-start-line="51" selection-start-column="34" selection-end-line="51" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1004,34 +885,95 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/ResizeBoardPane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
+        <state relative-caret-position="952">
           <caret line="64" column="85" selection-start-line="64" selection-start-column="85" selection-end-line="64" selection-end-column="85" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/ComponentCreationDialog.java">
+    <entry file="file://$PROJECT_DIR$/src/UI/UIHelpers/FileChooserCreator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-221">
-          <caret line="17" column="62" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/Toolbar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="90" column="21" lean-forward="true" selection-start-line="90" selection-start-column="21" selection-end-line="90" selection-end-column="21" />
+        <state relative-caret-position="119">
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
+    <entry file="file://$PROJECT_DIR$/src/UI/CenterPane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="51" column="43" lean-forward="true" selection-start-line="51" selection-start-column="43" selection-end-line="51" selection-end-column="43" />
+        <state relative-caret-position="2006">
+          <caret line="136" column="21" selection-start-line="136" selection-start-column="21" selection-end-line="136" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/ComponentCreationDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="17" column="62" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatServer/Messages/GameMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerProgram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatServer/GameListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/Toolbar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="96" column="21" lean-forward="true" selection-start-line="96" selection-start-column="21" selection-end-line="96" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="67" column="20" lean-forward="true" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="204" column="25" selection-start-line="204" selection-start-column="25" selection-end-line="204" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6335#6336#0" expanded="true" />
+            <element signature="e#6435#6436#0" expanded="true" />
+            <element signature="e#9552#9553#0" expanded="true" />
+            <element signature="e#9600#9601#0" expanded="true" />
           </folding>
         </state>
       </provider>
