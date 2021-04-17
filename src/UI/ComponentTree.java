@@ -96,7 +96,7 @@ public class ComponentTree extends JPanel implements Observable {
         });
 
         rightClickMenu.add(delete);
-        rightClickMenu.add(add);
+        //rightClickMenu.add(add);
 
         tree.addMouseListener(new MouseAdapter() {
             @Override

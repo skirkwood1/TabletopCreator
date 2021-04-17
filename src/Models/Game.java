@@ -173,12 +173,16 @@ public class Game implements Serializable {
 //        this.placedCards.put(card.copy(),point);
 //    }
 
-    public void placePlaceable(CardInterface cardInterface, Point point){
+    public void placeCard(CardInterface cardInterface, Point point){
         this.placedCards.put(cardInterface.copy(),point);
     }
 
     public HashMap<CardInterface,Point> getPlacedCards(){
         return this.placedCards;
+    }
+
+    public void removePlacedCard(CardInterface card){
+        this.placedCards.remove(card);
     }
 
     public GameComponent getSelectedComponent(){

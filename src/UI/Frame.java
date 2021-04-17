@@ -342,7 +342,7 @@ public class Frame extends JFrame implements Observable {
         actionMap.put(del, new AbstractAction("action3") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                centerPane.boardPane.deleteSelectedSpace();
+                centerPane.boardPane.deleteSelection();
                 //centerPane.refreshComponentTree(this.game);
                 centerPane.updateBoard();
                 centerPane.refreshComponentTree(game);

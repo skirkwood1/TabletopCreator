@@ -26,16 +26,23 @@ public class BoardPane extends JPanel {
 
     private PlacementType placementType;
 
-    Point imagePreview;
-    BufferedImage image;
+    private Point imagePreview;
+    private BufferedImage image;
 
-    Point spacePreview;
-    Point spacePreviewEnd;
+    private Point spacePreview;
+    private Point spacePreviewEnd;
+
+    private Point mousePoint;
 
     CommandStack commandStack;
 
+    private JPopupMenu rightClickMenu;
+
+
     public BoardPane(Game game,CommandStack commandStack) {
         this.game = game;
+
+        this.rightClickMenu = new JPopupMenu();
 
         int horizontalSize = game.getBoard().getSize()[0] + game.getBoard().getMargins()[2]+ game.getBoard().getMargins()[3];
         int verticalSize = game.getBoard().getSize()[1] + game.getBoard().getMargins()[0]+ game.getBoard().getMargins()[1];
@@ -75,8 +82,6 @@ public class BoardPane extends JPanel {
         CardInterface selectedCard;
         Piece selectedPiece;
 
-        int buttonPressed = 0;
-
         @Override
         public void mouseClicked(MouseEvent e) {
             Graphics g = getGraphics();
@@ -89,39 +94,43 @@ public class BoardPane extends JPanel {
 
             int x, y;
 
-            switch(placementType){
-                case SPACE:
-                    break;
-                case PIECE:
-                    // get X and y position on board
-                    x = (int)Math.floor((((e.getX()/zoom-PADDING)/SCALE))) - leftMarginOffset;
-                    y = (int)Math.floor((((e.getY()/zoom-PADDING)/SCALE))) - topMarginOffset; ///zoom);
-                    if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
-                        //Space space = game.getBoard().getSpace(x,y);
-                        //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
-                        Piece piece = null;
-                        if(game.getSelectedComponent() instanceof Piece){
-                            piece = (Piece)game.getSelectedComponent();
-                        }
+            if(SwingUtilities.isLeftMouseButton(e)){
+                switch(placementType){
+                    case SPACE:
+                        break;
+                    case PIECE:
+                        // get X and y position on board
+                        x = (int)Math.floor((((e.getX()/zoom-PADDING)/SCALE))) - leftMarginOffset;
+                        y = (int)Math.floor((((e.getY()/zoom-PADDING)/SCALE))) - topMarginOffset; ///zoom);
+                        if(x < size[0] && x >= 0 && y < size[1] && y >= 0){
+                            //Space space = game.getBoard().getSpace(x,y);
+                            //Piece piece = new Piece("t","t","C:\\Users\\Simon\\IdeaProjects\\TabletopCreator\\res\\icons8-save-100.png");
+                            Piece piece = null;
+                            if(game.getSelectedComponent() instanceof Piece){
+                                piece = (Piece)game.getSelectedComponent();
+                            }
 
-                        if(piece != null){
-                            PlacePieceCommand ppc = new PlacePieceCommand(game,x,y,piece);
-                            commandStack.insertCommand(ppc);
+                            if(piece != null){
+                                PlacePieceCommand ppc = new PlacePieceCommand(game,x,y,piece);
+                                commandStack.insertCommand(ppc);
+                            }
                         }
-                    }
-//                            space.addPiece(piece);
-//                        }
-                    break;
-                case CARD:
-                    if(game.getSelectedCard() != null){
-                        CardInterface card = game.getSelectedCard();
-                        Dimension d = scaleCard(card);
-                        Point point = new Point((int)(e.getX()/zoom-d.getWidth()/2),(int)(e.getY()/zoom-d.getHeight()/2));
-                        game.placePlaceable(card,point);
-                    }
-                    break;
-                case NONE:
-                    break;
+    //                            space.addPiece(piece);
+    //                        }
+                        break;
+                    case CARD:
+                        if(game.getSelectedCard() != null){
+                            CardInterface card = game.getSelectedCard();
+                            Dimension d = scaleCard(card);
+                            Point point = new Point((int)(e.getX()/zoom-d.getWidth()/2),(int)(e.getY()/zoom-d.getHeight()/2));
+                            game.placeCard(card,point);
+                        }
+                        break;
+                    case NONE:
+                        break;
+                }
+            }else if(SwingUtilities.isRightMouseButton(e)){
+                rightClickMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
 
@@ -148,22 +157,7 @@ public class BoardPane extends JPanel {
 
             if(SwingUtilities.isLeftMouseButton(e)){
                     if(placementType == PlacementType.NONE){
-                        for(Map.Entry<CardInterface,Point> cardEntry: game.getPlacedCards().entrySet()){
-                            CardInterface card = cardEntry.getKey();
-                            Point place = cardEntry.getValue();
-
-                            Dimension d = scaleCard(card);
-
-                            Rectangle bounds = new Rectangle((int)(place.getX()*zoom),
-                                    (int)(place.getY()*zoom),
-                                    (int)(d.getWidth()*zoom),(int)(d.getHeight()*zoom));
-                            g2.setColor(Color.BLUE);
-                            g2.draw(bounds);
-
-                            if(bounds.contains(originPoint)){
-                                selectedCard = card;
-                            }
-                        }
+                        selectedCard = getSelectedCard(originPoint);
 
                         if(start_x < size[0] && start_x >= 0 &&
                                 start_y < size[1] && start_y >= 0
@@ -187,8 +181,6 @@ public class BoardPane extends JPanel {
 
                     }
             }
-
-                buttonPressed = 1;
             //super.mousePressed(e);
         }
 
@@ -203,7 +195,7 @@ public class BoardPane extends JPanel {
 
             int[] size = game.getBoard().getSize();
 
-            if(buttonPressed == 1) {
+            if(SwingUtilities.isLeftMouseButton(e)) {
                 if (end_x < size[0] && end_x >= 0 &&
                         end_y < size[1] && end_y >= 0 &&
                         start_x < size[0] && start_x >= 0 &&
@@ -237,8 +229,6 @@ public class BoardPane extends JPanel {
                 selectedCard = null;
                 selectedPiece = null;
                 repaint();
-
-                buttonPressed = 0;
             }
 
             spacePreviewEnd = null;
@@ -266,7 +256,7 @@ public class BoardPane extends JPanel {
             //Graphics g = getGraphics();
             //Graphics2D g2 = (Graphics2D)g;
 
-            if(buttonPressed == 1){
+            if(SwingUtilities.isLeftMouseButton(e)){
 
                 switch(placementType){
                     case NONE:
@@ -341,6 +331,8 @@ public class BoardPane extends JPanel {
 
         @Override
         public void mouseMoved(MouseEvent e) {
+
+            mousePoint = e.getPoint();
 
             int[] size = game.getBoard().getSize();
 
@@ -503,10 +495,50 @@ public class BoardPane extends JPanel {
         return(AlphaComposite.getInstance(type, alpha));
     }
 
+    private CardInterface getSelectedCard(Point originPoint){
+        CardInterface selectedCard = null;
+        for(Map.Entry<CardInterface,Point> cardEntry: game.getPlacedCards().entrySet()){
+            CardInterface card = cardEntry.getKey();
+            Point place = cardEntry.getValue();
+
+            Dimension d = scaleCard(card);
+
+            Rectangle bounds = new Rectangle((int)(place.getX()*zoom),
+                    (int)(place.getY()*zoom),
+                    (int)(d.getWidth()*zoom),(int)(d.getHeight()*zoom));
+            //g2.setColor(Color.BLUE);
+            //g2.draw(bounds);
+
+            if(bounds.contains(originPoint)){
+                selectedCard = card;
+            }
+        }
+        return selectedCard;
+    }
+
+    public Space getSelectedSpace(){
+        if(spacePreview != null){
+            int x = (int)spacePreview.getX() - leftMarginOffset;
+            int y = (int)spacePreview.getY() - topMarginOffset;
+            return game.getBoard().getSpace(x,y);
+        }
+        return null;
+    }
+
+    public void deleteSelection(){
+        CardInterface selectedCard = getSelectedCard(mousePoint);
+
+        if(selectedCard != null){
+            game.removePlacedCard(selectedCard);
+        }else{
+            deleteSelectedSpace();
+        }
+    }
+
     public void deleteSelectedSpace(){
         if(spacePreview != null){
-            int x = (int)spacePreview.getX();
-            int y = (int)spacePreview.getY();
+            int x = (int)spacePreview.getX() - leftMarginOffset;
+            int y = (int)spacePreview.getY() - topMarginOffset;
 
             Space space = game.getBoard().getSpace(x,y);
 
@@ -533,6 +565,10 @@ public class BoardPane extends JPanel {
 
     public int spaceScale(int size){
         return size * SCALE + PADDING;
+    }
+
+    public JPopupMenu getRightClickMenu(){
+        return this.rightClickMenu;
     }
 
 }

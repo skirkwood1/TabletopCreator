@@ -235,6 +235,38 @@ public class CenterPane extends JPanel implements Observable {
         boardPane.addMouseMotionListener(bpvs);
         boardPane.addMouseWheelListener(bpvs);
 
+        JPopupMenu popupMenu = boardPane.getRightClickMenu();
+
+        JMenuItem delete = new JMenuItem("Delete");
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boardPane.deleteSelection();
+                updateBoard();
+            }
+        });
+
+        JMenuItem colorSelect = new JMenuItem("Get Color");
+        colorSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Space space = boardPane.getSelectedSpace();
+                if(space == null){
+                    return;
+                }
+                else if(space.isUsingTexture()){
+                    game.getBoard().setTexture(space.getTexture());
+                }else{
+                    game.getBoard().setColor(space.getColor());
+                }
+                updateBoard();
+                updateObservers();
+            }
+        });
+
+        popupMenu.add(delete);
+        popupMenu.add(colorSelect);
+
         updateBoard();
 
         imagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

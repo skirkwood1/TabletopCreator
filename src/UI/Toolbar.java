@@ -318,19 +318,19 @@ public class Toolbar extends JPanel implements ActionListener {
         createDeck.addActionListener(this);
         addToDeck.addActionListener(this);
 
-        file.add(cut);
-        file.add(copy);
+        //file.add(cut);
+        //file.add(copy);
         file.add(saveMenu);
         file.add(openMenu);
 
-        edit.add(paste);
+        //edit.add(paste);
         edit.add(changeSize);
         edit.add(undo);
         edit.add(redo);
 
         add.add(addPiece);
         add.add(addCard);
-        add.add(addRule);
+        //add.add(addRule);
         add.add(addTexture);
 
         decks.add(createDeck);
@@ -390,7 +390,7 @@ public class Toolbar extends JPanel implements ActionListener {
     public void updateColorLabel(){
         this.colorLabel.setBackground(game.getBoard().getColor());
         if(game.getBoard().useTexture()){
-            Image image = game.getBoard().getTextureImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            Image image = game.getBoard().getTextureImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH);
             this.colorLabel.setIcon(new ImageIcon(image));
         }else{
             this.colorLabel.setIcon(null);
