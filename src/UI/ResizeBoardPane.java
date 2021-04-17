@@ -35,7 +35,8 @@ public class ResizeBoardPane extends JOptionPane {
 //            this.heightField = new JFormattedTextField(mf);
 //        }
 //        catch(ParseException pe){}
-        UIManager.put("Label.font",new Font("Segoe UI",Font.BOLD,13));
+        UIManager.put("Label.font",new Font("Segoe UI",Font.BOLD,14));
+        UIManager.put("TextField.font",new Font("Segoe UI",Font.PLAIN,14));
         UIManager.put("Button.background",Color.LIGHT_GRAY);
         UIManager.put("Button.font",new Font("Segoe UI",Font.PLAIN,14));
 
@@ -55,6 +56,13 @@ public class ResizeBoardPane extends JOptionPane {
         bottomMargin.setText("" + game.getBoard().getMargins()[1]);
         leftMargin.setText("" + game.getBoard().getMargins()[2]);
         rightMargin.setText("" + game.getBoard().getMargins()[3]);
+
+        widthField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+        heightField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+        topMargin.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+        bottomMargin.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+        leftMargin.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+        rightMargin.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 
         Dimension textFieldDimension = new Dimension(150,20);
 

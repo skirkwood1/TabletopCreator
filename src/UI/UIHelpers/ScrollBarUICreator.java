@@ -1,4 +1,4 @@
-package UI.Factories;
+package UI.UIHelpers;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;

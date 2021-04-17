@@ -10,8 +10,6 @@ import java.util.HashMap;
 public class ServerProgram {
     //ServerSocket serverSocket;
 
-    HashMap<String,String> commandMap;
-
     private final int port = 8888;
 
     public ServerProgram(){
@@ -36,7 +34,6 @@ public class ServerProgram {
     }
 
     public static void main(String[] args){
-
         EventQueue.invokeLater(new Runnable(){
             public void run(){
                 new ServerProgram();

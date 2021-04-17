@@ -1,5 +1,7 @@
 package UI;
 
+import UI.UIHelpers.FileChooserCreator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -12,22 +14,43 @@ public class ComponentCreationDialog extends JOptionPane {
     private JFileChooser imageChooser;
 
     public ComponentCreationDialog(){
+        UIManager.put("OptionPane.background",new Color(255,255,255));
+        UIManager.put("Panel.background",new Color(255,255,255));
+
         this.name = new JTextField();
         this.text = new JTextArea();
         //this.confirmButton = new JButton();
         this.layout = new JPanel(new BorderLayout());
         this.imageChooser = new JFileChooser();
 
-        text.setPreferredSize(new Dimension(300,300));
+        imageChooser.setControlButtonsAreShown(false);
+        imageChooser.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
+        BorderLayout bl = (BorderLayout)layout.getLayout();
+        bl.setVgap(-1);
+
+        Component[] comp = imageChooser.getComponents();
+        FileChooserCreator.setFileChooserUI(comp);
+
+        name.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        name.setFont(new Font("Segoe UI",Font.PLAIN,12));
+
+        text.setPreferredSize(new Dimension(250,150));
+        text.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        text.setFont(new Font("Segoe UI",Font.PLAIN,12));
+
+        layout.setBackground(Color.WHITE);
         layout.add(name,BorderLayout.NORTH);
         layout.add(text,BorderLayout.CENTER);
         layout.add(imageChooser,BorderLayout.SOUTH);
         //layout.add(confirmButton,BorderLayout.SOUTH);
+
+        this.setOpaque(false);
+        this.setBackground(Color.WHITE);
     }
 
     public int display(){
-        int n = showConfirmDialog(null,layout,"Component Import",
+        int n = showConfirmDialog(null,layout,"GameComponent Import",
                 JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
 
         return n;

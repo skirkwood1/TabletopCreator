@@ -1,10 +1,9 @@
 package Models;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class Texture implements Serializable, Component {
+public class Texture implements Serializable, GameComponent {
     private static final long serialVersionUID = 5757975696680667974L;
 
     private String name,text;

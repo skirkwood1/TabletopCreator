@@ -1,7 +1,7 @@
 package UI;
 
 import Models.*;
-import Models.Component;
+import Models.GameComponent;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -122,7 +122,7 @@ public class ComponentTree extends JPanel implements Observable {
 //        model.insertNodeInto(node,cards,cards.getChildCount());
 //    }
 
-    public void updateTree(Component component){
+    public void updateTree(GameComponent component){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(component.getName());
         tree.scrollPathToVisible(new TreePath(node.getPath()));

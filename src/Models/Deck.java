@@ -11,7 +11,7 @@ import java.util.Collections;
 * but they can be separated into decks which can contain multiple copies
 * of each card for use in separate parts of the game
 * */
-public class Deck implements Serializable,CardInterface,Component {
+public class Deck implements Serializable,CardInterface, GameComponent {
     private static final long serialVersionUID = -1499205425401974194L;
     private String name;
     private ArrayList<Card> cards;

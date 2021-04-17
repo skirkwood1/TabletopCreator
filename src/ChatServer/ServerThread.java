@@ -1,27 +1,32 @@
 package ChatServer;
 
-import Commands.GameCommand;
+import ChatServer.Messages.GameMessage;
+import ChatServer.Messages.Message;
 
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.HashMap;
 
 public class ServerThread implements Runnable {
 
-
         private Socket socket;
         private ArrayList<ServerThread> clients;
+        private ServerThread self;
+        private HashMap<Message.MessageType, ChatCommand> commandMap;
 
         private volatile ObjectOutputStream oos;
-
         private ObjectInputStream ois;
 
-        private String username;
+        private String username = "";
 
         public ServerThread(Socket socket, ArrayList<ServerThread> clients) {
             this.socket = socket;
             this.clients = clients;
+            this.commandMap = new HashMap<>();
+            this.self = this;
+
+            initCommands();
         }
 
         public void run() {
@@ -29,16 +34,14 @@ public class ServerThread implements Runnable {
                 this.oos = new ObjectOutputStream(socket.getOutputStream());
                 this.ois = new ObjectInputStream(socket.getInputStream());
 
-                System.out.println("Created ObjectInputStream");
-
-                System.out.println("Created ObjectOutputStream");
-
                 oos.writeObject(new GameMessage("Please enter a username:",this.clients));
 
                 try{
-                    Message gm = (Message)ois.readObject();
-                    this.username = gm.getMessage();
-                    oos.writeObject(new GameMessage("Username set to: " + username,this.clients));
+                    Message msg = (Message)ois.readObject();
+                    this.username = msg.getMessage();
+                }catch(ClassNotFoundException ce){ }
+
+                if(!username.equals("")){
                     for(ServerThread client: this.clients){
                         if(!client.isClosed()){
                             try{
@@ -49,47 +52,18 @@ public class ServerThread implements Runnable {
                             }
                         }
                     }
-                }catch(ClassNotFoundException ce){
-
                 }
 
                 while(!socket.isClosed()){
-                    String s;
-
                     try{
                         Message msg = (Message)ois.readObject();
-                        if(msg instanceof QuitMessage){
-                            System.out.println(username + " quit");
-                            socket.close();
-                        }else{
-                            GameMessage gm = (GameMessage)msg;
-                            s = gm.getMessage();
-                            gm.setMessage(this.username + ": " + s);
-
-                            for(ServerThread client: this.clients){
-                                if(!client.isClosed()){
-                                    try{
-                                        client.getObjectOutputStream().writeObject(gm);
-                                    }catch(SocketException se){
-                                        client.socket.close();
-                                    }
-                                }
-                            }
-                        }
+                        commandMap.get(msg.getType()).execute(msg);
 
                     }catch(ClassNotFoundException ce){
                         System.err.println("Class not found");
                     }
                 }
 
-                clients.remove(this);
-
-                for(ServerThread client: this.clients){
-                    if(!client.isClosed()){
-                        client.getObjectOutputStream().writeObject(
-                                new GameMessage(username + " left the server.",this.clients));
-                    }
-                }
                 socket.getOutputStream().close();
                 socket.getInputStream().close();
                 oos.close();
@@ -111,6 +85,40 @@ public class ServerThread implements Runnable {
         }
 
         public String getUsername(){return this.username;}
+
+        public void initCommands(){
+            commandMap.put(Message.MessageType.QUIT, msg -> {
+                msg.setMessage(username);
+                try{
+                    socket.close();
+                    clients.remove(this);
+                    msg.setClients(clients);
+                    for(ServerThread client: clients){
+                        if(!client.isClosed()){
+                            client.getObjectOutputStream().writeObject(
+                                    new GameMessage(username + " left the server.",clients));
+                        }
+                    }
+                }catch(IOException i){
+                    i.printStackTrace();
+                }
+            });
+
+            commandMap.put(Message.MessageType.GAME, msg -> {
+                msg.setMessage(username + ": " + msg.getMessage());
+                for(ServerThread client: clients){
+                    if(!client.isClosed()){
+                        try{
+                            client.getObjectOutputStream().writeObject(msg);
+                        }catch(IOException ie){
+                            ie.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+
+        }
 
 
 }

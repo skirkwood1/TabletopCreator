@@ -5,10 +5,10 @@ import java.awt.*;
 
 import static java.awt.Color.white;
 
-public class TextPanel extends JPanel {
+public class CommandLog extends JPanel {
     private JTextArea textArea;
 
-    public TextPanel() {
+    public CommandLog() {
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setLineWrap(true);

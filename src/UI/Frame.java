@@ -5,6 +5,7 @@ import ChatServer.GameListener;
 import Commands.*;
 import Models.*;
 import Observers.ColorLabelObserver;
+import UI.UIHelpers.FileChooserCreator;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
 
@@ -22,7 +24,7 @@ public class Frame extends JFrame implements Observable {
     private ComponentTree componentTree;
     private Toolbar toolbar;
     private JTextField textPanel,cmd;
-    private TextPanel cmdOutput;
+    private CommandLog cmdOutput;
     private CenterPane centerPane;
     private ComponentCreationDialog cardCreationDialog;
     private ComponentCreationDialog pieceCreationDialog;
@@ -41,10 +43,13 @@ public class Frame extends JFrame implements Observable {
     private ClientWindow clientWindow;
     private GameListener gameListener;
 
-    private HashMap<KeyStroke, Action> actionMap = new HashMap<KeyStroke, Action>();
+    private HashMap<KeyStroke, Action> actionMap = new HashMap<>();
 
     public Frame() {
         super("Tabletop Creator v0.03");
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("ProgramIcon.png"));
+        this.setIconImage(icon.getImage());
 
         //GridBagConstraints gbc = new GridBagConstraints();
         //setLayout(new GridBagLayout());
@@ -58,7 +63,7 @@ public class Frame extends JFrame implements Observable {
         fileChooser.setBackground(Color.WHITE);
         fileChooser.setOpaque(true);
         fileChooser.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
-        setFileChooserUI(comp);
+        FileChooserCreator.setFileChooserUI(comp);
 
         toolbar = new Toolbar(game);
         centerPane = new CenterPane(game,commandStack);
@@ -205,27 +210,6 @@ public class Frame extends JFrame implements Observable {
         centerPane.updateObservers();
     }
 
-    public void setFileChooserUI(Component[] comps){
-        for(Component comp: comps) {
-            if(comp instanceof Container) setFileChooserUI(((Container)comp).getComponents());
-            try{
-                comp.setFont(new Font("Segoe UI",Font.PLAIN,12));
-            } catch(Exception e){
-                e.printStackTrace();
-            }//do nothing
-            try{
-                comp.setBackground(Color.WHITE);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            if(comp instanceof JButton){
-                JButton jb = (JButton)comp;
-                jb.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
-                jb.setBackground(new Color(220,220,220));
-            }
-        }
-    }
-
     public void setGame(Game game){
         this.game = game;
         this.toolbar.setGame(game);
@@ -277,7 +261,7 @@ public class Frame extends JFrame implements Observable {
 
             ComponentImage ci = new ComponentImage(fileSelected);
 
-            Models.Component component = null;
+            GameComponent component = null;
 
             switch(state){
                 case ADD_CARD:

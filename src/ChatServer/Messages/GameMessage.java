@@ -1,17 +1,22 @@
-package ChatServer;
+package ChatServer.Messages;
 
+import ChatServer.ServerThread;
 import Models.Game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameMessage implements Serializable,Message {
+import static ChatServer.Messages.Message.MessageType.GAME;
+
+public class GameMessage implements Serializable, Message {
 
     private static final long serialVersionUID = -1362608971386820237L;
 
     private Game game;
     private String message;
     private ArrayList<String> clients;
+
+    private MessageType type = GAME;
 
     public GameMessage(){
         this.game = null;
@@ -44,7 +49,17 @@ public class GameMessage implements Serializable,Message {
         return this.game;
     }
 
+    public void setClients(ArrayList<ServerThread> clients){
+        for(ServerThread client:clients){
+            this.clients.add(client.getUsername());
+        }
+    }
+
     public ArrayList<String> getClients(){
         return this.clients;
+    }
+
+    public MessageType getType(){
+        return this.type;
     }
 }

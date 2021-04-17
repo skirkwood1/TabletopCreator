@@ -1,10 +1,9 @@
 package Models;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class Piece implements Serializable,Component {
+public class Piece implements Serializable, GameComponent {
     private static final long serialVersionUID = -497535162892637357L;
 
     private String name,text;

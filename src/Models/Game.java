@@ -1,7 +1,6 @@
 package Models;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class Game implements Serializable {
 
     private Board board;
 
-    private Component selectedComponent = null;
+    private GameComponent selectedComponent = null;
     private CardInterface selectedCard = null;
 
     private HashMap<CardInterface, Point> placedCards;
@@ -182,11 +181,11 @@ public class Game implements Serializable {
         return this.placedCards;
     }
 
-    public Component getSelectedComponent(){
+    public GameComponent getSelectedComponent(){
         return selectedComponent;
     }
 
-    public void setSelectedComponent(Component component){
+    public void setSelectedComponent(GameComponent component){
         this.selectedComponent = component;
     }
 

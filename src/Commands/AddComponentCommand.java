@@ -6,9 +6,9 @@ import Models.*;
 * Undo removes the component.
 * */
 public class AddComponentCommand extends GameCommand {
-    private final Component component;
+    private final GameComponent component;
 
-    public AddComponentCommand(Game game, Component component){
+    public AddComponentCommand(Game game, GameComponent component){
         this.game = game;
         this.component = component;
     }

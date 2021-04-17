@@ -3,15 +3,15 @@ package UI;
 import Commands.CommandStack;
 import Commands.UpdateColorCommand;
 import Models.*;
-import Models.Component;
+import Models.GameComponent;
 import Observers.BoardPaneObserver;
 import Observers.Observer;
+import UI.UIHelpers.ScrollBarUICreator;
 import UI.Listeners.BoardPaneViewScroll;
 import UI.Listeners.ImageViewScroll;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
@@ -25,11 +25,11 @@ public class CenterPane extends JPanel implements Observable {
     ComponentTree componentTree;
     BoardPane boardPane;
     JScrollPane boardScreen;
-    private final TextPanel componentText;
+    private final CommandLog componentText;
     private final JLabel componentImage;
 
     private final JTextField cmd;
-    private final TextPanel cmdOutput;
+    private final CommandLog cmdOutput;
 
     //private double zoom = 1.0;
     private double imageZoom = 1.0;
@@ -47,7 +47,7 @@ public class CenterPane extends JPanel implements Observable {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
         if(selectedNode != null){
             String name = selectedNode.toString();
-            Component component = null;
+            GameComponent component = null;
             CardInterface card = null;
 
             if(selectedNode.getParent().equals(componentTree.top)){
@@ -96,7 +96,7 @@ public class CenterPane extends JPanel implements Observable {
         UIManager.put("ScrollPane.border",BorderFactory.createEmptyBorder());
         UIManager.put("SplitPane.border",BorderFactory.createEmptyBorder());
 
-        componentText = new TextPanel();
+        componentText = new CommandLog();
         componentImage = new JLabel();
         boardPane = new BoardPane(game,commandStack);
         boardScreen = new JScrollPane();
@@ -131,9 +131,9 @@ public class CenterPane extends JPanel implements Observable {
         boardScreen.getViewport().setOpaque(false);
         boardScreen.setMinimumSize(new Dimension(800,400));
         boardScreen.getVerticalScrollBar().setOpaque(false);
-        boardScreen.getVerticalScrollBar().setUI(scrollBarUI());
+        boardScreen.getVerticalScrollBar().setUI(ScrollBarUICreator.scrollBarUI());
         boardScreen.getHorizontalScrollBar().setOpaque(false);
-        boardScreen.getHorizontalScrollBar().setUI(scrollBarUI());
+        boardScreen.getHorizontalScrollBar().setUI(ScrollBarUICreator.scrollBarUI());
         boardScreen.setAutoscrolls(true);
 
         //boardScreen.setBackground(Color.LIGHT_GRAY);
@@ -145,7 +145,7 @@ public class CenterPane extends JPanel implements Observable {
         cmd.setPreferredSize(new Dimension(800,20));
         //cmd.setBorder(null);
 
-        cmdOutput = new TextPanel();
+        cmdOutput = new CommandLog();
         cmdOutput.setSize(new Dimension(800,100));
         cmdOutput.setPreferredSize(new Dimension(800,100));
         //cmdOutput.setBorder(BorderFactory.createEmptyBorder(-2,-1,-2,-1));
@@ -197,7 +197,7 @@ public class CenterPane extends JPanel implements Observable {
         componentTree.setSize(new Dimension(150,0));
         componentTree.revalidate();
 
-        //private TextPanel textPanel;
+        //private CommandLog textPanel;
         JSplitPane overallPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentTree, textAndCardPane);
 
         overallPane.setResizeWeight(0);
@@ -254,7 +254,7 @@ public class CenterPane extends JPanel implements Observable {
         componentImage.setIcon(icon);
     }
 
-    void updateComponentTree(Component component){
+    void updateComponentTree(GameComponent component){
         componentTree.updateTree(component);
     }
 
@@ -316,38 +316,6 @@ public class CenterPane extends JPanel implements Observable {
 //    @Override public void setBorder(Border border) {
 //        // No!
 //    }
-
-    public BasicScrollBarUI scrollBarUI(){
-        return new BasicScrollBarUI() {
-            @Override
-            protected JButton createDecreaseButton(int orientation) {
-                return zeroButton();
-            }
-
-            @Override
-            protected JButton createIncreaseButton(int orientation) {
-                return zeroButton();
-            }
-
-            @Override
-            protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds)
-            {
-            }
-
-            JButton zeroButton(){
-                JButton jbutton = new JButton();
-                jbutton.setPreferredSize(new Dimension(0, 0));
-                jbutton.setMinimumSize(new Dimension(0, 0));
-                jbutton.setMaximumSize(new Dimension(0, 0));
-                return jbutton;
-            }
-
-            @Override
-            protected void configureScrollBarColors() {
-                this.thumbColor = Color.LIGHT_GRAY;
-            }
-        };
-    }
 
     public void addObserver(Observer obs){
         this.observers.add(obs);

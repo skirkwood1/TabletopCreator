@@ -1,10 +1,9 @@
 package ChatServer;
 
-import Commands.CommandStack;
-import Commands.GameCommand;
+import ChatServer.Messages.GameMessage;
+import ChatServer.Messages.QuitMessage;
 import Models.Game;
-import UI.Factories.ScrollBarUICreator;
-import UI.TextPanel;
+import UI.UIHelpers.ScrollBarUICreator;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -19,12 +18,11 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class ClientWindow implements ActionListener,Runnable {
 
     private JFrame frame;
-    //private TextPanel log;
+    //private CommandLog log;
     private JEditorPane log;
     private JScrollPane logPane;
     private JTextField prompt;
