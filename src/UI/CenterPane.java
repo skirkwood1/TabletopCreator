@@ -3,22 +3,22 @@ package UI;
 import Commands.CommandStack;
 import Commands.UpdateColorCommand;
 import Models.*;
-import Models.GameComponent;
 import Observers.BoardPaneObserver;
 import Observers.Observer;
-import UI.UIHelpers.ScrollBarUICreator;
 import UI.Listeners.BoardPaneViewScroll;
 import UI.Listeners.ImageViewScroll;
+import UI.UIHelpers.ScrollBarUICreator;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Random;
-
-import static javax.swing.BorderFactory.createEmptyBorder;
 
 
 public class CenterPane extends JPanel implements Observable {
@@ -32,7 +32,6 @@ public class CenterPane extends JPanel implements Observable {
     private final CommandLog cmdOutput;
 
     //private double zoom = 1.0;
-    private double imageZoom = 1.0;
 
     private HashMap<String,Action> commandMap;
     //private ArrayList<Observer> observers;
@@ -65,6 +64,7 @@ public class CenterPane extends JPanel implements Observable {
             }
             else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
                 component = game.getCard(name);
+                card = game.getCard(name);
             }
             else if(selectedNode.getParent().equals(componentTree.decks)){
                 component = game.getDeck(name);
@@ -146,17 +146,18 @@ public class CenterPane extends JPanel implements Observable {
         cmdOutput = new CommandLog();
         cmdOutput.setSize(new Dimension(800,100));
         cmdOutput.setPreferredSize(new Dimension(800,100));
+
+        commandStack.setLog(cmdOutput);
         //cmdOutput.setBorder(BorderFactory.createEmptyBorder(-2,-1,-2,-1));
 
         cmd.addActionListener(e -> {
             String[] command = cmd.getText().split(" ");
             if(commandMap.containsKey(command[0])){
                 parseCommand(command);
-                cmd.setText("");
             }else{
                 cmdOutput.appendBottomText(cmd.getText());
-                cmd.setText("");
             }
+            cmd.setText("");
         });
 
         JSplitPane cmdPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -236,30 +237,24 @@ public class CenterPane extends JPanel implements Observable {
         JPopupMenu popupMenu = boardPane.getRightClickMenu();
 
         JMenuItem delete = new JMenuItem("Delete");
-        delete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boardPane.deleteSelection();
-                updateBoard();
-            }
+        delete.addActionListener(e -> {
+            boardPane.deleteSelection();
+            updateBoard();
         });
 
         JMenuItem colorSelect = new JMenuItem("Get Color");
-        colorSelect.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Space space = boardPane.getSelectedSpace();
-                if(space == null){
-                    return;
-                }
-                else if(space.isUsingTexture()){
-                    game.getBoard().setTexture(space.getTexture());
-                }else{
-                    game.getBoard().setColor(space.getColor());
-                }
-                updateBoard();
-                updateObservers();
+        colorSelect.addActionListener(e -> {
+            Space space = boardPane.getSelectedSpace();
+            if(space == null){
+                return;
             }
+            else if(space.isUsingTexture()){
+                game.getBoard().setTexture(space.getTexture());
+            }else{
+                game.getBoard().setColor(space.getColor());
+            }
+            updateBoard();
+            updateObservers();
         });
 
         JMenuItem flip = new JMenuItem("Flip");
@@ -426,6 +421,10 @@ public class CenterPane extends JPanel implements Observable {
         ivs.setImageZoom(1.0);
         displayImage(component.getImage());
         setComponentText(component.getText());
+    }
+
+    public CommandLog getCommandLog(){
+        return this.cmdOutput;
     }
 
 }

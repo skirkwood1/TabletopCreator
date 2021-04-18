@@ -10,10 +10,12 @@ import java.awt.*;
 /* Remove the piece or the color from a space
 * Saves the piece/color for undo
 * */
-public class DeleteSpaceCommand extends GameCommand{
+public class DeleteSpaceCommand implements GameCommand{
 
     private Space space;
     private int x,y;
+
+    private Game game;
 
     private Piece oldPiece;
 
@@ -56,6 +58,14 @@ public class DeleteSpaceCommand extends GameCommand{
             }else{
                 game.getBoard().setSquare(x,y,oldColor);
             }
+        }
+    }
+
+    public String toString(){
+        if(oldPiece != null){
+            return String.format("Deleted piece %s at (%d,%d)",oldPiece,x,y);
+        }else{
+            return String.format("Deleted space at (%d,%d)",x,y);
         }
     }
 }

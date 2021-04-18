@@ -9,8 +9,10 @@ import java.awt.image.BufferedImage;
 /* Assigns color/texture to multiple new squares at a time to the board
 * Saves arrays for each square containing their textures and/or colors
 * */
-public class MultipleSpacesCommand extends GameCommand {
+public class MultipleSpacesCommand implements GameCommand {
     int start_x, start_y, end_x, end_y;
+
+    private Game game;
 
     private final Color[][] oldColors;
     private final Texture[][] oldTextures;
@@ -75,6 +77,17 @@ public class MultipleSpacesCommand extends GameCommand {
                     game.getBoard().setSquare(i,j,oldColors[i - start_x][j - start_y]);
                 }
             }
+        }
+    }
+
+    public String toString(){
+        if(useTexture){
+            return String.format("Place spaces of texture %s from (%d,%d) to (%d,%d)",
+                    newTexture,start_x,start_y,end_x,end_y);
+        }else{
+            return String.format("Place spaces of color [%d,%d,%d] from (%d,%d) to (%d,%d)",
+                    newColor.getRed(),newColor.getGreen(),newColor.getBlue(),
+                    start_x,start_y,end_x,end_y);
         }
     }
 }

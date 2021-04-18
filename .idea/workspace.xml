@@ -8,17 +8,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Commands/CardMoveCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Commands/PlaceCardCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChatServer/ServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatServer/ServerThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/CardInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/CardInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/AddComponentCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/AddComponentCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/ChangeSizeCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/ChangeSizeCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CommandStack.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CommandStack.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/DeleteSpaceCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/DeleteSpaceCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/MultipleSpacesCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/MultipleSpacesCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/OpenGameCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/OpenGameCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PieceMoveCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PieceMoveCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlacePieceCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlacePieceCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlaceSpaceCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlaceSpaceCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/UpdateColorCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/UpdateColorCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/AddComponentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/AddComponentCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/ChangeSizeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ChangeSizeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/CommandStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/CommandStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/DeleteSpaceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/DeleteSpaceCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/GameCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/GameCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/MultipleSpacesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/MultipleSpacesCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/OpenGameCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/OpenGameCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/PieceMoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PieceMoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/PlacePieceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlacePieceCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/PlaceSpaceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlaceSpaceCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/UpdateColorCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/UpdateColorCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/BoardPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/BoardPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/CenterPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/CenterPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/CommandLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/CommandLog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Listeners/BoardPaneViewScroll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Listeners/BoardPaneViewScroll.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -367,7 +400,7 @@
       <workItem from="1618673606689" duration="4103000" />
       <workItem from="1618680148400" duration="4169000" />
       <workItem from="1618742993331" duration="158000" />
-      <workItem from="1618743627634" duration="8768000" />
+      <workItem from="1618743627634" duration="17185000" />
     </task>
     <servers />
   </component>
@@ -421,6 +454,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/UI/DrawnObjects/DrawCard.java" />

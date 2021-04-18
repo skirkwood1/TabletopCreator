@@ -180,7 +180,7 @@ public class Game implements Serializable {
 //    }
 
     public void placeCard(CardInterface cardInterface, Point point){
-        this.placedCards.put(cardInterface.copy(),point);
+        this.placedCards.put(cardInterface,point);
     }
 
     public HashMap<CardInterface,Point> getPlacedCards(){

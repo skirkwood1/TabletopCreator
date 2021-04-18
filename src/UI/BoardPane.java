@@ -82,6 +82,9 @@ public class BoardPane extends JPanel {
         CardInterface selectedCard;
         Piece selectedPiece;
 
+        Point cardStart;
+        Point cardEnd;
+
         @Override
         public void mouseClicked(MouseEvent e) {
             Graphics g = getGraphics();
@@ -150,6 +153,7 @@ public class BoardPane extends JPanel {
             if(SwingUtilities.isLeftMouseButton(e)){
                     if(placementType == PlacementType.NONE){
                         selectedCard = getSelectedCard();
+                        cardStart = game.getPlacedCards().get(selectedCard);
 
                         if(start_x < size[0] && start_x >= 0 &&
                                 start_y < size[1] && start_y >= 0
@@ -185,6 +189,8 @@ public class BoardPane extends JPanel {
             end_x = (int) Math.floor(((e.getX() / zoom - PADDING) / SCALE)) - leftMarginOffset;
             end_y = (int) Math.floor(((e.getY() / zoom - PADDING) / SCALE)) - topMarginOffset;
 
+            cardEnd = game.getPlacedCards().get(selectedCard);
+
             int[] size = game.getBoard().getSize();
 
             if(SwingUtilities.isLeftMouseButton(e)) {
@@ -194,10 +200,14 @@ public class BoardPane extends JPanel {
                         start_y < size[1] && start_y >= 0) {
                     switch(placementType){
                         case NONE:
-                            if((start_x != end_x || start_y != end_y) &&
-                                    selectedPiece != null){
-                                PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
-                                commandStack.insertCommand(pmc);
+                            if(selectedCard != null){
+                                CardMoveCommand cmc = new CardMoveCommand(game,selectedCard,cardStart,cardEnd);
+                                commandStack.insertCommand(cmc);
+                            }
+                            else if((start_x != end_x || start_y != end_y) &&
+                                selectedPiece != null){
+                            PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
+                            commandStack.insertCommand(pmc);
                             }
                             break;
                         case SPACE:
@@ -558,18 +568,16 @@ public class BoardPane extends JPanel {
     public void placeCard(){
         if(game.getSelectedCard() != null){
             CardInterface card = game.getSelectedCard();
-            Dimension d = scaleCard(card);
-            Point point = new Point((int)(mousePoint.getX()/zoom-d.getWidth()/2),(int)(mousePoint.getY()/zoom-d.getHeight()/2));
-            game.placeCard(card,point);
+            placeCard(card);
         }
     }
 
-    public void placeCard(Card card){
-        if(game.getSelectedCard() != null){
-            Dimension d = scaleCard(card);
-            Point point = new Point((int)(mousePoint.getX()/zoom-d.getWidth()/2),(int)(mousePoint.getY()/zoom-d.getHeight()/2));
-            game.placeCard(card,point);
-        }
+    public void placeCard(CardInterface card){
+        Dimension d = scaleCard(card);
+        Point point = new Point((int)(mousePoint.getX()/zoom-d.getWidth()/2),(int)(mousePoint.getY()/zoom-d.getHeight()/2));
+
+        PlaceCardCommand cpc = new PlaceCardCommand(game,card,point);
+        commandStack.insertCommand(cpc);
     }
 
     public int spaceScale(int size){

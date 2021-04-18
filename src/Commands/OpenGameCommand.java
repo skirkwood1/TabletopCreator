@@ -10,7 +10,7 @@ import java.io.ObjectInputStream;
 /* Replace game with new one
 * Saves the old game for undo
 * */
-public class OpenGameCommand extends GameCommand {
+public class OpenGameCommand implements GameCommand {
 
     private final Game oldGame;
     private final Game newGame;
@@ -33,5 +33,9 @@ public class OpenGameCommand extends GameCommand {
     public void unExecute(){
         frame.setGame(oldGame);
         //frame.updateBoard();
+    }
+
+    public String toString(){
+        return String.format("Opened game: %s",newGame.getName());
     }
 }

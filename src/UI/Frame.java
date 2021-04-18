@@ -47,7 +47,7 @@ public class Frame extends JFrame implements Observable {
     private HashMap<KeyStroke, Action> actionMap = new HashMap<>();
 
     public Frame() {
-        super("Tabletop Creator v0.03");
+        super("Tabletop Creator v0.1");
 
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("ProgramIcon.png"));
         this.setIconImage(icon.getImage());

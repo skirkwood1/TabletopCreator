@@ -14,6 +14,8 @@ public class CommandLog extends JPanel {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
+        textArea.setFont(new Font("Segoe UI",Font.PLAIN,12));
+
         UIManager.put("TextArea.border",BorderFactory.createEmptyBorder(2,2,2,2));
 
         //textArea.setBorder(BorderFactory.createEmptyBorder());
@@ -26,7 +28,7 @@ public class CommandLog extends JPanel {
     }
 
     public void appendText(String text){
-        textArea.append(text);
+        textArea.append(text + "\n\r");
     }
 
     public void setText(String text) {textArea.setText(text);}

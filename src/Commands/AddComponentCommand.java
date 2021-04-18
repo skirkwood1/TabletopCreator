@@ -5,8 +5,10 @@ import Models.*;
 /* Adds a component (piece or card) to the project.
 * Undo removes the component.
 * */
-public class AddComponentCommand extends GameCommand {
+public class AddComponentCommand implements GameCommand {
     private final GameComponent component;
+
+    private final Game game;
 
     public AddComponentCommand(Game game, GameComponent component){
         this.game = game;
@@ -35,5 +37,9 @@ public class AddComponentCommand extends GameCommand {
         else if(this.component instanceof Texture){
             game.removeTexture((Texture)component);
         }
+    }
+
+    public String toString(){
+        return "Import piece named " + component + " to project.";
     }
 }

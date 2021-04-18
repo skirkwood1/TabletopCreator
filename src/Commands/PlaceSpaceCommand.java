@@ -9,9 +9,11 @@ import java.awt.image.BufferedImage;
 /*Put a color/texture at a square
 * Saves the old color/texture
 * */
-public class PlaceSpaceCommand extends GameCommand {
+public class PlaceSpaceCommand implements GameCommand {
 
     private final int x,y;
+
+    private final Game game;
 
     private final boolean useTexture;
     private final Color newColor;

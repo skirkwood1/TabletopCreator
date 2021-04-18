@@ -8,14 +8,15 @@ import java.awt.*;
 /*Change the board's color to a new color or texture.
 * Saves the old color/texture in case of an undo.
 * */
-public class UpdateColorCommand extends GameCommand {
+public class UpdateColorCommand implements GameCommand {
     private Color color,oldColor;
 
+    private final Game game;
     private Texture texture,oldTexture;
     private final boolean usedTexture,useTexture;
 
     public UpdateColorCommand(Game game, Color color){
-        this.memento = new GameMemento();
+        //this.memento = new GameMemento();
         this.game = game;
 
         this.color = color;
@@ -32,7 +33,7 @@ public class UpdateColorCommand extends GameCommand {
     }
 
     public UpdateColorCommand(Game game, Texture texture){
-        this.memento = new GameMemento();
+        //this.memento = new GameMemento();
         this.game = game;
 
         this.texture = texture;
@@ -65,5 +66,13 @@ public class UpdateColorCommand extends GameCommand {
             game.getBoard().setColor(this.oldColor);
         }
 
+    }
+
+    public String toString(){
+        if(useTexture) {
+            return String.format("Changed color to %s",texture);
+        }else{
+            return String.format("Changed color to [%d,%d,%d]",color.getRed(),color.getGreen(),color.getBlue());
+        }
     }
 }

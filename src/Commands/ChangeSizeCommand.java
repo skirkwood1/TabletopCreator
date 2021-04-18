@@ -6,9 +6,11 @@ import Models.Game;
 * Spaces that already had a color/texture/piece applied will remain in the new board
 * Saves the old width and height for undo
 * */
-public class ChangeSizeCommand extends GameCommand {
+public class ChangeSizeCommand implements GameCommand {
     private int desiredWidth,desiredHeight;
     private int oldWidth,oldHeight;
+
+    private Game game;
 
     private int[] oldMargins;
     private int[] margins;
@@ -52,5 +54,13 @@ public class ChangeSizeCommand extends GameCommand {
         game.getBoard().setMargins(oldMargins);
 
         System.out.println(game);
+    }
+
+    public String toString(){
+        return String.format("Changed board size and margins from: \n\r\t" +
+                "Width: %d, Height: %d, Top: %d, Bottom: %d, Left: %d, Right: %d to \n\r\t" +
+                "Width: %d, Height: %d, Top: %d, Bottom: %d, Left: %d, Right: %d",
+                oldWidth,oldHeight,oldMargins[0],oldMargins[1],oldMargins[2],oldMargins[3],
+                desiredWidth,desiredHeight,margins[0],margins[1],margins[2],margins[3]);
     }
 }
