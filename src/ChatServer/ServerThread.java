@@ -12,7 +12,6 @@ public class ServerThread implements Runnable {
 
         private Socket socket;
         private ArrayList<ServerThread> clients;
-        private ServerThread self;
         private HashMap<Message.MessageType, ChatCommand> commandMap;
 
         private volatile ObjectOutputStream oos;
@@ -24,8 +23,6 @@ public class ServerThread implements Runnable {
             this.socket = socket;
             this.clients = clients;
             this.commandMap = new HashMap<>();
-            this.self = this;
-
             initCommands();
         }
 

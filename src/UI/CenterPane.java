@@ -72,9 +72,7 @@ public class CenterPane extends JPanel implements Observable {
             }
 
             if(component != null){
-                ivs.setImageZoom(1.0);
-                displayImage(component.getImage());
-                setComponentText(component.getText());
+                setComponentPane(component);
                 game.setSelectedComponent(component);
                 game.setSelectedCard(card);
 
@@ -264,8 +262,74 @@ public class CenterPane extends JPanel implements Observable {
             }
         });
 
-        popupMenu.add(delete);
-        popupMenu.add(colorSelect);
+        JMenuItem flip = new JMenuItem("Flip");
+        flip.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardInterface cardInterface = boardPane.getSelectedCard();
+                if(cardInterface != null){
+                    cardInterface.flip();
+                }
+                updateBoard();
+                updateObservers();
+            }
+        });
+
+        JMenuItem drawCard = new JMenuItem("Draw Card");
+        drawCard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardInterface cardInterface = boardPane.getSelectedCard();
+                if(cardInterface instanceof Deck){
+                    Deck deck = (Deck)cardInterface;
+                    Card card = deck.drawCard();
+                    boardPane.placeCard(card);
+                }
+                updateBoard();
+            }
+        });
+
+        JMenuItem shuffle = new JMenuItem("Shuffle");
+        shuffle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardInterface cardInterface = boardPane.getSelectedCard();
+                if(cardInterface instanceof Deck){
+                    Deck deck = (Deck)cardInterface;
+                    deck.shuffle();
+                }
+                updateBoard();
+            }
+        });
+
+        MouseAdapter rightClick = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(boardPane.getSelectedCard() != null){
+                    setComponentPane((GameComponent)boardPane.getSelectedCard());
+                }
+                else if(boardPane.getSelectedSpace().isOccupied()){
+                    setComponentPane(boardPane.getSelectedSpace().getPiece());
+                }
+                if(SwingUtilities.isRightMouseButton(e)){
+                    popupMenu.removeAll();
+                    popupMenu.add(delete);
+                    popupMenu.add(colorSelect);
+
+                    if(boardPane.getSelectedCard() != null){
+                        popupMenu.add(flip);
+                        if(boardPane.getSelectedCard() instanceof Deck){
+                            popupMenu.add(drawCard);
+                            popupMenu.add(shuffle);
+                        }
+                    }
+
+                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        };
+
+        boardPane.addMouseListener(rightClick);
 
         updateBoard();
 
@@ -356,6 +420,12 @@ public class CenterPane extends JPanel implements Observable {
 
     public ComponentTree getComponentTree(){
         return this.componentTree;
+    }
+
+    public void setComponentPane(GameComponent component){
+        ivs.setImageZoom(1.0);
+        displayImage(component.getImage());
+        setComponentText(component.getText());
     }
 
 }

@@ -1,14 +1,12 @@
 package UI.Listeners;
 
+import Models.Space;
 import Observers.Observer;
 import UI.BoardPane;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class BoardPaneViewScroll extends MouseAdapter {
@@ -29,7 +27,7 @@ public class BoardPaneViewScroll extends MouseAdapter {
             this.observers = observers;
         }
 
-        @Override
+    @Override
         public void mousePressed(MouseEvent e) {
 
             holdPoint = new Point(e.getPoint());

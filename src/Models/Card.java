@@ -9,15 +9,27 @@ public class Card implements Serializable, GameComponent,CardInterface {
 
     private String name,text;
     private ComponentImage image;
+    private ComponentImage cardBack;
+
+    private boolean flipped;
 
     public Card(String name, String text, ComponentImage image){
         this.name = name;
         this.text = text;
         this.image = image;
+        this.flipped = false;
+    }
+
+    public Card(String name, String text, ComponentImage image, ComponentImage cardBack){
+        this.name = name;
+        this.text = text;
+        this.image = image;
+        this.cardBack = cardBack;
+        this.flipped = false;
     }
 
     public Card copy(){
-        return new Card(this.getName(),this.getText(),this.getComponentImage());
+        return new Card(this.getName(),this.getText(),this.getComponentImage(),this.cardBack);
     }
 
     public String getName(){
@@ -29,10 +41,12 @@ public class Card implements Serializable, GameComponent,CardInterface {
     }
 
     public ComponentImage getComponentImage(){
+        if(flipped) return this.cardBack;
         return this.image;
     }
 
     public BufferedImage getImage(){
+        if(flipped) return this.cardBack.getImage();
         return this.image.getImage();
     }
 
@@ -40,4 +54,13 @@ public class Card implements Serializable, GameComponent,CardInterface {
         return getName();
     }
 
+    @Override
+    public void flip() {
+        this.flipped = !flipped;
+    }
+
+    @Override
+    public boolean isFlipped() {
+        return flipped;
+    }
 }

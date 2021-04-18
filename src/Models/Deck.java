@@ -17,10 +17,12 @@ public class Deck implements Serializable,CardInterface, GameComponent {
     private ArrayList<Card> cards;
 
     private ComponentImage cardBack;
+    private boolean flipped;
 
     public Deck(String name){
         this.name = name;
         this.cards = new ArrayList<>();
+        this.flipped = true;
         try{
             this.cardBack = new ComponentImage(ImageIO.read(getClass().getClassLoader().getResource("cardback.png")));
         }catch(IOException i){
@@ -31,6 +33,7 @@ public class Deck implements Serializable,CardInterface, GameComponent {
     public Deck(String name,Card ... cards){
         this.name = name;
         this.cards = new ArrayList<>();
+        this.flipped = true;
 
         Collections.addAll(this.cards, cards);
     }
@@ -38,6 +41,7 @@ public class Deck implements Serializable,CardInterface, GameComponent {
     public Deck(String name,ArrayList<Card> cards){
         this.name = name;
         this.cards = cards;
+        this.flipped = true;
 
         try{
             this.cardBack = new ComponentImage(ImageIO.read(getClass().getClassLoader().getResource("cardback.png")));
@@ -50,6 +54,7 @@ public class Deck implements Serializable,CardInterface, GameComponent {
         this.name = name;
         this.cards = cards;
         this.cardBack = cardBack;
+        this.flipped = true;
     }
 
     public void shuffle(){
@@ -102,6 +107,19 @@ public class Deck implements Serializable,CardInterface, GameComponent {
     }
 
     public BufferedImage getImage(){
-        return this.cardBack.getImage();
+        if(flipped){
+            return this.cardBack.getImage();
+        }else{
+            return this.cards.get(0).getImage();
+        }
+    }
+
+    public void flip(){
+        this.flipped = !flipped;
+    }
+
+    @Override
+    public boolean isFlipped() {
+        return flipped;
     }
 }

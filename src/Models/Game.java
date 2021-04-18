@@ -1,9 +1,11 @@
 package Models;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Game implements Serializable {
 
@@ -23,7 +25,7 @@ public class Game implements Serializable {
     private GameComponent selectedComponent = null;
     private CardInterface selectedCard = null;
 
-    private HashMap<CardInterface, Point> placedCards;
+    private LinkedHashMap<CardInterface, Point> placedCards;
 
     public Game(){
         this.cards = new ArrayList<>();
@@ -32,7 +34,7 @@ public class Game implements Serializable {
         this.board = new Board(10,10);
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
-        this.placedCards = new HashMap<>();
+        this.placedCards = new LinkedHashMap<>();
     }
 
     public Game(Game game){
@@ -41,7 +43,7 @@ public class Game implements Serializable {
         this.pieces = game.pieces;
         this.textures = new ArrayList<>();
         this.board = game.getBoard();
-        this.placedCards = new HashMap<>();
+        this.placedCards = new LinkedHashMap<>();
     }
 
     public Game(int x,int y){
@@ -51,7 +53,7 @@ public class Game implements Serializable {
         this.board = new Board(x,y);
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
-        this.placedCards = new HashMap<>();
+        this.placedCards = new LinkedHashMap<>();
     }
 
     public Game(ArrayList<Card> cards, ArrayList<Dice> diceCollection, ArrayList<Piece> pieces, Board board){
@@ -60,7 +62,7 @@ public class Game implements Serializable {
         this.pieces = pieces;
         this.board = board;
         this.textures = new ArrayList<>();
-        this.placedCards = new HashMap<>();
+        this.placedCards = new LinkedHashMap<>();
     }
 
     public Card addCard(Card card){
@@ -73,7 +75,11 @@ public class Game implements Serializable {
     }
 
     public void createDeck(String name,ArrayList<Card> cards){
-        this.decks.add(new Deck(name,cards));
+        try{
+            ComponentImage cardBack = new ComponentImage(ImageIO.read(getClass().getClassLoader().getResource("cardback.png")));
+            this.decks.add(new Deck(name,cards,cardBack));
+        }catch(Exception e){}
+
     }
 
     public void createDeck(Deck deck){

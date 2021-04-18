@@ -7,6 +7,7 @@ import Models.*;
 import Observers.ColorLabelObserver;
 import UI.UIHelpers.FileChooserCreator;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
@@ -265,7 +266,13 @@ public class Frame extends JFrame implements Observable {
 
             switch(state){
                 case ADD_CARD:
-                    component = new Card(name,text,ci);
+                    try{
+                        ComponentImage cardBack = new ComponentImage(ImageIO.read(getClass().getClassLoader().getResource("cardback.png")));
+                        component = new Card(name,text,ci,cardBack);
+                    }catch(IOException ie){
+                        component = new Card(name,text,ci);
+                    }
+
                     break;
                 case ADD_PIECE:
                     component = new Piece(name,text,ci);

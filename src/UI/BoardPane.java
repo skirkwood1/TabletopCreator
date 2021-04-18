@@ -36,7 +36,7 @@ public class BoardPane extends JPanel {
 
     CommandStack commandStack;
 
-    private JPopupMenu rightClickMenu;
+    private final JPopupMenu rightClickMenu;
 
 
     public BoardPane(Game game,CommandStack commandStack) {
@@ -97,6 +97,7 @@ public class BoardPane extends JPanel {
             if(SwingUtilities.isLeftMouseButton(e)){
                 switch(placementType){
                     case SPACE:
+                    case NONE:
                         break;
                     case PIECE:
                         // get X and y position on board
@@ -119,18 +120,9 @@ public class BoardPane extends JPanel {
     //                        }
                         break;
                     case CARD:
-                        if(game.getSelectedCard() != null){
-                            CardInterface card = game.getSelectedCard();
-                            Dimension d = scaleCard(card);
-                            Point point = new Point((int)(e.getX()/zoom-d.getWidth()/2),(int)(e.getY()/zoom-d.getHeight()/2));
-                            game.placeCard(card,point);
-                        }
-                        break;
-                    case NONE:
+                        placeCard();
                         break;
                 }
-            }else if(SwingUtilities.isRightMouseButton(e)){
-                rightClickMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
 
@@ -157,7 +149,7 @@ public class BoardPane extends JPanel {
 
             if(SwingUtilities.isLeftMouseButton(e)){
                     if(placementType == PlacementType.NONE){
-                        selectedCard = getSelectedCard(originPoint);
+                        selectedCard = getSelectedCard();
 
                         if(start_x < size[0] && start_x >= 0 &&
                                 start_y < size[1] && start_y >= 0
@@ -495,7 +487,7 @@ public class BoardPane extends JPanel {
         return(AlphaComposite.getInstance(type, alpha));
     }
 
-    private CardInterface getSelectedCard(Point originPoint){
+    public CardInterface getSelectedCard(){
         CardInterface selectedCard = null;
         for(Map.Entry<CardInterface,Point> cardEntry: game.getPlacedCards().entrySet()){
             CardInterface card = cardEntry.getKey();
@@ -509,7 +501,7 @@ public class BoardPane extends JPanel {
             //g2.setColor(Color.BLUE);
             //g2.draw(bounds);
 
-            if(bounds.contains(originPoint)){
+            if(bounds.contains(mousePoint)){
                 selectedCard = card;
             }
         }
@@ -526,7 +518,7 @@ public class BoardPane extends JPanel {
     }
 
     public void deleteSelection(){
-        CardInterface selectedCard = getSelectedCard(mousePoint);
+        CardInterface selectedCard = getSelectedCard();
 
         if(selectedCard != null){
             game.removePlacedCard(selectedCard);
@@ -561,6 +553,23 @@ public class BoardPane extends JPanel {
         double height = card.getImage().getHeight() / heightScale;
 
         return new Dimension((int)width,(int)height);
+    }
+
+    public void placeCard(){
+        if(game.getSelectedCard() != null){
+            CardInterface card = game.getSelectedCard();
+            Dimension d = scaleCard(card);
+            Point point = new Point((int)(mousePoint.getX()/zoom-d.getWidth()/2),(int)(mousePoint.getY()/zoom-d.getHeight()/2));
+            game.placeCard(card,point);
+        }
+    }
+
+    public void placeCard(Card card){
+        if(game.getSelectedCard() != null){
+            Dimension d = scaleCard(card);
+            Point point = new Point((int)(mousePoint.getX()/zoom-d.getWidth()/2),(int)(mousePoint.getY()/zoom-d.getHeight()/2));
+            game.placeCard(card,point);
+        }
     }
 
     public int spaceScale(int size){
