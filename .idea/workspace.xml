@@ -7,113 +7,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Commands/AddToDeckCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/CreateDeckCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/DeleteComponentCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/DeleteFromDeckCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/DetextureSpacesCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ChatCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ChatCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/GameListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/GameListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/MessagePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/MessagePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/GameMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/GameMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/Message$MessageType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/Message$MessageType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/QuitMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/QuitMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerProgram$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerProgram$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerProgram.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerProgram.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/AddComponentCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/AddComponentCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CardMoveCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CardMoveCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/ChangeSizeCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/ChangeSizeCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CommandStack.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CommandStack.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/DeleteSpaceCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/DeleteSpaceCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameMemento.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameMemento.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/MultipleSpacesCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/MultipleSpacesCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/OpenGameCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/OpenGameCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PieceMoveCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PieceMoveCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlaceCardCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlaceCardCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlacePieceCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlacePieceCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlaceSpaceCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlaceSpaceCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/UpdateColorCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/UpdateColorCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Card.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/CardInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/CardInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/ComponentImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/ComponentImage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Deck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Deck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Dice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Dice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/GameComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/GameComponent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Piece.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Piece.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Resource.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Resource.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space$Shape.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space$Shape.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Texture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Texture.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/BoardPaneObserver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/BoardPaneObserver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/ColorLabelObserver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/ColorLabelObserver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/Observer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/Observer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$PlacementType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$PlacementType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CardDisplay.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CardDisplay.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ColorChooseDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ColorChooseDialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CommandLog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CommandLog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentCreationDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentCreationDialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/DeckCreationDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/DeckCreationDialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Listeners/BoardPaneViewScroll.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Listeners/BoardPaneViewScroll.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Listeners/ImageViewScroll.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Listeners/ImageViewScroll.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Observable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Observable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Program$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Program$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Program.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Program.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ResizeBoardPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ResizeBoardPane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/StateListener$ButtonOutput.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/StateListener$ButtonOutput.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/StateListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/StateListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/FileChooserCreator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/FileChooserCreator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/ScrollBarUICreator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/ScrollBarUICreator$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/ScrollBarUICreator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/ScrollBarUICreator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/AddComponentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/AddComponentCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/PlaceCardCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlaceCardCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/PlacePieceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlacePieceCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/PlaceSpaceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlaceSpaceCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/CenterPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/CenterPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/ComponentTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ComponentTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Frame.java" afterDir="false" />
-    </list>
+    <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -129,40 +23,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/CreateDeckCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="27" column="108" selection-start-line="27" selection-start-column="108" selection-end-line="27" selection-end-column="108" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/ChangeSizeCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-459">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Commands/CardMoveCommand.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
               <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/AddComponentCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="37" column="32" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -209,14 +73,50 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/ComponentTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="103" column="42" lean-forward="true" selection-start-line="103" selection-start-column="42" selection-end-line="103" selection-end-column="42" />
+            <state relative-caret-position="357">
+              <caret line="139" column="41" selection-start-line="139" selection-start-column="41" selection-end-line="139" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#9326#9327#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerProgram.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="42" column="1" lean-forward="true" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerThread.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="488">
+              <caret line="58" column="36" lean-forward="true" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1321">
+              <caret line="127" column="35" selection-start-line="127" selection-start-column="33" selection-end-line="127" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -445,7 +345,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1618791814290" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1618791923864" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -588,12 +488,12 @@
       <workItem from="1618680148400" duration="4169000" />
       <workItem from="1618742993331" duration="158000" />
       <workItem from="1618743627634" duration="17185000" />
-      <workItem from="1618784365268" duration="5798000" />
+      <workItem from="1618784365268" duration="6611000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="374776000" />
+    <option name="totallyTimeSpent" value="375589000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -868,42 +768,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerProgram.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ChatServer/GameListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3043">
-          <caret line="195" column="40" selection-start-line="195" selection-start-column="40" selection-end-line="195" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6335#6336#0" expanded="true" />
-            <element signature="e#6431#6432#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1159,11 +1027,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/ComponentTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="103" column="42" lean-forward="true" selection-start-line="103" selection-start-column="42" selection-end-line="103" selection-end-column="42" />
+        <state relative-caret-position="357">
+          <caret line="139" column="41" selection-start-line="139" selection-start-column="41" selection-end-line="139" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#9326#9327#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerProgram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="42" column="1" lean-forward="true" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="58" column="36" lean-forward="true" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1321">
+          <caret line="127" column="35" selection-start-line="127" selection-start-column="33" selection-end-line="127" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
