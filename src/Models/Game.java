@@ -216,4 +216,53 @@ public class Game implements Serializable {
     }
 
     public void removeTexture(Texture texture){textures.remove(texture);}
+
+    public void removeComponent(GameComponent component){
+        if(component instanceof Texture){
+            textures.remove(component);
+        }else if(component instanceof  Piece){
+            pieces.remove(component);
+        }else if(component instanceof Card){
+            cards.remove(component);
+        }else if(component instanceof Deck){
+            decks.remove(component);
+        }
+    }
+
+    public void addComponent(GameComponent component){
+        if(component instanceof Texture){
+            textures.add((Texture)component);
+        }else if(component instanceof  Piece){
+            pieces.add((Piece)component);
+        }else if(component instanceof Card){
+            cards.add((Card)component);
+        }else if(component instanceof Deck){
+            decks.add((Deck)component);
+        }
+    }
+
+    public void addComponent(GameComponent component, int index){
+        if(component instanceof Texture){
+            textures.add(index,(Texture)component);
+        }else if(component instanceof  Piece){
+            pieces.add(index,(Piece)component);
+        }else if(component instanceof Card){
+            cards.add(index,(Card)component);
+        }else if(component instanceof Deck){
+            decks.add(index,(Deck)component);
+        }
+    }
+
+    public int getComponentIndex(GameComponent component){
+        if(component instanceof Texture){
+            return textures.indexOf(component);
+        }else if(component instanceof  Piece){
+            return pieces.indexOf(component);
+        }else if(component instanceof Card){
+            return cards.indexOf(component);
+        }else if(component instanceof Deck){
+            return decks.indexOf(component);
+        }
+        return -1;
+    }
 }

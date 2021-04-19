@@ -1,10 +1,15 @@
 package UI;
 
+import Commands.CommandStack;
+import Commands.DeleteComponentCommand;
+import Commands.DeleteFromDeckCommand;
+import Commands.DetextureSpacesCommand;
 import Models.*;
 import Models.GameComponent;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -28,7 +33,7 @@ public class ComponentTree extends JPanel implements Observable {
     private JMenuItem delete,add;
 
 
-    public ComponentTree(Game game){
+    public ComponentTree(Game game, CommandStack commandStack){
         super();
 
         this.game = game;
@@ -62,36 +67,45 @@ public class ComponentTree extends JPanel implements Observable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+                GameComponent component = null;
 
+                ArrayList<Space> texturedSpaces = new ArrayList<>();
                 if(selectedNode.getParent().equals(cards)){
-                    game.getCards().remove(game.getCard(selectedNode.toString()));
-                    refreshTree(game);
+                    component = game.getCard(selectedNode.toString());
                 }else if(selectedNode.getParent().equals(pieces)){
-                    game.getPieces().remove(game.getPiece(selectedNode.toString()));
-                    refreshTree(game);
+                    component = game.getPiece(selectedNode.toString());
                 }else if(selectedNode.getParent().equals(textures)){
-                    Texture texture = game.getTexture(selectedNode.toString());
-                    game.getTextures().remove(game.getTexture(selectedNode.toString()));
+                    component = game.getTexture(selectedNode.toString());
                     game.getBoard().setColor(game.getBoard().getColor());
                     for(Space[] row:game.getBoard().getSpaces()){
                         for(Space space:row){
                             if(space.isUsingTexture()){
-                                if(space.getTexture().equals(texture)){
-                                    space.setColor(space.getColor());
+                                if(space.getTexture().equals(component)){
+                                    texturedSpaces.add(space);
                                 }
                             }
                         }
                     }
-                    refreshTree(game);
-                }else if(selectedNode.getParent().equals(pieces)){
-                    game.getPieces().remove(game.getPiece(selectedNode.toString()));
-                    refreshTree(game);
-                }else if(selectedNode.getParent().equals(pieces)){
-                    game.getPieces().remove(game.getPiece(selectedNode.toString()));
-                    refreshTree(game);
+                }else if(selectedNode.getParent().equals(decks)){
+                    component = game.getDeck(selectedNode.toString());
+                }else if(selectedNode.getParent().getParent().equals(decks)){
+                    component = game.getCard(selectedNode.toString());
+                    ArrayList<Card> cardList = new ArrayList<>();
+                    cardList.add((Card)component);
+                    DeleteFromDeckCommand ddc = new DeleteFromDeckCommand(game.getDeck(selectedNode.getParent().toString()),cardList);
+                    commandStack.insertCommand(ddc);
+                }
+
+                if(component != null && !selectedNode.getParent().getParent().equals(decks)){
+                    DeleteComponentCommand dcc = new DeleteComponentCommand(game,component);
+                    commandStack.insertCommand(dcc);
+
+                    DetextureSpacesCommand dsc = new DetextureSpacesCommand(game,texturedSpaces);
+                    commandStack.insertCommand(dsc);
                 }
 
                 updateObservers();
+                refreshTree(game);
             }
         });
 

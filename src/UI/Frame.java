@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static UI.StateListener.ButtonOutput.*;
@@ -306,7 +307,9 @@ public class Frame extends JFrame implements Observable {
                     deck.addCard(card);
                 }
             }
-            game.createDeck(deck);
+            CreateDeckCommand cdc = new CreateDeckCommand(game,deck);
+            commandStack.insertCommand(cdc);
+            //game.createDeck(deck);
             centerPane.updateComponentTree(deck);
         }
     }
@@ -314,14 +317,15 @@ public class Frame extends JFrame implements Observable {
     private void addDeckDialog(Deck deck){
         DeckCreationDialog deckCreationDialog = new DeckCreationDialog(game);
         int n = deckCreationDialog.displayNoName();
+
+        ArrayList<Card> cards = new ArrayList<>();
         if(n == JOptionPane.YES_OPTION){
             for(Card card: deckCreationDialog.getSelection()){
-                if(deckCreationDialog.getNumCopies() != null){
-                    deck.addCard(card,deckCreationDialog.getNumCopies());
-                }else{
-                    deck.addCard(card);
-                }
+                    cards.add(card);
+                    //deck.addCard(card);
             }
+            AddToDeckCommand adc = new AddToDeckCommand(deck,cards,deckCreationDialog.getNumCopies());
+            commandStack.insertCommand(adc);
             centerPane.updateComponentTree(deck);
         }
     }

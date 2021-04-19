@@ -40,6 +40,6 @@ public class AddComponentCommand implements GameCommand {
     }
 
     public String toString(){
-        return "Import piece named " + component + " to project.";
+        return "Import component named " + component + " to project.";
     }
 }

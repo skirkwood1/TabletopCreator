@@ -27,4 +27,8 @@ public class PlacePieceCommand implements GameCommand {
     public void unExecute(){
         game.getBoard().getSpace(x,y).removePiece();
     }
+
+    public String toString(){
+        return String.format("Placed piece at (%d,%d)",x,y);
+    }
 }

@@ -54,4 +54,8 @@ public class PlaceSpaceCommand implements GameCommand {
             game.getBoard().setSquare(x,y,oldColor);
         }
     }
+
+    public String toString(){
+        return String.format("Placed space at (%d,%d)",x,y);
+    }
 }

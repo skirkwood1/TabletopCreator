@@ -26,4 +26,8 @@ public class PlaceCardCommand implements GameCommand{
     public void unExecute() {
         game.removePlacedCard(card);
     }
+
+    public String toString(){
+        return String.format("Placed card at (%d,%d)",(int)point.getX(),(int)point.getY());
+    }
 }

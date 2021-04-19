@@ -98,7 +98,7 @@ public class CenterPane extends JPanel implements Observable {
         componentImage = new JLabel();
         boardPane = new BoardPane(game,commandStack);
         boardScreen = new JScrollPane();
-        componentTree = new ComponentTree(game);
+        componentTree = new ComponentTree(game,commandStack);
         JScrollPane imagePane = new JScrollPane(componentImage);
 
         this.commandStack = commandStack;
@@ -249,9 +249,13 @@ public class CenterPane extends JPanel implements Observable {
                 return;
             }
             else if(space.isUsingTexture()){
-                game.getBoard().setTexture(space.getTexture());
+                UpdateColorCommand ucc = new UpdateColorCommand(game,space.getTexture());
+                commandStack.insertCommand(ucc);
+                //game.getBoard().setTexture(space.getTexture());
             }else{
-                game.getBoard().setColor(space.getColor());
+                UpdateColorCommand ucc = new UpdateColorCommand(game,space.getColor());
+                commandStack.insertCommand(ucc);
+                //game.getBoard().setColor(space.getColor());
             }
             updateBoard();
             updateObservers();
@@ -303,8 +307,10 @@ public class CenterPane extends JPanel implements Observable {
                 if(boardPane.getSelectedCard() != null){
                     setComponentPane((GameComponent)boardPane.getSelectedCard());
                 }
-                else if(boardPane.getSelectedSpace().isOccupied()){
-                    setComponentPane(boardPane.getSelectedSpace().getPiece());
+                else if(boardPane.getSelectedSpace() != null){
+                    if(boardPane.getSelectedSpace().isOccupied()){
+                        setComponentPane(boardPane.getSelectedSpace().getPiece());
+                    }
                 }
                 if(SwingUtilities.isRightMouseButton(e)){
                     popupMenu.removeAll();
