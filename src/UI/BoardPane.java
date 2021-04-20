@@ -4,6 +4,9 @@ import Models.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
@@ -357,6 +360,12 @@ public class BoardPane extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g;
 
+        RenderingHints rh = new RenderingHints(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHints(rh);
+
+
         //setBackground(Color.WHITE);
 
         int[] boardSize = game.getBoard().getSize();
@@ -436,7 +445,12 @@ public class BoardPane extends JPanel {
 
             Dimension d = scaleCard(card);
 
-            g2.drawImage(card.getImage(),(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight(),null);
+            if(card instanceof Deck){
+                Deck deck = (Deck)card;
+                drawDeck(g2,deck,(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight());
+            }else{
+                g2.drawImage(card.getImage(),(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight(),null);
+            }
         }
 
         if (this.image != null) {
@@ -466,6 +480,51 @@ public class BoardPane extends JPanel {
                 }
             }
         }
+    }
+
+    public void drawDeck(Graphics2D g2, Deck deck, int x, int y, int width, int height){
+        g2.drawImage(deck.getImage(),x,y,width,height,null);
+        g2.setFont(new Font("Segoe UI",Font.PLAIN,12));
+        g2.setColor(Color.BLACK);
+
+        FontRenderContext frc = g2.getFontRenderContext();
+        GlyphVector gv = g2.getFont().createGlyphVector(frc, deck.getName());
+        Rectangle rect = gv.getPixelBounds(null, x, y);
+
+        g2.drawGlyphVector(gv,x,y+1);
+        if(rect.width/zoom < width){
+            g2.drawLine(
+                (int)((x+(rect.width)/zoom)),
+                y-(int)(rect.getHeight()/(3*zoom)),
+                x+width-SCALE/5,
+                y-(int)(rect.getHeight()/(3*zoom)));
+        }
+        int[] xPoints = {x+1,x+width-1,x+width-3,x+3};
+        int[] yPoints = {y+height,y+height,y+height+4,y+height+4};
+
+        Stroke stroke = new BasicStroke(0.5f);
+        Stroke oldStroke = g2.getStroke();
+        g2.setStroke(stroke);
+        GeneralPath polygon = new GeneralPath(GeneralPath.WIND_EVEN_ODD,xPoints.length);
+        polygon.moveTo(xPoints[0],yPoints[0]);
+
+        for (int index = 1; index < xPoints.length; index++) {
+            polygon.lineTo(xPoints[index], yPoints[index]);
+        }
+
+        polygon.closePath();
+        g2.draw(polygon);
+        g2.setColor(Color.WHITE);
+        g2.fill(polygon);
+
+        g2.setColor(Color.BLACK);
+        g2.drawLine(x+2,
+                y+height+2,
+                x+width-2,
+                y+height+2);
+
+        g2.setStroke(oldStroke);
+
     }
 
     public void drawSpace(Graphics2D g2, int x, int y){

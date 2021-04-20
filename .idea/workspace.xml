@@ -7,7 +7,106 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="" />
+    <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ChatCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ClientWindow.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/GameListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/MessagePane.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/GameMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/Message$MessageType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/Messages/QuitMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerProgram$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerProgram.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/ChatServer/ServerThread.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/AddComponentCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/AddToDeckCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CardMoveCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/ChangeSizeCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CommandStack.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CommandStack.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/CreateDeckCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/DeleteComponentCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/DeleteFromDeckCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/DeleteSpaceCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/DetextureSpacesCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/GameMemento.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/MultipleSpacesCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/OpenGameCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PieceMoveCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlaceCardCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlacePieceCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/PlaceSpaceCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Commands/UpdateColorCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Card.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/CardInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/CardInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/ComponentImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/ComponentImage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Deck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Deck.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Dice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Dice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/GameComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/GameComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Piece.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Piece.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Resource.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space$Shape.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space$Shape.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Space.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Texture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Texture.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/BoardPaneObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/ColorLabelObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Observers/Observer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$PlacementType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane$PlacementType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/BoardPane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CardDisplay.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CenterPane.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ColorChooseDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/CommandLog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentCreationDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/DeckCreationDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Frame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Listeners/BoardPaneViewScroll.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Listeners/ImageViewScroll.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Observable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Program$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Program.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ResizeBoardPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ResizeBoardPane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/StateListener$ButtonOutput.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/StateListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/Toolbar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/FileChooserCreator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/ScrollBarUICreator$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/UIHelpers/ScrollBarUICreator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/cardback.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/cardback.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/BoardPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/BoardPane.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,53 +120,14 @@
     </SUITE>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/CardMoveCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/AddToDeckCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="39" column="114" selection-start-line="39" selection-start-column="114" selection-end-line="39" selection-end-column="114" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#693#694#0" expanded="true" />
-                <element signature="e#736#737#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/UI/Toolbar.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="398" column="5" lean-forward="true" selection-start-line="398" selection-start-column="5" selection-end-line="398" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Commands/DeleteFromDeckCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
+            <state relative-caret-position="306">
               <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#377#378#0" expanded="true" />
-                <element signature="e#396#397#0" expanded="true" />
-                <element signature="e#479#480#0" expanded="true" />
-                <element signature="e#498#499#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -76,10 +136,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/ComponentTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
+            <state relative-caret-position="2125">
               <caret line="139" column="41" selection-start-line="139" selection-start-column="41" selection-end-line="139" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#9299#9300#0" expanded="true" />
                 <element signature="e#9326#9327#0" expanded="true" />
               </folding>
             </state>
@@ -89,8 +150,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerProgram.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="42" column="1" lean-forward="true" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+            <state relative-caret-position="595">
+              <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -101,8 +162,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="58" column="36" lean-forward="true" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
+            <state relative-caret-position="884">
+              <caret line="58" column="36" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-371">
+              <caret line="205" column="33" lean-forward="true" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -111,10 +184,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
+        <entry file="file://$PROJECT_DIR$/src/UI/BoardPane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1321">
-              <caret line="127" column="35" selection-start-line="127" selection-start-column="33" selection-end-line="127" selection-end-column="35" />
+            <state relative-caret-position="-90">
+              <caret line="493" column="37" lean-forward="true" selection-start-line="493" selection-start-column="37" selection-end-line="493" selection-end-column="37" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#19298#19299#0" expanded="true" />
+                <element signature="e#19331#19332#0" expanded="true" />
+                <element signature="e#19963#19964#0" expanded="true" />
+                <element signature="e#20002#20003#0" expanded="true" />
+                <element signature="e#21852#21853#0" expanded="true" />
+                <element signature="e#21898#21899#0" expanded="true" />
+                <element signature="e#21938#21939#0" expanded="true" />
+                <element signature="e#21970#21971#0" expanded="true" />
+                <element signature="e#22794#22795#0" expanded="true" />
+                <element signature="e#22839#22840#0" expanded="true" />
+                <element signature="e#22883#22884#0" expanded="true" />
+                <element signature="e#22925#22926#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UI/CommandLog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="436">
+              <caret line="37" column="33" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -125,7 +222,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
+            <state relative-caret-position="5151">
               <caret line="326" column="17" selection-start-line="326" selection-start-column="17" selection-end-line="326" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -137,12 +234,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Models/Deck.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
+            <state relative-caret-position="1309">
               <caret line="86" column="5" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
-              <folding>
-                <element signature="e#2643#2644#0" expanded="true" />
-                <element signature="e#2676#2677#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -159,7 +252,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>card.getImage</find>
       <find>placedcards</find>
       <find>placeable card</find>
       <find>placecard</find>
@@ -189,6 +281,7 @@
       <find>deck</find>
       <find>delete</find>
       <find>rightclick</find>
+      <find>stroke</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -233,7 +326,6 @@
         <option value="$PROJECT_DIR$/src/UI/ComponentCreationDialog.java" />
         <option value="$PROJECT_DIR$/src/UI/ResizeBoardPane.java" />
         <option value="$PROJECT_DIR$/src/ChatServer/ClientWindow.java" />
-        <option value="$PROJECT_DIR$/src/UI/BoardPane.java" />
         <option value="$PROJECT_DIR$/src/UI/Toolbar.java" />
         <option value="$PROJECT_DIR$/src/Models/Game.java" />
         <option value="$PROJECT_DIR$/src/Commands/DetextureSpacesCommand.java" />
@@ -249,13 +341,15 @@
         <option value="$PROJECT_DIR$/src/Commands/AddToDeckCommand.java" />
         <option value="$PROJECT_DIR$/src/Commands/DeleteFromDeckCommand.java" />
         <option value="$PROJECT_DIR$/src/UI/ComponentTree.java" />
+        <option value="$PROJECT_DIR$/src/UI/BoardPane.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1270" />
-    <option name="width" value="1299" />
-    <option name="height" value="1400" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1271" />
+    <option name="y" value="-9" />
+    <option name="width" value="1298" />
+    <option name="height" value="1408" />
   </component>
   <component name="ProjectId" id="1qxf62pnp4SOU5kKOFw08xhbaOI" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -264,7 +358,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -303,6 +396,12 @@
               <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
               <item name="TabletopCreator" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TabletopCreator" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -317,24 +416,11 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="UI" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TabletopCreator" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="UI" type="462c0819:PsiDirectoryNode" />
-              <item name="Listeners" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TabletopCreator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TabletopCreator" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="UI" type="462c0819:PsiDirectoryNode" />
-              <item name="UIHelpers" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -345,7 +431,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1618791923864" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1618892817605" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -488,12 +574,14 @@
       <workItem from="1618680148400" duration="4169000" />
       <workItem from="1618742993331" duration="158000" />
       <workItem from="1618743627634" duration="17185000" />
-      <workItem from="1618784365268" duration="6611000" />
+      <workItem from="1618784365268" duration="7193000" />
+      <workItem from="1618853751702" duration="606000" />
+      <workItem from="1618878502193" duration="6968000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="375589000" />
+    <option name="totallyTimeSpent" value="383745000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -505,10 +593,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
+    <frame x="1017" y="-7" width="1038" height="1126" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14935064" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31186095" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -517,7 +605,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4875125" weight="0.32394367" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.47852147" visible="true" weight="0.3189135" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.47750512" visible="true" weight="0.3189135" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49846467" weight="0.39655173" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -526,8 +614,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.52147853" side_tool="true" visible="true" weight="0.3189135" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.4965035" weight="0.3249497" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5224949" side_tool="true" visible="true" weight="0.3189135" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.496004" weight="0.3249497" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -576,13 +664,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Models/CardInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Models/Space.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -786,16 +867,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/CommandLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/ComponentCreationDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -910,16 +981,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/BoardPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="507" column="32" selection-start-line="507" selection-start-column="32" selection-end-line="507" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/CenterPane.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-243">
@@ -961,27 +1022,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="326" column="17" selection-start-line="326" selection-start-column="17" selection-end-line="326" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Models/Deck.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="86" column="5" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
-          <folding>
-            <element signature="e#2643#2644#0" expanded="true" />
-            <element signature="e#2676#2677#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Commands/CardMoveCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -991,20 +1031,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Commands/AddToDeckCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
+        <state relative-caret-position="561">
           <caret line="39" column="114" selection-start-line="39" selection-start-column="114" selection-end-line="39" selection-end-column="114" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#693#694#0" expanded="true" />
-            <element signature="e#736#737#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/Toolbar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="398" column="5" lean-forward="true" selection-start-line="398" selection-start-column="5" selection-end-line="398" selection-end-column="5" />
+        <state relative-caret-position="6494">
+          <caret line="398" column="5" selection-start-line="398" selection-start-column="5" selection-end-line="398" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1013,24 +1051,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Commands/DeleteFromDeckCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
+        <state relative-caret-position="306">
           <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#377#378#0" expanded="true" />
-            <element signature="e#396#397#0" expanded="true" />
-            <element signature="e#479#480#0" expanded="true" />
-            <element signature="e#498#499#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/ComponentTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
+        <state relative-caret-position="2125">
           <caret line="139" column="41" selection-start-line="139" selection-start-column="41" selection-end-line="139" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9299#9300#0" expanded="true" />
             <element signature="e#9326#9327#0" expanded="true" />
           </folding>
         </state>
@@ -1038,8 +1073,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerProgram.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="42" column="1" lean-forward="true" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+        <state relative-caret-position="595">
+          <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1048,8 +1083,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ChatServer/ServerThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="58" column="36" lean-forward="true" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
+        <state relative-caret-position="884">
+          <caret line="58" column="36" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/Frame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5151">
+          <caret line="326" column="17" selection-start-line="326" selection-start-column="17" selection-end-line="326" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Models/Deck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1309">
+          <caret line="86" column="5" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/CommandLog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="37" column="33" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1058,10 +1120,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ChatServer/ClientWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1321">
-          <caret line="127" column="35" selection-start-line="127" selection-start-column="33" selection-end-line="127" selection-end-column="35" />
+        <state relative-caret-position="-371">
+          <caret line="205" column="33" lean-forward="true" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/java/awt/geom/GeneralPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="50" column="19" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/BoardPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-90">
+          <caret line="493" column="37" lean-forward="true" selection-start-line="493" selection-start-column="37" selection-end-line="493" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#19298#19299#0" expanded="true" />
+            <element signature="e#19331#19332#0" expanded="true" />
+            <element signature="e#19963#19964#0" expanded="true" />
+            <element signature="e#20002#20003#0" expanded="true" />
+            <element signature="e#21852#21853#0" expanded="true" />
+            <element signature="e#21898#21899#0" expanded="true" />
+            <element signature="e#21938#21939#0" expanded="true" />
+            <element signature="e#21970#21971#0" expanded="true" />
+            <element signature="e#22794#22795#0" expanded="true" />
+            <element signature="e#22839#22840#0" expanded="true" />
+            <element signature="e#22883#22884#0" expanded="true" />
+            <element signature="e#22925#22926#0" expanded="true" />
           </folding>
         </state>
       </provider>
