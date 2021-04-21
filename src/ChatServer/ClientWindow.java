@@ -181,7 +181,7 @@ public class ClientWindow implements ActionListener,Runnable {
                          this.pastMessages.add(game);
                          String gameName = game.getName();
 
-                         ChatGameButton gameButton = new ChatGameButton();
+                         ChatGameButton gameButton = new ChatGameButton(game.getBoard().getColor());
                          gameButton.setText(gameName);
                          gameButton.setDataSize(fileSize);
                          gameButton.setOpaque(false);
@@ -197,7 +197,7 @@ public class ClientWindow implements ActionListener,Runnable {
                          });
 
                          display(str,gameButton);
-                         log.insertComponent(gameButton);
+                         //log.insertComponent(gameButton);
 
                          index++;
                      }else{
@@ -237,7 +237,7 @@ public class ClientWindow implements ActionListener,Runnable {
          prompt.setText("");
      }
 
-    private void display(final String s, JButton button) {
+    private void display(final String s,ChatGameButton cgb) {
         EventQueue.invokeLater(new Runnable() {
             //@Override
             public void run() {
@@ -245,9 +245,11 @@ public class ClientWindow implements ActionListener,Runnable {
                 SimpleAttributeSet attr = new SimpleAttributeSet();
                 try{
                     doc.insertString(doc.getLength(),s + "\n\r" ,attr);
+                    if(cgb != null){
+                        log.insertComponent(cgb);
+                        doc.insertString(doc.getLength(), "\n\r", attr );
+                    }
                     log.setCaretPosition(log.getDocument().getLength());
-                    log.insertComponent(button);
-                    doc.insertString(doc.getLength(), "\n\r", attr );
                 }catch(Exception e){
 
                 }
