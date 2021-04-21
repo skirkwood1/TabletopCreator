@@ -25,7 +25,7 @@ public class DeckCreationDialog extends JOptionPane {
 
         number.setPreferredSize(new Dimension(50,20));
         JLabel numberLabel = new JLabel("Copies of Each:");
-        numberLabel.setPreferredSize(new Dimension(100,20));
+        //numberLabel.setPreferredSize(new Dimension(120,20));
 
         numberPanel.add(numberLabel);
         numberPanel.add(number);

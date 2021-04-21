@@ -126,18 +126,6 @@ public class ClientWindow implements ActionListener,Runnable {
 
         this.thread = new Thread(this);
         this.socket = new Socket(ip,port);
-
-        log.addHyperlinkListener(new HyperlinkListener() {
-            public void hyperlinkUpdate(HyperlinkEvent e) {
-                if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                    // Do something with e.getURL() here
-                    System.out.println(e.getDescription());
-
-                    Game game = pastMessages.get(Integer.parseInt(e.getDescription()));
-                    gameListener.gameEmitted(game);
-                }
-            }
-        });
     }
 
      public void start(){
@@ -181,6 +169,7 @@ public class ClientWindow implements ActionListener,Runnable {
                      GameMessage gm = (GameMessage)in.readObject();
                      String str = gm.getMessage();
                      Game game = gm.getGame();
+                     long fileSize = gm.getFileSize();
 
                      if(gm.getClients().size() != 0){
                          DefaultListModel<String> dlm = new DefaultListModel<>();
@@ -192,7 +181,14 @@ public class ClientWindow implements ActionListener,Runnable {
                          this.pastMessages.add(game);
                          String gameName = game.getName();
 
-                         JButton gameButton = new JButton(gameName);
+                         ChatGameButton gameButton = new ChatGameButton();
+                         gameButton.setText(gameName);
+                         gameButton.setDataSize(fileSize);
+                         gameButton.setOpaque(false);
+                         gameButton.setPreferredSize(new Dimension(240,60));
+                         gameButton.setMinimumSize(new Dimension(240,60));
+                         gameButton.setFocusPainted(false);
+                         //gameButton.
                          gameButton.addActionListener(new ActionListener() {
                              @Override
                              public void actionPerformed(ActionEvent e) {
@@ -229,12 +225,13 @@ public class ClientWindow implements ActionListener,Runnable {
              if (out != null) {
                  try{
                      out.writeObject(gameMessage);
+                     this.gameMessage = new GameMessage();
                  }catch(IOException ie){
 
                  }
                  //out.println(s);
              }
-             this.gameMessage = new GameMessage();
+
          }
          //display(s);
          prompt.setText("");
@@ -264,6 +261,8 @@ public class ClientWindow implements ActionListener,Runnable {
         int userSelection = fileUpload.showOpenDialog(this.frame);
         if(userSelection == JFileChooser.APPROVE_OPTION){
             File file = fileUpload.getSelectedFile();
+            gameMessage.setFileSize(file.length());
+
             try{
                 FileInputStream fileIn = new FileInputStream(file);
                 ObjectInputStream objectIn = new ObjectInputStream(fileIn);
@@ -280,15 +279,4 @@ public class ClientWindow implements ActionListener,Runnable {
     public void setGameListener(GameListener gameListener){
         this.gameListener = gameListener;
     }
-
-//    public static void main(String[] args){
-//
-//        EventQueue.invokeLater(new Runnable(){
-//            public void run(){
-//                try{
-//                    new ClientWindow("localhost").start();
-//                }catch(Exception e){}
-//            }
-//        });
-//    }
 }

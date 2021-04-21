@@ -16,6 +16,8 @@ public class GameMessage implements Serializable, Message {
     private String message;
     private ArrayList<String> clients;
 
+    private long fileSize;
+
     private MessageType type = GAME;
 
     public GameMessage(){
@@ -61,5 +63,13 @@ public class GameMessage implements Serializable, Message {
 
     public MessageType getType(){
         return this.type;
+    }
+
+    public void setFileSize(long size){
+        this.fileSize = size;
+    }
+
+    public long getFileSize(){
+        return this.fileSize;
     }
 }

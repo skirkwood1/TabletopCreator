@@ -19,6 +19,7 @@ public class Game implements Serializable {
     private ArrayList<Piece> pieces;
     private ArrayList<Deck> decks;
     private ArrayList<Texture> textures;
+    private ArrayList<Resource> resources;
 
     private Board board;
 
@@ -35,6 +36,7 @@ public class Game implements Serializable {
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
+        this.resources = new ArrayList<>();
     }
 
     public Game(Game game){
@@ -44,6 +46,7 @@ public class Game implements Serializable {
         this.textures = new ArrayList<>();
         this.board = game.getBoard();
         this.placedCards = new LinkedHashMap<>();
+        this.resources = new ArrayList<>();
     }
 
     public Game(int x,int y){
@@ -54,6 +57,7 @@ public class Game implements Serializable {
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
+        this.resources = new ArrayList<>();
     }
 
     public Game(ArrayList<Card> cards, ArrayList<Dice> diceCollection, ArrayList<Piece> pieces, Board board){
@@ -63,6 +67,7 @@ public class Game implements Serializable {
         this.board = board;
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
+        this.resources = new ArrayList<>();
     }
 
     public Card addCard(Card card){
@@ -264,5 +269,10 @@ public class Game implements Serializable {
             return decks.indexOf(component);
         }
         return -1;
+    }
+
+    public void addResource(Resource resource){
+        resources.add(resource);
+        System.out.println(resource);
     }
 }

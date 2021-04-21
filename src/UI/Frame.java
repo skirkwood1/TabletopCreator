@@ -32,6 +32,7 @@ public class Frame extends JFrame implements Observable {
     private ComponentCreationDialog pieceCreationDialog;
     private ComponentCreationDialog textureCreationDialog;
     private ComponentCreationDialog componentCreationDialog;
+    private ResourceCreationDialog resourceCreationDialog;
     private JSplitPane buttonPane,cmdPane,mainPane;
 
     private ResizeBoardPane resizePane;
@@ -78,6 +79,8 @@ public class Frame extends JFrame implements Observable {
         cardCreationDialog = new ComponentCreationDialog();
         pieceCreationDialog = new ComponentCreationDialog();
         textureCreationDialog = new ComponentCreationDialog();
+
+        resourceCreationDialog = new ResourceCreationDialog();
 
         this.resizePane = new ResizeBoardPane(game);
 
@@ -184,6 +187,12 @@ public class Frame extends JFrame implements Observable {
                     centerPane.refreshComponentTree(game);
                     break;
                 case ADD_RULE:
+                    break;
+
+                case ADD_RESOURCE:
+                    addResourceDialog();
+                    centerPane.refreshComponentTree(game);
+                    centerPane.updateBoard();
                     break;
                 default:
                     break;
@@ -327,6 +336,16 @@ public class Frame extends JFrame implements Observable {
             AddToDeckCommand adc = new AddToDeckCommand(deck,cards,deckCreationDialog.getNumCopies());
             commandStack.insertCommand(adc);
             centerPane.updateComponentTree(deck);
+        }
+    }
+
+    private void addResourceDialog(){
+        int n = resourceCreationDialog.display();
+        if(n == JOptionPane.YES_OPTION){
+            Resource resource = new Resource(resourceCreationDialog.getNameField(),
+                    resourceCreationDialog.getValueField());
+
+            game.addResource(resource);
         }
     }
 

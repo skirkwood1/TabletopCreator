@@ -30,7 +30,6 @@ public class Toolbar extends JPanel implements ActionListener {
 
     private JMenuBar menuBar;
     private JMenu file,edit,add,decks;
-    private JMenuItem copy,cut,paste,changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture;
     private JMenuItem createDeck,addToDeck;
 
     private StateListener stateListener;
@@ -151,6 +150,8 @@ public class Toolbar extends JPanel implements ActionListener {
 
         actionDescription.put(open, StateListener.ButtonOutput.OPEN);
 
+        JMenuItem changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture,addResource;
+
         saveMenu = new JMenuItem("Save");
         saveMenu.setIcon(saveIcon);
 
@@ -269,10 +270,6 @@ public class Toolbar extends JPanel implements ActionListener {
         decks.setRolloverEnabled(true);
         decks.addMouseListener(menuListener);
 
-        cut = new JMenuItem("Cut");
-        copy = new JMenuItem("Copy");
-        paste = new JMenuItem("Paste");
-
         changeSize = new JMenuItem("Change Size");
         actionDescription.put(changeSize, StateListener.ButtonOutput.CHANGE_SIZE);
 
@@ -293,6 +290,9 @@ public class Toolbar extends JPanel implements ActionListener {
 
         addTexture = new JMenuItem("Texture");
         actionDescription.put(addTexture, StateListener.ButtonOutput.ADD_TEXTURE);
+
+        addResource = new JMenuItem("Resource");
+        actionDescription.put(addResource, StateListener.ButtonOutput.ADD_RESOURCE);
 
         createDeck = new JMenuItem("Create");
         actionDescription.put(createDeck, StateListener.ButtonOutput.CREATE_DECK);
@@ -317,6 +317,7 @@ public class Toolbar extends JPanel implements ActionListener {
         addTexture.addActionListener(this);
         createDeck.addActionListener(this);
         addToDeck.addActionListener(this);
+        addResource.addActionListener(this);
 
         //file.add(cut);
         //file.add(copy);
@@ -332,6 +333,7 @@ public class Toolbar extends JPanel implements ActionListener {
         add.add(addCard);
         //add.add(addRule);
         add.add(addTexture);
+        add.add(addResource);
 
         decks.add(createDeck);
         decks.add(addToDeck);
