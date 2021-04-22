@@ -1,6 +1,7 @@
 package UI;
 
 import Models.Game;
+import UI.UIHelpers.AntialiasButton;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -75,13 +76,14 @@ public class Toolbar extends JPanel implements ActionListener {
         //setBorder(BorderFactory.createLoweredBevelBorder());
         setOpaque(false);
 
-        ImageIcon saveIcon = null;
-        ImageIcon openIcon = null;
-        ImageIcon messageIcon = null;
+        BufferedImage saveIcon = null;
+        BufferedImage openIcon = null;
+        BufferedImage messageIcon = null;
         try {
-            saveIcon = createIcon(getClass().getClassLoader().getResource("icons8-save-100.png"));
-            openIcon = createIcon(getClass().getClassLoader().getResource("folder-open-outline-filled.png"));
-            messageIcon = createIcon(getClass().getClassLoader().getResource("ChatIconSmall.png"));
+            saveIcon = ImageIO.read(getClass().getClassLoader().getResource("icons8-save-100.png"));
+            openIcon = ImageIO.read(getClass().getClassLoader().getResource("folder-open-outline-filled.png"));
+            //messageIcon = createIcon(getClass().getClassLoader().getResource("ChatIconSmall.png"));
+            messageIcon = ImageIO.read(getClass().getClassLoader().getResource("SendIcon.png"));
         }catch(IOException ie){
 
         }
@@ -126,7 +128,7 @@ public class Toolbar extends JPanel implements ActionListener {
             }
         };
 
-        save = new JButton(saveIcon);
+        save = new AntialiasButton(saveIcon);
         save.setPreferredSize(new Dimension(36,36));
         save.setToolTipText("Save");
         //save.setMargin(new Insets(0,0,0,0));
@@ -138,7 +140,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
         actionDescription.put(save, StateListener.ButtonOutput.SAVE);
 
-        open = new JButton(openIcon);
+        open = new AntialiasButton(openIcon);
         open.setPreferredSize(new Dimension(36,36));
         open.setToolTipText("Open");
         open.setMargin(new Insets(0,0,0,0));
@@ -153,12 +155,12 @@ public class Toolbar extends JPanel implements ActionListener {
         JMenuItem changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture,addResource;
 
         saveMenu = new JMenuItem("Save");
-        saveMenu.setIcon(saveIcon);
+        //saveMenu.setIcon(saveIcon);
 
         actionDescription.put(saveMenu, StateListener.ButtonOutput.SAVE);
 
         openMenu = new JMenuItem("Open");
-        openMenu.setIcon(openIcon);
+        //openMenu.setIcon(openIcon);
 
         actionDescription.put(openMenu, StateListener.ButtonOutput.OPEN);
 
@@ -178,7 +180,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
         actionDescription.put(colorChoose, StateListener.ButtonOutput.COLOR_CHOOSE);
 
-        message = new JButton(messageIcon);
+        message = new AntialiasButton(messageIcon);
         message.setPreferredSize(new Dimension(36,36));
         message.setMargin(new Insets(0,0,0,0));
         message.setForeground(game.getBoard().getColor());

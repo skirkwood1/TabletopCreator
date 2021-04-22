@@ -75,14 +75,6 @@ public class Board implements Serializable {
         return this.spaces[x][y];
     }
 
-    public int[] getSpaceLocation(int x, int y){
-        int[] coordinates = new int[2];
-        coordinates[0] = x*40;
-        coordinates[1] = y*40;
-
-        return coordinates;
-    }
-
     public int[] getSize(){
         int[] size = new int[2];
         size[0] = width;
@@ -171,5 +163,17 @@ public class Board implements Serializable {
 
     public int[] getMargins(){
         return this.margins;
+    }
+
+    public int[] getSpaceLocation(Space space){
+        for(int row = 0; row < spaces.length; row++){
+            for(int col = 0; col < spaces[row].length; col++){
+                if(spaces[row][col].equals(space)){
+                    int[] coord = {row,col};
+                    return coord;
+                }
+            }
+        }
+        return null;
     }
 }

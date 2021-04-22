@@ -49,7 +49,10 @@ public class CenterPane extends JPanel implements Observable {
             GameComponent component = null;
             CardInterface card = null;
 
-            if(selectedNode.getParent().equals(componentTree.top)){
+            if(selectedNode.getParent() == null){
+
+            }
+            else if((selectedNode.getParent() == componentTree.top)){
 
             }
             else if(selectedNode.getParent().equals(componentTree.pieces)){
@@ -62,13 +65,13 @@ public class CenterPane extends JPanel implements Observable {
             else if(selectedNode.getParent().equals(componentTree.textures)){
                 component = game.getTexture(name);
             }
-            else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
-                component = game.getCard(name);
-                card = game.getCard(name);
-            }
             else if(selectedNode.getParent().equals(componentTree.decks)){
                 component = game.getDeck(name);
                 card = game.getDeck(name);
+            }
+            else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
+                component = game.getCard(name);
+                card = game.getCard(name);
             }
 
             if(component != null){
@@ -238,7 +241,8 @@ public class CenterPane extends JPanel implements Observable {
 
         JMenuItem delete = new JMenuItem("Delete");
         delete.addActionListener(e -> {
-            boardPane.deleteSelection();
+            boardPane.deleteSelectedSpaces();
+            //boardPane.deleteSelection();
             updateBoard();
         });
 

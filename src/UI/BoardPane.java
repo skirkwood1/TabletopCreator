@@ -8,6 +8,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
@@ -34,10 +35,12 @@ public class BoardPane extends JPanel {
 
     private Point spacePreview;
     private Point spacePreviewEnd;
-
     private Point mousePoint;
 
-    CommandStack commandStack;
+    private ArrayList<GameComponent> selectedComponents;
+    private ArrayList<Space> selectedSpaces;
+
+    private CommandStack commandStack;
 
     private final JPopupMenu rightClickMenu;
 
@@ -64,6 +67,9 @@ public class BoardPane extends JPanel {
         addMouseMotionListener(ma);
 
         imagePreview = new Point(0,0);
+
+        this.selectedComponents = new ArrayList<>();
+        this.selectedSpaces = new ArrayList<>();
     }
 
     MouseAdapter ma = new MouseAdapter() {
@@ -211,6 +217,15 @@ public class BoardPane extends JPanel {
                                 selectedPiece != null){
                             PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
                             commandStack.insertCommand(pmc);
+                            }else{
+                                selectedSpaces = getSelectedSpaces();
+                                System.out.println(selectedSpaces);
+                                for(Space space:selectedSpaces){
+                                    if(space.isOccupied()){
+                                        selectedComponents.add(space.getPiece());
+                                    }
+                                }
+                                //deleteSelectedSpaces();
                             }
                             break;
                         case SPACE:
@@ -233,10 +248,17 @@ public class BoardPane extends JPanel {
                 image = null;
                 selectedCard = null;
                 selectedPiece = null;
-                repaint();
             }
 
             spacePreviewEnd = null;
+            int preview_x = (int)Math.floor((((e.getX()/zoom-PADDING)/SCALE)));
+            int preview_y = (int)Math.floor((((e.getY()/zoom-PADDING)/SCALE)));
+
+            if(preview_x < size[0] + leftMarginOffset && preview_x >= leftMarginOffset &&
+                    preview_y < size[1] + topMarginOffset && preview_y >= topMarginOffset){
+                spacePreview = new Point(preview_x,preview_y);
+            }
+            repaint();
 
             //super.mouseReleased(e);
         }
@@ -313,6 +335,13 @@ public class BoardPane extends JPanel {
                             int current_y = (int)(e.getY() / zoom - SCALE*.375) - topMarginOffset*SCALE;
 
                             imagePreview = new Point(current_x,current_y);
+                            int[] size = game.getBoard().getSize();
+                            int end_x = (int)((e.getX() / zoom - PADDING) / SCALE);
+                            int end_y = (int)((e.getY() / zoom - PADDING) / SCALE);
+                            if(end_x < size[0] + leftMarginOffset && end_x >= leftMarginOffset &&
+                                    end_y < size[1] + topMarginOffset && end_y >= topMarginOffset){
+                                spacePreviewEnd = new Point(end_x,end_y);
+                            }
                         }
                         break;
                     case SPACE:
@@ -398,7 +427,6 @@ public class BoardPane extends JPanel {
         for (int i = left; i < width + left; i++) {
             for (int j = top; j < height + top; j++) {
                 Space space = game.getBoard().getSpace(i-left, j-top);
-
                 if(space.isUsingTexture()){
                     Texture texture = space.getTexture();
                     g2.drawImage(texture.getImage(),
@@ -413,7 +441,6 @@ public class BoardPane extends JPanel {
                             spaceScale(j),
                             SCALE, SCALE);
                 }
-
                 if(showGrid){
                     g2.setColor(Color.BLACK);
                     oldStroke = g2.getStroke();
@@ -421,13 +448,18 @@ public class BoardPane extends JPanel {
                     g2.drawRect(spaceScale(i), spaceScale(j), SCALE, SCALE);
                     g2.setStroke(oldStroke);
                 }
-
                 if (space.getPiece() != null) {
                     g2.drawImage(space.getPiece().getImage(), spaceScale(i) + (int)(SCALE*.125),
                             spaceScale(j) + (int)(SCALE*.125), (int)(SCALE*.75), (int)(SCALE*.75), null);
                 }
             }
         }
+
+        for(Space space: selectedSpaces){
+            drawSpace(g,space);
+        }
+
+
 
 //        g2.setColor(game.getBoard().getDefaultColor());
 //        g2.fillRect(spaceScale(width),20,300,height*SCALE);
@@ -442,9 +474,7 @@ public class BoardPane extends JPanel {
         for(HashMap.Entry<CardInterface,Point> placedCard: game.getPlacedCards().entrySet()){
             CardInterface card = placedCard.getKey();
             Point point = placedCard.getValue();
-
             Dimension d = scaleCard(card);
-
             if(card instanceof Deck){
                 Deck deck = (Deck)card;
                 drawDeck(g2,deck,(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight());
@@ -460,10 +490,21 @@ public class BoardPane extends JPanel {
         }
 
         if (spacePreview != null) {
-            g2.setComposite(makeComposite(0.2f));
             g2.setPaint(game.getBoard().getColor());
             if(spacePreviewEnd == null){
-                drawSpace(g2,(int)spacePreview.getX(),(int)spacePreview.getY());
+                if(placementType == PlacementType.SPACE){
+                    g2.setComposite(makeComposite(0.2f));
+                    drawSpace(g2,(int)spacePreview.getX(),(int)spacePreview.getY());
+                }else{
+                    g2.setComposite(makeComposite(0.8f));
+                    oldStroke = g2.getStroke();
+                    g2.setStroke(new BasicStroke(2f));
+                    g2.drawRect(spaceScale((int)spacePreview.getX()),
+                            spaceScale((int)spacePreview.getY()),
+                            SCALE, SCALE);
+
+                    g2.setStroke(oldStroke);
+                }
                 //g2.fillRect((int) spacePreview.getX() * 40 + 20, (int) spacePreview.getY() * 40 + 20, 40, 40);
             }else{
                 int minx = (int)Math.min(spacePreview.getX(),spacePreviewEnd.getX());
@@ -472,11 +513,21 @@ public class BoardPane extends JPanel {
                 int miny = (int)Math.min(spacePreview.getY(),spacePreviewEnd.getY());
                 int maxy = (int)Math.max(spacePreview.getY(),spacePreviewEnd.getY());
 
-                for(int i = minx; i <= maxx; i++){
-                    for(int j = miny; j <= maxy; j++){
+                if(placementType == PlacementType.SPACE){
+                    g2.setComposite(makeComposite(0.2f));
+                    for(int i = minx; i <= maxx; i++){
+                        for(int j = miny; j <= maxy; j++){
                             drawSpace(g2,i,j);
                             //g2.fillRect(i*40+20,j*40+20,40,40);
+                        }
                     }
+                }else{
+                    g2.setComposite(makeComposite(0.8f));
+                    oldStroke = g2.getStroke();
+                    g2.setStroke(new BasicStroke(2f));
+                    g2.drawRect(spaceScale(minx),spaceScale(miny),
+                            (maxx-minx+1)*SCALE,(maxy-miny+1)*SCALE);
+                    g2.setStroke(oldStroke);
                 }
             }
         }
@@ -586,6 +637,31 @@ public class BoardPane extends JPanel {
         return null;
     }
 
+    public ArrayList<Space> getSelectedSpaces(){
+        if(spacePreview != null && spacePreviewEnd != null){
+            int minx = (int)Math.min(spacePreview.getX(),spacePreviewEnd.getX());
+            int maxx = (int)Math.max(spacePreview.getX(),spacePreviewEnd.getX());
+
+            int miny = (int)Math.min(spacePreview.getY(),spacePreviewEnd.getY());
+            int maxy = (int)Math.max(spacePreview.getY(),spacePreviewEnd.getY());
+
+            ArrayList<Space> spaces = new ArrayList<>();
+
+            if(placementType == PlacementType.NONE){
+                for(int i = minx; i <= maxx; i++){
+                    for(int j = miny; j <= maxy; j++){
+                        int x = i - leftMarginOffset;
+                        int y = j-topMarginOffset;
+                        spaces.add(game.getBoard().getSpace(x,y));
+                        //g2.fillRect(i*40+20,j*40+20,40,40);
+                    }
+                }
+            }
+            return spaces;
+        }
+        return null;
+    }
+
     public void deleteSelection(){
         CardInterface selectedCard = getSelectedCard();
 
@@ -610,6 +686,18 @@ public class BoardPane extends JPanel {
 
     public void toggleGrid(){
         this.showGrid = !this.showGrid;
+    }
+
+    public void drawSpace(Graphics g, Space space){
+        Graphics2D g2 = (Graphics2D)g.create();
+        int[] coords = game.getBoard().getSpaceLocation(space);
+        int x =(coords[0]+leftMarginOffset)*SCALE+PADDING;
+        int y =(coords[1]+topMarginOffset)*SCALE+PADDING;
+
+        g2.setComposite(makeComposite(0.5f));
+        g2.setStroke(new BasicStroke(1.5f));
+        g2.setPaint(game.getBoard().getColor());
+        g2.drawRect(x,y,SCALE,SCALE);
     }
 
     public void updateGame(Game game){
@@ -641,6 +729,12 @@ public class BoardPane extends JPanel {
 
     public int spaceScale(int size){
         return size * SCALE + PADDING;
+    }
+
+    public void deleteSelectedSpaces(){
+        for(Space space:selectedSpaces){
+            space.setColor(Color.WHITE);
+        }
     }
 
     public JPopupMenu getRightClickMenu(){

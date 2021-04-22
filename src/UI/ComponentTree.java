@@ -6,15 +6,17 @@ import Commands.DeleteFromDeckCommand;
 import Commands.DetextureSpacesCommand;
 import Models.*;
 import Models.GameComponent;
+import UI.UIHelpers.Icons.TreeCollapsedIcon;
+import UI.UIHelpers.Icons.TreeExpandedIcon;
+import UI.UIHelpers.Icons.TreeIcon;
+import UI.UIHelpers.Icons.TreeLeafIcon;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.plaf.basic.BasicTreeUI;
+import javax.swing.tree.*;
 
 public class ComponentTree extends JPanel implements Observable {
     private final JTree tree;
@@ -34,13 +36,18 @@ public class ComponentTree extends JPanel implements Observable {
 
 
     public ComponentTree(Game game, CommandStack commandStack){
-        super();
+        //super();
 
         this.game = game;
         //this.observers = new ArrayList<>();
 
-        UIManager.put("Tree.font",new Font("Segoe UI",Font.PLAIN,12));
-        UIManager.put("Tree.border",BorderFactory.createEmptyBorder(2,2,2,2));
+        UIManager.put("Tree.font",new Font("Segoe UI",Font.PLAIN,14));
+        //UIManager.put("Tree.border",BorderFactory.createEmptyBorder(2,2,2,2));
+        UIManager.put("Tree.paintLines", Boolean.FALSE);
+
+        Icon empty = new TreeIcon();
+        UIManager.put("Tree.collapsedIcon", empty);
+        UIManager.put("Tree.expandedIcon", empty);
 
         top.add(cards);
         top.add(pieces);
@@ -51,6 +58,8 @@ public class ComponentTree extends JPanel implements Observable {
         //top.add(new DefaultMutableTreeNode("Dice"));
 
         tree = new JTree(top);
+        tree.setShowsRootHandles(false);
+        tree.setBorder(BorderFactory.createEmptyBorder(2,5,2,2));
         tree.setPreferredSize(new Dimension(1280,0));
         tree.setEditable(true);
 
@@ -111,6 +120,12 @@ public class ComponentTree extends JPanel implements Observable {
 
         rightClickMenu.add(delete);
         //rightClickMenu.add(add);
+
+        DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+        renderer.setClosedIcon(new TreeCollapsedIcon());
+        renderer.setOpenIcon(new TreeExpandedIcon());
+        renderer.setLeafIcon(new TreeLeafIcon());
+        tree.setCellRenderer(renderer);
 
         tree.addMouseListener(new MouseAdapter() {
             @Override
