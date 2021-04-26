@@ -241,8 +241,8 @@ public class CenterPane extends JPanel implements Observable {
 
         JMenuItem delete = new JMenuItem("Delete");
         delete.addActionListener(e -> {
-            boardPane.deleteSelectedSpaces();
-            //boardPane.deleteSelection();
+            //boardPane.deleteSelectedSpaces();
+            boardPane.deleteSelection();
             updateBoard();
         });
 

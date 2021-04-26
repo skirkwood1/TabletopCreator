@@ -37,8 +37,8 @@ public class BoardPane extends JPanel {
     private Point spacePreviewEnd;
     private Point mousePoint;
 
-    private ArrayList<GameComponent> selectedComponents;
-    private ArrayList<Space> selectedSpaces;
+    //private ArrayList<GameComponent> selectedComponents;
+    //private ArrayList<Space> selectedSpaces;
 
     private CommandStack commandStack;
 
@@ -68,8 +68,8 @@ public class BoardPane extends JPanel {
 
         imagePreview = new Point(0,0);
 
-        this.selectedComponents = new ArrayList<>();
-        this.selectedSpaces = new ArrayList<>();
+        //this.selectedComponents = new ArrayList<>();
+        //this.selectedSpaces = new ArrayList<>();
     }
 
     MouseAdapter ma = new MouseAdapter() {
@@ -218,13 +218,13 @@ public class BoardPane extends JPanel {
                             PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
                             commandStack.insertCommand(pmc);
                             }else{
-                                selectedSpaces = getSelectedSpaces();
-                                System.out.println(selectedSpaces);
-                                for(Space space:selectedSpaces){
-                                    if(space.isOccupied()){
-                                        selectedComponents.add(space.getPiece());
-                                    }
-                                }
+//                                selectedSpaces = getSelectedSpaces();
+//                                System.out.println(selectedSpaces);
+//                                for(Space space:selectedSpaces){
+//                                    if(space.isOccupied()){
+//                                        selectedComponents.add(space.getPiece());
+//                                    }
+//                                }
                                 //deleteSelectedSpaces();
                             }
                             break;
@@ -455,9 +455,9 @@ public class BoardPane extends JPanel {
             }
         }
 
-        for(Space space: selectedSpaces){
-            drawSpace(g,space);
-        }
+//        for(Space space: selectedSpaces){
+//            drawSpace(g,space);
+//        }
 
 
 
@@ -731,11 +731,11 @@ public class BoardPane extends JPanel {
         return size * SCALE + PADDING;
     }
 
-    public void deleteSelectedSpaces(){
-        for(Space space:selectedSpaces){
-            space.setColor(Color.WHITE);
-        }
-    }
+//    public void deleteSelectedSpaces(){
+//        for(Space space:selectedSpaces){
+//            space.setColor(Color.WHITE);
+//        }
+//    }
 
     public JPopupMenu getRightClickMenu(){
         return this.rightClickMenu;
