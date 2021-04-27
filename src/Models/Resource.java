@@ -20,6 +20,12 @@ public class Resource implements Serializable {
         this.value = value;
     }
 
+    public Resource(String name,int value,int startValue){
+        this.name = name;
+        this.startValue = startValue;
+        this.value = value;
+    }
+
     public String getName(){
         return name;
     }
@@ -30,6 +36,18 @@ public class Resource implements Serializable {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public void incrementValue(){
+        this.value++;
+    }
+
+    public void decrementValue(){
+        this.value--;
+    }
+
+    public Resource copy(){
+        return new Resource(this.name,this.value,this.startValue);
     }
 
     public String toString(){

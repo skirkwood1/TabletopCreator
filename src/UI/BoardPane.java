@@ -1,6 +1,7 @@
 package UI;
 import Commands.*;
 import Models.*;
+import UI.BoardPaneObjects.ResourceDrawer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -44,6 +45,8 @@ public class BoardPane extends JPanel {
 
     private final JPopupMenu rightClickMenu;
 
+    private ResourceDrawer resourceDrawer;
+
 
     public BoardPane(Game game,CommandStack commandStack) {
         this.game = game;
@@ -68,6 +71,12 @@ public class BoardPane extends JPanel {
 
         imagePreview = new Point(0,0);
 
+        Resource resource = new Resource("test",420);
+        this.resourceDrawer = new ResourceDrawer(resource,new Point(60,60));
+
+        addMouseListener(resourceDrawer.getLocationTracker());
+        addMouseMotionListener(resourceDrawer.getLocationTracker());
+
         //this.selectedComponents = new ArrayList<>();
         //this.selectedSpaces = new ArrayList<>();
     }
@@ -90,9 +99,10 @@ public class BoardPane extends JPanel {
 
         CardInterface selectedCard;
         Piece selectedPiece;
+        ResourceDrawer selectedResource = null;
 
-        Point cardStart;
-        Point cardEnd;
+        Point dragStart;
+        Point dragEnd;
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -162,7 +172,13 @@ public class BoardPane extends JPanel {
             if(SwingUtilities.isLeftMouseButton(e)){
                     if(placementType == PlacementType.NONE){
                         selectedCard = getSelectedCard();
-                        cardStart = game.getPlacedCards().get(selectedCard);
+
+                        if(selectedCard != null){
+                            dragStart = game.getPlacedCards().get(selectedCard);
+                        }else if(resourceDrawer.getBounds().contains(e.getPoint())){
+                            selectedResource = resourceDrawer;
+                            dragStart = selectedResource.getPoint();
+                        }
 
                         if(start_x < size[0] && start_x >= 0 &&
                                 start_y < size[1] && start_y >= 0
@@ -198,7 +214,7 @@ public class BoardPane extends JPanel {
             end_x = (int) Math.floor(((e.getX() / zoom - PADDING) / SCALE)) - leftMarginOffset;
             end_y = (int) Math.floor(((e.getY() / zoom - PADDING) / SCALE)) - topMarginOffset;
 
-            cardEnd = game.getPlacedCards().get(selectedCard);
+            dragEnd = game.getPlacedCards().get(selectedCard);
 
             int[] size = game.getBoard().getSize();
 
@@ -210,7 +226,7 @@ public class BoardPane extends JPanel {
                     switch(placementType){
                         case NONE:
                             if(selectedCard != null){
-                                CardMoveCommand cmc = new CardMoveCommand(game,selectedCard,cardStart,cardEnd);
+                                CardMoveCommand cmc = new CardMoveCommand(game,selectedCard, dragStart, dragEnd);
                                 commandStack.insertCommand(cmc);
                             }
                             else if((start_x != end_x || start_y != end_y) &&
@@ -330,7 +346,50 @@ public class BoardPane extends JPanel {
 
                             last_x = mouse_x;//(int)(e.getX()/zoom);
                             last_y = mouse_y;
-                        }else{
+                        }else if(selectedResource != null){
+                            int mouse_x = (int)(e.getX() / zoom); //- leftMarginOffset*SCALE;
+                            int mouse_y = (int)(e.getY() / zoom); //- topMarginOffset*SCALE;
+
+                            int mouseDeltaX = mouse_x - last_x;
+                            int mouseDeltaY = mouse_y - last_y;
+
+                            Point cardPoint = selectedResource.getPoint();
+                            int card_x = (int)cardPoint.getX();
+                            int card_y = (int)cardPoint.getY();
+
+                            int new_x = card_x + mouseDeltaX;
+                            int new_y = card_y + mouseDeltaY;
+
+                            int horizontal_size = game.getBoard().getSize()[0] + game.getBoard().getMargins()[2]+ game.getBoard().getMargins()[3];
+                            int vertical_size = game.getBoard().getSize()[1] + game.getBoard().getMargins()[0]+ game.getBoard().getMargins()[1];
+
+                            int cardWidth = (int)selectedResource.getBounds().getWidth();
+                            int cardHeight = (int)selectedResource.getBounds().getHeight();
+
+                            if((new_x) >= (horizontal_size)*SCALE - cardWidth/4){
+                                new_x = (horizontal_size)*SCALE - cardWidth/4;
+                                mouse_x = last_x;
+                            }
+                            if((new_x) <= cardWidth/4){
+                                new_x = cardWidth/4;
+                                mouse_x = last_x;
+                            }
+                            if((new_y) >= vertical_size*SCALE - cardHeight/2){
+                                new_y = vertical_size*SCALE- cardHeight/2;
+                                mouse_y = last_y;
+                            }
+                            if((new_y) <= cardHeight/3){
+                                new_y = cardHeight/3;
+                                mouse_y = last_y;
+                            }
+
+                            Point newPoint = new Point(new_x, new_y);
+                            selectedResource.move(newPoint);
+
+                            last_x = mouse_x;//(int)(e.getX()/zoom);
+                            last_y = mouse_y;
+                        }
+                        else{
                             int current_x = (int)(e.getX() / zoom - SCALE*.375) - leftMarginOffset*SCALE;
                             int current_y = (int)(e.getY() / zoom - SCALE*.375) - topMarginOffset*SCALE;
 
@@ -531,6 +590,10 @@ public class BoardPane extends JPanel {
                 }
             }
         }
+
+        g2.setComposite(makeComposite(1f));
+
+        resourceDrawer.draw(g,zoom);
     }
 
     public void drawDeck(Graphics2D g2, Deck deck, int x, int y, int width, int height){
