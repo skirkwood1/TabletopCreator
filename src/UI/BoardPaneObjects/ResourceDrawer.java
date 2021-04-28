@@ -2,24 +2,21 @@ package UI.BoardPaneObjects;
 
 import Models.Resource;
 
-import javax.sound.sampled.Line;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 
-public class ResourceDrawer {
-
-    private Resource resource;
-    private Point point;
-
-    private Point mousePoint;
+public class ResourceDrawer implements DrawerInterface {
 
     private final int MARGIN = 10;
+
+    private Resource resource;
+
+    private Point point;
+    private Point mousePoint;
 
     private double zoom;
 
@@ -41,7 +38,7 @@ public class ResourceDrawer {
 
         Graphics2D g2 = (Graphics2D)g.create();
 
-        g2.setFont(new Font("Segoe UI",Font.PLAIN,14));
+        g2.setFont(new Font("Segoe UI",Font.PLAIN,12));
         g2.setColor(Color.BLACK);
 
         FontRenderContext frc = g2.getFontRenderContext();
@@ -55,8 +52,8 @@ public class ResourceDrawer {
 
         int width = 80 > nameBounds.width ? 100 : nameBounds.width + 20;
 
-        this.bounds = new Rectangle((int)(point.getX()-5),
-                (int)(point.getY()-15),
+        this.bounds = new Rectangle((int)(point.getX()),
+                (int)(point.getY()),
                 width + 5,
                 60);
 
@@ -64,25 +61,29 @@ public class ResourceDrawer {
         g2.fill(this.bounds);
         g2.setColor(Color.BLACK);
         g2.draw(this.bounds);
-        g2.drawLine(point.x-5,
-                point.y + 5,
-                point.x + width,
-                point.y + 5);
+        g2.drawLine(point.x,
+                point.y + 15,
+                point.x + width + 5,
+                point.y + 15);
 
         g2.drawGlyphVector(gv,
-                (int)(point.getX()),
-                (int)(point.getY()));
+                (int)(point.getX() + 5),
+                (int)(point.getY()) + 10);
 
         g2.drawGlyphVector(gv2,
-                point.x,
-                point.y + 25);
+                point.x + 5,
+                point.y + 40);
 
         this.plusButton = drawPlusSign(g,
-                point.x + width - 10,
-                point.y + 15);
-        this.minusButton = drawMinusSign(g,
-                point.x + width - 10,
+                point.x + width - 5,
                 point.y + 30);
+        this.minusButton = drawMinusSign(g,
+                point.x + width - 5,
+                point.y + 45);
+
+        if(bounds.contains(mousePoint)){
+            g2.draw(bounds);
+        }
     }
 
     private Ellipse2D drawPlusSign(Graphics g, int x, int y){

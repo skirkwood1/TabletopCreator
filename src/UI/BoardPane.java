@@ -1,6 +1,8 @@
 package UI;
 import Commands.*;
 import Models.*;
+import UI.BoardPaneObjects.CardDrawer;
+import UI.BoardPaneObjects.DrawerInterface;
 import UI.BoardPaneObjects.ResourceDrawer;
 
 import java.awt.*;
@@ -45,7 +47,7 @@ public class BoardPane extends JPanel {
 
     private final JPopupMenu rightClickMenu;
 
-    private ArrayList<ResourceDrawer> resourceDrawers;
+    private ArrayList<DrawerInterface> resourceDrawers;
 
 
     public BoardPane(Game game,CommandStack commandStack) {
@@ -73,11 +75,19 @@ public class BoardPane extends JPanel {
 
         this.resourceDrawers = new ArrayList<>();
 
-        Resource resource = new Resource("test",420);
-        this.resourceDrawers.add(new ResourceDrawer(resource,new Point(60,60)));
+        for(Map.Entry<CardInterface,Point> entry: game.getPlacedCards().entrySet()){
+            resourceDrawers.add(new CardDrawer(entry.getKey(),entry.getValue()));
+        }
 
-        addMouseListener(resourceDrawers.get(0).getLocationTracker());
-        addMouseMotionListener(resourceDrawers.get(0).getLocationTracker());
+        for(Map.Entry<Resource,Point> entry: game.getPlacedResources().entrySet()){
+            resourceDrawers.add(new ResourceDrawer(entry.getKey(),entry.getValue()));
+        }
+
+//        Resource resource = new Resource("test",420);
+////        this.resourceDrawers.add(new ResourceDrawer(resource,new Point(60,60)));
+////
+////        addMouseListener(resourceDrawers.get(0).getLocationTracker());
+////        addMouseMotionListener(resourceDrawers.get(0).getLocationTracker());
 
         //this.selectedComponents = new ArrayList<>();
         //this.selectedSpaces = new ArrayList<>();
@@ -99,9 +109,8 @@ public class BoardPane extends JPanel {
 
         HashMap<CardInterface,Point> cards;
 
-        CardInterface selectedCard;
         Piece selectedPiece;
-        ResourceDrawer selectedResource = null;
+        DrawerInterface selectedDrawer = null;
 
         Point dragStart;
         Point dragEnd;
@@ -148,7 +157,7 @@ public class BoardPane extends JPanel {
                         break;
                     case RESOURCE:
                         placeResource();
-                        System.out.println("Placed resource: " + game.getSelectedResource());
+                        System.out.println("Placed resource: " + game.getSelectedComponent());
                         break;
                 }
             }
@@ -177,18 +186,18 @@ public class BoardPane extends JPanel {
 
             if(SwingUtilities.isLeftMouseButton(e)){
                     if(placementType == PlacementType.NONE){
-                        selectedCard = getSelectedCard();
-                        selectedResource = getSelectedResource();
+                        //selectedCard = getSelectedCard();
+                        selectedDrawer = getSelectedResource();
 
-                        if(selectedCard != null){
-                            dragStart = game.getPlacedCards().get(selectedCard);
-                        }else if(selectedResource != null){
-                            dragStart = selectedResource.getPoint();
+                        //System.out.println(selectedDrawer);
+
+                        if(selectedDrawer != null){
+                            dragStart = selectedDrawer.getPoint();
                         }
 
                         if(start_x < size[0] && start_x >= 0 &&
                                 start_y < size[1] && start_y >= 0
-                                && selectedCard == null){
+                                && selectedDrawer == null){
                             Space start_space = spaces[start_x][start_y];
                             selectedPiece = start_space.getPiece();
 
@@ -220,7 +229,7 @@ public class BoardPane extends JPanel {
             end_x = (int) Math.floor(((e.getX() / zoom - PADDING) / SCALE)) - leftMarginOffset;
             end_y = (int) Math.floor(((e.getY() / zoom - PADDING) / SCALE)) - topMarginOffset;
 
-            dragEnd = game.getPlacedCards().get(selectedCard);
+            //dragEnd = game.getPlacedCards().get(selectedCard);
 
             int[] size = game.getBoard().getSize();
 
@@ -231,11 +240,11 @@ public class BoardPane extends JPanel {
                         start_y < size[1] && start_y >= 0) {
                     switch(placementType){
                         case NONE:
-                            if(selectedCard != null){
-                                CardMoveCommand cmc = new CardMoveCommand(game,selectedCard, dragStart, dragEnd);
-                                commandStack.insertCommand(cmc);
-                            }
-                            else if((start_x != end_x || start_y != end_y) &&
+//                            if(selectedCard != null){
+//                                CardMoveCommand cmc = new CardMoveCommand(game,selectedCard, dragStart, dragEnd);
+//                                commandStack.insertCommand(cmc);
+//                            }
+                            if((start_x != end_x || start_y != end_y) &&
                                 selectedPiece != null){
                             PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
                             commandStack.insertCommand(pmc);
@@ -268,7 +277,7 @@ public class BoardPane extends JPanel {
                     }
                 }
                 image = null;
-                selectedCard = null;
+                //selectedCard = null;
                 selectedPiece = null;
             }
 
@@ -309,16 +318,18 @@ public class BoardPane extends JPanel {
 
                 switch(placementType){
                     case NONE:
-                        if(selectedCard != null){
+                        if(selectedDrawer != null){
                             int mouse_x = (int)(e.getX() / zoom); //- leftMarginOffset*SCALE;
                             int mouse_y = (int)(e.getY() / zoom); //- topMarginOffset*SCALE;
 
                             int mouseDeltaX = mouse_x - last_x;
                             int mouseDeltaY = mouse_y - last_y;
 
-                            Point cardPoint = cards.get(selectedCard);
+                            Point cardPoint = selectedDrawer.getPoint();
                             int card_x = (int)cardPoint.getX();
                             int card_y = (int)cardPoint.getY();
+
+                            Rectangle bounds = selectedDrawer.getBounds();
 
                             int new_x = card_x + mouseDeltaX;
                             int new_y = card_y + mouseDeltaY;
@@ -326,71 +337,28 @@ public class BoardPane extends JPanel {
                             int horizontal_size = game.getBoard().getSize()[0] + game.getBoard().getMargins()[2]+ game.getBoard().getMargins()[3];
                             int vertical_size = game.getBoard().getSize()[1] + game.getBoard().getMargins()[0]+ game.getBoard().getMargins()[1];
 
-                            Dimension d = scaleCard(selectedCard);
-                            int cardWidth = (int)d.getWidth();
-                            int cardHeight = (int)d.getHeight();
+                            int cardWidth = (int) selectedDrawer.getBounds().getWidth();
+                            int cardHeight = (int) selectedDrawer.getBounds().getHeight();
 
-                            if((new_x) >= (horizontal_size)*SCALE - cardWidth/4){
-                                new_x = (horizontal_size)*SCALE - cardWidth/4;
+                            if((new_x) >= (horizontal_size)*SCALE + PADDING - bounds.width){
+                                new_x = (horizontal_size)*SCALE + PADDING - bounds.width;
                                 mouse_x = last_x;
                             }
-                            if((new_x) <= cardWidth/4){
-                                new_x = cardWidth/4;
+                            if((new_x) <= PADDING){
+                                new_x = PADDING;
                                 mouse_x = last_x;
                             }
-                            if((new_y) >= vertical_size*SCALE - cardHeight/2){
-                                new_y = vertical_size*SCALE- cardHeight/2;
+                            if((new_y) >= vertical_size*SCALE + PADDING- bounds.height){
+                                new_y = vertical_size*SCALE + PADDING - bounds.height;
                                 mouse_y = last_y;
                             }
-                            if((new_y) <= cardHeight/3){
-                                new_y = cardHeight/3;
-                                mouse_y = last_y;
-                            }
-
-                            Point newPoint = new Point(new_x, new_y);
-                            cards.put(selectedCard,newPoint);
-
-                            last_x = mouse_x;//(int)(e.getX()/zoom);
-                            last_y = mouse_y;
-                        }else if(selectedResource != null){
-                            int mouse_x = (int)(e.getX() / zoom); //- leftMarginOffset*SCALE;
-                            int mouse_y = (int)(e.getY() / zoom); //- topMarginOffset*SCALE;
-
-                            int mouseDeltaX = mouse_x - last_x;
-                            int mouseDeltaY = mouse_y - last_y;
-
-                            Point cardPoint = selectedResource.getPoint();
-                            int card_x = (int)cardPoint.getX();
-                            int card_y = (int)cardPoint.getY();
-
-                            int new_x = card_x + mouseDeltaX;
-                            int new_y = card_y + mouseDeltaY;
-
-                            int horizontal_size = game.getBoard().getSize()[0] + game.getBoard().getMargins()[2]+ game.getBoard().getMargins()[3];
-                            int vertical_size = game.getBoard().getSize()[1] + game.getBoard().getMargins()[0]+ game.getBoard().getMargins()[1];
-
-                            int cardWidth = (int)selectedResource.getBounds().getWidth();
-                            int cardHeight = (int)selectedResource.getBounds().getHeight();
-
-                            if((new_x) >= (horizontal_size)*SCALE - cardWidth/4){
-                                new_x = (horizontal_size)*SCALE - cardWidth/4;
-                                mouse_x = last_x;
-                            }
-                            if((new_x) <= cardWidth/4){
-                                new_x = cardWidth/4;
-                                mouse_x = last_x;
-                            }
-                            if((new_y) >= vertical_size*SCALE - cardHeight/2){
-                                new_y = vertical_size*SCALE- cardHeight/2;
-                                mouse_y = last_y;
-                            }
-                            if((new_y) <= cardHeight/3){
-                                new_y = cardHeight/3;
+                            if((new_y) <= PADDING){
+                                new_y = PADDING;
                                 mouse_y = last_y;
                             }
 
                             Point newPoint = new Point(new_x, new_y);
-                            selectedResource.move(newPoint);
+                            selectedDrawer.move(newPoint);
 
                             last_x = mouse_x;//(int)(e.getX()/zoom);
                             last_y = mouse_y;
@@ -536,17 +504,17 @@ public class BoardPane extends JPanel {
         //g2.drawRect(width*SCALE+20,20,300,height*SCALE);
         g2.setStroke(oldStroke);
 
-        for(HashMap.Entry<CardInterface,Point> placedCard: game.getPlacedCards().entrySet()){
-            CardInterface card = placedCard.getKey();
-            Point point = placedCard.getValue();
-            Dimension d = scaleCard(card);
-            if(card instanceof Deck){
-                Deck deck = (Deck)card;
-                drawDeck(g2,deck,(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight());
-            }else{
-                g2.drawImage(card.getImage(),(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight(),null);
-            }
-        }
+//        for(HashMap.Entry<CardInterface,Point> placedCard: game.getPlacedCards().entrySet()){
+//            CardInterface card = placedCard.getKey();
+//            Point point = placedCard.getValue();
+//            Dimension d = scaleCard(card);
+//            if(card instanceof Deck){
+//                Deck deck = (Deck)card;
+//                drawDeck(g2,deck,(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight());
+//            }else{
+//                g2.drawImage(card.getImage(),(int)point.getX(),(int)point.getY(),(int)d.getWidth(),(int)d.getHeight(),null);
+//            }
+//        }
 
         if (this.image != null) {
             g2.drawImage(image, (int) imagePreview.getX() + leftMarginOffset*SCALE,
@@ -599,8 +567,8 @@ public class BoardPane extends JPanel {
 
         g2.setComposite(makeComposite(1f));
 
-        for(ResourceDrawer rd: resourceDrawers){
-            rd.draw(g,zoom);
+        for(DrawerInterface drawer: resourceDrawers){
+            drawer.draw(g,zoom);
         }
 
     }
@@ -700,13 +668,13 @@ public class BoardPane extends JPanel {
         return selectedCard;
     }
 
-    public ResourceDrawer getSelectedResource(){
-        ResourceDrawer selectedResource = null;
+    public DrawerInterface getSelectedResource(){
+        DrawerInterface selectedResource = null;
         Point selectionPoint = new Point((int)(mousePoint.getX()/zoom),
                 (int)(mousePoint.getY()/zoom));
-        for(ResourceDrawer rd: this.resourceDrawers){
-            if(rd.getBounds().contains(selectionPoint)){
-                selectedResource = rd;
+        for(DrawerInterface drawer: this.resourceDrawers){
+            if(drawer.getBounds().contains(selectionPoint)){
+                selectedResource = drawer;
             }
         }
         return selectedResource;
@@ -808,21 +776,33 @@ public class BoardPane extends JPanel {
         Point point = new Point((int)(mousePoint.getX()/zoom-d.getWidth()/2),
                 (int)(mousePoint.getY()/zoom-d.getHeight()/2));
 
-        PlaceCardCommand cpc = new PlaceCardCommand(game,card,point);
-        commandStack.insertCommand(cpc);
+        CardInterface copy = card.copy();
+
+        CardDrawer cardDrawer = new CardDrawer(card,point);
+        resourceDrawers.add(cardDrawer);
+        game.placeCard(copy,point);
+        addMouseListener(cardDrawer.getLocationTracker());
+        addMouseMotionListener(cardDrawer.getLocationTracker());
+
+        //PlaceCardCommand cpc = new PlaceCardCommand(game,card,point);
+        //commandStack.insertCommand(cpc);
     }
 
     public void placeResource(){
-        if(game.getSelectedResource() != null){
-            placeResource(game.getSelectedResource());
+        if(game.getSelectedComponent() instanceof Resource){
+            placeResource((Resource)game.getSelectedComponent());
         }
     }
 
     public void placeResource(Resource resource){
         Point placePoint = new Point((int)(mousePoint.x/zoom),
                 (int)(mousePoint.getY()/zoom));
-        ResourceDrawer resourceDrawer = new ResourceDrawer(resource.copy(),placePoint);
+
+        Resource copy = resource.copy();
+
+        ResourceDrawer resourceDrawer = new ResourceDrawer(copy,placePoint);
         resourceDrawers.add(resourceDrawer);
+        game.placeResource(copy,placePoint);
         addMouseListener(resourceDrawer.getLocationTracker());
         addMouseMotionListener(resourceDrawer.getLocationTracker());
     }

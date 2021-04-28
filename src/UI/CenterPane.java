@@ -75,15 +75,16 @@ public class CenterPane extends JPanel implements Observable {
                 card = game.getCard(name);
             }
             else if(selectedNode.getParent().equals(componentTree.resources)){
-                resource = game.getResource(name);
-                game.setSelectedResource(resource);
+                component = game.getResource(name);
+                //resource = game.getResource(name);
+                //game.setSelectedResource(component);
             }
 
             if(component != null){
                 setComponentPane(component);
                 game.setSelectedComponent(component);
                 game.setSelectedCard(card);
-                game.setSelectedResource(null);
+                //game.setSelectedResource(null);
 
                 if(component instanceof Texture){
                     UpdateColorCommand ucc = new UpdateColorCommand(game,(Texture) component);
@@ -357,8 +358,10 @@ public class CenterPane extends JPanel implements Observable {
     }
 
     void displayImage(Image image){
-        ImageIcon icon = new ImageIcon(image);
-        componentImage.setIcon(icon);
+        if(image != null){
+            ImageIcon icon = new ImageIcon(image);
+            componentImage.setIcon(icon);
+        }
     }
 
     void updateComponentTree(GameComponent component){

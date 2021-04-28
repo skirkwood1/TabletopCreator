@@ -28,6 +28,7 @@ public class Game implements Serializable {
     private Resource selectedResource = null;
 
     private LinkedHashMap<CardInterface, Point> placedCards;
+    private LinkedHashMap<Resource, Point> placedResources;
 
     public Game(){
         this.cards = new ArrayList<>();
@@ -37,6 +38,7 @@ public class Game implements Serializable {
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
+        this.placedResources = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
     }
 
@@ -47,6 +49,7 @@ public class Game implements Serializable {
         this.textures = new ArrayList<>();
         this.board = game.getBoard();
         this.placedCards = new LinkedHashMap<>();
+        this.placedResources = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
     }
 
@@ -58,6 +61,7 @@ public class Game implements Serializable {
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
+        this.placedResources = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
     }
 
@@ -68,6 +72,7 @@ public class Game implements Serializable {
         this.board = board;
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
+        this.placedResources = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
     }
 
@@ -281,10 +286,6 @@ public class Game implements Serializable {
         return this.resources;
     }
 
-    public void setSelectedResource(Resource resource){
-        this.selectedResource = resource;
-    }
-
     public Resource getResource(String name){
         for(Resource resource: this.resources){
             if(resource.getName().equals(name)){
@@ -295,7 +296,11 @@ public class Game implements Serializable {
         return null;
     }
 
-    public Resource getSelectedResource(){
-        return this.selectedResource;
+    public void placeResource(Resource resource, Point point){
+        this.placedResources.put(resource,point);
+    }
+
+    public HashMap<Resource,Point> getPlacedResources(){
+        return this.placedResources;
     }
 }
