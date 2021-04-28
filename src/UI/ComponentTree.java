@@ -30,6 +30,8 @@ public class ComponentTree extends JPanel implements Observable {
     DefaultMutableTreeNode rules = new DefaultMutableTreeNode("Rules");
     DefaultMutableTreeNode decks = new DefaultMutableTreeNode("Decks");
     DefaultMutableTreeNode players = new DefaultMutableTreeNode("Players");
+    DefaultMutableTreeNode resources = new DefaultMutableTreeNode("Resources");
+
 
     private JPopupMenu rightClickMenu;
     private JMenuItem delete,add;
@@ -55,6 +57,7 @@ public class ComponentTree extends JPanel implements Observable {
         top.add(rules);
         top.add(decks);
         top.add(players);
+        top.add(resources);
         //top.add(new DefaultMutableTreeNode("Dice"));
 
         tree = new JTree(top);
@@ -95,7 +98,10 @@ public class ComponentTree extends JPanel implements Observable {
                             }
                         }
                     }
-                }else if(selectedNode.getParent().equals(decks)){
+                }else if(selectedNode.getParent().equals(resources)){
+
+                }
+                else if(selectedNode.getParent().equals(decks)){
                     component = game.getDeck(selectedNode.toString());
                 }else if(selectedNode.getParent().getParent().equals(decks)){
                     component = game.getCard(selectedNode.toString());
@@ -166,6 +172,13 @@ public class ComponentTree extends JPanel implements Observable {
         }
     }
 
+    public void addResource(Resource resource){
+        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(resource.getName());
+        tree.scrollPathToVisible(new TreePath(node.getPath()));
+        model.insertNodeInto(node,resources,resources.getChildCount());
+    }
+
     public void addDeck(Deck deck){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(deck.getName());
@@ -208,6 +221,7 @@ public class ComponentTree extends JPanel implements Observable {
         pieces.removeAllChildren();
         textures.removeAllChildren();
         decks.removeAllChildren();
+        resources.removeAllChildren();
 
         for(Card card: this.game.getCards()){
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(card.getName());
@@ -230,6 +244,11 @@ public class ComponentTree extends JPanel implements Observable {
                 node.add(new DefaultMutableTreeNode(card.getName()));
             }
             model.insertNodeInto(node,decks,decks.getChildCount());
+        }
+
+        for(Resource resource: this.game.getResources()){
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(resource.getName());
+            model.insertNodeInto(node,resources,resources.getChildCount());
         }
 
         model.reload();

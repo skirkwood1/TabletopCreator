@@ -26,6 +26,7 @@ public class Toolbar extends JPanel implements ActionListener {
     private JToggleButton placeSpace;
     private JToggleButton placePiece;
     private JToggleButton placeCard;
+    private JToggleButton placeResource;
 
     private JLabel colorLabel;
 
@@ -41,13 +42,32 @@ public class Toolbar extends JPanel implements ActionListener {
 
     private HashMap<JComponent,StateListener.ButtonOutput> actionDescription;
 
+    private MetalToggleButtonUI mtbUI = new MetalToggleButtonUI() {
+        @Override
+        protected Color getSelectColor() {
+            return new Color(170,170,170);
+        }
+    };
+    private Color buttonBG = new Color(210,210,210);
+    private ChangeListener changeListener = new ChangeListener() {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            AbstractButton button = (AbstractButton) e.getSource();
+            ButtonModel model = button.getModel();
+
+            if (model.isRollover()) {
+                button.setBackground(Color.LIGHT_GRAY);
+            } else {
+                button.setBackground(buttonBG);
+            }
+        }
+    };
+
     public Toolbar(Game game){
         this.game = game;
 
         this.placementType = BoardPane.PlacementType.NONE;
         this.actionDescription = new HashMap<>();
-
-        Color buttonBG = new Color(210,210,210);
 
         UIManager.put("MenuBar.border",BorderFactory.createEmptyBorder());
 
@@ -92,20 +112,6 @@ public class Toolbar extends JPanel implements ActionListener {
         colorLabel.setOpaque(true);
         colorLabel.setPreferredSize(new Dimension(36,36));
 
-        ChangeListener changeListener = new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                AbstractButton button = (AbstractButton) e.getSource();
-                ButtonModel model = button.getModel();
-
-                if (model.isRollover()) {
-                    button.setBackground(Color.LIGHT_GRAY);
-                } else {
-                    button.setBackground(buttonBG);
-                }
-            }
-        };
-
         MouseListener menuListener = new MouseAdapter(){
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -118,13 +124,6 @@ public class Toolbar extends JPanel implements ActionListener {
             public void mouseExited(MouseEvent e) {
                 JMenu item = (JMenu) e.getSource();
                 item.setSelected(false);
-            }
-        };
-
-        MetalToggleButtonUI mtbUI = new MetalToggleButtonUI() {
-            @Override
-            protected Color getSelectColor() {
-                return new Color(170,170,170);
             }
         };
 
@@ -156,12 +155,10 @@ public class Toolbar extends JPanel implements ActionListener {
 
         saveMenu = new JMenuItem("Save");
         //saveMenu.setIcon(saveIcon);
-
         actionDescription.put(saveMenu, StateListener.ButtonOutput.SAVE);
 
         openMenu = new JMenuItem("Open");
         //openMenu.setIcon(openIcon);
-
         actionDescription.put(openMenu, StateListener.ButtonOutput.OPEN);
 
         System.out.println(javax.swing.UIManager.getDefaults().getFont("Label.font"));
@@ -189,47 +186,23 @@ public class Toolbar extends JPanel implements ActionListener {
         message.setFocusPainted(false);
         message.addChangeListener(changeListener);
         message.setUI(mtbUI);
-
         actionDescription.put(message, StateListener.ButtonOutput.MESSAGE);
 
         placeSpace = new JToggleButton("Space");
-        placeSpace.setPreferredSize(new Dimension(48,36));
-        placeSpace.setMargin(new Insets(0,0,0,0));
-        placeSpace.setBackground(buttonBG);
-        placeSpace.setBorder(BorderFactory.createEmptyBorder());
-        placeSpace.setFocusPainted(false);
-        placeSpace.setRolloverEnabled(true);
-        placeSpace.setFont(new Font("Segoe UI",Font.BOLD,13));
-        placeSpace.addChangeListener(changeListener);
-        placeSpace.setUI(mtbUI);
-
+        initToggleButton(placeSpace);
         actionDescription.put(placeSpace, StateListener.ButtonOutput.PLACE);
 
         placePiece = new JToggleButton("Piece");
-        placePiece.setPreferredSize(new Dimension(48,36));
-        placePiece.setMargin(new Insets(0,0,0,0));
-        placePiece.setBackground(buttonBG);
-        placePiece.setBorder(BorderFactory.createEmptyBorder());
-        placePiece.setFocusPainted(false);
-        placePiece.setRolloverEnabled(true);
-        placePiece.setFont(new Font("Segoe UI",Font.BOLD,13));
-        placePiece.addChangeListener(changeListener);
-        placePiece.setUI(mtbUI);
-
+        initToggleButton(placePiece);
         actionDescription.put(placePiece, StateListener.ButtonOutput.PLACE);
 
         placeCard = new JToggleButton("Card");
-        placeCard.setPreferredSize(new Dimension(48,36));
-        placeCard.setMargin(new Insets(0,0,0,0));
-        placeCard.setBackground(buttonBG);
-        placeCard.setBorder(BorderFactory.createEmptyBorder());
-        placeCard.setFocusPainted(false);
-        placeCard.setRolloverEnabled(true);
-        placeCard.setFont(new Font("Segoe UI",Font.BOLD,13));
-        placeCard.addChangeListener(changeListener);
-        placeCard.setUI(mtbUI);
-
+        initToggleButton(placeCard);
         actionDescription.put(placeCard, StateListener.ButtonOutput.PLACE);
+
+        placeResource = new JToggleButton("Resource");
+        initToggleButton(placeResource);
+        actionDescription.put(placeResource, StateListener.ButtonOutput.PLACE);
 
         buttons = new JPanel();
 
@@ -249,6 +222,8 @@ public class Toolbar extends JPanel implements ActionListener {
         buttons.add(placeSpace);
         buttons.add(placePiece);
         buttons.add(placeCard);
+        buttons.add(placeResource);
+
         buttons.add(colorLabel);
 
         menuBar = new JMenuBar();
@@ -309,6 +284,7 @@ public class Toolbar extends JPanel implements ActionListener {
         placePiece.addActionListener(this);
         placeSpace.addActionListener(this);
         placeCard.addActionListener(this);
+        placeResource.addActionListener(this);
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
         openMenu.addActionListener(this);
@@ -358,18 +334,26 @@ public class Toolbar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JComponent c = (JComponent)e.getSource();
 
-        if(c == placeSpace || c == placePiece || c == placeCard){
+        if(c == placeSpace || c == placePiece || c == placeCard || c == placeResource){
             if(c == placeSpace){
                 placePiece.setSelected(false);
                 placeCard.setSelected(false);
+                placeResource.setSelected(false);
             }
             else if(c == placePiece){
                 placeSpace.setSelected(false);
                 placeCard.setSelected(false);
+                placeResource.setSelected(false);
             }
             else if(c == placeCard){
                 placeSpace.setSelected(false);
                 placePiece.setSelected(false);
+                placeResource.setSelected(false);
+            }
+            else if(c == placeResource){
+                placeSpace.setSelected(false);
+                placePiece.setSelected(false);
+                placeCard.setSelected(false);
             }
 
             if(placePiece.isSelected()){
@@ -380,6 +364,9 @@ public class Toolbar extends JPanel implements ActionListener {
             }
             else if(placeCard.isSelected()){
                 this.placementType = BoardPane.PlacementType.CARD;
+            }
+            else if(placeResource.isSelected()){
+                this.placementType = BoardPane.PlacementType.RESOURCE;
             }
             else{
                 this.placementType = BoardPane.PlacementType.NONE;
@@ -429,5 +416,17 @@ public class Toolbar extends JPanel implements ActionListener {
                 }
             }
         };
+    }
+
+    public void initToggleButton(JToggleButton button){
+        button.setPreferredSize(new Dimension(48,36));
+        button.setMargin(new Insets(0,0,0,0));
+        button.setBackground(buttonBG);
+        button.setBorder(BorderFactory.createEmptyBorder());
+        button.setFocusPainted(false);
+        button.setRolloverEnabled(true);
+        button.setFont(new Font("Segoe UI",Font.BOLD,13));
+        button.addChangeListener(changeListener);
+        button.setUI(mtbUI);
     }
 }

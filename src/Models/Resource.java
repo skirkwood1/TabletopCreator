@@ -1,8 +1,9 @@
 package Models;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-public class Resource implements Serializable {
+public class Resource implements Serializable,GameComponent {
     private static final long serialVersionUID = 8607053040307709847L;
     private String name;
     private int value;
@@ -32,6 +33,14 @@ public class Resource implements Serializable {
 
     public int getValue() {
         return value;
+    }
+
+    public String getText(){
+        return "Starting value: " + startValue;
+    }
+
+    public BufferedImage getImage(){
+        return null;
     }
 
     public void setValue(int value) {

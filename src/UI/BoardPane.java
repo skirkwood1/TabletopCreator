@@ -25,7 +25,7 @@ public class BoardPane extends JPanel {
     private int topMarginOffset;
 
     private double zoom = 1.0;
-    public enum PlacementType{SPACE,PIECE,CARD,NONE}
+    public enum PlacementType{SPACE,PIECE,CARD,RESOURCE,NONE}
 
     private boolean showGrid = true;
 
@@ -45,7 +45,7 @@ public class BoardPane extends JPanel {
 
     private final JPopupMenu rightClickMenu;
 
-    private ResourceDrawer resourceDrawer;
+    private ArrayList<ResourceDrawer> resourceDrawers;
 
 
     public BoardPane(Game game,CommandStack commandStack) {
@@ -71,11 +71,13 @@ public class BoardPane extends JPanel {
 
         imagePreview = new Point(0,0);
 
-        Resource resource = new Resource("test",420);
-        this.resourceDrawer = new ResourceDrawer(resource,new Point(60,60));
+        this.resourceDrawers = new ArrayList<>();
 
-        addMouseListener(resourceDrawer.getLocationTracker());
-        addMouseMotionListener(resourceDrawer.getLocationTracker());
+        Resource resource = new Resource("test",420);
+        this.resourceDrawers.add(new ResourceDrawer(resource,new Point(60,60)));
+
+        addMouseListener(resourceDrawers.get(0).getLocationTracker());
+        addMouseMotionListener(resourceDrawers.get(0).getLocationTracker());
 
         //this.selectedComponents = new ArrayList<>();
         //this.selectedSpaces = new ArrayList<>();
@@ -144,6 +146,10 @@ public class BoardPane extends JPanel {
                     case CARD:
                         placeCard();
                         break;
+                    case RESOURCE:
+                        placeResource();
+                        System.out.println("Placed resource: " + game.getSelectedResource());
+                        break;
                 }
             }
         }
@@ -172,11 +178,11 @@ public class BoardPane extends JPanel {
             if(SwingUtilities.isLeftMouseButton(e)){
                     if(placementType == PlacementType.NONE){
                         selectedCard = getSelectedCard();
+                        selectedResource = getSelectedResource();
 
                         if(selectedCard != null){
                             dragStart = game.getPlacedCards().get(selectedCard);
-                        }else if(resourceDrawer.getBounds().contains(e.getPoint())){
-                            selectedResource = resourceDrawer;
+                        }else if(selectedResource != null){
                             dragStart = selectedResource.getPoint();
                         }
 
@@ -593,7 +599,10 @@ public class BoardPane extends JPanel {
 
         g2.setComposite(makeComposite(1f));
 
-        resourceDrawer.draw(g,zoom);
+        for(ResourceDrawer rd: resourceDrawers){
+            rd.draw(g,zoom);
+        }
+
     }
 
     public void drawDeck(Graphics2D g2, Deck deck, int x, int y, int width, int height){
@@ -691,6 +700,18 @@ public class BoardPane extends JPanel {
         return selectedCard;
     }
 
+    public ResourceDrawer getSelectedResource(){
+        ResourceDrawer selectedResource = null;
+        Point selectionPoint = new Point((int)(mousePoint.getX()/zoom),
+                (int)(mousePoint.getY()/zoom));
+        for(ResourceDrawer rd: this.resourceDrawers){
+            if(rd.getBounds().contains(selectionPoint)){
+                selectedResource = rd;
+            }
+        }
+        return selectedResource;
+    }
+
     public Space getSelectedSpace(){
         if(spacePreview != null){
             int x = (int)spacePreview.getX() - leftMarginOffset;
@@ -784,10 +805,26 @@ public class BoardPane extends JPanel {
 
     public void placeCard(CardInterface card){
         Dimension d = scaleCard(card);
-        Point point = new Point((int)(mousePoint.getX()/zoom-d.getWidth()/2),(int)(mousePoint.getY()/zoom-d.getHeight()/2));
+        Point point = new Point((int)(mousePoint.getX()/zoom-d.getWidth()/2),
+                (int)(mousePoint.getY()/zoom-d.getHeight()/2));
 
         PlaceCardCommand cpc = new PlaceCardCommand(game,card,point);
         commandStack.insertCommand(cpc);
+    }
+
+    public void placeResource(){
+        if(game.getSelectedResource() != null){
+            placeResource(game.getSelectedResource());
+        }
+    }
+
+    public void placeResource(Resource resource){
+        Point placePoint = new Point((int)(mousePoint.x/zoom),
+                (int)(mousePoint.getY()/zoom));
+        ResourceDrawer resourceDrawer = new ResourceDrawer(resource.copy(),placePoint);
+        resourceDrawers.add(resourceDrawer);
+        addMouseListener(resourceDrawer.getLocationTracker());
+        addMouseMotionListener(resourceDrawer.getLocationTracker());
     }
 
     public int spaceScale(int size){

@@ -25,6 +25,7 @@ public class Game implements Serializable {
 
     private GameComponent selectedComponent = null;
     private CardInterface selectedCard = null;
+    private Resource selectedResource = null;
 
     private LinkedHashMap<CardInterface, Point> placedCards;
 
@@ -274,5 +275,27 @@ public class Game implements Serializable {
     public void addResource(Resource resource){
         resources.add(resource);
         System.out.println(resource);
+    }
+
+    public ArrayList<Resource> getResources(){
+        return this.resources;
+    }
+
+    public void setSelectedResource(Resource resource){
+        this.selectedResource = resource;
+    }
+
+    public Resource getResource(String name){
+        for(Resource resource: this.resources){
+            if(resource.getName().equals(name)){
+                return resource;
+            }
+        }
+
+        return null;
+    }
+
+    public Resource getSelectedResource(){
+        return this.selectedResource;
     }
 }

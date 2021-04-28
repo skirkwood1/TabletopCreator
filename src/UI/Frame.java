@@ -273,6 +273,7 @@ public class Frame extends JFrame implements Observable {
             ComponentImage ci = new ComponentImage(fileSelected);
 
             GameComponent component = null;
+            Resource resource = null;
 
             switch(state){
                 case ADD_CARD:
@@ -346,6 +347,7 @@ public class Frame extends JFrame implements Observable {
                     resourceCreationDialog.getValueField());
 
             game.addResource(resource);
+            centerPane.updateComponentTree(resource);
         }
     }
 
