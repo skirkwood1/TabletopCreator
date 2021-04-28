@@ -140,4 +140,8 @@ public class CardDrawer implements DrawerInterface {
     public Point getPoint() {
         return this.point;
     }
+
+    public CardInterface getComponent(){
+        return this.card;
+    }
 }

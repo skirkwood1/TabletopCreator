@@ -276,7 +276,12 @@ public class CenterPane extends JPanel implements Observable {
         flip.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CardInterface cardInterface = boardPane.getSelectedCard();
+                CardInterface cardInterface = null;
+                if(boardPane.getSelectedResource() != null){
+                    if(boardPane.getSelectedResource().getComponent() instanceof CardInterface){
+                        cardInterface = (CardInterface) boardPane.getSelectedResource().getComponent();
+                    }
+                }
                 if(cardInterface != null){
                     cardInterface.flip();
                 }
@@ -289,7 +294,7 @@ public class CenterPane extends JPanel implements Observable {
         drawCard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CardInterface cardInterface = boardPane.getSelectedCard();
+                CardInterface cardInterface = (CardInterface)boardPane.getSelectedResource().getComponent();
                 if(cardInterface instanceof Deck){
                     Deck deck = (Deck)cardInterface;
                     Card card = deck.drawCard();
@@ -303,7 +308,7 @@ public class CenterPane extends JPanel implements Observable {
         shuffle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CardInterface cardInterface = boardPane.getSelectedCard();
+                CardInterface cardInterface = (CardInterface)boardPane.getSelectedResource().getComponent();
                 if(cardInterface instanceof Deck){
                     Deck deck = (Deck)cardInterface;
                     deck.shuffle();
@@ -328,9 +333,12 @@ public class CenterPane extends JPanel implements Observable {
                     popupMenu.add(delete);
                     popupMenu.add(colorSelect);
 
-                    if(boardPane.getSelectedCard() != null){
-                        popupMenu.add(flip);
-                        if(boardPane.getSelectedCard() instanceof Deck){
+                    if(boardPane.getSelectedResource() != null){
+                        System.out.println(boardPane.getSelectedResource());
+                        if(boardPane.getSelectedResource().getComponent() instanceof CardInterface){
+                            popupMenu.add(flip);
+                        }
+                        if(boardPane.getSelectedResource().getComponent() instanceof Deck){
                             popupMenu.add(drawCard);
                             popupMenu.add(shuffle);
                         }

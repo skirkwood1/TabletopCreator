@@ -25,7 +25,7 @@ public class ResourceDrawer implements DrawerInterface {
 
     public ResourceDrawer(Resource resource, Point point){
         this.resource = resource;
-        this.point = point;
+        this.point = new Point(point.x-30,point.y-30);
         this.mousePoint = new Point(0,0);
     }
 
@@ -43,43 +43,49 @@ public class ResourceDrawer implements DrawerInterface {
 
         FontRenderContext frc = g2.getFontRenderContext();
 
+        String str = resource.getName();
         GlyphVector gv = g2.getFont().createGlyphVector(frc, resource.getName());
+
+        String str2 = "Value: " + resource.getValue();
         GlyphVector gv2 = g2.getFont().createGlyphVector(frc, "Value: " + resource.getValue());
         //gv.getOutline();
-        Rectangle nameBounds = gv.getPixelBounds(null,
-                (float)point.getX(),
-                (float)point.getY());
 
-        int width = 80 > nameBounds.width ? 100 : nameBounds.width + 20;
+        //int width =  g2.getFontMetrics().stringWidth(str);
+
+//        Rectangle nameBounds = gv.getPixelBounds(null,
+//                (float)point.getX(),
+//                (float)point.getY());
+
+        int width = 80 > g2.getFontMetrics().stringWidth(str) ? 80 : g2.getFontMetrics().stringWidth(str);
 
         this.bounds = new Rectangle((int)(point.getX()),
                 (int)(point.getY()),
-                width + 5,
-                60);
+                width + 8,
+                45);
 
         g2.setColor(Color.WHITE);
         g2.fill(this.bounds);
         g2.setColor(Color.BLACK);
         g2.draw(this.bounds);
         g2.drawLine(point.x,
-                point.y + 15,
-                point.x + width + 5,
-                point.y + 15);
+                point.y + 12,
+                point.x + width + 8,
+                point.y + 12);
 
         g2.drawGlyphVector(gv,
-                (int)(point.getX() + 5),
+                (int)(point.getX() + 4),
                 (int)(point.getY()) + 10);
 
         g2.drawGlyphVector(gv2,
-                point.x + 5,
-                point.y + 40);
+                point.x + 4,
+                point.y + 30);
 
         this.plusButton = drawPlusSign(g,
-                point.x + width - 5,
-                point.y + 30);
+                point.x + width,
+                point.y + 22);
         this.minusButton = drawMinusSign(g,
-                point.x + width - 5,
-                point.y + 45);
+                point.x + width,
+                point.y + 36);
 
         if(bounds.contains(mousePoint)){
             g2.draw(bounds);
@@ -152,6 +158,10 @@ public class ResourceDrawer implements DrawerInterface {
 
     public Point getPoint(){
         return this.point;
+    }
+
+    public Resource getComponent(){
+        return this.resource;
     }
 
 }

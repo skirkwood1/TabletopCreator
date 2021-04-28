@@ -9,4 +9,5 @@ public interface DrawerInterface {
     Rectangle getBounds();
     Point getPoint();
     void move(Point point);
+    Object getComponent();
 }

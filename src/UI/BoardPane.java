@@ -778,7 +778,7 @@ public class BoardPane extends JPanel {
 
         CardInterface copy = card.copy();
 
-        CardDrawer cardDrawer = new CardDrawer(card,point);
+        CardDrawer cardDrawer = new CardDrawer(copy,point);
         resourceDrawers.add(cardDrawer);
         game.placeCard(copy,point);
         addMouseListener(cardDrawer.getLocationTracker());
