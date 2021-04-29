@@ -5,6 +5,7 @@ import ChatServer.GameListener;
 import Commands.*;
 import Models.*;
 import Observers.ColorLabelObserver;
+import Observers.PlacementTypeObserver;
 import UI.UIHelpers.FileChooserCreator;
 
 import javax.imageio.ImageIO;
@@ -68,8 +69,11 @@ public class Frame extends JFrame implements Observable {
         fileChooser.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
         FileChooserCreator.setFileChooserUI(comp);
 
-        toolbar = new Toolbar(game);
         centerPane = new CenterPane(game,commandStack);
+        PlacementTypeObserver pto = new PlacementTypeObserver(centerPane);
+        observers.add(pto);
+        toolbar = new Toolbar(game,observers);
+
         ColorLabelObserver colorLabelObserver = new ColorLabelObserver(toolbar);
         centerPane.addObserver(colorLabelObserver);
         centerPane.setOpaque(false);
@@ -125,9 +129,11 @@ public class Frame extends JFrame implements Observable {
                 case COLOR_CHOOSE:
                     colorDialog.display();
                     Color color = colorDialog.getColor();
+                    centerPane.setPlacementType(BoardPane.PlacementType.SPACE);
+                    System.out.println(centerPane.getPlacementType());
                     UpdateColorCommand ucc = new UpdateColorCommand(game,color);
                     commandStack.insertCommand(ucc);
-                    centerPane.updateObservers();
+                    updateObservers();
                     break;
                 case MESSAGE:
                     try {
@@ -161,7 +167,14 @@ public class Frame extends JFrame implements Observable {
                     redo();
                     break;
                 case PLACE:
-                    centerPane.boardPane.setPlacementType(toolbar.getPlacementType());
+                    centerPane.setPlace(true);
+                    //centerPane.boardPane.setPlacementType(toolbar.getPlacementType());
+                    centerPane.updateBoard();
+                    break;
+                case MOVE:
+                    centerPane.setPlace(false);
+                    centerPane.boardPane.setPlacementType(BoardPane.PlacementType.NONE);
+                    updateObservers();
                     centerPane.updateBoard();
                     break;
                 case CREATE_DECK:

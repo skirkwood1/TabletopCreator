@@ -20,6 +20,9 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Random;
 
+import static UI.BoardPane.PlacementType.NONE;
+import static UI.BoardPane.PlacementType.SPACE;
+
 
 public class CenterPane extends JPanel implements Observable {
     ComponentTree componentTree;
@@ -39,6 +42,9 @@ public class CenterPane extends JPanel implements Observable {
     private Game game;
     private CommandStack commandStack;
 
+    private boolean place = false;
+    private BoardPane.PlacementType placementType = SPACE;
+
     BoardPaneViewScroll bpvs;
     ImageViewScroll ivs;
 
@@ -48,8 +54,6 @@ public class CenterPane extends JPanel implements Observable {
             String name = selectedNode.toString();
             GameComponent component = null;
             CardInterface card = null;
-            Resource resource = null;
-
             if(selectedNode.getParent() == null){
 
             }
@@ -57,24 +61,30 @@ public class CenterPane extends JPanel implements Observable {
 
             }
             else if(selectedNode.getParent().equals(componentTree.pieces)){
+                this.placementType = BoardPane.PlacementType.PIECE;
                 component = game.getPiece(name);
             }
             else if(selectedNode.getParent().equals(componentTree.cards)){
+                this.placementType = BoardPane.PlacementType.CARD;
                 component = game.getCard(name);
                 card = game.getCard(name);
             }
             else if(selectedNode.getParent().equals(componentTree.textures)){
+                this.placementType = SPACE;
                 component = game.getTexture(name);
             }
             else if(selectedNode.getParent().equals(componentTree.decks)){
+                this.placementType = BoardPane.PlacementType.CARD;
                 component = game.getDeck(name);
                 card = game.getDeck(name);
             }
             else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
+                this.placementType = BoardPane.PlacementType.CARD;
                 component = game.getCard(name);
                 card = game.getCard(name);
             }
             else if(selectedNode.getParent().equals(componentTree.resources)){
+                this.placementType = BoardPane.PlacementType.RESOURCE;
                 component = game.getResource(name);
                 //resource = game.getResource(name);
                 //game.setSelectedResource(component);
@@ -90,8 +100,9 @@ public class CenterPane extends JPanel implements Observable {
                     UpdateColorCommand ucc = new UpdateColorCommand(game,(Texture) component);
                     commandStack.insertCommand(ucc);
                 }
-                updateObservers();
+                //updateObservers();
             }
+            updateObservers();
         }
     };
 
@@ -458,4 +469,23 @@ public class CenterPane extends JPanel implements Observable {
         return this.cmdOutput;
     }
 
+    public boolean willPlace(){
+        return place;
+    }
+
+    public void setPlace(boolean b){
+        this.place = b;
+    }
+
+    public BoardPane getBoardPane(){
+        return this.boardPane;
+    }
+
+    public BoardPane.PlacementType getPlacementType() {
+        return placementType;
+    }
+
+    public void setPlacementType(BoardPane.PlacementType pt){
+        this.placementType = pt;
+    }
 }

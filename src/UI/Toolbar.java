@@ -1,6 +1,7 @@
 package UI;
 
 import Models.Game;
+import Observers.Observer;
 import UI.UIHelpers.AntialiasButton;
 
 import javax.imageio.ImageIO;
@@ -13,9 +14,10 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Toolbar extends JPanel implements ActionListener {
+public class Toolbar extends JPanel implements ActionListener,Observable {
     private JPanel buttons;
     private JButton save;
     private JButton open;
@@ -23,10 +25,12 @@ public class Toolbar extends JPanel implements ActionListener {
     private JButton message;
 
     private ButtonGroup buttonGroup;
-    private JToggleButton placeSpace;
-    private JToggleButton placePiece;
-    private JToggleButton placeCard;
-    private JToggleButton placeResource;
+//    private JToggleButton placeSpace;
+//    private JToggleButton placePiece;
+//    private JToggleButton placeCard;
+//    private JToggleButton placeResource;
+
+    private JToggleButton place,move;
 
     private JLabel colorLabel;
 
@@ -63,8 +67,11 @@ public class Toolbar extends JPanel implements ActionListener {
         }
     };
 
-    public Toolbar(Game game){
+    private ArrayList<Observer> observers;
+
+    public Toolbar(Game game, ArrayList<Observer> observers){
         this.game = game;
+        this.observers = observers;
 
         this.placementType = BoardPane.PlacementType.NONE;
         this.actionDescription = new HashMap<>();
@@ -78,7 +85,6 @@ public class Toolbar extends JPanel implements ActionListener {
         UIManager.put("Menu.opaque", false);
         UIManager.put("Menu.border",BorderFactory.createEmptyBorder(3,1,3,1));
         UIManager.put("Menu.font",new Font("Segoe UI",Font.PLAIN,14));
-
 
         UIManager.put("MenuItem.background",Color.WHITE);
         UIManager.put("MenuItem.selectionBackground",buttonBG);
@@ -128,81 +134,62 @@ public class Toolbar extends JPanel implements ActionListener {
         };
 
         save = new AntialiasButton(saveIcon);
-        save.setPreferredSize(new Dimension(36,36));
         save.setToolTipText("Save");
-        //save.setMargin(new Insets(0,0,0,0));
-        save.setBackground(buttonBG);
-        save.setBorder(BorderFactory.createEmptyBorder());
-        save.setFocusPainted(false);
-        save.addChangeListener(changeListener);
-        save.setUI(mtbUI);
-
+        initButton(save);
         actionDescription.put(save, StateListener.ButtonOutput.SAVE);
 
         open = new AntialiasButton(openIcon);
-        open.setPreferredSize(new Dimension(36,36));
         open.setToolTipText("Open");
-        open.setMargin(new Insets(0,0,0,0));
-        open.setBackground(buttonBG);
-        open.setBorder(BorderFactory.createEmptyBorder());
-        open.setFocusPainted(false);
-        open.addChangeListener(changeListener);
-        open.setUI(mtbUI);
-
+        initButton(open);
         actionDescription.put(open, StateListener.ButtonOutput.OPEN);
 
         JMenuItem changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture,addResource;
 
         saveMenu = new JMenuItem("Save");
-        //saveMenu.setIcon(saveIcon);
+        saveMenu.setIcon(new ImageIcon(saveIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         actionDescription.put(saveMenu, StateListener.ButtonOutput.SAVE);
 
         openMenu = new JMenuItem("Open");
-        //openMenu.setIcon(openIcon);
+        openMenu.setIcon(new ImageIcon(openIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         actionDescription.put(openMenu, StateListener.ButtonOutput.OPEN);
 
         System.out.println(javax.swing.UIManager.getDefaults().getFont("Label.font"));
 
         colorChoose = new JButton("⬛");
-        colorChoose.setPreferredSize(new Dimension(36,36));
-        colorChoose.setMargin(new Insets(0,0,0,0));
         colorChoose.setToolTipText("Choose Color");
+        initButton(colorChoose);
         colorChoose.setFont(new Font("Dialog",Font.PLAIN,30));
         colorChoose.setForeground(game.getBoard().getColor());
-        colorChoose.setBackground(buttonBG);
-        colorChoose.setBorder(BorderFactory.createEmptyBorder());
-        colorChoose.setFocusPainted(false);
-        colorChoose.addChangeListener(changeListener);
-        colorChoose.setUI(mtbUI);
-
         actionDescription.put(colorChoose, StateListener.ButtonOutput.COLOR_CHOOSE);
 
         message = new AntialiasButton(messageIcon);
-        message.setPreferredSize(new Dimension(36,36));
-        message.setMargin(new Insets(0,0,0,0));
-        message.setForeground(game.getBoard().getColor());
-        message.setBackground(buttonBG);
-        message.setBorder(BorderFactory.createEmptyBorder());
-        message.setFocusPainted(false);
-        message.addChangeListener(changeListener);
-        message.setUI(mtbUI);
+        message.setToolTipText("Chat Room");
+        initButton(message);
         actionDescription.put(message, StateListener.ButtonOutput.MESSAGE);
 
-        placeSpace = new JToggleButton("Space");
-        initToggleButton(placeSpace);
-        actionDescription.put(placeSpace, StateListener.ButtonOutput.PLACE);
+        place = new JToggleButton("Place");
+        initToggleButton(place);
+        actionDescription.put(place, StateListener.ButtonOutput.PLACE);
 
-        placePiece = new JToggleButton("Piece");
-        initToggleButton(placePiece);
-        actionDescription.put(placePiece, StateListener.ButtonOutput.PLACE);
+        move = new JToggleButton("Move");
+        initToggleButton(move);
+        actionDescription.put(move, StateListener.ButtonOutput.MOVE);
 
-        placeCard = new JToggleButton("Card");
-        initToggleButton(placeCard);
-        actionDescription.put(placeCard, StateListener.ButtonOutput.PLACE);
-
-        placeResource = new JToggleButton("Resource");
-        initToggleButton(placeResource);
-        actionDescription.put(placeResource, StateListener.ButtonOutput.PLACE);
+//        placeSpace = new JToggleButton("Space");
+//        initToggleButton(placeSpace);
+//        actionDescription.put(placeSpace, StateListener.ButtonOutput.PLACE);
+//
+//        placePiece = new JToggleButton("Piece");
+//        initToggleButton(placePiece);
+//        actionDescription.put(placePiece, StateListener.ButtonOutput.PLACE);
+//
+//        placeCard = new JToggleButton("Card");
+//        initToggleButton(placeCard);
+//        actionDescription.put(placeCard, StateListener.ButtonOutput.PLACE);
+//
+//        placeResource = new JToggleButton("Resource");
+//        initToggleButton(placeResource);
+//        actionDescription.put(placeResource, StateListener.ButtonOutput.PLACE);
 
         buttons = new JPanel();
 
@@ -219,10 +206,12 @@ public class Toolbar extends JPanel implements ActionListener {
         buttons.add(open);
         buttons.add(colorChoose);
         buttons.add(message);
-        buttons.add(placeSpace);
-        buttons.add(placePiece);
-        buttons.add(placeCard);
-        buttons.add(placeResource);
+//        buttons.add(placeSpace);
+//        buttons.add(placePiece);
+//        buttons.add(placeCard);
+//        buttons.add(placeResource);
+        buttons.add(move);
+        buttons.add(place);
 
         buttons.add(colorLabel);
 
@@ -281,10 +270,12 @@ public class Toolbar extends JPanel implements ActionListener {
         open.addActionListener(this);
         colorChoose.addActionListener(this);
         message.addActionListener(this);
-        placePiece.addActionListener(this);
-        placeSpace.addActionListener(this);
-        placeCard.addActionListener(this);
-        placeResource.addActionListener(this);
+        //placePiece.addActionListener(this);
+        //placeSpace.addActionListener(this);
+        //placeCard.addActionListener(this);
+        //placeResource.addActionListener(this);
+        place.addActionListener(this);
+        move.addActionListener(this);
         changeSize.addActionListener(this);
         saveMenu.addActionListener(this);
         openMenu.addActionListener(this);
@@ -324,7 +315,7 @@ public class Toolbar extends JPanel implements ActionListener {
         add(menuBar,BorderLayout.NORTH);
         add(buttons,BorderLayout.SOUTH);
 
-
+        move.setSelected(true);
     }
 
     public void setStateListener(StateListener listener){
@@ -334,48 +325,60 @@ public class Toolbar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JComponent c = (JComponent)e.getSource();
 
-        if(c == placeSpace || c == placePiece || c == placeCard || c == placeResource){
-            if(c == placeSpace){
-                placePiece.setSelected(false);
-                placeCard.setSelected(false);
-                placeResource.setSelected(false);
-            }
-            else if(c == placePiece){
-                placeSpace.setSelected(false);
-                placeCard.setSelected(false);
-                placeResource.setSelected(false);
-            }
-            else if(c == placeCard){
-                placeSpace.setSelected(false);
-                placePiece.setSelected(false);
-                placeResource.setSelected(false);
-            }
-            else if(c == placeResource){
-                placeSpace.setSelected(false);
-                placePiece.setSelected(false);
-                placeCard.setSelected(false);
-            }
+        //if(c == placeSpace || c == placePiece || c == placeCard || c == placeResource){
+//            if(c == placeSpace){
+//                placePiece.setSelected(false);
+//                placeCard.setSelected(false);
+//                placeResource.setSelected(false);
+//            }
+//            else if(c == placePiece){
+//                placeSpace.setSelected(false);
+//                placeCard.setSelected(false);
+//                placeResource.setSelected(false);
+//            }
+//            else if(c == placeCard){
+//                placeSpace.setSelected(false);
+//                placePiece.setSelected(false);
+//                placeResource.setSelected(false);
+//            }
+//            else if(c == placeResource){
+//                placeSpace.setSelected(false);
+//                placePiece.setSelected(false);
+//                placeCard.setSelected(false);
+//            }
+//
+//            if(placePiece.isSelected()){
+//                this.placementType = BoardPane.PlacementType.PIECE;
+//            }
+//            else if(placeSpace.isSelected()){
+//                this.placementType = BoardPane.PlacementType.SPACE;
+//            }
+//            else if(placeCard.isSelected()){
+//                this.placementType = BoardPane.PlacementType.CARD;
+//            }
+//            else if(placeResource.isSelected()){
+//                this.placementType = BoardPane.PlacementType.RESOURCE;
+//            }
+//            else{
+//                this.placementType = BoardPane.PlacementType.NONE;
+//            }
+//        }
+//
+//        stateListener.stateEmitted(actionDescription.get(c));
+        //System.out.println(placementType);
 
-            if(placePiece.isSelected()){
-                this.placementType = BoardPane.PlacementType.PIECE;
-            }
-            else if(placeSpace.isSelected()){
-                this.placementType = BoardPane.PlacementType.SPACE;
-            }
-            else if(placeCard.isSelected()){
-                this.placementType = BoardPane.PlacementType.CARD;
-            }
-            else if(placeResource.isSelected()){
-                this.placementType = BoardPane.PlacementType.RESOURCE;
-            }
-            else{
-                this.placementType = BoardPane.PlacementType.NONE;
+        if(c == place || c == move){
+            if(c == place){
+                move.setSelected(false);
+                place.setSelected(true);
+            }else{
+                place.setSelected(false);
+                move.setSelected(true);
             }
         }
 
         stateListener.stateEmitted(actionDescription.get(c));
-        //System.out.println(placementType);
-
+        updateObservers();
     }
 
     public void updateColorLabel(){
@@ -426,6 +429,16 @@ public class Toolbar extends JPanel implements ActionListener {
         button.setFocusPainted(false);
         button.setRolloverEnabled(true);
         button.setFont(new Font("Segoe UI",Font.BOLD,13));
+        button.addChangeListener(changeListener);
+        button.setUI(mtbUI);
+    }
+
+    public void initButton(JButton button){
+        button.setPreferredSize(new Dimension(36,36));
+        button.setMargin(new Insets(0,0,0,0));
+        button.setBackground(buttonBG);
+        button.setBorder(BorderFactory.createEmptyBorder());
+        button.setFocusPainted(false);
         button.addChangeListener(changeListener);
         button.setUI(mtbUI);
     }

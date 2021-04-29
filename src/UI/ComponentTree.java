@@ -32,7 +32,6 @@ public class ComponentTree extends JPanel implements Observable {
     DefaultMutableTreeNode players = new DefaultMutableTreeNode("Players");
     DefaultMutableTreeNode resources = new DefaultMutableTreeNode("Resources");
 
-
     private JPopupMenu rightClickMenu;
     private JMenuItem delete,add;
 
