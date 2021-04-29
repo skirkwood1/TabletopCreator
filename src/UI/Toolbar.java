@@ -143,7 +143,7 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
         initButton(open);
         actionDescription.put(open, StateListener.ButtonOutput.OPEN);
 
-        JMenuItem changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture,addResource;
+        JMenuItem changeSize,saveMenu,openMenu,undo,redo,addPiece,addCard,addRule,addTexture,addResource,addPlayer;
 
         saveMenu = new JMenuItem("Save");
         saveMenu.setIcon(new ImageIcon(saveIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
@@ -260,6 +260,9 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
         addResource = new JMenuItem("Resource");
         actionDescription.put(addResource, StateListener.ButtonOutput.ADD_RESOURCE);
 
+        addPlayer = new JMenuItem("Player");
+        actionDescription.put(addPlayer,StateListener.ButtonOutput.ADD_PLAYER);
+
         createDeck = new JMenuItem("Create");
         actionDescription.put(createDeck, StateListener.ButtonOutput.CREATE_DECK);
 
@@ -284,6 +287,7 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
         addPiece.addActionListener(this);
         addCard.addActionListener(this);
         addTexture.addActionListener(this);
+        addPlayer.addActionListener(this);
         createDeck.addActionListener(this);
         addToDeck.addActionListener(this);
         addResource.addActionListener(this);
@@ -303,6 +307,7 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
         //add.add(addRule);
         add.add(addTexture);
         add.add(addResource);
+        add.add(addPlayer);
 
         decks.add(createDeck);
         decks.add(addToDeck);

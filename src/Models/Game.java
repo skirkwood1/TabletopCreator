@@ -20,6 +20,7 @@ public class Game implements Serializable {
     private ArrayList<Deck> decks;
     private ArrayList<Texture> textures;
     private ArrayList<Resource> resources;
+    private ArrayList<Player> players;
 
     private Board board;
 
@@ -40,6 +41,7 @@ public class Game implements Serializable {
         this.placedCards = new LinkedHashMap<>();
         this.placedResources = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
 
     public Game(Game game){
@@ -51,6 +53,7 @@ public class Game implements Serializable {
         this.placedCards = new LinkedHashMap<>();
         this.placedResources = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
 
     public Game(int x,int y){
@@ -63,6 +66,7 @@ public class Game implements Serializable {
         this.placedCards = new LinkedHashMap<>();
         this.placedResources = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
 
     public Game(ArrayList<Card> cards, ArrayList<Dice> diceCollection, ArrayList<Piece> pieces, Board board){
@@ -74,6 +78,7 @@ public class Game implements Serializable {
         this.placedCards = new LinkedHashMap<>();
         this.placedResources = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
 
     public Card addCard(Card card){
@@ -302,5 +307,13 @@ public class Game implements Serializable {
 
     public HashMap<Resource,Point> getPlacedResources(){
         return this.placedResources;
+    }
+
+    public void addPlayer(Player player){
+        this.players.add(player);
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return this.players;
     }
 }

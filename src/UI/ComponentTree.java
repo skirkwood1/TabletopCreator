@@ -191,6 +191,19 @@ public class ComponentTree extends JPanel implements Observable {
 
     }
 
+    public void addPlayer(Player player){
+        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(player.getName());
+        tree.scrollPathToVisible(new TreePath(node.getPath()));
+        for(Resource resource: player.getResources()){
+            node.add(new DefaultMutableTreeNode(resource.getName()));
+        }
+//        this.decks.add(node);
+        model.insertNodeInto(node,players,players.getChildCount());
+//        refreshTree(game);
+
+    }
+
     public void updateTree(Texture texture){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(texture.getName());

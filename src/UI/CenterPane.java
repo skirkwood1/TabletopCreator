@@ -391,6 +391,10 @@ public class CenterPane extends JPanel implements Observable {
         componentTree.addDeck(deck);
     }
 
+    void updateComponentTree(Player player){
+        componentTree.addPlayer(player);
+    }
+
     void updateComponentTree(Texture texture){
         componentTree.updateTree(texture);
     }

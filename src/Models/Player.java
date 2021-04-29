@@ -5,21 +5,21 @@ import java.util.ArrayList;
 
 public class Player implements Serializable {
     private static final long serialVersionUID = 6607801587212017657L;
+
+    private String name;
     private ArrayList<Card> hand;
     private ArrayList<Piece> controlledPieces;
     private ArrayList<Resource> resources;
 
-    public Player(String ... resources){
+    public Player(String name){
+        this.name = name;
         this.hand = new ArrayList<>();
         this.controlledPieces = new ArrayList<>();
         this.resources = new ArrayList<>();
-
-        for(String resource: resources){
-            this.resources.add(new Resource(resource));
-        }
     }
 
-    public Player(ArrayList<Resource> resources){
+    public Player(String name, ArrayList<Resource> resources){
+        this.name = name;
         this.hand = new ArrayList<>();
         this.controlledPieces = new ArrayList<>();
         this.resources = resources;
@@ -53,6 +53,10 @@ public class Player implements Serializable {
         this.controlledPieces.add(piece);
     }
 
+    public String getName(){
+        return this.name;
+    }
+
     public int getResourceValue(String name){
         for(Resource resource:resources){
             if(resource.getName().equals(name)){
@@ -68,6 +72,10 @@ public class Player implements Serializable {
                 resource.setValue(value);
             }
         }
+    }
+
+    public void addResource(Resource resource){
+        this.resources.add(resource);
     }
 
     public ArrayList<Resource> getResources(){

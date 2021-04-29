@@ -160,6 +160,11 @@ public class Frame extends JFrame implements Observable {
                 case ADD_TEXTURE:
                     addComponentDialog(ADD_TEXTURE);
                     break;
+                case ADD_PLAYER:
+                    addPlayerDialog();
+                    centerPane.refreshComponentTree(game);
+                    centerPane.updateBoard();
+                    break;
                 case UNDO:
                     undo();
                     break;
@@ -314,6 +319,22 @@ public class Frame extends JFrame implements Observable {
             centerPane.updateComponentTree(component);
 
             componentCreationDialog.clear();
+        }
+    }
+
+    private void addPlayerDialog(){
+        PlayerCreationDialog playerCreationDialog = new PlayerCreationDialog(game);
+        int n = playerCreationDialog.display();
+
+        if(n == JOptionPane.YES_OPTION){
+            ArrayList<Resource> resources = new ArrayList<>();
+            for(Resource resource: playerCreationDialog.getSelection()){
+                resources.add(resource);
+            }
+            Player player = new Player(playerCreationDialog.getPlayerName(),resources);
+            game.addPlayer(player);
+            //game.createDeck(deck);
+            centerPane.updateComponentTree(player);
         }
     }
 
