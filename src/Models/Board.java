@@ -32,7 +32,7 @@ public class Board implements Serializable {
             }
         }
 
-        int[] margins = {2,2,2,2};
+        int[] margins = {4,4,4,4};
         this.margins = margins;
     }
 
@@ -52,7 +52,7 @@ public class Board implements Serializable {
             }
         }
 
-        int[] margins = {2,2,2,2};
+        int[] margins = {4,4,4,4};
         this.margins = margins;
     }
 
@@ -63,7 +63,7 @@ public class Board implements Serializable {
         this.height = height;
         this.spaces = spaces;
 
-        int[] margins = {2,2,2,2};
+        int[] margins = {4,4,4,4};
         this.margins = margins;
     }
 

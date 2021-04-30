@@ -3,6 +3,7 @@ import Commands.*;
 import Models.*;
 import UI.BoardPaneObjects.CardDrawer;
 import UI.BoardPaneObjects.DrawerInterface;
+import UI.BoardPaneObjects.PlayerDrawer;
 import UI.BoardPaneObjects.ResourceDrawer;
 
 import java.awt.*;
@@ -70,6 +71,17 @@ public class BoardPane extends JPanel {
         for(Map.Entry<Resource,Point> entry: game.getPlacedResources().entrySet()){
             resourceDrawers.add(new ResourceDrawer(entry.getKey(),entry.getValue()));
         }
+
+        ArrayList<Resource> res = new ArrayList<>();
+        res.add(new Resource("a",10));
+        res.add(new Resource("b",9999));
+        Player p1 = new Player("p1",res);
+
+        //ResourceDrawer rd = new ResourceDrawer(res.get(0));
+        PlayerDrawer pd = new PlayerDrawer(p1,new Point(60,60));
+        resourceDrawers.add(pd);
+        addMouseMotionListener(pd.getLocationTracker());
+        addMouseListener(pd.getLocationTracker());
     }
 
     MouseAdapter ma = new MouseAdapter() {
