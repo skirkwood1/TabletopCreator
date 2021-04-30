@@ -1,9 +1,10 @@
 package Models;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player implements Serializable {
+public class Player implements Serializable, GameComponent {
     private static final long serialVersionUID = 6607801587212017657L;
 
     private String name;
@@ -22,6 +23,13 @@ public class Player implements Serializable {
         this.name = name;
         this.hand = new ArrayList<>();
         this.controlledPieces = new ArrayList<>();
+        this.resources = resources;
+    }
+
+    public Player(String name,ArrayList<Card> hand,ArrayList<Piece> controlledPieces,ArrayList<Resource> resources){
+        this.name = name;
+        this.hand = hand;
+        this.controlledPieces = controlledPieces;
         this.resources = resources;
     }
 
@@ -57,6 +65,16 @@ public class Player implements Serializable {
         return this.name;
     }
 
+    @Override
+    public String getText() {
+        return "Player: " + this.name + "\n\r # of Resources: " + resources.size();
+    }
+
+    @Override
+    public BufferedImage getImage() {
+        return null;
+    }
+
     public int getResourceValue(String name){
         for(Resource resource:resources){
             if(resource.getName().equals(name)){
@@ -88,5 +106,13 @@ public class Player implements Serializable {
 
     public ArrayList<Card> getCards(){
         return this.hand;
+    }
+
+    public Player copy(){
+        ArrayList<Resource> copiedResources = new ArrayList<>();
+        for(Resource resource: this.resources){
+            copiedResources.add(resource.copy());
+        }
+        return new Player(this.name,this.hand,this.controlledPieces,copiedResources);
     }
 }

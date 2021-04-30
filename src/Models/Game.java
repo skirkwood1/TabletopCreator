@@ -30,6 +30,7 @@ public class Game implements Serializable {
 
     private LinkedHashMap<CardInterface, Point> placedCards;
     private LinkedHashMap<Resource, Point> placedResources;
+    private LinkedHashMap<Player, Point> placedPlayers;
 
     public Game(){
         this.cards = new ArrayList<>();
@@ -40,6 +41,7 @@ public class Game implements Serializable {
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
         this.placedResources = new LinkedHashMap<>();
+        this.placedPlayers = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -52,6 +54,7 @@ public class Game implements Serializable {
         this.board = game.getBoard();
         this.placedCards = new LinkedHashMap<>();
         this.placedResources = new LinkedHashMap<>();
+        this.placedPlayers = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -65,6 +68,7 @@ public class Game implements Serializable {
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
         this.placedResources = new LinkedHashMap<>();
+        this.placedPlayers = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -77,6 +81,7 @@ public class Game implements Serializable {
         this.textures = new ArrayList<>();
         this.placedCards = new LinkedHashMap<>();
         this.placedResources = new LinkedHashMap<>();
+        this.placedPlayers = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -316,4 +321,22 @@ public class Game implements Serializable {
     public ArrayList<Player> getPlayers(){
         return this.players;
     }
+
+    public Player getPlayer(String name){
+        for(Player player: this.players){
+            if(player.getName().equals(name)){
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public void placePlayer(Player player, Point point){
+        this.placedPlayers.put(player,point);
+    }
+
+    public HashMap<Player,Point> getPlacedPlayers(){
+        return this.placedPlayers;
+    }
+
 }

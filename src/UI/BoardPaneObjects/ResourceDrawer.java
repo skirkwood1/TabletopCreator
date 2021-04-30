@@ -44,9 +44,9 @@ public class ResourceDrawer implements DrawerInterface {
     }
 
     public void initializeBounds(Graphics g){
-        g.setFont(new Font("Segoe UI",Font.PLAIN,12));
+        g.setFont(new Font("Segoe UI",Font.PLAIN,10));
         String str = resource.getName();
-        int width = 80 > g.getFontMetrics().stringWidth(str) ? 80 : g.getFontMetrics().stringWidth(str);
+        int width = 70 > g.getFontMetrics().stringWidth(str) ? 70 : g.getFontMetrics().stringWidth(str);
 
         this.bounds = new Rectangle((int)(point.getX()),
                 (int)(point.getY()),
@@ -56,35 +56,17 @@ public class ResourceDrawer implements DrawerInterface {
 
     public void draw(Graphics g,double zoom){
         this.zoom = zoom;
-
         Graphics2D g2 = (Graphics2D)g.create();
 
-        g2.setFont(new Font("Segoe UI",Font.PLAIN,12));
+        initializeBounds(g);
+
+        g2.setFont(new Font("Segoe UI",Font.PLAIN,10));
         g2.setColor(Color.BLACK);
 
         FontRenderContext frc = g2.getFontRenderContext();
 
-        String str = resource.getName();
         GlyphVector gv = g2.getFont().createGlyphVector(frc, resource.getName());
-
-        //String str2 = "Value: " + resource.getValue();
         GlyphVector gv2 = g2.getFont().createGlyphVector(frc, "Value: " + resource.getValue());
-        //gv.getOutline();
-
-        //int width =  g2.getFontMetrics().stringWidth(str);
-
-//        Rectangle nameBounds = gv.getPixelBounds(null,
-//                (float)point.getX(),
-//                (float)point.getY());
-
-        int width = 80 > g2.getFontMetrics().stringWidth(str) ? 80 : g2.getFontMetrics().stringWidth(str);
-
-        this.bounds = new Rectangle((int)(point.getX()),
-                (int)(point.getY()),
-                width + 8,
-                45);
-
-        //initializeBounds(g,zoom);
 
         g2.setColor(Color.WHITE);
         g2.fill(this.bounds);

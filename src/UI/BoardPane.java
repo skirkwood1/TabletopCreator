@@ -26,7 +26,7 @@ public class BoardPane extends JPanel {
     private int topMarginOffset;
 
     private double zoom = 1.0;
-    public enum PlacementType{SPACE,PIECE,CARD,RESOURCE,NONE}
+    public enum PlacementType{SPACE,PIECE,CARD,RESOURCE,PLAYER,NONE}
     private boolean showGrid = true;
     private PlacementType placementType;
 
@@ -71,17 +71,21 @@ public class BoardPane extends JPanel {
         for(Map.Entry<Resource,Point> entry: game.getPlacedResources().entrySet()){
             resourceDrawers.add(new ResourceDrawer(entry.getKey(),entry.getValue()));
         }
+        for(Map.Entry<Player,Point> entry: game.getPlacedPlayers().entrySet()){
+            resourceDrawers.add(new PlayerDrawer(entry.getKey(),entry.getValue()));
+        }
 
-        ArrayList<Resource> res = new ArrayList<>();
-        res.add(new Resource("a",10));
-        res.add(new Resource("b",9999));
-        Player p1 = new Player("p1",res);
-
-        //ResourceDrawer rd = new ResourceDrawer(res.get(0));
-        PlayerDrawer pd = new PlayerDrawer(p1,new Point(60,60));
-        resourceDrawers.add(pd);
-        addMouseMotionListener(pd.getLocationTracker());
-        addMouseListener(pd.getLocationTracker());
+//        ArrayList<Resource> res = new ArrayList<>();
+//        res.add(new Resource("A",10));
+//        res.add(new Resource("A long resource name for testing purposes",10));
+//        res.add(new Resource("b",9999));
+//        Player p1 = new Player("p1",res);
+//
+//        //ResourceDrawer rd = new ResourceDrawer(res.get(0));
+//        PlayerDrawer pd = new PlayerDrawer(p1,new Point(60,60));
+//        resourceDrawers.add(pd);
+//        addMouseMotionListener(pd.getLocationTracker());
+//        addMouseListener(pd.getLocationTracker());
     }
 
     MouseAdapter ma = new MouseAdapter() {
@@ -142,6 +146,9 @@ public class BoardPane extends JPanel {
                     case RESOURCE:
                         placeResource();
                         System.out.println("Placed resource: " + game.getSelectedComponent());
+                        break;
+                    case PLAYER:
+                        placePlayer();
                         break;
                 }
             }
@@ -677,6 +684,25 @@ public class BoardPane extends JPanel {
         game.placeResource(copy,placePoint);
         addMouseListener(resourceDrawer.getLocationTracker());
         addMouseMotionListener(resourceDrawer.getLocationTracker());
+    }
+
+    public void placePlayer(){
+        if(game.getSelectedComponent() instanceof Player){
+            placePlayer((Player)game.getSelectedComponent());
+        }
+    }
+
+    public void placePlayer(Player player){
+        Point placePoint = new Point((int)(mousePoint.x/zoom),
+                (int)(mousePoint.getY()/zoom));
+
+        Player copy = player.copy();
+
+        PlayerDrawer playerDrawer = new PlayerDrawer(copy,placePoint);
+        resourceDrawers.add(playerDrawer);
+        game.placePlayer(copy,placePoint);
+        addMouseListener(playerDrawer.getLocationTracker());
+        addMouseMotionListener(playerDrawer.getLocationTracker());
     }
 
     public int spaceScale(int size){

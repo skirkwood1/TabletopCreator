@@ -89,6 +89,10 @@ public class CenterPane extends JPanel implements Observable {
                 //resource = game.getResource(name);
                 //game.setSelectedResource(component);
             }
+            else if(selectedNode.getParent().equals(componentTree.players)){
+                this.placementType = BoardPane.PlacementType.PLAYER;
+                component = game.getPlayer(name);
+            }
 
             if(component != null){
                 setComponentPane(component);
