@@ -19,12 +19,12 @@ public class CardMoveCommand implements GameCommand{
 
     @Override
     public void execute() {
-        game.getPlacedCards().put(card,endPoint);
+        game.getPlacedComponents().put(card,endPoint);
     }
 
     @Override
     public void unExecute() {
-        game.getPlacedCards().put(card,startPoint);
+        game.getPlacedComponents().put(card,startPoint);
 
     }
 

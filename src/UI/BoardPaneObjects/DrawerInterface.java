@@ -1,5 +1,7 @@
 package UI.BoardPaneObjects;
 
+import Models.GameComponent;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 
@@ -9,5 +11,5 @@ public interface DrawerInterface {
     Rectangle getBounds();
     Point getPoint();
     void move(Point point);
-    Object getComponent();
+    GameComponent getComponent();
 }

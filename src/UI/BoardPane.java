@@ -8,9 +8,6 @@ import UI.BoardPaneObjects.ResourceDrawer;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,14 +62,14 @@ public class BoardPane extends JPanel {
         imagePreview = new Point(0,0);
 
         this.resourceDrawers = new ArrayList<>();
-        for(Map.Entry<CardInterface,Point> entry: game.getPlacedCards().entrySet()){
-            resourceDrawers.add(new CardDrawer(entry.getKey(),entry.getValue()));
-        }
-        for(Map.Entry<Resource,Point> entry: game.getPlacedResources().entrySet()){
-            resourceDrawers.add(new ResourceDrawer(entry.getKey(),entry.getValue()));
-        }
-        for(Map.Entry<Player,Point> entry: game.getPlacedPlayers().entrySet()){
-            resourceDrawers.add(new PlayerDrawer(entry.getKey(),entry.getValue()));
+        for(Map.Entry<GameComponent,Point> entry: game.getPlacedComponents().entrySet()){
+            if(entry.getKey() instanceof CardInterface){
+                resourceDrawers.add(new CardDrawer((CardInterface)entry.getKey(),entry.getValue()));
+            }else if(entry.getKey() instanceof Resource) {
+                resourceDrawers.add(new ResourceDrawer((Resource) entry.getKey(), entry.getValue()));
+            }else if(entry.getKey() instanceof Player) {
+                resourceDrawers.add(new PlayerDrawer((Player) entry.getKey(), entry.getValue()));
+            }
         }
 
 //        ArrayList<Resource> res = new ArrayList<>();
@@ -156,7 +153,6 @@ public class BoardPane extends JPanel {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            cards = game.getPlacedCards();
             Graphics2D g2 = (Graphics2D)getGraphics();
 
             start_x = (int)Math.floor((((e.getX()/zoom-PADDING)/SCALE))) - leftMarginOffset;
@@ -208,7 +204,7 @@ public class BoardPane extends JPanel {
             end_x = (int) Math.floor(((e.getX() / zoom - PADDING) / SCALE)) - leftMarginOffset;
             end_y = (int) Math.floor(((e.getY() / zoom - PADDING) / SCALE)) - topMarginOffset;
 
-            //dragEnd = game.getPlacedCards().get(selectedCard);
+            //dragEnd = game.getPlacedComponents().get(selectedCard);
             int[] size = game.getBoard().getSize();
 
             if(SwingUtilities.isLeftMouseButton(e)) {
@@ -528,20 +524,20 @@ public class BoardPane extends JPanel {
 
     public CardInterface getSelectedCard(){
         CardInterface selectedCard = null;
-        for(Map.Entry<CardInterface,Point> cardEntry: game.getPlacedCards().entrySet()){
-            CardInterface card = cardEntry.getKey();
-            Point place = cardEntry.getValue();
+        for(Map.Entry<GameComponent,Point> cardEntry: game.getPlacedComponents().entrySet()){
+            if(cardEntry instanceof CardInterface){
+                CardInterface card = (CardInterface)cardEntry.getKey();
+                Point place = cardEntry.getValue();
+                Dimension d = scaleCard(card);
+                Rectangle bounds = new Rectangle((int)(place.getX()*zoom),
+                        (int)(place.getY()*zoom),
+                        (int)(d.getWidth()*zoom),(int)(d.getHeight()*zoom));
+                //g2.setColor(Color.BLUE);
+                //g2.draw(bounds);
 
-            Dimension d = scaleCard(card);
-
-            Rectangle bounds = new Rectangle((int)(place.getX()*zoom),
-                    (int)(place.getY()*zoom),
-                    (int)(d.getWidth()*zoom),(int)(d.getHeight()*zoom));
-            //g2.setColor(Color.BLUE);
-            //g2.draw(bounds);
-
-            if(bounds.contains(mousePoint)){
-                selectedCard = card;
+                if(bounds.contains(mousePoint)){
+                    selectedCard = card;
+                }
             }
         }
         return selectedCard;
@@ -597,7 +593,7 @@ public class BoardPane extends JPanel {
         CardInterface selectedCard = getSelectedCard();
 
         if(selectedCard != null){
-            game.removePlacedCard(selectedCard);
+            game.removePlacedComponent(selectedCard);
         }else{
             deleteSelectedSpace();
         }
@@ -658,8 +654,10 @@ public class BoardPane extends JPanel {
         CardInterface copy = card.copy();
 
         CardDrawer cardDrawer = new CardDrawer(copy,point);
-        resourceDrawers.add(cardDrawer);
-        game.placeCard(copy,point);
+        //resourceDrawers.add(cardDrawer);
+        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,cardDrawer,resourceDrawers);
+        commandStack.insertCommand(prc);
+        //game.placeCard(copy,point);
         addMouseListener(cardDrawer.getLocationTracker());
         addMouseMotionListener(cardDrawer.getLocationTracker());
 
@@ -680,8 +678,10 @@ public class BoardPane extends JPanel {
         Resource copy = resource.copy();
 
         ResourceDrawer resourceDrawer = new ResourceDrawer(copy,placePoint);
-        resourceDrawers.add(resourceDrawer);
-        game.placeResource(copy,placePoint);
+        //resourceDrawers.add(resourceDrawer);
+        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,resourceDrawer,resourceDrawers);
+        commandStack.insertCommand(prc);
+        //game.placeResource(copy,placePoint);
         addMouseListener(resourceDrawer.getLocationTracker());
         addMouseMotionListener(resourceDrawer.getLocationTracker());
     }
@@ -699,8 +699,10 @@ public class BoardPane extends JPanel {
         Player copy = player.copy();
 
         PlayerDrawer playerDrawer = new PlayerDrawer(copy,placePoint);
-        resourceDrawers.add(playerDrawer);
-        game.placePlayer(copy,placePoint);
+        //resourceDrawers.add(playerDrawer);
+        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,playerDrawer,resourceDrawers);
+        commandStack.insertCommand(prc);
+        //game.placePlayer(copy,placePoint);
         addMouseListener(playerDrawer.getLocationTracker());
         addMouseMotionListener(playerDrawer.getLocationTracker());
     }

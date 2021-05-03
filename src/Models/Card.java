@@ -3,7 +3,7 @@ package Models;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class Card implements Serializable, GameComponent,CardInterface {
+public class Card extends CardInterface implements Serializable, GameComponent {
 
     private static final long serialVersionUID = 469671549044569183L;
 

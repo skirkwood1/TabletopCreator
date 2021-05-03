@@ -1,5 +1,7 @@
 package Models;
 
+import UI.BoardPaneObjects.DrawerInterface;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.Serializable;
@@ -28,9 +30,7 @@ public class Game implements Serializable {
     private CardInterface selectedCard = null;
     private Resource selectedResource = null;
 
-    private LinkedHashMap<CardInterface, Point> placedCards;
-    private LinkedHashMap<Resource, Point> placedResources;
-    private LinkedHashMap<Player, Point> placedPlayers;
+    private LinkedHashMap<GameComponent, Point> placedComponents;
 
     public Game(){
         this.cards = new ArrayList<>();
@@ -39,9 +39,7 @@ public class Game implements Serializable {
         this.board = new Board(10,10);
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
-        this.placedCards = new LinkedHashMap<>();
-        this.placedResources = new LinkedHashMap<>();
-        this.placedPlayers = new LinkedHashMap<>();
+        this.placedComponents = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -52,9 +50,7 @@ public class Game implements Serializable {
         this.pieces = game.pieces;
         this.textures = new ArrayList<>();
         this.board = game.getBoard();
-        this.placedCards = new LinkedHashMap<>();
-        this.placedResources = new LinkedHashMap<>();
-        this.placedPlayers = new LinkedHashMap<>();
+        this.placedComponents = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -66,9 +62,7 @@ public class Game implements Serializable {
         this.board = new Board(x,y);
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
-        this.placedCards = new LinkedHashMap<>();
-        this.placedResources = new LinkedHashMap<>();
-        this.placedPlayers = new LinkedHashMap<>();
+        this.placedComponents = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -79,9 +73,7 @@ public class Game implements Serializable {
         this.pieces = pieces;
         this.board = board;
         this.textures = new ArrayList<>();
-        this.placedCards = new LinkedHashMap<>();
-        this.placedResources = new LinkedHashMap<>();
-        this.placedPlayers = new LinkedHashMap<>();
+        this.placedComponents = new LinkedHashMap<>();
         this.resources = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -197,19 +189,19 @@ public class Game implements Serializable {
     }
 
 //    public void placeCard(Card card,Point point){
-//        this.placedCards.put(card.copy(),point);
+//        this.placedComponents.put(card.copy(),point);
 //    }
 
     public void placeCard(CardInterface cardInterface, Point point){
-        this.placedCards.put(cardInterface,point);
+        this.placedComponents.put(cardInterface,point);
     }
 
-    public HashMap<CardInterface,Point> getPlacedCards(){
-        return this.placedCards;
+    public HashMap<GameComponent,Point> getPlacedComponents(){
+        return this.placedComponents;
     }
 
-    public void removePlacedCard(CardInterface card){
-        this.placedCards.remove(card);
+    public void removePlacedComponent(GameComponent component){
+        this.placedComponents.remove(component);
     }
 
     public GameComponent getSelectedComponent(){
@@ -306,12 +298,8 @@ public class Game implements Serializable {
         return null;
     }
 
-    public void placeResource(Resource resource, Point point){
-        this.placedResources.put(resource,point);
-    }
-
-    public HashMap<Resource,Point> getPlacedResources(){
-        return this.placedResources;
+    public void placeComponent(GameComponent gc, Point point){
+        this.placedComponents.put(gc,point);
     }
 
     public void addPlayer(Player player){
@@ -331,12 +319,10 @@ public class Game implements Serializable {
         return null;
     }
 
-    public void placePlayer(Player player, Point point){
-        this.placedPlayers.put(player,point);
-    }
-
-    public HashMap<Player,Point> getPlacedPlayers(){
-        return this.placedPlayers;
+    public void moveDrawer(DrawerInterface drawer, Point point){
+        if(drawer.getComponent() instanceof CardInterface){
+            this.placedComponents.put((CardInterface)drawer.getComponent(),point);
+        }
     }
 
 }

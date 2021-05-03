@@ -107,7 +107,7 @@ public class PlayerDrawer implements DrawerInterface {
     }
 
     @Override
-    public Object getComponent() {
+    public Player getComponent() {
         return this.player;
     }
 }

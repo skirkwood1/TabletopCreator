@@ -2,10 +2,8 @@ package Models;
 
 import java.awt.image.BufferedImage;
 
-public interface CardInterface {
-    BufferedImage getImage();
-    CardInterface copy();
-
-    void flip();
-    boolean isFlipped();
+public abstract class CardInterface implements GameComponent {
+    public abstract CardInterface copy();
+    public abstract void flip();
+    public abstract boolean isFlipped();
 }
