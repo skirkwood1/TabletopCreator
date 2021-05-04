@@ -115,4 +115,8 @@ public class Player implements Serializable, GameComponent {
         }
         return new Player(this.name,this.hand,this.controlledPieces,copiedResources);
     }
+
+    public String toString(){
+        return String.format("Player: %s",name);
+    }
 }

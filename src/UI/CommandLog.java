@@ -1,5 +1,7 @@
 package UI;
 
+import UI.UIHelpers.ScrollBarUICreator;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,9 +24,12 @@ public class CommandLog extends JPanel {
         //textArea.setMargin(new Insets(0,2,0,5));
         textArea.setAutoscrolls(true);
 
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.getVerticalScrollBar().setUI(ScrollBarUICreator.scrollBarUI());
+
         setLayout(new BorderLayout());
 
-        add(new JScrollPane(textArea), BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     public void appendText(String text){

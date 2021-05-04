@@ -47,7 +47,6 @@ public class ResourceDrawer implements DrawerInterface {
         g.setFont(new Font("Segoe UI",Font.PLAIN,10));
         String str = resource.getName();
         int width = 70 > g.getFontMetrics().stringWidth(str) ? 70 : g.getFontMetrics().stringWidth(str);
-
         this.bounds = new Rectangle((int)(point.getX()),
                 (int)(point.getY()),
                 width + 8,

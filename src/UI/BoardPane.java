@@ -171,8 +171,8 @@ public class BoardPane extends JPanel {
                         selectedDrawer = getSelectedResource();
                         if(selectedDrawer != null){
                             dragStart = selectedDrawer.getPoint();
-                        }
 
+                        }
                         if(start_x < size[0] && start_x >= 0 &&
                                 start_y < size[1] && start_y >= 0
                                 && selectedDrawer == null){
@@ -208,41 +208,45 @@ public class BoardPane extends JPanel {
             int[] size = game.getBoard().getSize();
 
             if(SwingUtilities.isLeftMouseButton(e)) {
-                if (end_x < size[0] && end_x >= 0 &&
-                        end_y < size[1] && end_y >= 0 &&
-                        start_x < size[0] && start_x >= 0 &&
-                        start_y < size[1] && start_y >= 0) {
-                    switch(placementType){
-                        case NONE:
-//                            if(selectedCard != null){
-//                                CardMoveCommand cmc = new CardMoveCommand(game,selectedCard, dragStart, dragEnd);
-//                                commandStack.insertCommand(cmc);
-//                            }
-                            if((start_x != end_x || start_y != end_y) &&
-                                selectedPiece != null){
-                            PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
-                            commandStack.insertCommand(pmc);
-                            }
-                            break;
-                        case SPACE:
+
+
+                switch(placementType){
+                    case NONE:
+                        if(selectedDrawer != null){
+                            dragEnd = selectedDrawer.getPoint();
+                            MoveDrawerCommand mdc = new MoveDrawerCommand(game, selectedDrawer, dragStart, dragEnd);
+                            commandStack.insertCommand(mdc);
+                        }
+                        else if((start_x != end_x || start_y != end_y) &&
+                            selectedPiece != null){
+                        PieceMoveCommand pmc = new PieceMoveCommand(game,start_x,start_y,end_x,end_y,selectedPiece);
+                        commandStack.insertCommand(pmc);
+                        }
+                        break;
+                    case SPACE:
 //                            if(start_x == end_x & start_y == end_y){
 //                                PlaceSpaceCommand psc = new PlaceSpaceCommand(game,start_x,start_y);
 //                                commandStack.insertCommand(psc);
 //                            } else{
-                                int minx = Math.min(start_x, end_x);
-                                int maxx = Math.max(start_x, end_x);
+                        if (end_x < size[0] && end_x >= 0 &&
+                                end_y < size[1] && end_y >= 0 &&
+                                start_x < size[0] && start_x >= 0 &&
+                                start_y < size[1] && start_y >= 0) {
+                            int minx = Math.min(start_x, end_x);
+                            int maxx = Math.max(start_x, end_x);
 
-                                int miny = Math.min(start_y,end_y);
-                                int maxy = Math.max(start_y,end_y);
+                            int miny = Math.min(start_y,end_y);
+                            int maxy = Math.max(start_y,end_y);
 
-                                MultipleSpacesCommand msc = new MultipleSpacesCommand(game,minx,miny,maxx,maxy);
-                                commandStack.insertCommand(msc);
-                            //}
-                            break;
+                            MultipleSpacesCommand msc = new MultipleSpacesCommand(game,minx,miny,maxx,maxy);
+                            commandStack.insertCommand(msc);
+                        //}
+                        break;
                     }
                 }
                 image = null;
                 selectedPiece = null;
+                selectedDrawer = null;
             }
             spacePreviewEnd = null;
             int preview_x = (int)Math.floor((((e.getX()/zoom-PADDING)/SCALE)));
@@ -299,7 +303,7 @@ public class BoardPane extends JPanel {
                                 new_x = (horizontal_size)*SCALE + PADDING - bounds.width;
                                 mouse_x = last_x;
                             }
-                            if((new_x) <= PADDING){
+                            else if((new_x) <= PADDING){
                                 new_x = PADDING;
                                 mouse_x = last_x;
                             }
@@ -307,7 +311,7 @@ public class BoardPane extends JPanel {
                                 new_y = vertical_size*SCALE + PADDING - bounds.height;
                                 mouse_y = last_y;
                             }
-                            if((new_y) <= PADDING){
+                            else if((new_y) <= PADDING){
                                 new_y = PADDING;
                                 mouse_y = last_y;
                             }

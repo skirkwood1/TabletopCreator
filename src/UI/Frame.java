@@ -7,6 +7,9 @@ import Models.*;
 import Observers.ColorLabelObserver;
 import Observers.PlacementTypeObserver;
 import UI.UIHelpers.FileChooserCreator;
+import UI.UIHelpers.FileViewerUI;
+import UI.UIHelpers.Icons.*;
+import UI.UIHelpers.Icons.TreeCollapsedIcon;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,7 +18,6 @@ import java.awt.*;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +40,7 @@ public class Frame extends JFrame implements Observable {
 
     private ResizeBoardPane resizePane;
 
-    private JFileChooser fileChooser = new JFileChooser();
+    private JFileChooser fileChooser;
     private ColorChooseDialog colorDialog = new ColorChooseDialog();
 
     private Game game = new Game(10,10);
@@ -59,15 +61,27 @@ public class Frame extends JFrame implements Observable {
         //setLayout(new GridBagLayout());
         setLayout(new BorderLayout());
 
+//        try{
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//        }
+//        catch(Exception e){}
+
         UIManager.put("Separator.foreground",Color.BLACK);
         UIManager.put("Separator.background",Color.BLACK);
 
-        Component[] comp =  fileChooser.getComponents();
+        UIManager.put("FileChooser.upFolderIcon", new UpIcon());
+        UIManager.put("FileChooser.homeFolderIcon", new HomeIcon());
+        UIManager.put("FileChooser.listViewIcon", new FileGridViewIcon());
+        UIManager.put("FileChooser.detailsViewIcon", new FileDetailViewIcon());
+        UIManager.put("FileChooser.newFolderIcon", new FolderIcon());
 
+        this.fileChooser = new JFileChooser();
         fileChooser.setBackground(Color.WHITE);
         fileChooser.setOpaque(true);
         fileChooser.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
-        FileChooserCreator.setFileChooserUI(comp);
+        fileChooser.setFileView(new FileViewerUI());
+        Component[] comp =  fileChooser.getComponents();
+        FileChooserCreator.setFileChooserElements(comp);
 
         centerPane = new CenterPane(game,commandStack);
         PlacementTypeObserver pto = new PlacementTypeObserver(centerPane);

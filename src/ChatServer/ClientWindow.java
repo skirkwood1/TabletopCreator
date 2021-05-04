@@ -3,14 +3,12 @@ package ChatServer;
 import ChatServer.Messages.GameMessage;
 import ChatServer.Messages.QuitMessage;
 import Models.Game;
+import UI.UIHelpers.FileChooserCreator;
 import UI.UIHelpers.ScrollBarUICreator;
 
 import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
-import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -59,6 +57,11 @@ public class ClientWindow implements ActionListener,Runnable {
 
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("ChatIcon.png"));
         this.frame.setIconImage(icon.getImage());
+
+        this.fileUpload = new JFileChooser();
+
+        Component[] comp = fileUpload.getComponents();
+        FileChooserCreator.setFileChooserElements(comp);
 
         this.ip = ip;
         this.pastMessages = new ArrayList<>();
@@ -258,7 +261,7 @@ public class ClientWindow implements ActionListener,Runnable {
     }
 
     private Game uploadGameFile(){
-        this.fileUpload = new JFileChooser();
+
 
         int userSelection = fileUpload.showOpenDialog(this.frame);
         if(userSelection == JFileChooser.APPROVE_OPTION){

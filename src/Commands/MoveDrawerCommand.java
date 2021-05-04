@@ -25,6 +25,12 @@ public class MoveDrawerCommand implements GameCommand {
 
     @Override
     public void unExecute() {
+        drawer.move(oldPoint);
+        game.moveDrawer(drawer,oldPoint);
+    }
 
+    public String toString(){
+        return String.format("Moved component %s from point (%d,%d) to point (%d,%d)",
+                drawer.getComponent(),oldPoint.x,oldPoint.y,newPoint.x,newPoint.y);
     }
 }

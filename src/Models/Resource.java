@@ -60,6 +60,6 @@ public class Resource implements Serializable,GameComponent {
     }
 
     public String toString(){
-        return String.format("Resource Name: %s \n\r Starting value: %d",name,value);
+        return String.format("Resource: %s; Start Value: %d",name,value);
     }
 }

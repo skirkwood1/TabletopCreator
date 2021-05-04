@@ -30,7 +30,7 @@ public class ComponentCreationDialog extends JOptionPane {
         bl.setVgap(-1);
 
         Component[] comp = imageChooser.getComponents();
-        FileChooserCreator.setFileChooserUI(comp);
+        FileChooserCreator.setFileChooserElements(comp);
 
         name.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         name.setFont(new Font("Segoe UI",Font.PLAIN,12));
