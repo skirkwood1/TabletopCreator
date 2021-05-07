@@ -9,9 +9,11 @@ import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.GeneralPath;
+import java.io.Serializable;
 
-public class CardDrawer implements DrawerInterface {
+public class CardDrawer implements DrawerInterface, Serializable {
 
+    private static final long serialVersionUID = -6825766076404940284L;
     private final int SCALE = 40;
 
     private Point point;

@@ -8,9 +8,11 @@ import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Ellipse2D;
+import java.io.Serializable;
 
-public class ResourceDrawer implements DrawerInterface {
+public class ResourceDrawer implements DrawerInterface, Serializable {
 
+    private static final long serialVersionUID = 579324485687726774L;
     private final int MARGIN = 10;
 
     private Resource resource;

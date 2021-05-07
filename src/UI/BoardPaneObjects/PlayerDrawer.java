@@ -8,10 +8,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PlayerDrawer implements DrawerInterface {
+public class PlayerDrawer implements DrawerInterface, Serializable {
 
+    private static final long serialVersionUID = -3760542160924320197L;
     private Point point,mousePoint;
     private Player player;
 
