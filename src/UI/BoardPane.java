@@ -587,8 +587,11 @@ public class BoardPane extends JPanel {
         DrawerInterface selectedResource = getSelectedResource();
 
         if(selectedResource != null){
-            game.removePlacedComponent(selectedResource);
+            //game.removePlacedComponent(selectedResource);
+            DeleteDrawerCommand ddc = new DeleteDrawerCommand(game,selectedResource);
+            commandStack.insertCommand(ddc);
         }else{
+
             deleteSelectedSpace();
         }
     }

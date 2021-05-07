@@ -82,10 +82,10 @@ public class MultipleSpacesCommand implements GameCommand {
 
     public String toString(){
         if(useTexture){
-            return String.format("Place spaces of texture %s from (%d,%d) to (%d,%d)",
+            return String.format("Placed spaces of texture %s from (%d,%d) to (%d,%d)",
                     newTexture,start_x,start_y,end_x,end_y);
         }else{
-            return String.format("Place spaces of color [%d,%d,%d] from (%d,%d) to (%d,%d)",
+            return String.format("Placed spaces of color [%d,%d,%d] from (%d,%d) to (%d,%d)",
                     newColor.getRed(),newColor.getGreen(),newColor.getBlue(),
                     start_x,start_y,end_x,end_y);
         }

@@ -12,14 +12,6 @@ public class DeleteFromDeckCommand implements GameCommand {
     private Deck deck;
     private ArrayList<Card> cards;
 
-    public DeleteFromDeckCommand(Deck deck, String cardName){
-        this.deck = deck;
-        Card card;
-//        for(Card c: deck.getCards()){
-//            if(c.getName())
-//        }
-    }
-
     public DeleteFromDeckCommand(Deck deck, ArrayList<Card> cards){
         this.deck = deck;
         this.cards = cards;
@@ -42,6 +34,6 @@ public class DeleteFromDeckCommand implements GameCommand {
         }
         String joined = cardNames.stream()
                 .collect(joining(", ", "", ""));
-        return String.format("Remove the following cards from deck %s: %s",deck.getName(),joined);
+        return String.format("Removed the following cards from deck %s: %s",deck.getName(),joined);
     }
 }

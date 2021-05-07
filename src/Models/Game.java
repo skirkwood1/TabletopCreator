@@ -79,21 +79,11 @@ public class Game implements Serializable {
         this.players = new ArrayList<>();
     }
 
-    public Card addCard(Card card){
-        cards.add(card);
-        return card;
-    }
-
-    public void addPiece(Piece piece){
-        pieces.add(piece);
-    }
-
     public void createDeck(String name,ArrayList<Card> cards){
         try{
             ComponentImage cardBack = new ComponentImage(ImageIO.read(getClass().getClassLoader().getResource("cardback.png")));
             this.decks.add(new Deck(name,cards,cardBack));
         }catch(Exception e){}
-
     }
 
     public void createDeck(Deck deck){
@@ -162,25 +152,6 @@ public class Game implements Serializable {
 
     public ArrayList<Dice> getDice(){ return this.diceCollection;}
 
-    public String toString(){
-        String finalString = "";
-        int numDice = 0;
-        for(Card card: cards){
-            finalString += card.getName() + "   ";
-            finalString += card.getText() + "   ";
-            //finalString += card.getImage().getAbsolutePath();
-            finalString += "\r\n";
-        }
-        for(Dice die: diceCollection){
-            numDice += 1;
-        }
-        finalString = finalString + numDice + "\n\r";
-
-        finalString += board.toString();
-
-        return finalString;
-    }
-
     public void setName(String name){
         this.name = name;
     }
@@ -217,16 +188,6 @@ public class Game implements Serializable {
         this.selectedCard = card;
     }
 
-    public void removeCard(Card card){
-        cards.remove(card);
-    }
-
-    public void removePiece(Piece piece){
-        pieces.remove(piece);
-    }
-
-    public void removeTexture(Texture texture){textures.remove(texture);}
-
     public void removeComponent(GameComponent component){
         if(component instanceof Texture){
             textures.remove(component);
@@ -238,6 +199,8 @@ public class Game implements Serializable {
             decks.remove(component);
         }else if(component instanceof Resource){
             resources.remove(component);
+        }else if(component instanceof Player){
+            players.remove(component);
         }
     }
 
@@ -250,6 +213,10 @@ public class Game implements Serializable {
             cards.add((Card)component);
         }else if(component instanceof Deck){
             decks.add((Deck)component);
+        }else if(component instanceof Resource){
+            resources.add((Resource)component);
+        }else if(component instanceof Player){
+            players.add((Player)component);
         }
     }
 
@@ -262,6 +229,10 @@ public class Game implements Serializable {
             cards.add(index,(Card)component);
         }else if(component instanceof Deck){
             decks.add(index,(Deck)component);
+        }else if(component instanceof Resource){
+            resources.add(index,(Resource)component);
+        }else if(component instanceof Player){
+            players.add(index, (Player)component);
         }
     }
 
@@ -274,13 +245,12 @@ public class Game implements Serializable {
             return cards.indexOf(component);
         }else if(component instanceof Deck){
             return decks.indexOf(component);
+        }else if(component instanceof Resource){
+            return resources.indexOf(component);
+        }else if(component instanceof Player){
+            return players.indexOf(component);
         }
         return -1;
-    }
-
-    public void addResource(Resource resource){
-        resources.add(resource);
-        System.out.println(resource);
     }
 
     public ArrayList<Resource> getResources(){
@@ -318,9 +288,22 @@ public class Game implements Serializable {
         return null;
     }
 
-//    public void moveDrawer(DrawerInterface drawer, Point point){
-//        if(drawer.getComponent() instanceof CardInterface){
-//            this.placedComponents.put((CardInterface)drawer.getComponent(),point);
-//        }
-//    }
+    public String toString(){
+        String finalString = "";
+        int numDice = 0;
+        for(Card card: cards){
+            finalString += card.getName() + "   ";
+            finalString += card.getText() + "   ";
+            //finalString += card.getImage().getAbsolutePath();
+            finalString += "\r\n";
+        }
+        for(Dice die: diceCollection){
+            numDice += 1;
+        }
+        finalString = finalString + numDice + "\n\r";
+
+        finalString += board.toString();
+
+        return finalString;
+    }
 }

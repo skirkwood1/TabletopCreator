@@ -345,7 +345,9 @@ public class Frame extends JFrame implements Observable {
                 resources.add(resource);
             }
             Player player = new Player(playerCreationDialog.getPlayerName(),resources);
-            game.addPlayer(player);
+
+            commandStack.insertCommand(new AddComponentCommand(game,player));
+            //game.addPlayer(player);
             //game.createDeck(deck);
             centerPane.updateComponentTree(player);
         }
@@ -393,7 +395,8 @@ public class Frame extends JFrame implements Observable {
             Resource resource = new Resource(resourceCreationDialog.getNameField(),
                     resourceCreationDialog.getValueField());
 
-            game.addResource(resource);
+            AddComponentCommand acc = new AddComponentCommand(game,resource);
+            commandStack.insertCommand(acc);
             centerPane.updateComponentTree(resource);
         }
     }

@@ -16,30 +16,14 @@ public class AddComponentCommand implements GameCommand {
     }
 
     public void execute(){
-        if(this.component instanceof Piece){
-            game.addPiece((Piece)component);
-        }
-        else if(this.component instanceof Card){
-            game.addCard((Card)component);
-        }
-        else if(this.component instanceof Texture){
-            game.addTexture((Texture)component);
-        }
+        game.addComponent(component);
     }
 
     public void unExecute(){
-        if(this.component instanceof Piece){
-            game.removePiece((Piece)component);
-        }
-        else if(this.component instanceof Card){
-            game.removeCard((Card)component);
-        }
-        else if(this.component instanceof Texture){
-            game.removeTexture((Texture)component);
-        }
+        game.removeComponent(component);
     }
 
     public String toString(){
-        return "Import component named " + component + " to project.";
+        return "Imported component named " + component + " to project.";
     }
 }
