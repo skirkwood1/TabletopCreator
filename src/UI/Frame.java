@@ -198,7 +198,6 @@ public class Frame extends JFrame implements Observable {
                     break;
                 case CREATE_DECK:
                     addDeckDialog();
-                    centerPane.refreshComponentTree(game);
                     break;
                 case ADD_DECK:
                     DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)centerPane.componentTree.getTree().getLastSelectedPathComponent();
@@ -216,7 +215,7 @@ public class Frame extends JFrame implements Observable {
                     }else{
                         addDeckDialog();
                     }
-                    centerPane.refreshComponentTree(game);
+                    //centerPane.refreshComponentTree(game);
                     break;
                 case ADD_RULE:
                     break;

@@ -7,6 +7,8 @@ import Observers.BoardPaneObserver;
 import Observers.Observer;
 import UI.Listeners.BoardPaneViewScroll;
 import UI.Listeners.ImageViewScroll;
+import UI.UIHelpers.ComponentTreeNode;
+import UI.UIHelpers.ProjectTreeNode;
 import UI.UIHelpers.ScrollBarUICreator;
 
 import javax.swing.*;
@@ -49,11 +51,13 @@ public class CenterPane extends JPanel implements Observable {
     ImageViewScroll ivs;
 
     TreeSelectionListener tsl = e -> {
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)componentTree.getTree().getLastSelectedPathComponent();
+        ProjectTreeNode selectedNode = (ProjectTreeNode)componentTree.getTree().getLastSelectedPathComponent();
         if(selectedNode != null){
             String name = selectedNode.toString();
             GameComponent component = null;
             CardInterface card = null;
+
+            component = selectedNode.getComponent();
             if(selectedNode.getParent() == null){
 
             }
@@ -62,36 +66,35 @@ public class CenterPane extends JPanel implements Observable {
             }
             else if(selectedNode.getParent().equals(componentTree.pieces)){
                 this.placementType = BoardPane.PlacementType.PIECE;
-                component = game.getPiece(name);
             }
             else if(selectedNode.getParent().equals(componentTree.cards)){
                 this.placementType = BoardPane.PlacementType.CARD;
-                component = game.getCard(name);
-                card = game.getCard(name);
+                //component = game.getCard(name);
+                card = (Card)component;
             }
             else if(selectedNode.getParent().equals(componentTree.textures)){
                 this.placementType = SPACE;
-                component = game.getTexture(name);
+                //component = game.getTexture(name);
             }
             else if(selectedNode.getParent().equals(componentTree.decks)){
                 this.placementType = BoardPane.PlacementType.CARD;
-                component = game.getDeck(name);
-                card = game.getDeck(name);
+                //component = game.getDeck(name);
+                card = (Deck)component;
             }
             else if(selectedNode.getParent().getParent().equals(componentTree.decks)){
                 this.placementType = BoardPane.PlacementType.CARD;
-                component = game.getCard(name);
-                card = game.getCard(name);
+                //component = game.getCard(name);
+                card = (Card)component;
             }
             else if(selectedNode.getParent().equals(componentTree.resources)){
                 this.placementType = BoardPane.PlacementType.RESOURCE;
-                component = game.getResource(name);
+                //component = game.getResource(name);
                 //resource = game.getResource(name);
                 //game.setSelectedResource(component);
             }
             else if(selectedNode.getParent().equals(componentTree.players)){
                 this.placementType = BoardPane.PlacementType.PLAYER;
-                component = game.getPlayer(name);
+                //component = game.getPlayer(name);
             }
 
             if(component != null){
@@ -346,7 +349,6 @@ public class CenterPane extends JPanel implements Observable {
                 if(SwingUtilities.isRightMouseButton(e)){
                     popupMenu.removeAll();
                     popupMenu.add(delete);
-                    popupMenu.add(colorSelect);
 
                     if(boardPane.getSelectedResource() != null){
                         System.out.println(boardPane.getSelectedResource());
@@ -357,6 +359,8 @@ public class CenterPane extends JPanel implements Observable {
                             popupMenu.add(drawCard);
                             popupMenu.add(shuffle);
                         }
+                    }else{
+                        popupMenu.add(colorSelect);
                     }
 
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());

@@ -6,10 +6,12 @@ import Commands.DeleteFromDeckCommand;
 import Commands.DetextureSpacesCommand;
 import Models.*;
 import Models.GameComponent;
+import UI.UIHelpers.ComponentTreeNode;
 import UI.UIHelpers.Icons.TreeCollapsedIcon;
 import UI.UIHelpers.Icons.TreeExpandedIcon;
 import UI.UIHelpers.Icons.TreeIcon;
 import UI.UIHelpers.Icons.TreeLeafIcon;
+import UI.UIHelpers.UpperTreeNode;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -23,14 +25,14 @@ public class ComponentTree extends JPanel implements Observable {
 
     private Game game;
 
-    DefaultMutableTreeNode top = new DefaultMutableTreeNode("Project");
-    DefaultMutableTreeNode cards = new DefaultMutableTreeNode("Cards");
-    DefaultMutableTreeNode pieces = new DefaultMutableTreeNode("Pieces");
-    DefaultMutableTreeNode textures = new DefaultMutableTreeNode("Textures");
-    DefaultMutableTreeNode rules = new DefaultMutableTreeNode("Rules");
-    DefaultMutableTreeNode decks = new DefaultMutableTreeNode("Decks");
-    DefaultMutableTreeNode players = new DefaultMutableTreeNode("Players");
-    DefaultMutableTreeNode resources = new DefaultMutableTreeNode("Resources");
+    UpperTreeNode top = new UpperTreeNode("Project");
+    UpperTreeNode cards = new UpperTreeNode("Cards");
+    UpperTreeNode pieces = new UpperTreeNode("Pieces");
+    UpperTreeNode textures = new UpperTreeNode("Textures");
+    UpperTreeNode rules = new UpperTreeNode("Rules");
+    UpperTreeNode decks = new UpperTreeNode("Decks");
+    UpperTreeNode players = new UpperTreeNode("Players");
+    UpperTreeNode resources = new UpperTreeNode("Resources");
 
     private JPopupMenu rightClickMenu;
     private JMenuItem delete,add;
@@ -77,16 +79,12 @@ public class ComponentTree extends JPanel implements Observable {
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
-                GameComponent component = null;
+                ComponentTreeNode selectedNode = (ComponentTreeNode)tree.getLastSelectedPathComponent();
+                GameComponent component;
 
                 ArrayList<Space> texturedSpaces = new ArrayList<>();
-                if(selectedNode.getParent().equals(cards)){
-                    component = game.getCard(selectedNode.toString());
-                }else if(selectedNode.getParent().equals(pieces)){
-                    component = game.getPiece(selectedNode.toString());
-                }else if(selectedNode.getParent().equals(textures)){
-                    component = game.getTexture(selectedNode.toString());
+                component = selectedNode.getComponent();
+                if(selectedNode.getParent().equals(textures)){
                     game.getBoard().setColor(game.getBoard().getColor());
                     for(Space[] row:game.getBoard().getSpaces()){
                         for(Space space:row){
@@ -97,13 +95,8 @@ public class ComponentTree extends JPanel implements Observable {
                             }
                         }
                     }
-                }else if(selectedNode.getParent().equals(resources)){
-
                 }
-                else if(selectedNode.getParent().equals(decks)){
-                    component = game.getDeck(selectedNode.toString());
-                }else if(selectedNode.getParent().getParent().equals(decks)){
-                    component = game.getCard(selectedNode.toString());
+                else if(selectedNode.getParent().getParent().equals(decks)){
                     ArrayList<Card> cardList = new ArrayList<>();
                     cardList.add((Card)component);
                     DeleteFromDeckCommand ddc = new DeleteFromDeckCommand(game.getDeck(selectedNode.getParent().toString()),cardList);
@@ -114,8 +107,10 @@ public class ComponentTree extends JPanel implements Observable {
                     DeleteComponentCommand dcc = new DeleteComponentCommand(game,component);
                     commandStack.insertCommand(dcc);
 
-                    DetextureSpacesCommand dsc = new DetextureSpacesCommand(game,texturedSpaces);
-                    commandStack.insertCommand(dsc);
+                    if(component instanceof Texture && texturedSpaces.size() > 0){
+                        DetextureSpacesCommand dsc = new DetextureSpacesCommand(game,texturedSpaces);
+                        commandStack.insertCommand(dsc);
+                    }
                 }
 
                 updateObservers();
@@ -158,7 +153,7 @@ public class ComponentTree extends JPanel implements Observable {
 
     public void updateTree(GameComponent component){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(component.getName());
+        ComponentTreeNode node = new ComponentTreeNode(component);
         tree.scrollPathToVisible(new TreePath(node.getPath()));
         if(component instanceof Piece){
             model.insertNodeInto(node,pieces,pieces.getChildCount());
@@ -173,17 +168,17 @@ public class ComponentTree extends JPanel implements Observable {
 
     public void addResource(Resource resource){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(resource.getName());
+        ComponentTreeNode node = new ComponentTreeNode(resource);
         tree.scrollPathToVisible(new TreePath(node.getPath()));
         model.insertNodeInto(node,resources,resources.getChildCount());
     }
 
     public void addDeck(Deck deck){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(deck.getName());
+        ComponentTreeNode node = new ComponentTreeNode(deck);
         tree.scrollPathToVisible(new TreePath(node.getPath()));
         for(Card card: deck.getCards()){
-            node.add(new DefaultMutableTreeNode(card.getName()));
+            node.add(new ComponentTreeNode(card));
         }
 //        this.decks.add(node);
         model.insertNodeInto(node,decks,decks.getChildCount());
@@ -193,10 +188,10 @@ public class ComponentTree extends JPanel implements Observable {
 
     public void addPlayer(Player player){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(player.getName());
+        ComponentTreeNode node = new ComponentTreeNode(player);
         tree.scrollPathToVisible(new TreePath(node.getPath()));
         for(Resource resource: player.getResources()){
-            node.add(new DefaultMutableTreeNode(resource.getName()));
+            node.add(new ComponentTreeNode(resource));
         }
 //        this.decks.add(node);
         model.insertNodeInto(node,players,players.getChildCount());
@@ -206,7 +201,7 @@ public class ComponentTree extends JPanel implements Observable {
 
     public void updateTree(Texture texture){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(texture.getName());
+        ComponentTreeNode node = new ComponentTreeNode(texture);
         tree.scrollPathToVisible(new TreePath(node.getPath()));
         model.insertNodeInto(node, textures, textures.getChildCount());
     }
@@ -234,33 +229,39 @@ public class ComponentTree extends JPanel implements Observable {
         textures.removeAllChildren();
         decks.removeAllChildren();
         resources.removeAllChildren();
+        players.removeAllChildren();
 
         for(Card card: this.game.getCards()){
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(card.getName());
+            ComponentTreeNode node = new ComponentTreeNode(card);
             model.insertNodeInto(node, cards, cards.getChildCount());
         }
 
         for(Piece piece: this.game.getPieces()){
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(piece.getName());
+            ComponentTreeNode node = new ComponentTreeNode(piece);
             model.insertNodeInto(node,pieces,pieces.getChildCount());
         }
 
         for(Texture texture: this.game.getTextures()){
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(texture.getName());
+            ComponentTreeNode node = new ComponentTreeNode(texture);
             model.insertNodeInto(node,textures,textures.getChildCount());
         }
 
         for(Deck deck: this.game.getDecks()){
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(deck.getName());
+            ComponentTreeNode node = new ComponentTreeNode(deck);
             for(Card card: deck.getCards()){
-                node.add(new DefaultMutableTreeNode(card.getName()));
+                node.add(new ComponentTreeNode(card));
             }
             model.insertNodeInto(node,decks,decks.getChildCount());
         }
 
         for(Resource resource: this.game.getResources()){
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(resource.getName());
+            ComponentTreeNode node = new ComponentTreeNode(resource);
             model.insertNodeInto(node,resources,resources.getChildCount());
+        }
+
+        for(Player player: this.game.getPlayers()){
+            ComponentTreeNode node = new ComponentTreeNode(player);
+            model.insertNodeInto(node,players,players.getChildCount());
         }
 
         model.reload();

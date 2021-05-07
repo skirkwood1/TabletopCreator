@@ -12,24 +12,20 @@ import java.util.ArrayList;
 public class PlaceDrawerCommand implements GameCommand {
     private Game game;
     private DrawerInterface drawer;
-    private ArrayList<DrawerInterface> drawers;
 
-    public PlaceDrawerCommand(Game game, DrawerInterface drawer, ArrayList<DrawerInterface> drawers){
+    public PlaceDrawerCommand(Game game, DrawerInterface drawer){
         this.game = game;
         this.drawer = drawer;
-        this.drawers = drawers;
     }
 
     @Override
     public void execute() {
-        game.placeComponent(drawer.getComponent(),drawer.getPoint());
-        drawers.add(drawer);
+        game.placeComponent(drawer);
     }
 
     @Override
     public void unExecute() {
-        game.removePlacedComponent(drawer.getComponent());
-        drawers.remove(drawer);
+        game.removePlacedComponent(drawer);
     }
 
     @Override

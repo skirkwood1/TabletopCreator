@@ -36,7 +36,6 @@ public class BoardPane extends JPanel {
 
     private CommandStack commandStack;
     private final JPopupMenu rightClickMenu;
-    private ArrayList<DrawerInterface> resourceDrawers;
 
     public BoardPane(Game game,CommandStack commandStack) {
         this.game = game;
@@ -60,17 +59,6 @@ public class BoardPane extends JPanel {
         addMouseMotionListener(ma);
 
         imagePreview = new Point(0,0);
-
-        this.resourceDrawers = new ArrayList<>();
-        for(Map.Entry<GameComponent,Point> entry: game.getPlacedComponents().entrySet()){
-            if(entry.getKey() instanceof CardInterface){
-                resourceDrawers.add(new CardDrawer((CardInterface)entry.getKey(),entry.getValue()));
-            }else if(entry.getKey() instanceof Resource) {
-                resourceDrawers.add(new ResourceDrawer((Resource) entry.getKey(), entry.getValue()));
-            }else if(entry.getKey() instanceof Player) {
-                resourceDrawers.add(new PlayerDrawer((Player) entry.getKey(), entry.getValue()));
-            }
-        }
 
 //        ArrayList<Resource> res = new ArrayList<>();
 //        res.add(new Resource("A",10));
@@ -214,8 +202,10 @@ public class BoardPane extends JPanel {
                     case NONE:
                         if(selectedDrawer != null){
                             dragEnd = selectedDrawer.getPoint();
-                            MoveDrawerCommand mdc = new MoveDrawerCommand(game, selectedDrawer, dragStart, dragEnd);
-                            commandStack.insertCommand(mdc);
+                            if(dragStart.x != dragEnd.x || dragStart.y != dragEnd.y){
+                                MoveDrawerCommand mdc = new MoveDrawerCommand(game, selectedDrawer, dragStart, dragEnd);
+                                commandStack.insertCommand(mdc);
+                            }
                         }
                         else if((start_x != end_x || start_y != end_y) &&
                             selectedPiece != null){
@@ -492,7 +482,7 @@ public class BoardPane extends JPanel {
             }
         }
         g2.setComposite(makeComposite(1f));
-        for(DrawerInterface drawer: resourceDrawers){
+        for(DrawerInterface drawer: game.getPlacedComponents()){
             drawer.draw(g,zoom);
         }
     }
@@ -528,10 +518,10 @@ public class BoardPane extends JPanel {
 
     public CardInterface getSelectedCard(){
         CardInterface selectedCard = null;
-        for(Map.Entry<GameComponent,Point> cardEntry: game.getPlacedComponents().entrySet()){
-            if(cardEntry instanceof CardInterface){
-                CardInterface card = (CardInterface)cardEntry.getKey();
-                Point place = cardEntry.getValue();
+        for(DrawerInterface drawer: game.getPlacedComponents()){
+            if(drawer.getComponent() instanceof CardInterface){
+                CardInterface card = (CardInterface)drawer.getComponent();
+                Point place = drawer.getPoint();
                 Dimension d = scaleCard(card);
                 Rectangle bounds = new Rectangle((int)(place.getX()*zoom),
                         (int)(place.getY()*zoom),
@@ -551,7 +541,7 @@ public class BoardPane extends JPanel {
         DrawerInterface selectedResource = null;
         Point selectionPoint = new Point((int)(mousePoint.getX()/zoom),
                 (int)(mousePoint.getY()/zoom));
-        for(DrawerInterface drawer: this.resourceDrawers){
+        for(DrawerInterface drawer: game.getPlacedComponents()){
             if(drawer.getBounds().contains(selectionPoint)){
                 selectedResource = drawer;
             }
@@ -594,10 +584,10 @@ public class BoardPane extends JPanel {
     }
 
     public void deleteSelection(){
-        CardInterface selectedCard = getSelectedCard();
+        DrawerInterface selectedResource = getSelectedResource();
 
-        if(selectedCard != null){
-            game.removePlacedComponent(selectedCard);
+        if(selectedResource != null){
+            game.removePlacedComponent(selectedResource);
         }else{
             deleteSelectedSpace();
         }
@@ -659,7 +649,7 @@ public class BoardPane extends JPanel {
 
         CardDrawer cardDrawer = new CardDrawer(copy,point);
         //resourceDrawers.add(cardDrawer);
-        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,cardDrawer,resourceDrawers);
+        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,cardDrawer);
         commandStack.insertCommand(prc);
         //game.placeCard(copy,point);
         addMouseListener(cardDrawer.getLocationTracker());
@@ -683,7 +673,7 @@ public class BoardPane extends JPanel {
 
         ResourceDrawer resourceDrawer = new ResourceDrawer(copy,placePoint);
         //resourceDrawers.add(resourceDrawer);
-        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,resourceDrawer,resourceDrawers);
+        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,resourceDrawer);
         commandStack.insertCommand(prc);
         //game.placeResource(copy,placePoint);
         addMouseListener(resourceDrawer.getLocationTracker());
@@ -704,7 +694,7 @@ public class BoardPane extends JPanel {
 
         PlayerDrawer playerDrawer = new PlayerDrawer(copy,placePoint);
         //resourceDrawers.add(playerDrawer);
-        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,playerDrawer,resourceDrawers);
+        PlaceDrawerCommand prc = new PlaceDrawerCommand(game,playerDrawer);
         commandStack.insertCommand(prc);
         //game.placePlayer(copy,placePoint);
         addMouseListener(playerDrawer.getLocationTracker());

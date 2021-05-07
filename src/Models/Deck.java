@@ -77,12 +77,12 @@ public class Deck extends CardInterface implements Serializable, GameComponent {
     }
 
     public void addCard(Card card){
-        this.cards.add(card);
+        this.cards.add(card.copy());
     }
 
     public void addCard(Card card,int n){
         for(int i = 0; i < n; i++){
-            this.cards.add(card);
+            this.cards.add(card.copy());
         }
     }
 

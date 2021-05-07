@@ -20,13 +20,13 @@ public class MoveDrawerCommand implements GameCommand {
     @Override
     public void execute() {
         drawer.move(newPoint);
-        game.moveDrawer(drawer,newPoint);
+        //game.moveDrawer(drawer,newPoint);
     }
 
     @Override
     public void unExecute() {
         drawer.move(oldPoint);
-        game.moveDrawer(drawer,oldPoint);
+        //game.moveDrawer(drawer,oldPoint);
     }
 
     public String toString(){
