@@ -2,6 +2,6 @@ package ChatServer;
 
 import ChatServer.Messages.Message;
 
-public interface ChatCommand {
+public interface MessageTypeExecutor {
     void execute(Message msg);
 }
