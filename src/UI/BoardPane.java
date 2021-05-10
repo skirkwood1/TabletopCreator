@@ -1,17 +1,14 @@
 package UI;
 import Commands.*;
 import Models.*;
-import UI.BoardPaneObjects.CardDrawer;
-import UI.BoardPaneObjects.DrawerInterface;
-import UI.BoardPaneObjects.PlayerDrawer;
-import UI.BoardPaneObjects.ResourceDrawer;
+import UI.BoardPaneObjects.*;
+import UI.BoardPaneObjects.HexagonGridTest;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import javax.swing.*;
 
 public class BoardPane extends JPanel {
@@ -37,6 +34,8 @@ public class BoardPane extends JPanel {
     private CommandStack commandStack;
     private final JPopupMenu rightClickMenu;
 
+    HexagonGridTest hgt = new HexagonGridTest(10,10);
+
     public BoardPane(Game game,CommandStack commandStack) {
         this.game = game;
 
@@ -59,6 +58,9 @@ public class BoardPane extends JPanel {
         addMouseMotionListener(ma);
 
         imagePreview = new Point(0,0);
+
+        addMouseListener(hgt.getLocationTracker());
+        addMouseMotionListener(hgt.getLocationTracker());
 
 //        ArrayList<Resource> res = new ArrayList<>();
 //        res.add(new Resource("A",10));
@@ -485,6 +487,9 @@ public class BoardPane extends JPanel {
         for(DrawerInterface drawer: game.getPlacedComponents()){
             drawer.draw(g,zoom);
         }
+
+        g2.setColor(Color.BLACK);
+        //hgt.draw(g,zoom);
     }
 
     public void drawSpace(Graphics2D g2, int x, int y){
