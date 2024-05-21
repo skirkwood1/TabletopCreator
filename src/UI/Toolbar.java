@@ -403,6 +403,7 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
 
     public void setGame(Game game){
         this.game = game;
+        updateColorLabel();
     }
 
     public ImageIcon createIcon(URL iconPath) throws IOException {

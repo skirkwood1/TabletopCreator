@@ -18,6 +18,8 @@ import java.awt.*;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -128,8 +130,6 @@ public class Frame extends JFrame implements Observable {
                         Game newGame = openGame(fileToOpen);
                         OpenGameCommand ogc = new OpenGameCommand(this,newGame);
                         commandStack.insertCommand(ogc);
-                        centerPane.refreshComponentTree(game);
-                        centerPane.updateBoard();
                         centerPane.updateObservers();
                     }
                     break;
@@ -156,8 +156,6 @@ public class Frame extends JFrame implements Observable {
                         clientWindow.setGameListener(game -> {
                             OpenGameCommand ogc = new OpenGameCommand(this,game);
                             commandStack.insertCommand(ogc);
-                            centerPane.refreshComponentTree(game);
-                            centerPane.updateBoard();
                         });
 
                         clientWindow.start();
@@ -235,6 +233,14 @@ public class Frame extends JFrame implements Observable {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                if(clientWindow != null){
+                    clientWindow.closeFrame();
+                }
+            }
+        });
+
         keyboardSetup();
     }
 
@@ -255,6 +261,8 @@ public class Frame extends JFrame implements Observable {
     public void setGame(Game game){
         this.game = game;
         this.toolbar.setGame(game);
+        this.centerPane.refreshComponentTree(game);
+        this.updateBoard();
     }
 
     public Game getGame(){

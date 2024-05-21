@@ -31,6 +31,8 @@ public class ClientWindow implements ActionListener,Runnable {
 
     private JFileChooser fileUpload;
     private JButton upload;
+    private JLabel uploadNote;
+    private JButton cancelUpload;
 
     private GameListener gameListener;
     private ArrayList<Game> pastMessages;
@@ -59,6 +61,7 @@ public class ClientWindow implements ActionListener,Runnable {
         this.frame.setIconImage(icon.getImage());
 
         this.fileUpload = new JFileChooser();
+
 
         Component[] comp = fileUpload.getComponents();
         FileChooserCreator.setFileChooserElements(comp);
@@ -106,6 +109,20 @@ public class ClientWindow implements ActionListener,Runnable {
 
         this.buttons.add(upload);
 
+        this.uploadNote = new JLabel("");
+        Dimension labelSize = new Dimension(200,50);
+        this.uploadNote.setMaximumSize(labelSize);
+        this.uploadNote.setSize(labelSize);
+
+        this.cancelUpload = new JButton("X");
+        this.cancelUpload.addActionListener(e -> {removeGameUpload();});
+        this.cancelUpload.setVisible(false);
+
+        //uploadConfirmBar.add(cancelUpload);
+        this.buttons.add(uploadNote);
+        this.buttons.add(cancelUpload);
+        //uploadConfirmBar.setVisible(false);
+
         this.center.setLayout(new BorderLayout());
         this.frame.setLayout(new BorderLayout());
 
@@ -123,7 +140,8 @@ public class ClientWindow implements ActionListener,Runnable {
         this.frame.add(userPane,BorderLayout.EAST);
 
         this.frame.setSize(600, 400);
-        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
 
         this.prompt.addActionListener(this);
 
@@ -137,28 +155,16 @@ public class ClientWindow implements ActionListener,Runnable {
      }
 
      public void run(){
-         try {
-             OutputStream output = socket.getOutputStream();
-             this.out = new ObjectOutputStream(output);
-
-             InputStream input = socket.getInputStream();
-             //this.in = new Scanner(input);
-             this.in = new ObjectInputStream(input);
+         try (
+                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+         ){
+             this.out = out;
+             this.in = in;
 
              this.frame.addWindowListener(new WindowAdapter() {
                  public void windowClosing(WindowEvent e) {
-                     try{
-                         out.writeObject(new QuitMessage());
-                         System.out.println("Quit");
-                         out.close();
-                         output.close();
-                         in.close();
-                         input.close();
-
-                         socket.close();
-                     }catch(IOException ex){
-
-                     }
+                     closeFrame();
                  }
              });
 
@@ -216,9 +222,7 @@ public class ClientWindow implements ActionListener,Runnable {
 //             while (in.hasNextLine()) {
 //                 display(in.nextLine());
 //             }
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
+         } catch (IOException e) {}
      }
 
      public void actionPerformed(ActionEvent e){
@@ -229,6 +233,8 @@ public class ClientWindow implements ActionListener,Runnable {
                  try{
                      out.writeObject(gameMessage);
                      this.gameMessage = new GameMessage();
+                     this.uploadNote.setText("");
+                     this.cancelUpload.setVisible(false);
                  }catch(IOException ie){
 
                  }
@@ -261,8 +267,6 @@ public class ClientWindow implements ActionListener,Runnable {
     }
 
     private Game uploadGameFile(){
-
-
         int userSelection = fileUpload.showOpenDialog(this.frame);
         if(userSelection == JFileChooser.APPROVE_OPTION){
             File file = fileUpload.getSelectedFile();
@@ -272,16 +276,37 @@ public class ClientWindow implements ActionListener,Runnable {
                 FileInputStream fileIn = new FileInputStream(file);
                 ObjectInputStream objectIn = new ObjectInputStream(fileIn);
                 Game gameIn = (Game)objectIn.readObject();
+                this.uploadNote.setText("Attached: " + file.getName());
+                this.cancelUpload.setVisible(true);
                 //System.out.println(gameIn.toString());
                 return gameIn;
             }catch(Exception ex){
+                this.uploadNote.setText("Failed attachment");
                 ex.printStackTrace();
             }
         }
         return null;
     }
 
+    public void removeGameUpload(){
+        gameMessage.setGame(null);
+        this.cancelUpload.setVisible(false);
+        this.uploadNote.setText("");
+    }
+
     public void setGameListener(GameListener gameListener){
         this.gameListener = gameListener;
+    }
+
+    public void closeFrame(){
+        try {
+            out.writeObject(new QuitMessage());
+            System.out.println("Quit");
+            out.close();
+            in.close();
+            socket.close();
+        } catch (IOException ex) {
+        }
+        frame.dispose();
     }
 }

@@ -7,13 +7,13 @@ import Observers.BoardPaneObserver;
 import Observers.Observer;
 import UI.Listeners.BoardPaneViewScroll;
 import UI.Listeners.ImageViewScroll;
-import UI.UIHelpers.ComponentTreeNode;
+//import UI.UIHelpers.ComponentTreeNode;
 import UI.UIHelpers.ProjectTreeNode;
 import UI.UIHelpers.ScrollBarUICreator;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
+//import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +22,7 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Random;
 
-import static UI.BoardPane.PlacementType.NONE;
+//import static UI.BoardPane.PlacementType.NONE;
 import static UI.BoardPane.PlacementType.SPACE;
 
 
@@ -53,8 +53,8 @@ public class CenterPane extends JPanel implements Observable {
     TreeSelectionListener tsl = e -> {
         ProjectTreeNode selectedNode = (ProjectTreeNode)componentTree.getTree().getLastSelectedPathComponent();
         if(selectedNode != null){
-            String name = selectedNode.toString();
-            GameComponent component = null;
+            //String name = selectedNode.toString();
+            GameComponent component;
             CardInterface card = null;
 
             component = selectedNode.getComponent();
@@ -99,12 +99,12 @@ public class CenterPane extends JPanel implements Observable {
 
             if(component != null){
                 setComponentPane(component);
-                game.setSelectedComponent(component);
-                game.setSelectedCard(card);
+                getGame().setSelectedComponent(component);
+                getGame().setSelectedCard(card);
                 //game.setSelectedResource(null);
 
                 if(component instanceof Texture){
-                    UpdateColorCommand ucc = new UpdateColorCommand(game,(Texture) component);
+                    UpdateColorCommand ucc = new UpdateColorCommand(getGame(),(Texture) component);
                     commandStack.insertCommand(ucc);
                 }
                 //updateObservers();
@@ -206,7 +206,7 @@ public class CenterPane extends JPanel implements Observable {
         //boardAndCmd.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         boardAndCmd.addPropertyChangeListener("dividerLocation", e -> {
-            int location = ((Integer)e.getNewValue()).intValue();
+            int location = (Integer) e.getNewValue();
             if (location < 400) {
                 JSplitPane splitPane = (JSplitPane)e.getSource();
                 splitPane.setDividerLocation( 400 );
@@ -233,7 +233,7 @@ public class CenterPane extends JPanel implements Observable {
         //overallPane.setDividerLocation(200);
 
         overallPane.addPropertyChangeListener("dividerLocation", e -> {
-            int location = ((Integer)e.getNewValue()).intValue();
+            int location = (Integer) e.getNewValue();
             if (location > 400)
             {
                 JSplitPane splitPane = (JSplitPane)e.getSource();
@@ -278,11 +278,12 @@ public class CenterPane extends JPanel implements Observable {
                 return;
             }
             else if(space.isUsingTexture()){
-                UpdateColorCommand ucc = new UpdateColorCommand(game,space.getTexture());
+                UpdateColorCommand ucc = new UpdateColorCommand(getGame(),space.getTexture());
                 commandStack.insertCommand(ucc);
                 //game.getBoard().setTexture(space.getTexture());
             }else{
-                UpdateColorCommand ucc = new UpdateColorCommand(game,space.getColor());
+                UpdateColorCommand ucc = new UpdateColorCommand(getGame(),space.getColor());
+                System.out.println(game.getName());
                 commandStack.insertCommand(ucc);
                 //game.getBoard().setColor(space.getColor());
             }
@@ -415,6 +416,7 @@ public class CenterPane extends JPanel implements Observable {
 
     void refreshComponentTree(Game game){
         this.game = game;
+        System.out.println("Changed game in center pane to " + game.getName());
         componentTree.refreshTree(game);
         //componentTree.collapseTree();
         componentTree.getTree().addTreeSelectionListener(tsl);
@@ -499,5 +501,9 @@ public class CenterPane extends JPanel implements Observable {
 
     public void setPlacementType(BoardPane.PlacementType pt){
         this.placementType = pt;
+    }
+
+    public Game getGame(){
+        return this.game;
     }
 }
