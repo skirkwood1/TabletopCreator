@@ -1,5 +1,6 @@
 package UI.UIHelpers;
 
+import UI.UIColorConstants;
 import UI.UIHelpers.Icons.TreeCollapsedIcon;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ public class FileChooserCreator {
     private static MetalToggleButtonUI mtbUI = new MetalToggleButtonUI() {
         @Override
         protected Color getSelectColor() {
-            return new Color(170,170,170);
+            return UIColorConstants.buttonSelected;
         }
     };
 
@@ -21,6 +22,19 @@ public class FileChooserCreator {
             if(comp instanceof JScrollPane){
                 JScrollPane scrollPane = (JScrollPane)comp;
                 scrollPane.getVerticalScrollBar().setUI(ScrollBarUICreator.scrollBarUI());
+            }
+            if(comp instanceof JList){
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (InstantiationException e) {
+                    throw new RuntimeException(e);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                } catch (UnsupportedLookAndFeelException e) {
+                    throw new RuntimeException(e);
+                }
             }
             if(comp instanceof Container){
                 setFileChooserElements(((Container)comp).getComponents());
@@ -48,7 +62,7 @@ public class FileChooserCreator {
             if(comp instanceof JButton){
                 JButton jb = (JButton)comp;
                 //jb.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-                jb.setBackground(new Color(220,220,220));
+                jb.setBackground(UIColorConstants.buttonUnselected);
                 jb.setFocusPainted(false);
                 jb.setMargin(new Insets(5,5,5,5));
                 jb.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -58,7 +72,7 @@ public class FileChooserCreator {
             if(comp instanceof  JToggleButton){
                 JToggleButton jb = (JToggleButton)comp;
                 //jb.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-                jb.setBackground(new Color(220,220,220));
+                jb.setBackground(UIColorConstants.buttonUnselected);
                 jb.setFocusPainted(false);
                 jb.setMargin(new Insets(5,5,5,5));
                 jb.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));

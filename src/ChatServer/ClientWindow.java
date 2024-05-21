@@ -4,6 +4,7 @@ import ChatServer.Messages.GameMessage;
 import ChatServer.Messages.QuitMessage;
 import Models.Game;
 import UI.UIHelpers.FileChooserCreator;
+import UI.UIHelpers.FileViewerUI;
 import UI.UIHelpers.ScrollBarUICreator;
 
 import javax.swing.*;
@@ -61,6 +62,10 @@ public class ClientWindow implements ActionListener,Runnable {
         this.frame.setIconImage(icon.getImage());
 
         this.fileUpload = new JFileChooser();
+        fileUpload.setBackground(Color.WHITE);
+        fileUpload.setOpaque(true);
+        fileUpload.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+        fileUpload.setFileView(new FileViewerUI());
 
 
         Component[] comp = fileUpload.getComponents();

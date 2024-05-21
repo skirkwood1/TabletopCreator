@@ -1,6 +1,7 @@
 package UI;
 
 import UI.UIHelpers.FileChooserCreator;
+import UI.UIHelpers.FileViewerUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,10 @@ public class ComponentCreationDialog extends JOptionPane {
         bl.setVgap(-1);
 
         Component[] comp = imageChooser.getComponents();
+        imageChooser.setBackground(Color.WHITE);
+        imageChooser.setOpaque(true);
+        //fileUpload.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+        imageChooser.setFileView(new FileViewerUI());
         FileChooserCreator.setFileChooserElements(comp);
 
         name.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));

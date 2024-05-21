@@ -49,10 +49,9 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
     private MetalToggleButtonUI mtbUI = new MetalToggleButtonUI() {
         @Override
         protected Color getSelectColor() {
-            return new Color(170,170,170);
+            return UIColorConstants.buttonSelected;
         }
     };
-    private Color buttonBG = new Color(210,210,210);
     private ChangeListener changeListener = new ChangeListener() {
         @Override
         public void stateChanged(ChangeEvent e) {
@@ -60,9 +59,9 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
             ButtonModel model = button.getModel();
 
             if (model.isRollover()) {
-                button.setBackground(Color.LIGHT_GRAY);
+                button.setBackground(UIColorConstants.buttonHovered);
             } else {
-                button.setBackground(buttonBG);
+                button.setBackground(UIColorConstants.buttonUnselected);
             }
         }
     };
@@ -87,7 +86,7 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
         UIManager.put("Menu.font",new Font("Segoe UI",Font.PLAIN,14));
 
         UIManager.put("MenuItem.background",Color.WHITE);
-        UIManager.put("MenuItem.selectionBackground",buttonBG);
+        UIManager.put("MenuItem.selectionBackground",UIColorConstants.buttonUnselected);
         UIManager.put("MenuItem.background",Color.WHITE);
         UIManager.put("MenuItem.foreground",Color.BLACK);
         UIManager.put("MenuItem.border",BorderFactory.createEmptyBorder(2,2,2,2));
@@ -419,9 +418,9 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
                 DefaultButtonModel model = (DefaultButtonModel) e.getSource();
 
                 if (model.isRollover()) {
-                    button.setBackground(Color.LIGHT_GRAY);
+                    button.setBackground(UIColorConstants.buttonHovered);
                 } else {
-                    button.setBackground(new Color(220,220,220));
+                    button.setBackground(UIColorConstants.buttonUnselected);
                 }
             }
         };
@@ -430,7 +429,7 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
     public void initToggleButton(JToggleButton button){
         button.setPreferredSize(new Dimension(48,36));
         button.setMargin(new Insets(0,0,0,0));
-        button.setBackground(buttonBG);
+        button.setBackground(UIColorConstants.buttonUnselected);
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setFocusPainted(false);
         button.setRolloverEnabled(true);
@@ -442,7 +441,7 @@ public class Toolbar extends JPanel implements ActionListener,Observable {
     public void initButton(JButton button){
         button.setPreferredSize(new Dimension(36,36));
         button.setMargin(new Insets(0,0,0,0));
-        button.setBackground(buttonBG);
+        button.setBackground(UIColorConstants.buttonUnselected);
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setFocusPainted(false);
         button.addChangeListener(changeListener);

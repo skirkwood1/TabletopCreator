@@ -37,7 +37,7 @@ public class ResizeBoardPane extends JOptionPane {
 //        catch(ParseException pe){}
         UIManager.put("Label.font",new Font("Segoe UI",Font.BOLD,14));
         UIManager.put("TextField.font",new Font("Segoe UI",Font.PLAIN,14));
-        UIManager.put("Button.background",Color.LIGHT_GRAY);
+        UIManager.put("Button.background",UIColorConstants.buttonSelected);
         UIManager.put("Button.font",new Font("Segoe UI",Font.PLAIN,14));
 
         NumberFormat nf = NumberFormat.getNumberInstance();

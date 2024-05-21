@@ -1,12 +1,14 @@
 package UI.UIHelpers;
 
+import UI.UIColorConstants;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class ButtonUICreator {
-    private static Color buttonBG = new Color(210,210,210);
+    //private static Color buttonBG = new Color(210,210,210);
     private static ChangeListener changeListener = new ChangeListener() {
         @Override
         public void stateChanged(ChangeEvent e) {
@@ -14,9 +16,9 @@ public class ButtonUICreator {
             ButtonModel model = button.getModel();
 
             if (model.isRollover()) {
-                button.setBackground(Color.LIGHT_GRAY);
+                button.setBackground(UIColorConstants.buttonHovered);
             } else {
-                button.setBackground(buttonBG);
+                button.setBackground(UIColorConstants.buttonUnselected);
             }
         }
     };
