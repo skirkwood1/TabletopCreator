@@ -119,4 +119,8 @@ public class Player implements Serializable, GameComponent {
     public String toString(){
         return String.format("Player: %s",name);
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
 }

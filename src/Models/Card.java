@@ -63,4 +63,8 @@ public class Card extends CardInterface implements Serializable, GameComponent {
     public boolean isFlipped() {
         return flipped;
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
 }

@@ -16,4 +16,6 @@ public class ComponentTreeNode extends ProjectTreeNode {
     public GameComponent getComponent(){
         return this.component;
     }
+
+
 }

@@ -35,4 +35,8 @@ public class Piece implements Serializable, GameComponent {
     public String toString(){
         return getName();
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
 }

@@ -15,8 +15,8 @@ public class ComponentCreationDialog extends JOptionPane {
     private JFileChooser imageChooser;
 
     public ComponentCreationDialog(){
-        UIManager.put("OptionPane.background",new Color(255,255,255));
-        UIManager.put("Panel.background",new Color(255,255,255));
+        UIManager.put("OptionPane.background", UIColorConstants.background);
+        UIManager.put("Panel.background", UIColorConstants.background);
 
         this.name = new JTextField();
         this.text = new JTextArea();

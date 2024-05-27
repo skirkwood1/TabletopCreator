@@ -8,4 +8,6 @@ public interface GameComponent {
     String getName();
     String getText();
     BufferedImage getImage();
+
+    void setName(String name);
 }

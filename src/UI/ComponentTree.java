@@ -1,12 +1,10 @@
 package UI;
 
-import Commands.CommandStack;
-import Commands.DeleteComponentCommand;
-import Commands.DeleteFromDeckCommand;
-import Commands.DetextureSpacesCommand;
+import Commands.*;
 import Models.*;
 import Models.GameComponent;
 import UI.UIHelpers.ComponentTreeNode;
+import UI.UIHelpers.HelperTreeCellEditor;
 import UI.UIHelpers.Icons.TreeCollapsedIcon;
 import UI.UIHelpers.Icons.TreeExpandedIcon;
 import UI.UIHelpers.Icons.TreeIcon;
@@ -17,6 +15,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.*;
 
@@ -35,7 +35,7 @@ public class ComponentTree extends JPanel implements Observable {
     UpperTreeNode resources = new UpperTreeNode("Resources");
 
     private JPopupMenu rightClickMenu;
-    private JMenuItem delete,add;
+    private JMenuItem delete, rename, add;
 
 
     public ComponentTree(Game game, CommandStack commandStack){
@@ -52,13 +52,6 @@ public class ComponentTree extends JPanel implements Observable {
         UIManager.put("Tree.collapsedIcon", empty);
         UIManager.put("Tree.expandedIcon", empty);
 
-        top.add(cards);
-        top.add(pieces);
-        top.add(textures);
-        top.add(rules);
-        top.add(decks);
-        top.add(players);
-        top.add(resources);
         //top.add(new DefaultMutableTreeNode("Dice"));
 
         tree = new JTree(top);
@@ -66,6 +59,38 @@ public class ComponentTree extends JPanel implements Observable {
         tree.setBorder(BorderFactory.createEmptyBorder(2,5,2,2));
         tree.setPreferredSize(new Dimension(1280,0));
         tree.setEditable(true);
+        tree.setToggleClickCount(1);
+        //tree.set
+
+        TreeCellEditor editor = new HelperTreeCellEditor(tree, (DefaultTreeCellRenderer) tree.getCellRenderer());
+        tree.setCellEditor(editor);
+
+        editor.addCellEditorListener(new CellEditorListener() {
+
+            @Override
+            public void editingStopped(ChangeEvent e) {
+                ComponentTreeNode editedNode = (ComponentTreeNode)tree.getLastSelectedPathComponent();
+
+                RenameComponentCommand rcc =
+                        new RenameComponentCommand(
+                                editedNode.getComponent(),
+                                editor.getCellEditorValue().toString());
+                commandStack.insertCommand(rcc);
+            }
+
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+
+            }
+        });
+
+        top.add(cards);
+        top.add(pieces);
+        top.add(textures);
+        top.add(rules);
+        top.add(decks);
+        top.add(players);
+        top.add(resources);
 
         JScrollPane view = new JScrollPane(tree);
 
@@ -74,11 +99,11 @@ public class ComponentTree extends JPanel implements Observable {
 
         this.rightClickMenu = new JPopupMenu();
         this.delete = new JMenuItem("Delete");
+        this.rename = new JMenuItem("Rename");
         this.add = new JMenuItem("Add");
 
-        delete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        delete.addActionListener(e -> {
+            if(tree.getLastSelectedPathComponent() instanceof ComponentTreeNode){
                 ComponentTreeNode selectedNode = (ComponentTreeNode)tree.getLastSelectedPathComponent();
                 GameComponent component;
 
@@ -118,7 +143,12 @@ public class ComponentTree extends JPanel implements Observable {
             }
         });
 
+        rename.addActionListener(e -> {
+            tree.startEditingAtPath(tree.getSelectionPath());
+        });
+
         rightClickMenu.add(delete);
+        rightClickMenu.add(rename);
         //rightClickMenu.add(add);
 
         DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
@@ -138,7 +168,9 @@ public class ComponentTree extends JPanel implements Observable {
                         tree.setSelectionRow(selRow);
                     }
 
-                    rightClickMenu.show(e.getComponent(), e.getX(), e.getY());
+                    if(tree.getLastSelectedPathComponent() instanceof ComponentTreeNode){
+                        rightClickMenu.show(e.getComponent(), e.getX(), e.getY());
+                    }
                 }
             }
         });

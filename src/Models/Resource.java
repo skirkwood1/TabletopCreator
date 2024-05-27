@@ -62,4 +62,8 @@ public class Resource implements Serializable,GameComponent {
     public String toString(){
         return String.format("Resource: %s; Start Value: %d",name,value);
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
 }
