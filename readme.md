@@ -58,6 +58,23 @@ and have separate posts with support for rating and reviewing games and collecti
 The bottom of the main program window contains a text panel. In the future, there will be a set of commands that fulfill certain roles.
 For now, the only command is "/roll x", which rolls an x-sided die and prints the result.
 
+## TODO List
+- Custom space layout besides grid
+  - Hexagonal arrangement and freeform with custom space placement
+- Add players and assign components to players
+  - Enable hiding of components based on player, and switching current active player
+- Rulesheets displayed with markdown formatting
+- Board background images
+- Board visualization tools such as custom space drawing, and visual x and y axis values
+- Value trackers (attach values to players, components, etc. and manipulate them)
+- Card and piece manipulation
+  - Rotating, replacing, attaching tokens and markers, etc.
+- Allow multiple pieces in one space (customizable)
+### Stretch goals (unlikely)
+- Three dimensional games (board layers)
+- PDF/image exports
+- Scripting language for game rule automation
+
 ## Programmer Guide
 
 ### Model Classes
