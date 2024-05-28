@@ -1,6 +1,7 @@
 package UI;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +21,7 @@ public class ResourceCreationDialog extends JOptionPane {
     JButton removeResourceButton;
 
     GridBagConstraints constraints;
+    Font font = new Font("Segoe UI",Font.PLAIN,12);
 
 
 
@@ -32,19 +34,32 @@ public class ResourceCreationDialog extends JOptionPane {
 
         JPanel firstRes = new JPanel();
         firstRes.setLayout(new GridLayout(1,4));
+        firstRes.setBorder(new EmptyBorder(0,0,4,0));
 
         this.titleField = new JTextField();
         titleField.setPreferredSize(new Dimension(80,20));
         JLabel titleLabel = new JLabel("Resource Title:");
         JPanel name = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        titleLabel.setFont(font);
+
         name.add(titleLabel);
         name.add(titleField);
 
+        JLabel nameLabel = new JLabel("Name: ");
+        nameLabel.setFont(font);
+        nameLabel.setMaximumSize(new Dimension(40,20));
+        nameLabel.setBorder(new EmptyBorder(0,40,0,0));
 
-        JLabel nameLabel = new JLabel("Name:");
         JTextField firstKey = new JTextField();
-        JLabel valueLabel = new JLabel("Start value:");
+        firstKey.setPreferredSize(new Dimension(80,20));
+
+        JLabel valueLabel = new JLabel("Start value: ");
+        valueLabel.setFont(font);
+        valueLabel.setMaximumSize(new Dimension(40,20));
+        valueLabel.setBorder(new EmptyBorder(0,20,0,0));
+
         JTextField firstValue = new JTextField();
+        firstValue.setPreferredSize(new Dimension(80,20));
 
         firstRes.add(nameLabel);
         firstRes.add(firstKey);
@@ -80,6 +95,7 @@ public class ResourceCreationDialog extends JOptionPane {
     public void addResource(){
         JPanel newPanel = new JPanel();
         newPanel.setLayout(new GridLayout(1,4));
+        newPanel.setBorder(new EmptyBorder(0,0,4,0));
 
         constraints.gridy++;
 
@@ -87,8 +103,12 @@ public class ResourceCreationDialog extends JOptionPane {
         firstKey.setPreferredSize(new Dimension(80,20));
         JTextField firstValue = new JTextField();
         firstValue.setPreferredSize(new Dimension(80,20));
-        JLabel nameLabel = new JLabel("Name:");
-        JLabel valueLabel = new JLabel("Start value:");
+        JLabel nameLabel = new JLabel("Name: ");
+        nameLabel.setBorder(new EmptyBorder(0,40,0,0));
+        nameLabel.setFont(font);
+        JLabel valueLabel = new JLabel("Start value: ");
+        valueLabel.setBorder(new EmptyBorder(0,20,0,0));
+        valueLabel.setFont(font);
 
         newPanel.add(nameLabel);
         newPanel.add(firstKey);

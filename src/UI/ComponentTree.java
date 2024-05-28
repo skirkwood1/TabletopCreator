@@ -90,7 +90,7 @@ public class ComponentTree extends JPanel implements Observable {
         top.add(resources);
         top.add(rules);
         top.add(textures);
-        
+
         JScrollPane view = new JScrollPane(tree);
 
         setLayout(new BorderLayout());
