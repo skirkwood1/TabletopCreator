@@ -668,16 +668,16 @@ public class BoardPane extends JPanel {
     }
 
     public void placeResource(){
-        if(game.getSelectedComponent() instanceof Resource){
-            placeResource((Resource)game.getSelectedComponent());
+        if(game.getSelectedComponent() instanceof ResourceSheet){
+            placeResource((ResourceSheet)game.getSelectedComponent());
         }
     }
 
-    public void placeResource(Resource resource){
+    public void placeResource(ResourceSheet resourceSheet){
         Point placePoint = new Point((int)(mousePoint.x/zoom),
                 (int)(mousePoint.getY()/zoom));
 
-        Resource copy = resource.copy();
+        ResourceSheet copy = resourceSheet.copy();
 
         ResourceDrawer resourceDrawer = new ResourceDrawer(copy,placePoint);
         //resourceDrawers.add(resourceDrawer);

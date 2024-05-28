@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
-import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.*;
 
 public class ComponentTree extends JPanel implements Observable {
@@ -32,7 +31,7 @@ public class ComponentTree extends JPanel implements Observable {
     UpperTreeNode rules = new UpperTreeNode("Rules");
     UpperTreeNode decks = new UpperTreeNode("Decks");
     UpperTreeNode players = new UpperTreeNode("Players");
-    UpperTreeNode resources = new UpperTreeNode("Resources");
+    UpperTreeNode resources = new UpperTreeNode("Resource Sheets");
 
     private JPopupMenu rightClickMenu;
     private JMenuItem delete, rename, add;
@@ -85,13 +84,13 @@ public class ComponentTree extends JPanel implements Observable {
         });
 
         top.add(cards);
-        top.add(pieces);
-        top.add(textures);
-        top.add(rules);
         top.add(decks);
+        top.add(pieces);
         top.add(players);
         top.add(resources);
-
+        top.add(rules);
+        top.add(textures);
+        
         JScrollPane view = new JScrollPane(tree);
 
         setLayout(new BorderLayout());
@@ -198,9 +197,9 @@ public class ComponentTree extends JPanel implements Observable {
         }
     }
 
-    public void addResource(Resource resource){
+    public void addResource(ResourceSheet resourceSheet){
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
-        ComponentTreeNode node = new ComponentTreeNode(resource);
+        ComponentTreeNode node = new ComponentTreeNode(resourceSheet);
         tree.scrollPathToVisible(new TreePath(node.getPath()));
         model.insertNodeInto(node,resources,resources.getChildCount());
     }
@@ -222,8 +221,8 @@ public class ComponentTree extends JPanel implements Observable {
         DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
         ComponentTreeNode node = new ComponentTreeNode(player);
         tree.scrollPathToVisible(new TreePath(node.getPath()));
-        for(Resource resource: player.getResources()){
-            node.add(new ComponentTreeNode(resource));
+        for(ResourceSheet resourceSheet : player.getResources()){
+            node.add(new ComponentTreeNode(resourceSheet));
         }
 //        this.decks.add(node);
         model.insertNodeInto(node,players,players.getChildCount());
@@ -286,8 +285,8 @@ public class ComponentTree extends JPanel implements Observable {
             model.insertNodeInto(node,decks,decks.getChildCount());
         }
 
-        for(Resource resource: this.game.getResources()){
-            ComponentTreeNode node = new ComponentTreeNode(resource);
+        for(ResourceSheet resourceSheet : this.game.getResources()){
+            ComponentTreeNode node = new ComponentTreeNode(resourceSheet);
             model.insertNodeInto(node,resources,resources.getChildCount());
         }
 

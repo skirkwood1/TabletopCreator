@@ -1,6 +1,6 @@
 package UI.BoardPaneObjects;
 
-import Models.Resource;
+import Models.ResourceSheet;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -9,32 +9,52 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Ellipse2D;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ResourceDrawer implements DrawerInterface, Serializable {
 
     private static final long serialVersionUID = 579324485687726774L;
     private final int MARGIN = 10;
 
-    private Resource resource;
+    private ResourceSheet resourceSheet;
 
     private Point point;
     private Point mousePoint;
+    private boolean mouseHeld;
 
     private double zoom;
 
     private Ellipse2D plusButton,minusButton;
+    private final ArrayList<Ellipse2D> plusButtons,minusButtons;
     private Rectangle bounds;
 
-    public ResourceDrawer(Resource resource){
-        this.resource = resource;
+    public ResourceDrawer(ResourceSheet resourceSheet){
+        this.resourceSheet = resourceSheet;
         this.point = new Point(0,0);
         this.mousePoint = new Point(0,0);
+
+        this.plusButtons = new ArrayList();
+        this.minusButtons = new ArrayList();
+
+        for(Map.Entry<String, Integer[]> resValue: resourceSheet.getResources().entrySet()){
+            plusButtons.add(null);
+            minusButtons.add(null);
+        }
     }
 
-    public ResourceDrawer(Resource resource, Point point){
-        this.resource = resource;
+    public ResourceDrawer(ResourceSheet resourceSheet, Point point){
+        this.resourceSheet = resourceSheet;
         this.point = new Point(point.x-30,point.y-30);
         this.mousePoint = new Point(0,0);
+
+        this.plusButtons = new ArrayList<>();
+        this.minusButtons = new ArrayList<>();
+
+        for(Map.Entry<String, Integer[]> resValue: resourceSheet.getResources().entrySet()){
+            plusButtons.add(null);
+            minusButtons.add(null);
+        }
     }
 
     public void move(Point point){
@@ -47,12 +67,20 @@ public class ResourceDrawer implements DrawerInterface, Serializable {
 
     public void initializeBounds(Graphics g){
         g.setFont(new Font("Segoe UI",Font.PLAIN,10));
-        String str = resource.getName();
-        int width = 70 > g.getFontMetrics().stringWidth(str) ? 70 : g.getFontMetrics().stringWidth(str);
+        String str = resourceSheet.getName();
+        int width = Math.max(90, g.getFontMetrics().stringWidth(str) + 12);
+        int resourceHeight = this.resourceSheet.getResources().size()*20;
+
+        for(String resName: resourceSheet.getResources().keySet()){
+            int stringWidth = g.getFontMetrics().stringWidth(resName) + 60;
+            if(stringWidth > width){
+                width = stringWidth;
+            }
+        }
         this.bounds = new Rectangle((int)(point.getX()),
                 (int)(point.getY()),
-                width + 8,
-                45);
+                width,
+                resourceHeight + 16);
     }
 
     public void draw(Graphics g,double zoom){
@@ -66,8 +94,14 @@ public class ResourceDrawer implements DrawerInterface, Serializable {
 
         FontRenderContext frc = g2.getFontRenderContext();
 
-        GlyphVector gv = g2.getFont().createGlyphVector(frc, resource.getName());
-        GlyphVector gv2 = g2.getFont().createGlyphVector(frc, "Value: " + resource.getValue());
+        ArrayList<GlyphVector> valueLines = new ArrayList<>();
+
+        GlyphVector gv = g2.getFont().createGlyphVector(frc, resourceSheet.getName());
+
+        for(Map.Entry<String, Integer[]> resValue: resourceSheet.getResources().entrySet()){
+            valueLines.add(g2.getFont().createGlyphVector(frc, resValue.getKey() + ": " + resValue.getValue()[0]));
+        }
+        //GlyphVector gv2 = g2.getFont().createGlyphVector(frc, "Value: " + resource.getValue());
 
         g2.setColor(Color.WHITE);
         g2.fill(this.bounds);
@@ -82,16 +116,27 @@ public class ResourceDrawer implements DrawerInterface, Serializable {
                 (int)(point.getX() + 4),
                 (int)(point.getY()) + 10);
 
-        g2.drawGlyphVector(gv2,
-                point.x + 4,
-                point.y + 30);
+        for(int i = 0; i < valueLines.size(); i++){
+            g2.setFont(new Font("Segoe UI",Font.PLAIN,10));
+            g2.setColor(Color.BLACK);
+            g2.drawGlyphVector(valueLines.get(i),
+                    point.x + 4,
+                    point.y + 8 + (20*(i+1)));
 
-        this.plusButton = drawPlusSign(g,
-                point.x + bounds.width - 8,
-                point.y + 22);
-        this.minusButton = drawMinusSign(g,
-                point.x + bounds.width - 8,
-                point.y + 36);
+//            this.plusButton = drawPlusSign(g,
+//                    point.x + bounds.width - 8,
+//                    point.y + 5 + (20*(i+1)));
+//            this.minusButton = drawMinusSign(g,
+//                    point.x + bounds.width - 22,
+//                    point.y + 5 + (20*(i+1)));
+
+            plusButtons.set(i, drawPlusSign(g,
+                    point.x + bounds.width - 10,
+                    point.y + 4 + (20*(i+1))));
+            minusButtons.set(i, drawMinusSign(g,
+                    point.x + bounds.width - 24,
+                    point.y + 4 + (20*(i+1))));
+        }
 
         if(bounds.contains(mousePoint)){
             g2.draw(bounds);
@@ -128,7 +173,7 @@ public class ResourceDrawer implements DrawerInterface, Serializable {
 
         Ellipse2D ellipse = new Ellipse2D.Double(x-6,y-6,12,12);
 
-        if(ellipse.contains(mousePoint)){
+        if(ellipse.contains(mousePoint) & !mouseHeld){
             g2.setColor(new Color(100,200,255));
             g2.fill(ellipse);
             g2.setColor(Color.BLACK);
@@ -146,11 +191,23 @@ public class ResourceDrawer implements DrawerInterface, Serializable {
         }
 
         public void mouseClicked(MouseEvent e){
-            if(plusButton.contains(mousePoint)){
-                resource.incrementValue();
-            }else if(minusButton.contains(mousePoint)){
-                resource.decrementValue();
+            for(int i = 0; i < plusButtons.size(); i++){
+                if(plusButtons.get(i).contains(mousePoint)){
+                    resourceSheet.incrementValue(resourceSheet.getEntry(i).getKey());
+                }else if(minusButtons.get(i).contains(mousePoint)){
+                    resourceSheet.decrementValue(resourceSheet.getEntry(i).getKey());
+                }
             }
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            mouseHeld = true;
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            mouseHeld = false;
         }
     };
 
@@ -166,8 +223,7 @@ public class ResourceDrawer implements DrawerInterface, Serializable {
         return this.point;
     }
 
-    public Resource getComponent(){
-        return this.resource;
+    public ResourceSheet getComponent(){
+        return this.resourceSheet;
     }
-
 }

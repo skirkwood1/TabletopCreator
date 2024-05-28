@@ -1,7 +1,7 @@
 package UI.BoardPaneObjects;
 
 import Models.Player;
-import Models.Resource;
+import Models.ResourceSheet;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -44,8 +44,8 @@ public class PlayerDrawer implements DrawerInterface, Serializable {
         this.mousePoint = new Point(0,0);
         this.resources = new ArrayList<>();
 
-        for(Resource resource: player.getResources()){
-            resources.add(new ResourceDrawer(resource));
+        for(ResourceSheet resourceSheet : player.getResources()){
+            resources.add(new ResourceDrawer(resourceSheet));
         }
     }
 

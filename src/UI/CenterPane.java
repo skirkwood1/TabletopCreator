@@ -408,8 +408,8 @@ public class CenterPane extends JPanel implements Observable {
         componentTree.updateTree(texture);
     }
 
-    void updateComponentTree(Resource resource){
-        componentTree.addResource(resource);
+    void updateComponentTree(ResourceSheet resourceSheet){
+        componentTree.addResource(resourceSheet);
     }
 
     public void collapseComponentTree(){componentTree.collapseTree();}

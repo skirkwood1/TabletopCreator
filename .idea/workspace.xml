@@ -11,28 +11,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d084613f-23b6-41d4-bd4b-75e1b6d47ed3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Commands/RenameComponentCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/UIHelpers/HelperTreeCellEditor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Models/ResourceSheet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Card.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/GameComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/GameComponent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Piece.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Piece.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Resource.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Resource.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Texture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/Models/Texture.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TabletopCreator/UI/ComponentTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/GameComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/GameComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Piece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/PlaceDrawerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlaceDrawerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Resource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Texture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/ComponentCreationDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ComponentCreationDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Resource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/BoardPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/BoardPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/BoardPaneObjects/PlayerDrawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/BoardPaneObjects/PlayerDrawer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/BoardPaneObjects/ResourceDrawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/BoardPaneObjects/ResourceDrawer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/CenterPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/CenterPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/ComponentTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ComponentTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/UIColorConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/UIColorConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/UIHelpers/ComponentTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/UIHelpers/ComponentTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Frame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/PlayerCreationDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/PlayerCreationDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/ResourceCreationDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ResourceCreationDialog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -540,7 +533,8 @@
       <workItem from="1620670355675" duration="5135000" />
       <workItem from="1716319734706" duration="13911000" />
       <workItem from="1716333788465" duration="184000" />
-      <workItem from="1716775455029" duration="7241000" />
+      <workItem from="1716775455029" duration="8088000" />
+      <workItem from="1716857529504" duration="16154000" />
     </task>
     <task id="LOCAL-00001" summary="Added game upload confirmation to chat window and fixed bug regarding updating color after opening another game file">
       <option name="closed" value="true" />

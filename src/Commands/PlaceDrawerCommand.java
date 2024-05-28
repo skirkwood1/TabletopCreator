@@ -1,13 +1,7 @@
 package Commands;
 
-import Models.CardInterface;
 import Models.Game;
-import Models.Player;
-import Models.Resource;
 import UI.BoardPaneObjects.DrawerInterface;
-import UI.BoardPaneObjects.ResourceDrawer;
-
-import java.util.ArrayList;
 
 public class PlaceDrawerCommand implements GameCommand {
     private Game game;

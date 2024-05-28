@@ -10,27 +10,27 @@ public class Player implements Serializable, GameComponent {
     private String name;
     private ArrayList<Card> hand;
     private ArrayList<Piece> controlledPieces;
-    private ArrayList<Resource> resources;
+    private ArrayList<ResourceSheet> resourceSheets;
 
     public Player(String name){
         this.name = name;
         this.hand = new ArrayList<>();
         this.controlledPieces = new ArrayList<>();
-        this.resources = new ArrayList<>();
+        this.resourceSheets = new ArrayList<>();
     }
 
-    public Player(String name, ArrayList<Resource> resources){
+    public Player(String name, ArrayList<ResourceSheet> resourceSheets){
         this.name = name;
         this.hand = new ArrayList<>();
         this.controlledPieces = new ArrayList<>();
-        this.resources = resources;
+        this.resourceSheets = resourceSheets;
     }
 
-    public Player(String name,ArrayList<Card> hand,ArrayList<Piece> controlledPieces,ArrayList<Resource> resources){
+    public Player(String name,ArrayList<Card> hand,ArrayList<Piece> controlledPieces,ArrayList<ResourceSheet> resourceSheets){
         this.name = name;
         this.hand = hand;
         this.controlledPieces = controlledPieces;
-        this.resources = resources;
+        this.resourceSheets = resourceSheets;
     }
 
     public void addCard(Card card){
@@ -67,7 +67,7 @@ public class Player implements Serializable, GameComponent {
 
     @Override
     public String getText() {
-        return "Player: " + this.name + "\n\r # of Resources: " + resources.size();
+        return "Player: " + this.name + "\n\r # of Resources: " + resourceSheets.size();
     }
 
     @Override
@@ -75,29 +75,29 @@ public class Player implements Serializable, GameComponent {
         return null;
     }
 
-    public int getResourceValue(String name){
-        for(Resource resource:resources){
-            if(resource.getName().equals(name)){
-                return resource.getValue();
+    public int getResourceValue(String name, String resName){
+        for(ResourceSheet resourceSheet : resourceSheets){
+            if(resourceSheet.getName().equals(name)){
+                return resourceSheet.getValue(resName);
             }
         }
         return 0;
     }
 
-    public void setResource(String name, int value){
-        for(Resource resource: this.resources){
-            if(resource.getName().equals(name)){
-                resource.setValue(value);
+    public void setResource(String name, String resName, int value){
+        for(ResourceSheet resourceSheet : this.resourceSheets){
+            if(resourceSheet.getName().equals(name)){
+                resourceSheet.setValue(resName, value);
             }
         }
     }
 
-    public void addResource(Resource resource){
-        this.resources.add(resource);
+    public void addResource(ResourceSheet resourceSheet){
+        this.resourceSheets.add(resourceSheet);
     }
 
-    public ArrayList<Resource> getResources(){
-        return this.resources;
+    public ArrayList<ResourceSheet> getResources(){
+        return this.resourceSheets;
     }
 
     public ArrayList<Piece> getPieces(){
@@ -109,11 +109,11 @@ public class Player implements Serializable, GameComponent {
     }
 
     public Player copy(){
-        ArrayList<Resource> copiedResources = new ArrayList<>();
-        for(Resource resource: this.resources){
-            copiedResources.add(resource.copy());
+        ArrayList<ResourceSheet> copiedResourceSheets = new ArrayList<>();
+        for(ResourceSheet resourceSheet : this.resourceSheets){
+            copiedResourceSheets.add(resourceSheet.copy());
         }
-        return new Player(this.name,this.hand,this.controlledPieces,copiedResources);
+        return new Player(this.name,this.hand,this.controlledPieces, copiedResourceSheets);
     }
 
     public String toString(){

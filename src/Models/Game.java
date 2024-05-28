@@ -1,14 +1,10 @@
 package Models;
 
 import UI.BoardPaneObjects.DrawerInterface;
-import UI.BoardPaneObjects.ResourceDrawer;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class Game implements Serializable {
 
@@ -22,14 +18,14 @@ public class Game implements Serializable {
     private ArrayList<Piece> pieces;
     private ArrayList<Deck> decks;
     private ArrayList<Texture> textures;
-    private ArrayList<Resource> resources;
+    private ArrayList<ResourceSheet> resourceSheets;
     private ArrayList<Player> players;
 
     private Board board;
 
     private GameComponent selectedComponent = null;
     private CardInterface selectedCard = null;
-    private Resource selectedResource = null;
+    private ResourceSheet selectedResourceSheet = null;
 
     private ArrayList<DrawerInterface> placedComponents;
 
@@ -41,7 +37,7 @@ public class Game implements Serializable {
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
         this.placedComponents = new ArrayList<>();
-        this.resources = new ArrayList<>();
+        this.resourceSheets = new ArrayList<>();
         this.players = new ArrayList<>();
     }
 
@@ -52,7 +48,7 @@ public class Game implements Serializable {
         this.textures = new ArrayList<>();
         this.board = game.getBoard();
         this.placedComponents = new ArrayList<>();
-        this.resources = new ArrayList<>();
+        this.resourceSheets = new ArrayList<>();
         this.players = new ArrayList<>();
     }
 
@@ -64,7 +60,7 @@ public class Game implements Serializable {
         this.decks = new ArrayList<>();
         this.textures = new ArrayList<>();
         this.placedComponents = new ArrayList<>();
-        this.resources = new ArrayList<>();
+        this.resourceSheets = new ArrayList<>();
         this.players = new ArrayList<>();
     }
 
@@ -75,7 +71,7 @@ public class Game implements Serializable {
         this.board = board;
         this.textures = new ArrayList<>();
         this.placedComponents = new ArrayList<>();
-        this.resources = new ArrayList<>();
+        this.resourceSheets = new ArrayList<>();
         this.players = new ArrayList<>();
     }
 
@@ -197,8 +193,8 @@ public class Game implements Serializable {
             cards.remove(component);
         }else if(component instanceof Deck){
             decks.remove(component);
-        }else if(component instanceof Resource){
-            resources.remove(component);
+        }else if(component instanceof ResourceSheet){
+            resourceSheets.remove(component);
         }else if(component instanceof Player){
             players.remove(component);
         }
@@ -213,8 +209,8 @@ public class Game implements Serializable {
             cards.add((Card)component);
         }else if(component instanceof Deck){
             decks.add((Deck)component);
-        }else if(component instanceof Resource){
-            resources.add((Resource)component);
+        }else if(component instanceof ResourceSheet){
+            resourceSheets.add((ResourceSheet)component);
         }else if(component instanceof Player){
             players.add((Player)component);
         }
@@ -229,8 +225,8 @@ public class Game implements Serializable {
             cards.add(index,(Card)component);
         }else if(component instanceof Deck){
             decks.add(index,(Deck)component);
-        }else if(component instanceof Resource){
-            resources.add(index,(Resource)component);
+        }else if(component instanceof ResourceSheet){
+            resourceSheets.add(index,(ResourceSheet)component);
         }else if(component instanceof Player){
             players.add(index, (Player)component);
         }
@@ -245,22 +241,22 @@ public class Game implements Serializable {
             return cards.indexOf(component);
         }else if(component instanceof Deck){
             return decks.indexOf(component);
-        }else if(component instanceof Resource){
-            return resources.indexOf(component);
+        }else if(component instanceof ResourceSheet){
+            return resourceSheets.indexOf(component);
         }else if(component instanceof Player){
             return players.indexOf(component);
         }
         return -1;
     }
 
-    public ArrayList<Resource> getResources(){
-        return this.resources;
+    public ArrayList<ResourceSheet> getResources(){
+        return this.resourceSheets;
     }
 
-    public Resource getResource(String name){
-        for(Resource resource: this.resources){
-            if(resource.getName().equals(name)){
-                return resource;
+    public ResourceSheet getResource(String name){
+        for(ResourceSheet resourceSheet : this.resourceSheets){
+            if(resourceSheet.getName().equals(name)){
+                return resourceSheet;
             }
         }
 

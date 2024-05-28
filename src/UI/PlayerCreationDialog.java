@@ -1,8 +1,7 @@
 package UI;
 
-import Models.Card;
 import Models.Game;
-import Models.Resource;
+import Models.ResourceSheet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 
 public class PlayerCreationDialog extends JOptionPane {
     private final JTextField name;
-    private JList<Resource> resources;
+    private JList<ResourceSheet> resources;
     private final JPanel layout;
 
     public PlayerCreationDialog(Game game){
@@ -20,11 +19,11 @@ public class PlayerCreationDialog extends JOptionPane {
 
         layout.setPreferredSize(new Dimension(300,300));
 
-        DefaultListModel<Resource> dlm = new DefaultListModel<>();
+        DefaultListModel<ResourceSheet> dlm = new DefaultListModel<>();
 
-        ArrayList<Resource> resourceList = game.getResources();
-        for(Resource resource: resourceList){
-            dlm.addElement(resource);
+        ArrayList<ResourceSheet> resourceSheetList = game.getResources();
+        for(ResourceSheet resourceSheet : resourceSheetList){
+            dlm.addElement(resourceSheet);
         }
 
         resources.setModel(dlm);
@@ -41,9 +40,9 @@ public class PlayerCreationDialog extends JOptionPane {
         return n;
     }
 
-    public ArrayList<Resource> getSelection(){
+    public ArrayList<ResourceSheet> getSelection(){
         //ArrayList<Card> cards = new ArrayList<>();
-        return (ArrayList<Resource>)this.resources.getSelectedValuesList();
+        return (ArrayList<ResourceSheet>)this.resources.getSelectedValuesList();
     }
 
     public String getPlayerName(){

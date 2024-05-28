@@ -9,7 +9,6 @@ import Observers.PlacementTypeObserver;
 import UI.UIHelpers.FileChooserCreator;
 import UI.UIHelpers.FileViewerUI;
 import UI.UIHelpers.Icons.*;
-import UI.UIHelpers.Icons.TreeCollapsedIcon;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -312,7 +311,7 @@ public class Frame extends JFrame implements Observable {
             ComponentImage ci = new ComponentImage(fileSelected);
 
             GameComponent component = null;
-            Resource resource = null;
+            ResourceSheet resourceSheet = null;
 
             switch(state){
                 case ADD_CARD:
@@ -348,11 +347,11 @@ public class Frame extends JFrame implements Observable {
         int n = playerCreationDialog.display();
 
         if(n == JOptionPane.YES_OPTION){
-            ArrayList<Resource> resources = new ArrayList<>();
-            for(Resource resource: playerCreationDialog.getSelection()){
-                resources.add(resource);
+            ArrayList<ResourceSheet> resourceSheets = new ArrayList<>();
+            for(ResourceSheet resourceSheet : playerCreationDialog.getSelection()){
+                resourceSheets.add(resourceSheet);
             }
-            Player player = new Player(playerCreationDialog.getPlayerName(),resources);
+            Player player = new Player(playerCreationDialog.getPlayerName(), resourceSheets);
 
             commandStack.insertCommand(new AddComponentCommand(game,player));
             //game.addPlayer(player);
@@ -400,12 +399,13 @@ public class Frame extends JFrame implements Observable {
     private void addResourceDialog(){
         int n = resourceCreationDialog.display();
         if(n == JOptionPane.YES_OPTION){
-            Resource resource = new Resource(resourceCreationDialog.getNameField(),
-                    resourceCreationDialog.getValueField());
+            ResourceSheet resourceSheet = new ResourceSheet(
+                    resourceCreationDialog.getTitleField(),
+                    resourceCreationDialog.getValMap());
 
-            AddComponentCommand acc = new AddComponentCommand(game,resource);
+            AddComponentCommand acc = new AddComponentCommand(game, resourceSheet);
             commandStack.insertCommand(acc);
-            centerPane.updateComponentTree(resource);
+            centerPane.updateComponentTree(resourceSheet);
         }
     }
 
